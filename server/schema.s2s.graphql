@@ -1,0 +1,115 @@
+type Query {
+  me: User
+}
+
+type Mutation {
+  login(username: String!, password: String!): Result<LoginData>!
+  verifyToken(token: String): BinResult!
+  createPost(input: CreatePostInput!): Result<Post>!
+}
+
+
+#region API Result spec
+type BinResult {
+  ok: Boolean!
+  error: ErrorInfo
+}
+
+@alias(rt => rt + 'Result')
+type Result<ResultType> {
+  ok: Boolean!
+  error: ErrorInfo
+  data: ResultType
+}
+
+type ErrorInfo {
+  message: String
+  code: String
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  endCursor: String
+  totalCount: Int
+}
+#endregion API Result spec
+
+#region Relay pagination spec
+@alias(nt => nt+'Edge')
+type Edge<NodeType> {
+  cursor: String!
+  node: NodeType!
+}
+
+interface Node {
+  uid: String!
+}
+
+type Connection<EdgeType> {
+  edges: [Edge<EdgeType>!]!
+  pageInfo: PageInfo!
+}
+#endregion Relay pagination spec
+
+#region auth
+type LoginData {
+  token: String
+}
+#endregion auth
+
+#region User
+type User {
+  uid: String!
+  username: String!
+  role: Role!
+  firstName: String
+  lastName: String
+  email: String
+  posts: [Post!]!
+  # Todo: Create a user profile field here
+}
+
+enum Role {
+  MANAGER
+  TEACHER
+  STUDENT
+}
+#endregion User
+
+#region Post Types
+type Post implements Node {
+  uid: String!
+  author: User!
+  title: String!
+  segments: [PostSegment!]!
+  tags: [String!]!
+}
+
+type PostSegment {
+  content: String
+  type: PostSegmentType!
+}
+
+enum PostSegmentType {
+  TEXT
+  FILE
+  IMAGE
+}
+#endregion Post Types
+
+#region Create Post
+input CreatePostInput {
+  author: String!
+  title: String!
+  summery: String!
+  segments: [CreatePostSegmentInput!]!
+  tags: [String!]!
+}
+
+input CreatePostSegmentInput {
+  content: String!
+  type: PostSegmentType!
+}
+#endregion Create Post
+

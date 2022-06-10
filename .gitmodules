@@ -1,0 +1,3 @@
+[submodule "internals/GSDL"]
+	path = internals/GSDL
+	url = https://github.com/Amohammadi2/GSDL.git

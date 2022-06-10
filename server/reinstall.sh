@@ -1,0 +1,1 @@
+. uninstall_labels.sh && . install_labels.sh auth.models posts.models
