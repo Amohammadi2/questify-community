@@ -1,34 +1,37 @@
-import { Injectable } from "@nestjs/common";
 import { Neo4jService } from "nest-neo4j/dist";
-import { IUserEntity } from "../entities/user.entity";
+import { UserModel } from "../models/user.model";
 
-@Injectable()
 export class UserRepository {
 
-  private static entityLabel = "User";
-
-  constructor (
-    public readonly neo4jService: Neo4jService
-  ){}
-
-  public async persist(user: IUserEntity): Promise<IUserEntity> {
-
-    const dbPayload: IUserEntity = {
-      uid: user.uid,
-      username: user.username,
-      password: user.password,
-      email: user.email
-    };
-
+  constructor(
+    private readonly neo4jService: Neo4jService
+  ) {}
+  
+  public async save(user: UserModel) {
     await this.neo4jService.write(`
-      CREATE (${UserRepository.entityLabel} {
-        uid: $uid,
-        username: $username,
-        email: $email,
-        password: $password
-      })
-    `, dbPayload);
+      MERGE (u:User {id: $id}) SET 
+        u.username = $username,
+        u.email = $email, 
+        u.password = $password
+      RETURN u
+    `, user);
 
-    return user;
+    return true;
+  }
+
+  public async findOne(id: string) {
+    const result = await this.neo4jService.read(`
+    MATCH (u:User {id: $id}) return u as user
+    `, { id });
+
+    if (result.records.length === 0) {
+      return null;
+    }
+
+    const {
+      username, email, password
+    } = result.records[0].get('user').properties;
+
+    new UserModel({ username, email, password, id });
   }
 }
