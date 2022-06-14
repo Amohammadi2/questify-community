@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "pwa-chrome",
+            "name": "ws://127.0.0.1:9229/f80335aa-1d88-4e8b-948a-1ba2c7c1f9e8",
+            "request": "launch",
+            "url": "ws://127.0.0.1:9229/f80335aa-1d88-4e8b-948a-1ba2c7c1f9e8"
+        }
+    ]
+}

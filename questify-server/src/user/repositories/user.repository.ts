@@ -1,6 +1,8 @@
+import { Injectable } from "@nestjs/common";
 import { Neo4jService } from "nest-neo4j/dist";
 import { UserModel } from "../models/user.model";
 
+@Injectable()
 export class UserRepository {
 
   constructor(
@@ -9,29 +11,26 @@ export class UserRepository {
   
   public async save(user: UserModel) {
     await this.neo4jService.write(`
-      MERGE (u:User {id: $id}) SET 
-        u.username = $username,
-        u.email = $email, 
-        u.password = $password
+      MERGE (u:User {id: $id})  
+        SET u.username = $username
+        SET u.password = $password
       RETURN u
     `, user);
 
     return true;
   }
 
-  public async findOne(id: string) {
+  public async findOne(id: string): Promise<UserModel> {
     const result = await this.neo4jService.read(`
-    MATCH (u:User {id: $id}) return u as user
+      MATCH (u:User {id: $id}) return u as user
     `, { id });
 
     if (result.records.length === 0) {
       return null;
     }
 
-    const {
-      username, email, password
-    } = result.records[0].get('user').properties;
+    const { username, password } = result.records[0].get('user').properties;
 
-    new UserModel({ username, email, password, id });
+    new UserModel({ username, password, id });
   }
 }

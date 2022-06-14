@@ -5,7 +5,6 @@ import { AppService } from './app.service';
 import { Neo4jModule } from "nest-neo4j"
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { MailModule } from './mail/mail.module';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -19,9 +18,8 @@ import { UserModule } from './user/user.module';
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: false,
+      autoSchemaFile: 'schema.gql'
     }),
-    MailModule,
     UserModule
   ],
   controllers: [AppController],

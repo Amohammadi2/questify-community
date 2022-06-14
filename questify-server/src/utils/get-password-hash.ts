@@ -1,4 +1,4 @@
-import crypto from "crypto";
+const crypto = require('crypto');
 
 export function getPasswordHash(password: string) {
   if (password === null) return null;
