@@ -5,18 +5,26 @@
 type User {
   id: String!
   username: String!
+  email: String!
+  bio: String!
+  profileImageUrl: String!
 }
 
 type Query {
-  user: String!
+  hello: String!
 }
 
 type Mutation {
-  registerUser(input: RegisterUserInput!): User!
+  requestRegistration(input: RegisterUserInput!): User!
+  obtainAuthToken(input: obtainAuthTokenInput!): String!
 }
 
 input RegisterUserInput {
   username: String!
-  email: String!
+  password: String!
+}
+
+input obtainAuthTokenInput {
+  username: String!
   password: String!
 }

@@ -1,6 +1,8 @@
+import { INeoModel } from "src/neomodel.interface";
+
 export type UserRoleNeo4j = "STUDENT" | "TEACHER" | "MANAGER"
 
-interface IUserNeo4j {
+export interface IUserNeo4j extends INeoModel {
   id: string;
   username: string;
   password: string;

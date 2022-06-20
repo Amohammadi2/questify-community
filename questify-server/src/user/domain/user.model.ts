@@ -27,7 +27,7 @@ export class UserModel implements IUserModel {
     Object.assign(this, props);
   }
 
-  public static create({
+  public static init({
     username, password, bio=null, profileImageUrl=null, role=UserRole.STUDENT
   }: Omit<IUserModel, 'id'>) {
     return new UserModel({

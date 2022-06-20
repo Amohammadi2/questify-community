@@ -38,3 +38,12 @@ export class Result <R, E1> {
     return this.result;
   }
 }
+
+export class ControlledError extends Error {
+  constructor(public readonly error: {
+    code: string,
+    message: string
+  }) {
+    super(error.message);
+  }
+}

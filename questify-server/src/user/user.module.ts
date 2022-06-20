@@ -1,9 +1,21 @@
 import { Module } from '@nestjs/common';
 import { UserService } from './domain/user.service';
 import { UserResolver } from './gateway/user.resolver';
-import { UserMapper } from './persistance/user.mapper';
+import {
+  UserMapper,
+  UserRepository,
+  IntroductionCodeMapper,
+  IntroductionCodeRepository,
+} from './persistance';
 
 @Module({
-  providers: [UserResolver, UserService, UserMapper]
+  providers: [
+    UserService,
+    UserMapper,
+    UserRepository,
+    UserResolver,
+    IntroductionCodeMapper,
+    IntroductionCodeRepository,
+  ],
 })
 export class UserModule {}
