@@ -1,8 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { IMapper } from "src/mapper.interface";
-import { UserModel } from "../domain/user.model";
+import { UserModel, UserRole } from "../../domain/models";
 import { UserNeo4j, UserRoleNeo4j } from "./user.neo4j.interface";
-import { UserRole } from "../domain/user.model";
 
 @Injectable()
 export class UserMapper implements IMapper<UserNeo4j, UserModel> {

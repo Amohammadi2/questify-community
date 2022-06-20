@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { obtainAuthTokenInput } from '../gateway/dto/obtain-auth-token.input';
 import { RegisterUserInput } from '../gateway/dto/register-user.input';
-import { UserRepository } from '../persistance';
+import { IntroductionCodeRepository, UserRepository } from '../persistance';
 import jwt from "jsonwebtoken";
 
 export type UserServiceErrorCodes = 'INVALID_CREDENTIALS'
@@ -11,9 +11,16 @@ export class UserService {
   
   constructor(
     private readonly userRepository: UserRepository,
+    private readonly introductionCodeRepository: IntroductionCodeRepository
   ) {}
   
-  public async register(registerUserInput: RegisterUserInput) {
+  public async register(registerUserInput: RegisterUserInput): Promise<"ok" | "invalid-code"> {
+    const code = await this.introductionCodeRepository.findByCode(registerUserInput.introductionCode);
+    
+    if (code === "not-found") {
+      return "invalid-code";
+    }
+
     
   }
 

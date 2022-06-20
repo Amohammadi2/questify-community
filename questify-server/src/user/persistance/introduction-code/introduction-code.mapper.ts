@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { IMapper } from "src/mapper.interface";
-import { IntroductionCodeModel } from "../domain/introduction-code";
+import { IntroductionCodeModel } from "../../domain/models";
 import { IntroductionCodeNeo4j } from "./introduction-code.neo4j.interface";
 
 @Injectable()

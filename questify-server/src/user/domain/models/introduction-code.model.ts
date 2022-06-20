@@ -1,4 +1,4 @@
-export interface IIntroductionCodeModel {
+interface IIntroductionCodeModel {
   code: string;
 }
 

@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { Neo4jService } from "nest-neo4j/dist";
 import { Repository } from "src/repository.abstract";
-import { UserModel } from "../domain/user.model";
+import { UserModel } from "../../domain/models";
 import { UserMapper } from "./user.mapper";
 import { UserNeo4j } from "./user.neo4j.interface";
 
