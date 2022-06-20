@@ -3,6 +3,12 @@ import { IMapper } from "./mapper.interface";
 import { INeoModel } from "./neomodel.interface";
 import { getProps } from "./utils/get-props";
 
+interface RelationshipInfo {
+  direction: string;
+  name: string;
+  targetNodeLabel: string;
+}
+
 export abstract class Repository<NeoModel, DomainModel> {
   
   protected readonly nodeName: string;
@@ -53,6 +59,25 @@ export abstract class Repository<NeoModel, DomainModel> {
     `, queryFilterParams);
 
     return result.records.length > 0;
+  }
+
+  public async traverse <TargetNeo4j, TargetModel> (startNodeID: string, pattern: string, mapper: IMapper<TargetNeo4j, TargetModel>): Promise<TargetModel[]> {
+    const result = await this.neo4jService.read(`
+      MATCH (n: ${this.nodeName} {id: $startNodeID})${pattern} RETURN m AS node
+    `, { startNodeID, pattern });
+    return result.records.map(record => mapper.toDomainModel(record.get('node').properties));
+  }
+
+  public async traverseOne <TargetNeo4j, TargetModel> (startNodeID: string, pattern: string, mapper: IMapper<TargetNeo4j, TargetModel>): Promise<TargetModel | "not-found"> {
+    const result = await this.neo4jService.read(`
+      MATCH (n: ${this.nodeName} {id: $startNodeID})${pattern} RETURN m AS node LIMIT 1
+    `, { startNodeID, pattern });
+
+    if (result.records.length === 0) {
+      return "not-found";
+    }
+
+    return mapper.toDomainModel(getProps(result, 0, "node"));
   }
 }
 
