@@ -43,7 +43,7 @@ export abstract class Repository<NeoModel, DomainModel> {
 
   public async findOneWhere(queryFilterSpec: string, queryFilterParams: Partial<NeoModel>): Promise<DomainModel | "not-found"> {
     const result = await this.neo4jService.read(`
-      MATCH (n:${this.nodeName}) WHERE ${queryFilterSpec} RETURN n AS node
+      MATCH (n:${this.nodeName}) WHERE ${queryFilterSpec} RETURN n AS node LIMIT 1
     `, queryFilterParams);
 
     if (result.records.length === 0) {
