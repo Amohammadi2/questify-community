@@ -7,6 +7,7 @@ import { obtainAuthTokenInput } from './dto/obtain-auth-token.input';
 import { ResultObject } from 'src/result.object';
 import { ControlledError } from 'src/exceptions';
 import { InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
+import { getPasswordHash } from 'src/utils/get-password-hash';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -31,13 +32,16 @@ export class UserResolver {
 
   @Mutation(() => String)
   async obtainAuthToken(@Args("input") obtainAuthTokenInput: obtainAuthTokenInput) {
-    const token = await this.userService.obtainAuthToken(obtainAuthTokenInput);
+    const token = await this.userService.obtainAuthToken({
+      ...obtainAuthTokenInput,
+      password: getPasswordHash(obtainAuthTokenInput.password)
+    });
 
     if (token === "invalid-credentials") {
       throw new UnauthorizedException('Please enter valid credentials');
     }
 
-    return new String(token);
+    return new String(token.token);
   }
 
   // @Query(() => [User], { name: 'user' })
