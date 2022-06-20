@@ -6,7 +6,7 @@ import { UpdateUserInput } from './dto/update-user.input';
 import { obtainAuthTokenInput } from './dto/obtain-auth-token.input';
 import { ResultObject } from 'src/result.object';
 import { ControlledError } from 'src/exceptions';
-import { UnauthorizedException } from '@nestjs/common';
+import { InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -17,7 +17,16 @@ export class UserResolver {
   
   @Mutation(() => User)
   async requestRegistration(@Args("input") registerUserInput: RegisterUserInput) {
-    return await this.userService.register(registerUserInput);
+    const result = await this.userService.register(registerUserInput);
+
+    if (result === "invalid-code") {
+      throw new UnauthorizedException("The introduction code is invalid");
+    }
+    else if (result === "error") {
+      throw new InternalServerErrorException("An error occurred while registering the user");
+    }
+
+    return result;
   }
 
   @Mutation(() => String)

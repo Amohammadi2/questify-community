@@ -22,6 +22,7 @@ type Mutation {
 input RegisterUserInput {
   username: String!
   password: String!
+  introductionCode: String!
 }
 
 input obtainAuthTokenInput {

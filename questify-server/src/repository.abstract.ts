@@ -12,6 +12,7 @@ interface RelationshipInfo {
 export abstract class Repository<NeoModel, DomainModel> {
   
   protected readonly nodeName: string;
+  protected readonly mergeCondition: string = "{id: $payload.id}";
 
   constructor(
     protected readonly neo4jService: Neo4jService,
@@ -21,13 +22,28 @@ export abstract class Repository<NeoModel, DomainModel> {
   public async save(domainModel: DomainModel): Promise<DomainModel | "save-failed"> {
     const result = await this.neo4jService.write(`
       WITH $payload as props
-      MERGE (n:${this.nodeName} {id: $id})
-        SET output += props
+      MERGE (n:${this.nodeName} ${this.mergeCondition})
+        SET n += props
       RETURN n AS node
-    `, this.mapper.toNeoModel(domainModel));
+    `, { payload: this.mapper.toNeoModel(domainModel)});
 
     if (result.records.length === 0) {
       return "save-failed";
+    }
+
+    return this.mapper.toDomainModel(getProps(result, 0, "node"));
+  }
+
+  public async create(domainModel: DomainModel): Promise<DomainModel | "create-failed"> {
+    const result = await this.neo4jService.write(`
+      WITH $payload as props
+      CREATE (n:${this.nodeName}) 
+        SET n += props 
+      RETURN n AS node 
+    `, { payload: this.mapper.toNeoModel(domainModel)});
+
+    if (result.records.length === 0) {
+      return "create-failed";
     }
 
     return this.mapper.toDomainModel(getProps(result, 0, "node"));
@@ -68,10 +84,10 @@ export abstract class Repository<NeoModel, DomainModel> {
     return result.records.map(record => mapper.toDomainModel(record.get('node').properties));
   }
 
-  public async traverseOne <TargetNeo4j, TargetModel> (startNodeID: string, pattern: string, mapper: IMapper<TargetNeo4j, TargetModel>): Promise<TargetModel | "not-found"> {
+  public async traverseOne <TargetNeo4j, TargetModel> (queryFilterSpec: string, params:object,  pattern: string, mapper: IMapper<TargetNeo4j, TargetModel>): Promise<TargetModel | "not-found"> {
     const result = await this.neo4jService.read(`
-      MATCH (n: ${this.nodeName} {id: $startNodeID})${pattern} RETURN m AS node LIMIT 1
-    `, { startNodeID, pattern });
+      MATCH (n: ${this.nodeName})${pattern} WHERE ${queryFilterSpec} RETURN m AS node LIMIT 1
+    `, params);
 
     if (result.records.length === 0) {
       return "not-found";

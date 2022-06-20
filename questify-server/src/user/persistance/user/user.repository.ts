@@ -29,4 +29,13 @@ export class UserRepository extends Repository<UserNeo4j, UserModel> {
     return this.findOneWhere("n.username = $username AND n.password = $password", credentials);
   }
 
+
+  public async connectAsIntroductor(user: UserModel, introductor: UserModel): Promise<"ok"> {
+    await this.neo4jService.write(`
+      MATCH (u1:User {id: $userId}), (u2:User {id: $introductorId})
+      MERGE (u1)-[:INTRODUCED_BY]->(u2)
+    `, { userId: user.id, introductorId: introductor.id });
+
+    return "ok";
+  }
 }
