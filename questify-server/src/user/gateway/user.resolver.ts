@@ -6,7 +6,7 @@ import { UpdateUserInput } from './dto/update-user.input';
 import { obtainAuthTokenInput } from './dto/obtain-auth-token.input';
 import { ResultObject } from 'src/result.object';
 import { ControlledError } from 'src/exceptions';
-import { InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { getPasswordHash } from 'src/utils/get-password-hash';
 
 @Resolver(() => User)
@@ -22,6 +22,9 @@ export class UserResolver {
 
     if (result === "invalid-code") {
       throw new UnauthorizedException("The introduction code is invalid");
+    }
+    else if (result === "username-taken") {
+      throw new BadRequestException("The username is already taken");
     }
     else if (result === "error") {
       throw new InternalServerErrorException("An error occurred while registering the user");
