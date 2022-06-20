@@ -2,8 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { obtainAuthTokenInput } from '../gateway/dto/obtain-auth-token.input';
 import { RegisterUserInput } from '../gateway/dto/register-user.input';
 import { IntroductionCodeRepository, UserRepository } from '../persistance';
-import jwt from "jsonwebtoken";
 import { UserModel, UserRole } from './models';
+
+const jwt = require('jsonwebtoken');
 
 export type UserServiceErrorCodes = 'INVALID_CREDENTIALS'
 
@@ -36,6 +37,7 @@ export class UserService {
     return "error";
   }
 
+  // Todo: Move authentication logic to a separate service
   public async obtainAuthToken(obtainAuthTokenInput: obtainAuthTokenInput): Promise<{token: string} | "invalid-credentials"> {
     const result = await this.userRepository.findOneByAuthCredentials(obtainAuthTokenInput);
     if (result == "not-found") {
