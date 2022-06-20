@@ -4,8 +4,6 @@ import { User } from './entities/user.entity';
 import { RegisterUserInput } from './dto/register-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { obtainAuthTokenInput } from './dto/obtain-auth-token.input';
-import { ResultObject } from 'src/result.object';
-import { ControlledError } from 'src/exceptions';
 import { BadRequestException, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { getPasswordHash } from 'src/utils/get-password-hash';
 
