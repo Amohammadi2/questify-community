@@ -3,7 +3,7 @@ import { UserService } from '../domain/user.service';
 import { User } from './entities/user.entity';
 import { RegisterUserInput } from './dto/register-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
-import { obtainAuthTokenInput } from './dto/obtain-auth-token.input';
+import { ObtainAuthTokenInput } from '../../auth/gateway/dto/obtain-auth-token.input';
 import { BadRequestException, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { getPasswordHash } from 'src/utils/get-password-hash';
 
@@ -29,25 +29,6 @@ export class UserResolver {
     }
 
     return result;
-  }
-
-  @Mutation(() => String)
-  async obtainAuthToken(@Args("input") obtainAuthTokenInput: obtainAuthTokenInput) {
-    const token = await this.userService.obtainAuthToken({
-      ...obtainAuthTokenInput,
-      password: getPasswordHash(obtainAuthTokenInput.password)
-    });
-
-    if (token === "invalid-credentials") {
-      throw new UnauthorizedException('Please enter valid credentials');
-    }
-
-    return new String(token.token);
-  }
-
-  @Mutation(() => Boolean)
-  public async verifyToken(@Args("token") token: string): Promise<boolean> {
-    return (await this.userService.verifyToken(token)) === "ok";
   }
 
   // @Query(() => [User], { name: 'user' })

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { obtainAuthTokenInput } from '../../auth/gateway/dto/obtain-auth-token.inputen.input';
+import { ObtainAuthTokenInput } from '../../auth/gateway/dto/obtain-auth-token.input';
 import { RegisterUserInput } from '../gateway/dto/register-user.input';
 import { IntroductionCodeRepository, UserRepository } from '../persistance';
 import { UserModel, UserRole } from './models';
@@ -37,25 +37,5 @@ export class UserService {
       }
     }
     return "error";
-  }
-
-  // Todo: Move authentication logic to a separate service
-  public async obtainAuthToken(obtainAuthTokenInput: obtainAuthTokenInput): Promise<{token: string} | "invalid-credentials"> {
-    const result = await this.userRepository.findOneByAuthCredentials(obtainAuthTokenInput);
-    if (result == "not-found") {
-      return "invalid-credentials";
-    }
-    return {
-      token: jwt.sign({ userId: result.id }, process.env.JWT_SECRET, { expiresIn: '1d' })
-    };
-  }
-
-  public async verifyToken(token: string): Promise<"ok" | "invalid"> {
-    try {
-      jwt.verify(token, process.env.JWT_SECRET);
-      return "ok";
-    } catch (e) {
-      return "invalid";
-    }
   }
 }

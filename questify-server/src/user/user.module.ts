@@ -17,5 +17,8 @@ import {
     IntroductionCodeMapper,
     IntroductionCodeRepository,
   ],
+  exports: [
+    UserRepository
+  ]
 })
 export class UserModule {}
