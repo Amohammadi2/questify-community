@@ -8,5 +8,12 @@
   },
   "devDependencies": {
     "nuxt": "3.0.0-rc.3"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.6.8",
+    "@nuxt3/apollo-module": "^0.1.1",
+    "@vue/apollo-composable": "^4.0.0-alpha.17",
+    "maz-ui": "^3.0.0",
+    "sass": "^1.52.3"
   }
 }

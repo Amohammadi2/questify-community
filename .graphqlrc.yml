@@ -1,0 +1,2 @@
+schema: 'questify-server/schema.gql'
+docmuents: 'questify-client/graphql/**/*{ts}'

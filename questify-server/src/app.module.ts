@@ -6,6 +6,7 @@ import { Neo4jModule } from "nest-neo4j"
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { UserModule } from './user/user.module';
+import { AuthService } from './auth/auth.service';
 
 @Module({
   imports: [
@@ -23,6 +24,6 @@ import { UserModule } from './user/user.module';
     UserModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AuthService],
 })
 export class AppModule {}

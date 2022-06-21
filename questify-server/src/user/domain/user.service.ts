@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { obtainAuthTokenInput } from '../gateway/dto/obtain-auth-token.input';
+import { obtainAuthTokenInput } from '../../auth/gateway/dto/obtain-auth-token.inputen.input';
 import { RegisterUserInput } from '../gateway/dto/register-user.input';
 import { IntroductionCodeRepository, UserRepository } from '../persistance';
 import { UserModel, UserRole } from './models';
@@ -48,5 +48,14 @@ export class UserService {
     return {
       token: jwt.sign({ userId: result.id }, process.env.JWT_SECRET, { expiresIn: '1d' })
     };
+  }
+
+  public async verifyToken(token: string): Promise<"ok" | "invalid"> {
+    try {
+      jwt.verify(token, process.env.JWT_SECRET);
+      return "ok";
+    } catch (e) {
+      return "invalid";
+    }
   }
 }

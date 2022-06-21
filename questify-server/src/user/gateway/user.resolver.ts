@@ -15,7 +15,7 @@ export class UserResolver {
   hello() { return "Hello" }
   
   @Mutation(() => User)
-  async requestRegistration(@Args("input") registerUserInput: RegisterUserInput) {
+  async register(@Args("input") registerUserInput: RegisterUserInput) {
     const result = await this.userService.register(registerUserInput);
 
     if (result === "invalid-code") {
@@ -43,6 +43,11 @@ export class UserResolver {
     }
 
     return new String(token.token);
+  }
+
+  @Mutation(() => Boolean)
+  public async verifyToken(@Args("token") token: string): Promise<boolean> {
+    return (await this.userService.verifyToken(token)) === "ok";
   }
 
   // @Query(() => [User], { name: 'user' })

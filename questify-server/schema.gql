@@ -17,6 +17,7 @@ type Query {
 type Mutation {
   requestRegistration(input: RegisterUserInput!): User!
   obtainAuthToken(input: obtainAuthTokenInput!): String!
+  verifyToken(token: String!): Boolean!
 }
 
 input RegisterUserInput {
