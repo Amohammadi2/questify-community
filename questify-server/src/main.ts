@@ -7,6 +7,6 @@ dotenv.config()
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(8000);
+  await app.listen(8000, '127.0.0.1');
 }
 bootstrap();

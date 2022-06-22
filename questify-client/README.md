@@ -1,42 +1,27 @@
-# Nuxt 3 Minimal Starter
+# QuestifyClient
 
-Look at the [nuxt 3 documentation](https://v3.nuxtjs.org) to learn more.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.2.
 
-## Setup
+## Development server
 
-Make sure to install the dependencies:
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-```bash
-# yarn
-yarn install
+## Code scaffolding
 
-# npm
-npm install
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-# pnpm
-pnpm install --shamefully-hoist
-```
+## Build
 
-## Development Server
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-Start the development server on http://localhost:3000
+## Running unit tests
 
-```bash
-npm run dev
-```
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Production
+## Running end-to-end tests
 
-Build the application for production:
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-```bash
-npm run build
-```
+## Further help
 
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Checkout the [deployment documentation](https://v3.nuxtjs.org/guide/deploy/presets) for more information.
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
