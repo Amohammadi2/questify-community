@@ -13,6 +13,10 @@ export const OBTAIN_AUTH_TOKEN = gql`
 
 export const VERIFY_TOKEN = gql`
   mutation VerifyToken($input: String!) {
-    verifyToken(token: $input)
+    verifyToken(token: $input) {
+      user {
+        id username bio profileImageUrl
+      }
+    }
   }
-`
+`;

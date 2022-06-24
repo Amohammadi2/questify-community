@@ -1,5 +1,5 @@
 import { Box, Button, Paper, TextField, Typography } from "@mui/material";
-import { centeredFlexbox } from "../../styles/utils";
+import { centeredFlexbox } from "../../../styles/utils";
 
 export default function LoginPageUI() { // get in the login function
   return (
