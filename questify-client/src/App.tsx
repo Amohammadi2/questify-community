@@ -3,6 +3,8 @@ import { apolloClient } from "./plugins/apollo-client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MuiThemeProvider from './plugins/mui-theme';
 import HomePage from './pages/HomePage';
+import MainLayout from './layouts/MainLayout';
+import LoginPageUI from './pages/LoginPage/LoginPage.ui';
 
 function App() {
   return (
@@ -10,7 +12,10 @@ function App() {
       <MuiThemeProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<HomePage />}/>
+            <Route path="/" element={<MainLayout />}>
+              <Route index element={<HomePage />} />
+              <Route path="login" element={<LoginPageUI />} />
+            </Route>
           </Routes>
         </BrowserRouter>
       </MuiThemeProvider>

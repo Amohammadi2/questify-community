@@ -1,15 +1,16 @@
-import { Button, Toolbar, AppBar, IconButton } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
+import { Button, Toolbar, AppBar, IconButton, Box, Typography} from "@mui/material";
+import { centeredFlexbox } from "../styles/utils";
+
 
 export default function HomePage() {
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <Button variant="contained">hello</Button>
-        <IconButton color="inherit">
-          <MenuIcon />
-        </IconButton>
-      </Toolbar>
-    </AppBar>
+    <Box sx={{ ...centeredFlexbox, height: '100vh' }}>
+      <Typography variant="h2" mb={2}>
+        Questify
+      </Typography>
+      <Typography>
+        پلتفرم جامع پرسش و پاسخ درون مدرسه ای
+      </Typography>
+    </Box>
   )
 }
