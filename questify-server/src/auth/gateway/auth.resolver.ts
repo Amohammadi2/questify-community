@@ -4,6 +4,7 @@ import { getPasswordHash } from "src/utils/get-password-hash";
 import { AuthService } from "../domain/auth.service";
 import { ObtainAuthTokenInput } from "./dto/obtain-auth-token.input";
 import { ObtainAuthTokenOutput } from "./dto/obtain-auth-token.output";
+import { VerifyTokenOutput } from "./dto/verify-token.output";
 
 @Resolver()
 export class AuthResolver {
@@ -12,22 +13,26 @@ export class AuthResolver {
     private readonly authService: AuthService
   ) {}
 
-  @Mutation(() => Boolean)
-  public async verifyToken(@Args("token") token: string): Promise<boolean> {
-    return (await this.authService.verifyToken(token)) === "ok";
+  @Mutation(() => VerifyTokenOutput)
+  public async verifyToken(@Args("token") token: string) {
+    const result = await this.authService.verifyToken(token);
+    if (result == "invalid" || result == "not-found") {
+      throw new UnauthorizedException('Token is invalid or expired');
+    }
+    return { user: result };
   }
 
   @Mutation(() => ObtainAuthTokenOutput)
   async obtainAuthToken(@Args("input") obtainAuthTokenInput: ObtainAuthTokenInput) {
-    const token = await this.authService.obtainAuthToken({
+    const result = await this.authService.obtainAuthToken({
       ...obtainAuthTokenInput,
       password: getPasswordHash(obtainAuthTokenInput.password)
     });
 
-    if (token === "invalid-credentials") {
+    if (result === "invalid-credentials") {
       throw new UnauthorizedException('Please enter valid credentials');
     }
 
-    return new String(token.token);
+    return result;
   }
 }

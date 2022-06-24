@@ -15,13 +15,17 @@ type ObtainAuthTokenOutput {
   user: User!
 }
 
+type VerifyTokenOutput {
+  user: User!
+}
+
 type Query {
   hello: String!
 }
 
 type Mutation {
   register(input: RegisterUserInput!): User!
-  verifyToken(token: String!): Boolean!
+  verifyToken(token: String!): VerifyTokenOutput!
   obtainAuthToken(input: ObtainAuthTokenInput!): ObtainAuthTokenOutput!
 }
 

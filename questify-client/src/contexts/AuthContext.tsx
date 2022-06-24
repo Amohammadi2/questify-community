@@ -14,12 +14,14 @@ interface AuthUser {
 
 export interface IAuthContextValue {
   isAuth: boolean;
+  authToken: string | null;
   user: AuthUser | null
 }
 
 const authContext = createContext<IAuthContextValue>({
   isAuth: false,
-  user: null
+  user: null,
+  authToken: null
 })
 
 const { Provider } = authContext;

@@ -10,3 +10,9 @@ export const OBTAIN_AUTH_TOKEN = gql`
     }
   }
 `;
+
+export const VERIFY_TOKEN = gql`
+  mutation VerifyToken($input: String!) {
+    verifyToken(token: $input)
+  }
+`
