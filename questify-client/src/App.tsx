@@ -1,25 +1,40 @@
-import { ApolloProvider } from '@apollo/client';
-import { apolloClient } from "./plugins/apollo-client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import MuiThemeProvider from './plugins/mui-theme';
+import { Routes, Route } from "react-router-dom";
 import HomePage from './pages/HomePage';
 import MainLayout from './layouts/MainLayout';
-import LoginPageUI from './auth/pages/LoginPage/LoginPage.ui';
+import { LoginPage } from './pages/LoginPage';
+import useBootstrap from './hooks/useBootstrap';
+import { Box, CircularProgress } from '@mui/material';
+
+import { centeredFlexbox } from './styles/utils';
+import AppLayout from "./layouts/AppLayout";
+import { UnprotectedRoute } from "./components/UnprotectedRoute";
 
 function App() {
+
+  const completed = useBootstrap();
+
+  if (!completed) {
+    return (
+      <Box sx={{ ...centeredFlexbox, height: '100vh' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
-    <ApolloProvider client={apolloClient}>
-      <MuiThemeProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<MainLayout />}>
-              <Route index element={<HomePage />} />
-              <Route path="login" element={<LoginPageUI />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </MuiThemeProvider>
-    </ApolloProvider>
+    <Routes>
+      <Route path="/" element={<MainLayout />}>
+        <Route index element={<HomePage />} />
+        <Route path="login" element={<UnprotectedRoute />}>
+          <Route index element={<LoginPage />} />
+        </Route>
+        <Route path="app" element={<AppLayout />}>
+          <Route path="school-space" element={<p>here is school</p>} />
+          <Route path="shared-space" element={<p>here is shared</p>} />
+          <Route path="community" element={<p>here is community page</p>} />
+        </Route>
+      </Route>
+    </Routes>
   );
 }
 

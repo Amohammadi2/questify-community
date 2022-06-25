@@ -5,9 +5,8 @@
 type User {
   id: String!
   username: String!
-  email: String!
-  bio: String!
-  profileImageUrl: String!
+  bio: String
+  profileImageUrl: String
 }
 
 type ObtainAuthTokenOutput {
