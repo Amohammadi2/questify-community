@@ -18,6 +18,7 @@ export default function AppLayout() {
   return (
     <>
       <Outlet />
+      <div style={{ marginBottom: '100px'}} />
       <BottomNavigation 
         value={currentActivePage} 
         sx={bottomNavigationStyles}

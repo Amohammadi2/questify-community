@@ -1,1 +1,1 @@
-export { SchoolPageBL as SchoolPage} from './SchoolSpacePage.bl';
+export { SchooSpacelPageBL as SchoolSpacePage} from './SchoolSpacePage.bl';

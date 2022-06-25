@@ -15,7 +15,7 @@ export default function LoginPageUI({ handleLogin, errorMessage }: ILoginPageUIP
   return (
     <Box sx={{ ...centeredFlexbox, height: "100vh" }}>
       <Paper
-        sx={{ width: "80%", maxWidth: "500px", py: 3, px: 4 }}
+        sx={{ maxWidth: "360px", py: 3, px: 4 }}
         elevation={1}
       >
         <Typography variant="h5" mb={4}>

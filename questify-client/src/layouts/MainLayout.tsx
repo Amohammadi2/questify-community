@@ -36,6 +36,7 @@ export default function MainLayout() {
           </IconButton>
         </Toolbar>
       </AppBar>
+      <div style={{ paddingTop: '70px'}} />
       <Outlet />
     </>
   );

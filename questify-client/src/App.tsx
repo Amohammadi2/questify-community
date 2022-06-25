@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import HomePage from './pages/HomePage';
+import { SchoolSpacePage } from './pages/SchoolSpacePage'
 import MainLayout from './layouts/MainLayout';
 import { LoginPage } from './pages/LoginPage';
 import useBootstrap from './hooks/useBootstrap';
@@ -8,6 +9,7 @@ import { Box, CircularProgress } from '@mui/material';
 import { centeredFlexbox } from './styles/utils';
 import AppLayout from "./layouts/AppLayout";
 import { UnprotectedRoute } from "./components/UnprotectedRoute";
+
 
 function App() {
 
@@ -29,7 +31,7 @@ function App() {
           <Route index element={<LoginPage />} />
         </Route>
         <Route path="app" element={<AppLayout />}>
-          <Route path="school-space" element={<p>here is school</p>} />
+          <Route path="school-space" element={<SchoolSpacePage />} />
           <Route path="shared-space" element={<p>here is shared</p>} />
           <Route path="community" element={<p>here is community page</p>} />
         </Route>

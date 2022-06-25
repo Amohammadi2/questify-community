@@ -1,7 +1,12 @@
-import { SchoolPageUI } from './SchoolSpacePage.ui';
+import { useRecoilState } from 'recoil';
+import { authStore } from '../../store/auth.store';
+import { SchoolSpacePageUI } from './SchoolSpacePage.ui';
 
-export function SchoolPageBL() {
+export function SchooSpacelPageBL() {
+
+  const [authValue] = useRecoilState(authStore);
+
   return (
-    <SchoolPageUI />
+    <SchoolSpacePageUI isAuth={authValue.isAuth} />
   )
 }
