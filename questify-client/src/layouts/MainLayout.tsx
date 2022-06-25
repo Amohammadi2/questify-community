@@ -1,4 +1,4 @@
-import { Button, Toolbar, AppBar, IconButton, Typography } from "@mui/material";
+import { Button, Toolbar, AppBar, IconButton, Typography, Grid } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import LoginIcon from "@mui/icons-material/Login";
 import AppRegisterIcon from "@mui/icons-material/AppRegistration";
@@ -12,8 +12,8 @@ export default function MainLayout() {
   const navigate = useNavigate();
 
   return (
-    <>
-      <AppBar position="fixed">
+    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <AppBar position="static">
         <Toolbar>
           <IconButton color="inherit">
             <MenuIcon />
@@ -36,8 +36,9 @@ export default function MainLayout() {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <div style={{ paddingTop: '70px'}} />
-      <Outlet />
-    </>
+      <Grid item sx={{ flexGrow: '1' }}>
+        <Outlet />
+      </Grid>
+    </div>
   );
 }

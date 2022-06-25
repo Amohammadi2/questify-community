@@ -8,7 +8,7 @@ export default function HomePage() {
   const navigate = useNavigate();
 
   return (
-    <Box sx={{ ...centeredFlexbox, height: '100vh' }}>
+    <Box sx={{ ...centeredFlexbox, height: '100%' }}>
       <Typography variant="h2" mb={2}>
         Questify
       </Typography>

@@ -13,7 +13,7 @@ export default function LoginPageUI({ handleLogin, errorMessage }: ILoginPageUIP
   const [password, setPassword] = useState('');
   
   return (
-    <Box sx={{ ...centeredFlexbox, height: "100vh" }}>
+    <Box sx={{ ...centeredFlexbox, height: '100%' }}>
       <Paper
         sx={{ maxWidth: "360px", py: 3, px: 4 }}
         elevation={1}
