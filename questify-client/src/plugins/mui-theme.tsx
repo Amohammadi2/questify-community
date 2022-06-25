@@ -1,6 +1,7 @@
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ReactNode } from "react";
 
+
 const theme = createTheme({
   direction: 'rtl',
   typography: {
@@ -12,7 +13,7 @@ const theme = createTheme({
     },
     secondary: {
       main: '#4053f7'
-    }
+    },
   }
 });
 

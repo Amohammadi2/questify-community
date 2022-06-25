@@ -1,8 +1,10 @@
 import { Box, Grid, Button, Typography, Paper } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { QuestionCard } from "../../components/QuestionCard";
 import { centeredFlexbox } from "../../styles/utils";
-
+import { QuestionContainer } from "../../components/QuestionContainerGrid";
+import { ListMetaGrid } from "../../components/ListMetaGrid";
 
 export function SchoolSpacePageUI({ isAuth }: { isAuth: boolean }) {
 
@@ -21,11 +23,18 @@ export function SchoolSpacePageUI({ isAuth }: { isAuth: boolean }) {
   );
 
   return (
-    <Grid container direction="column">
-      <QuestionCard />
-      <QuestionCard />
-      <QuestionCard />
-      <QuestionCard />
+    <Grid container direction="row">
+      <Grid item sx={{ width: '500px', pt: 1 }}>
+        <ListMetaGrid />
+      </Grid>
+      <QuestionContainer item>
+        <Grid container direction="column">
+          <QuestionCard />
+          <QuestionCard />
+          <QuestionCard />
+          <QuestionCard />
+        </Grid>
+      </QuestionContainer>
     </Grid>
   )
 }

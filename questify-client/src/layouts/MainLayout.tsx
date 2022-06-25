@@ -15,9 +15,9 @@ export default function MainLayout() {
     <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton color="inherit">
+          {/* <IconButton color="inherit">
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Typography
             variant="h5"
             sx={{ flexGrow: "1", mx: 2, cursor: "pointer" }}

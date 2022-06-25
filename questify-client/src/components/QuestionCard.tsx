@@ -26,7 +26,9 @@ export function QuestionCard() {
           <Typography sx={{ mx: 1, flexGrow: "1" }}>
             Ashkan Mohammadi
           </Typography>
-          <VoteCounter />
+          <Grid item>
+            <VoteCounter />
+          </Grid>
         </Grid>
         <CardActionArea>
           <Typography gutterBottom variant="h5" component="div">

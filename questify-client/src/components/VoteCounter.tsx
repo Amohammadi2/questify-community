@@ -6,7 +6,7 @@ export function VoteCounter() {
   const [votes, setVotes] = useState(0);
 
   return (
-    <Grid direction="column" justifyContent={'space-between'} sx={{ height: '40px' }}>
+    <Grid container direction="row" justifyContent={'space-between'}>
       <IconButton size="small" onClick={e=>setVotes(votes+1)}>
         <ArrowUp />
       </IconButton>
