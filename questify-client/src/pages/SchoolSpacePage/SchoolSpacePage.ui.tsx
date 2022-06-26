@@ -35,7 +35,7 @@ export function SchoolSpacePageUI({ isAuth }: { isAuth: boolean }) {
           <ListMetaGrid />
         </Grid>
         <QuestionContainer item>
-          <Grid container direction="column">
+          <Grid container direction="column" sx={{ pb: 12 }}>
             <QuestionCard />
             <QuestionCard />
             <QuestionCard />
