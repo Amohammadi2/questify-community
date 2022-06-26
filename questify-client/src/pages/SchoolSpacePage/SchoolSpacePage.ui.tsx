@@ -7,6 +7,7 @@ import { QuestionContainer } from "../../components/QuestionContainerGrid";
 import { ListMetaGrid } from "../../components/ListMetaGrid";
 import { AskQuestionInput } from "../../components/AskQuestionInput";
 
+
 export function SchoolSpacePageUI({ isAuth }: { isAuth: boolean }) {
   const navigate = useNavigate();
 
