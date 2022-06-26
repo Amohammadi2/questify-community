@@ -23,6 +23,7 @@ export default function LoginPageBL() {
       }))
       setError('');
       navigate('/app');
+      localStorage.setItem('token', data.obtainAuthToken.token);
     },
     onError: err => {
       setError(err.message);

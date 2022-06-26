@@ -1,4 +1,7 @@
 import { Avatar, AvatarGroup, Grid, Paper, Typography } from "@mui/material";
+import { ReactNode } from "react";
+
+
 
 export function ListMetaGrid () {
   return (
@@ -28,7 +31,7 @@ export function ListMetaGrid () {
     </Grid> 
   );
 
-    function MetaDataBox({ children }: { children: ReactNode[]}) {
+    function MetaDataBox({ children }: { children: ReactNode}) {
       return (
       <Paper sx={{
         my: 1,

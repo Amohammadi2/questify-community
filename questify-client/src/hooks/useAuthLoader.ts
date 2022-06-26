@@ -11,7 +11,7 @@ export function useAuthLoader() {
 
   const [verifyToken] = useMutation(VERIFY_TOKEN, {
     onCompleted: data => {
-      const { token, user } = data.ObtainAuthToken;
+      const { token, user } = data.verifyToken;
       setAuthValue({ isAuth: true, token: token , user });
     },
   });
