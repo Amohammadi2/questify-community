@@ -7,6 +7,7 @@ import {
   Button,
   CardActionArea,
   CardActions,
+  Chip,
   Grid,
   IconButton,
 } from "@mui/material";
@@ -56,7 +57,11 @@ export function QuestionCard() {
               : 'پیگیری سوال'
           }
         </Button>
-        {/* Todo: add tags here */}
+        <div style={{ flexGrow: '1'}}> </div>
+        <Chip size="small" label="#انگلیسی" variant="outlined" />
+        <Chip size="small" label="#زبان" variant="outlined" />
+        <Chip size="small" label="#درس 2" variant="outlined" />
+        <Chip size="small" label="#I am Mr Karimi" variant="outlined" />
       </CardActions>
     </Card>
   );
