@@ -1,13 +1,15 @@
-import { Box, Button, Paper, TextField, Typography } from "@mui/material";
+import { Box, Paper, TextField, Typography } from "@mui/material";
+import LoadingButton from '@mui/lab/LoadingButton';
 import { useState } from "react";
 import { centeredFlexbox } from "../../styles/utils";
 
 export interface ILoginPageUIProps {
   handleLogin: (payload : { username: string, password: string }) => void;
   errorMessage: string | null;
+  loading: boolean;
 }
 
-export default function LoginPageUI({ handleLogin, errorMessage }: ILoginPageUIProps) { // get in the login function
+export default function LoginPageUI({ handleLogin, errorMessage, loading }: ILoginPageUIProps) { // get in the login function
   
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -40,7 +42,8 @@ export default function LoginPageUI({ handleLogin, errorMessage }: ILoginPageUIP
           sx={{ width: "100%", my: 1.3 }}
           onChange={e=>setPassword(e.target.value)}
         />
-        <Button
+        <LoadingButton
+          loading={loading}
           variant="contained"
           color="primary"
           size="large"
@@ -48,7 +51,7 @@ export default function LoginPageUI({ handleLogin, errorMessage }: ILoginPageUIP
           onClick={e=>handleLogin({ username, password })}
         >
           ورود
-        </Button>
+        </LoadingButton>
       </Paper>
     </Box>
   );

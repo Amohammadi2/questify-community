@@ -56,6 +56,7 @@ export function QuestionCard() {
               : 'پیگیری سوال'
           }
         </Button>
+        {/* Todo: add tags here */}
       </CardActions>
     </Card>
   );

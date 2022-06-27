@@ -1,7 +1,8 @@
-import { Button, Grid, Paper, TextField } from "@mui/material";
+import { Button, Grid, Paper, TextField, Badge } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useRef, useState } from "react";
 import { useClickAway } from "react-use";
+import { FileAttachmentDialog } from "./FileAttachmentDialog";
 
 
 export interface IAskQuestionInput {
@@ -31,7 +32,7 @@ export function AskQuestionInput({ label, placeholder }: IAskQuestionInput) {
   
   
   // control the file attachement dialog
-  const [attachments, setAttachments] = useState<any>([]);
+  const [attachments, setAttachments] = useState<File[]>([]);
   const [attachmentOpen, setAttachmentOpen] = useState(false);
   
   // control the UI
@@ -50,6 +51,7 @@ export function AskQuestionInput({ label, placeholder }: IAskQuestionInput) {
   const cleanUpForm = () => {
     setQuestionTitle('');
     setQuestionBody('');
+    setAttachments([]);
   }
 
   const exitForm = () => {
@@ -86,9 +88,19 @@ export function AskQuestionInput({ label, placeholder }: IAskQuestionInput) {
       />
       <Grid container direction="row" sx={{ py: 1, px: 1 }}>
         <Button variant="outlined" color="error" sx={{ ml: 1 }} onClick={()=>exitForm()}>لغو</Button>
-        <Button variant="contained" color="secondary" sx={{ ml: 1 }} onClick={()=>setAttachmentOpen(true)}>ضمیمه</Button>
+        <Button variant="contained" color="secondary" sx={{ ml: 1 }} onClick={()=>setAttachmentOpen(true)}>
+          <Badge badgeContent={attachments.length} color="info">
+            ضمیمه
+          </Badge>
+        </Button>
         <Button variant="contained" sx={{ ml: 1 }}>ارسال</Button>
       </Grid>
+      <FileAttachmentDialog 
+        isOpen={attachmentOpen} 
+        onClose={()=>setAttachmentOpen(false)}
+        attachments={attachments}
+        setAttachments={setAttachments}
+      />
     </AskQuestionDialog>
   );
 }

@@ -13,7 +13,7 @@ export default function LoginPageBL() {
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
 
-  const [obtainAuthToken] = useMutation(OBTAIN_AUTH_TOKEN, {
+  const [obtainAuthToken, { loading }] = useMutation(OBTAIN_AUTH_TOKEN, {
     onCompleted: data => {
       console.log(data);
       setAuthValue(cv => ({
@@ -38,6 +38,7 @@ export default function LoginPageBL() {
         }})
       }}
       errorMessage={error}
+      loading={loading}
     />
   )
 }
