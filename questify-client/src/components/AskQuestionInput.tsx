@@ -69,11 +69,23 @@ export function AskQuestionInput({ label, placeholder }: IAskQuestionInput) {
     setQuestionBody('');
     setTags([]);
     setAttachments([]);
+    setCoverImage(null);
   }
   
   const exitForm = () => {
     cleanUpForm();
     setFocused(false);
+  }
+
+  const handleFormSubmit = () => {
+    // Todo: connect back to the back-end service
+    console.log("DATA TO SUBMIT: ", {
+      questionTitle,
+      questionBody,
+      tags,
+      coverImage,
+      attachments
+    })
   }
   
   
@@ -160,7 +172,14 @@ export function AskQuestionInput({ label, placeholder }: IAskQuestionInput) {
             >
               برگشت
             </Button>
-            <Button variant="contained" sx={{ flexGrow: '1', mr:0.5 }}>ارسال</Button>
+            <Button 
+              variant="contained" 
+              sx={{ flexGrow: '1', mr:0.5 }} 
+              disabled={tags.length == 0} 
+              onClick={handleFormSubmit}
+            >
+              ارسال
+            </Button>
           </Stack>
         </Stack>
       }

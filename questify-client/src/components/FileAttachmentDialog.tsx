@@ -40,8 +40,6 @@ export function FileAttachmentDialog({ isOpen, onClose, attachments, setAttachme
     setAttachments([])
     onClose();
   };
-
-  console.log(attachments);
   
   return (
     <Dialog open={isOpen} onClose={onClose}>

@@ -8,6 +8,8 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { UserModule } from './user/user.module';
 import { AuthService } from './auth/domain/auth.service';
 import { AuthModule } from './auth/auth.module';
+import { QuestionService } from './question/domain/question.service';
+import { QuestionModule } from './question/question.module';
 
 @Module({
   imports: [
@@ -23,9 +25,10 @@ import { AuthModule } from './auth/auth.module';
       autoSchemaFile: 'schema.gql'
     }),
     UserModule,
-    AuthModule
+    AuthModule,
+    QuestionModule
   ],
   controllers: [AppController],
-  providers: [AppService, AuthService],
+  providers: [AppService, AuthService, QuestionService],
 })
 export class AppModule {}

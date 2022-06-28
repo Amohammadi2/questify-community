@@ -3,11 +3,6 @@ import { IMapper } from "./mapper.interface";
 import { INeoModel } from "./neomodel.interface";
 import { getProps } from "./utils/get-props";
 
-interface RelationshipInfo {
-  direction: string;
-  name: string;
-  targetNodeLabel: string;
-}
 
 export abstract class Repository<NeoModel, DomainModel> {
   
