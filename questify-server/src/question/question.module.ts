@@ -1,8 +1,9 @@
 import { Module } from "@nestjs/common";
-import { QuestionMapper } from "./persistance/question.mapper";
-import { QuestionRepository } from "./persistance/question.repository";
+import { FileUploadModule } from "src/file-upload/file-upload.module";
+import { QuestionRepository } from "./question.repository";
+import { QuestionService } from "./question.service";
 
 @Module({
-  providers: [QuestionMapper, QuestionRepository]
+  providers: [QuestionService, QuestionRepository]
 })
 export class QuestionModule {}
