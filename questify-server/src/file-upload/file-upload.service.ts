@@ -3,7 +3,7 @@ import { createWriteStream, ReadStream, unlink } from 'fs';
 import { FileUpload } from 'graphql-upload';
 import { getUID } from 'src/utils/get-uid';
 import { IFileInfo } from './interfaces/file-info.interface';
-import { FileUploadUtils } from './utils';
+import { FileUploadUtils } from './file-upload.utils';
 
 
 @Injectable()
@@ -58,7 +58,7 @@ export class FileUploadService {
 
   public async unlinkMultiple(fileInfos: IFileInfo[]): Promise<boolean> {
     const operations = await Promise.all(fileInfos.map(info => this.unlink(info.path)))
-    // even if any of the operations fails, returns false to notify
+    // even if one of the operations failed, return false to notify
     return operations.reduce((previousOperationSucceeded, currentOperationSucceeded) => previousOperationSucceeded && currentOperationSucceeded);
   }
 }

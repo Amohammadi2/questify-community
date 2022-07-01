@@ -17,9 +17,8 @@ export class QuestionService {
     private readonly questionRepository: QuestionRepository
   ) {}
 
-  public async askQuestion(askQuestionInput: AskQuestionInput) {
+  public async askQuestion(askQuestionInput: AskQuestionInput): Promise<QuestionModel | "create-failed"> {
 
-    // file uploads
     const coverImageResult = await this.fileUploadService
       .storeFile(this.coverImagePath, askQuestionInput.coverImage);
     const attachmentsResult = await this.fileUploadService
@@ -31,14 +30,26 @@ export class QuestionService {
       attachments: attachmentsResult
     })
 
-    this.questionRepository.create(model);
+    let question = await this.questionRepository.create(model);
+    
+    if (question == "create-failed") {
+      // retry to create question
+      question = await this.questionRepository.create(model);
+      if (question == "create-failed") {
+        // clean up if the process failed the second time
+        this.fileUploadService.unlink(coverImageResult.path);
+        this.fileUploadService.unlinkMultiple(attachmentsResult);
+        return "create-failed";
+      }
+    }
+    return question;
   }
 
   public async addAttachments(attachments: FileUpload[]): Promise<IFileInfo[]> {
     return this.fileUploadService.storeMultiple('/questions/attachments', attachments);
   }
 
-  public async removeAttachments(questionId: string, ids: string[]): Promise<"ok" | "question-not-found" | "error"> {
+  public async removeAttachments(questionId: string, ids: string[]): Promise<"ok" | "error" | "question-not-found"> {
     const question = await this.questionRepository.findOneByID(questionId);
     
     if (question === "not-found") 

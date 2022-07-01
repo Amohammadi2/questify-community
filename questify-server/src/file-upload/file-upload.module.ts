@@ -1,6 +1,6 @@
 import { DynamicModule, Global, Module } from '@nestjs/common';
 import { FileUploadService } from './file-upload.service';
-import { FileUploadUtils } from './utils';
+import { FileUploadUtils } from './file-upload.utils';
 
 interface IFileUploadModuleConfig {
   uploadRoot: string;

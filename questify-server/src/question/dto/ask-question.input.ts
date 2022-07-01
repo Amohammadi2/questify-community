@@ -1,11 +1,11 @@
 import { Field, InputType } from "@nestjs/graphql";
-import { GraphQLUpload, FileUpload} from "graphql-upload";
+import { GraphQLUpload, FileUpload } from "src/plugins/graphql-file-upload";
 
 @InputType()
 export class AskQuestionInput {
   @Field() title: string;
   @Field() body: string;
   @Field(() => [String]) tags: string[];
-  @Field(() => GraphQLUpload, { nullable: true }) coverImage: FileUpload;
-  @Field(() => [GraphQLUpload]) attachments: FileUpload[];
+  @Field(() => GraphQLUpload, { nullable: true }) coverImage: typeof FileUpload;
+  @Field(() => [GraphQLUpload]) attachments: typeof FileUpload[];
 }
