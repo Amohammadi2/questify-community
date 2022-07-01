@@ -6,7 +6,7 @@ import { useClickAway } from "react-use";
 import { FileAttachmentDialog } from "./FileAttachmentDialog";
 
 
-export interface IAskQuestionInput {
+export interface IAskQuestionInputProps {
   label: string;
   placeholder: string;
 }
@@ -29,7 +29,7 @@ const AskQuestionDialog = styled(Paper)(() => {
   };
 })
 
-export function AskQuestionInput({ label, placeholder }: IAskQuestionInput) {
+export function AskQuestionInput({ label, placeholder }: IAskQuestionInputProps) {
   
   // control the slides
   const [activeSlide, setActiveSlide] = useState(1);
