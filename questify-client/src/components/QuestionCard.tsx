@@ -58,10 +58,11 @@ export function QuestionCard() {
           }
         </Button>
         <div style={{ flexGrow: '1'}}> </div>
-        <Chip size="small" label="#انگلیسی" variant="outlined" />
-        <Chip size="small" label="#زبان" variant="outlined" />
-        <Chip size="small" label="#درس 2" variant="outlined" />
-        <Chip size="small" label="#I am Mr Karimi" variant="outlined" />
+        <div style={{ overflowX: 'hidden' }}>
+          <Chip size="small" label="#انگلیسی" variant="outlined" sx={{ mx: .3}} />
+          <Chip size="small" label="#زبان" variant="outlined" sx={{ mx: .3}} />
+          <Chip size="small" label="#درس 2" variant="outlined" sx={{ mx: .3}} />
+        </div>
       </CardActions>
     </Card>
   );

@@ -15,23 +15,23 @@ const actions = [
   { icon: <Person />, name: 'تنظیمات پروفایل' }
 ];
 
-export function OpenIconSpeedDial() {
-  return (
-    <SpeedDial
-      ariaLabel="SpeedDial openIcon example"
-      sx={{ position: 'absolute', bottom: 70, right: 60 }}
-      icon={<Settings />}
-    >
-      {actions.map((action) => (
-        <SpeedDialAction
-          key={action.name}
-          icon={action.icon}
-          tooltipTitle={action.name}
-        />
-      ))}
-    </SpeedDial>
-  );
-}
+// export function OpenIconSpeedDial() {
+//   return (
+//     <SpeedDial
+//       ariaLabel="SpeedDial openIcon example"
+//       sx={{ position: 'absolute', bottom: 70, right: 60 }}
+//       icon={<Settings />}
+//     >
+//       {actions.map((action) => (
+//         <SpeedDialAction
+//           key={action.name}
+//           icon={action.icon}
+//           tooltipTitle={action.name}
+//         />
+//       ))}
+//     </SpeedDial>
+//   );
+// }
 
 
 
@@ -50,7 +50,6 @@ export default function AppLayout() {
   
   return (
     <>
-      <OpenIconSpeedDial />
       <Grid container direction="column" sx={{ height: '100%' }}>
         <Grid item sx={{ flexGrow: '1', position: 'relative'}}>
           <div style={{ position: 'absolute', top: '0', bottom: '0', left: '0', right: '0', overflowY: 'scroll' }}>
