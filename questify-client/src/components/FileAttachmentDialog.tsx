@@ -24,6 +24,7 @@ export function FileAttachmentDialog({ isOpen, onClose, attachments, setAttachme
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleFiles = (e: any) => {
+    // Review: instead of replacing the array completely, we can append the new files to the end
     const data: File[] = [];
     for (let i=0; i<e.target.files.length; i++) {
       data.push(e.target.files[i]);
