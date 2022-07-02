@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { ObtainAuthTokenInput } from 'src/auth/gateway/dto/obtain-auth-token.input';
+import { ObtainAuthTokenInput } from 'src/auth/dto/obtain-auth-token.input';
 import { UserModel } from 'src/user/domain/models';
 import { UserRepository } from 'src/user/persistance';
+import { JWTAuthPayload } from './interfaces/jwt-auth-payload.interface';
 
 const jwt = require('jsonwebtoken');
 
@@ -18,7 +19,7 @@ export class AuthService {
       return "invalid-credentials";
     }
     return {
-      token: jwt.sign({ userId: result.id }, process.env.JWT_SECRET, { expiresIn: '1d' }),
+      token: jwt.sign({ userId: result.id } as JWTAuthPayload, process.env.JWT_SECRET, { expiresIn: '1d' }),
       user: result
     };
   }

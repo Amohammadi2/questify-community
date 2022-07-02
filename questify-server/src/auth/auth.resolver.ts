@@ -1,7 +1,7 @@
 import { UnauthorizedException } from "@nestjs/common";
 import { Args, Mutation, Resolver } from "@nestjs/graphql";
 import { getPasswordHash } from "src/utils/get-password-hash";
-import { AuthService } from "../domain/auth.service";
+import { AuthService } from "./auth.service";
 import { ObtainAuthTokenInput } from "./dto/obtain-auth-token.input";
 import { ObtainAuthTokenOutput } from "./dto/obtain-auth-token.output";
 import { VerifyTokenOutput } from "./dto/verify-token.output";

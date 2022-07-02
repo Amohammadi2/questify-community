@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -9,6 +9,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { QuestionModule } from './question/question.module';
 import { FileUploadModule } from './file-upload/file-upload.module';
+import { AuthMiddleware } from './auth/auth.middleware';
 
 @Module({
   imports: [
@@ -34,4 +35,9 @@ import { FileUploadModule } from './file-upload/file-upload.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    // secure the graphql endpoint using the Auth Middleware
+    consumer.apply(AuthMiddleware).forRoutes('graphql');
+  }
+}

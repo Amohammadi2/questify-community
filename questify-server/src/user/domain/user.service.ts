@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ObtainAuthTokenInput } from '../../auth/gateway/dto/obtain-auth-token.input';
+import { ObtainAuthTokenInput } from '../../auth/dto/obtain-auth-token.input';
 import { RegisterUserInput } from '../gateway/dto/register-user.input';
 import { IntroductionCodeRepository, UserRepository } from '../persistance';
 import { UserModel, UserRole } from './models';

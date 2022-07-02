@@ -1,1 +1,0 @@
-// Todo: write a middleware to handle request authentication based on JWT token

@@ -3,7 +3,7 @@ import { UserService } from '../domain/user.service';
 import { User } from './entities/user.entity';
 import { RegisterUserInput } from './dto/register-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
-import { ObtainAuthTokenInput } from '../../auth/gateway/dto/obtain-auth-token.input';
+import { ObtainAuthTokenInput } from '../../auth/dto/obtain-auth-token.input';
 import { BadRequestException, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { getPasswordHash } from 'src/utils/get-password-hash';
 
