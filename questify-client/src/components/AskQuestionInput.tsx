@@ -1,8 +1,10 @@
+import { useMutation } from "@apollo/client";
 import { Button, Grid, Paper, TextField, Badge, Stack, Chip, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useRef, useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import { useClickAway } from "react-use";
+import { ASK_QUESTION } from "../gql/mutations";
 import { FileAttachmentDialog } from "./FileAttachmentDialog";
 
 
@@ -30,7 +32,7 @@ const AskQuestionDialog = styled(Paper)(() => {
 })
 
 export function AskQuestionInput({ label, placeholder }: IAskQuestionInputProps) {
-  
+
   // control the slides
   const [activeSlide, setActiveSlide] = useState(1);
   
@@ -77,6 +79,9 @@ export function AskQuestionInput({ label, placeholder }: IAskQuestionInputProps)
     setFocused(false);
   }
 
+  // prepare the mutation
+  const [askQuestionMutation, { loading, data, error }] = useMutation(ASK_QUESTION);
+
   const handleFormSubmit = () => {
     // Todo: connect back to the back-end service
     console.log("DATA TO SUBMIT: ", {
@@ -85,6 +90,17 @@ export function AskQuestionInput({ label, placeholder }: IAskQuestionInputProps)
       tags,
       coverImage,
       attachments
+    })
+    askQuestionMutation({
+      variables: {
+        input: {
+          title: questionTitle,
+          body: questionBody,
+          tags,
+          coverImage,
+          attachments
+        }
+      }
     })
   }
   

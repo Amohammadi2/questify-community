@@ -19,13 +19,12 @@ type VerifyTokenOutput {
 }
 
 type QuestionEntity {
+  id: String!
   title: String!
   body: String!
   tags: [String!]!
-  coverImageUrl: String!
-  attachmentUrls: [String!]!
-  isFollowing: Boolean!
-  hasSaved: Boolean!
+  coverImage: String!
+  attachments: [String!]!
   scores: Int!
 }
 

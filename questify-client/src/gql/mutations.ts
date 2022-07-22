@@ -21,17 +21,14 @@ export const VERIFY_TOKEN = gql`
   }
 `;
 
-// Todo: rename all these mutations to `ask question in school space`
 export const ASK_QUESTION = gql`
   mutation AskQuestion($input: AskQuestionInput!) {
     askQuestion(input: $input) {
       title
       body
       tags
-      attachmentUrls
-      coverImageUrl
-      isFollowing
-      hasSaved
+      attachments
+      coverImage
       scores
     }
   }

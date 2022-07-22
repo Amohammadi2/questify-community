@@ -1,10 +1,21 @@
 {
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
     "configurations": [
         {
-            "type": "pwa-chrome",
-            "name": "ws://127.0.0.1:9229/f80335aa-1d88-4e8b-948a-1ba2c7c1f9e8",
+            "type": "node",
             "request": "launch",
-            "url": "ws://127.0.0.1:9229/f80335aa-1d88-4e8b-948a-1ba2c7c1f9e8"
+            "name": "Debug nest js server",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "envFile": "${workspaceFolder}/questify-server/.env",
+            "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
+            "program": "${workspaceFolder}/questify-server/src/main.ts",
+            "console": "integratedTerminal",
+            "autoAttachChildProcesses": true
         }
     ]
 }
