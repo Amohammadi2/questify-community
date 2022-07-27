@@ -1,0 +1,25 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type UserObject {
+  username: String!
+}
+
+type GetAuthTokenResult {
+  token: String!
+  user: UserObject!
+}
+
+type Query {
+  hello: String!
+}
+
+type Mutation {
+  getAuthToken(input: GetAuthTokenInput!): GetAuthTokenResult!
+}
+
+input GetAuthTokenInput {
+  username: String!
+  password: String!
+}
