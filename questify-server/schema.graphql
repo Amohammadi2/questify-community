@@ -4,11 +4,19 @@
 
 type UserObject {
   username: String!
+  id: String!
 }
 
 type GetAuthTokenResult {
   token: String!
   user: UserObject!
+}
+
+type QuestionObject {
+  title: String!
+  content: String!
+  tags: [String!]!
+  author: UserObject!
 }
 
 type Query {
@@ -17,9 +25,16 @@ type Query {
 
 type Mutation {
   getAuthToken(input: GetAuthTokenInput!): GetAuthTokenResult!
+  askQuestion(input: AskQuestionInput!): QuestionObject!
 }
 
 input GetAuthTokenInput {
   username: String!
   password: String!
+}
+
+input AskQuestionInput {
+  title: String!
+  content: String!
+  tags: [String!]!
 }

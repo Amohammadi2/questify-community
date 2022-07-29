@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UserDocument, userSchema } from './user.schema';
+import { User, userSchema } from './user.schema';
 
-const mongooseModule = MongooseModule.forFeature([{ name: UserDocument.name, schema: userSchema }]);
+const mongooseModule = MongooseModule.forFeature([{ name: User.name, schema: userSchema }]);
 
 @Module({
   imports: [
@@ -11,4 +11,5 @@ const mongooseModule = MongooseModule.forFeature([{ name: UserDocument.name, sch
   providers: [],
   exports: [mongooseModule],
 })
-export class UsersModule {}
+export class UserSocialModule {}
+
