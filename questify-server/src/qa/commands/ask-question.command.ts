@@ -1,8 +1,7 @@
+import { QuestionPayload } from "../schemas/question.schema";
+
 export class AskQuestionCommand {
-  constructor(public readonly props: {
-    title: string;
-    content: string;
-    tags: string[];
-    author: string;
-  }) {}
+  constructor(
+    public readonly payload: QuestionPayload
+  ) {}
 }

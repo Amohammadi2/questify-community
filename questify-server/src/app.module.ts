@@ -11,13 +11,13 @@ import { QaModule } from './qa/qa.module';
 @Module({
   imports: [
     AuthModule,
+    QaModule,
     UserSocialModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: './schema.graphql'
     }),
     MongooseModule.forRoot(`mongodb://localhost:27017/questify`),
-    QaModule
   ],
   controllers: [AppController],
   providers: [AppService],
