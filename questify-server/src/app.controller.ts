@@ -5,7 +5,7 @@ import { Model } from 'mongoose';
 import { AppService } from './app.service';
 import { User } from './user-social/user.schema';
 import * as bcrypt from "bcrypt";
-import { Question, QuestionDocument } from './qa/schemas/question.schema';
+import { Question, QuestionDocument } from './qa/qa.schema';
 
 @Controller()
 export class AppController {

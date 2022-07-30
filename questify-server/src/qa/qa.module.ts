@@ -1,19 +1,16 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AskQuestionHandler } from './commands/handlers/ask-question.handler';
-import { QaResolver } from './graphql/qa.resolver';
-import { Question, questionSchema } from './schemas/question.schema';
-import { Tag, tagSchema } from './schemas/tag.schema';
+import { handlers } from './qa.handlers';
+import { resolvers } from './qa.resolver';
+import { models } from './qa.schema';
 
-const mongoModule = MongooseModule.forFeature([
-  { name: Question.name, schema: questionSchema },
-  { name: Tag.name, schema: tagSchema }
-])
+
+const mongoModule = MongooseModule.forFeature(models);
 
 @Module({
   imports: [CqrsModule,mongoModule],
   exports: [mongoModule],
-  providers: [QaResolver, AskQuestionHandler]
+  providers: [...resolvers, ...handlers]
 })
 export class QaModule {}

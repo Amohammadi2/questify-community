@@ -4,8 +4,9 @@ import { Document, Types } from 'mongoose';
 import { UserObject } from 'src/user-social/graphql/object-types/user.object';
 import { User, UserDocument } from 'src/user-social/user.schema';
 import { Payload } from 'src/utils/payload';
-import { Tag, tagSchema } from './tag.schema';
 
+
+//#region Question Model
 
 interface QuestionBase {
   title: any;
@@ -15,7 +16,6 @@ interface QuestionBase {
   score: any;
 }
 
-// mongo db stuff
 @Schema({ timestamps: true })
 export class Question implements QuestionBase {
   @Prop({ required: true })
@@ -24,7 +24,7 @@ export class Question implements QuestionBase {
   @Prop({ required: true })
   content: string;
 
-  @Prop({ type: [tagSchema], required: true })
+  @Prop({ type: ()=>[tagSchema], required: true })
   tags: Tag[];
 
   @Prop({ type: Types.ObjectId, ref: User.name, required: true })
@@ -42,11 +42,12 @@ export type QuestionDocument = Question & Document;
 export type QuestionPayload = Payload<Question, "score", { author: string, tags: string[] }>;
 export const questionSchema = SchemaFactory.createForClass(Question);
 
-
-// graphql stuff
 @ObjectType({ isAbstract: true })
 export class QuestionObject implements QuestionBase {
   
+  @Field(() => String)
+  id: string;
+
   @Field(() => String)
   title: string;
   
@@ -64,11 +65,26 @@ export class QuestionObject implements QuestionBase {
 }
 
 @InputType()
-export class QuestionCreateInput extends OmitType(QuestionObject, ["author", "score"], InputType) {
- 
-}
-
+export class QuestionCreateInput extends OmitType(QuestionObject, ["author", "score", "id"], InputType) {}
 @InputType()
-export class QuestionUpdateInput extends PartialType(QuestionCreateInput, InputType) {
-  
+export class QuestionUpdateInput extends PartialType(QuestionCreateInput, InputType) {}
+
+//#endregion
+
+//#region Tag model
+
+
+
+@Schema()
+export class Tag {
+  @Prop() name: string;
 }
+export type TagDocument = Tag & Document;
+export const tagSchema = SchemaFactory.createForClass(Tag);
+
+//#endregion
+
+export const models = [
+  { name: Question.name, schema: questionSchema },
+  { name: Tag.name, schema: tagSchema }
+]

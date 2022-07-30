@@ -32,6 +32,7 @@ input GetAuthTokenInput {
 }
 
 type QuestionObject {
+  id: String!
   title: String!
   content: String!
   tags: [String!]!

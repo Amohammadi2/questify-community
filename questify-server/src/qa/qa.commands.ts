@@ -1,4 +1,4 @@
-import { QuestionPayload } from "../schemas/question.schema";
+import { QuestionPayload } from "./qa.schema";
 
 export class AskQuestionCommand {
   constructor(

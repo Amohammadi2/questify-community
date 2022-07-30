@@ -1,10 +1,10 @@
 import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { Question, QuestionDocument } from "src/qa/schemas/question.schema";
-import { AskQuestionCommand } from "../ask-question.command";
+import { Question, QuestionDocument } from "src/qa/qa.schema";
+import { AskQuestionCommand } from "./qa.commands";
 
-// Todo: register as provider
+
 @CommandHandler(AskQuestionCommand)
 export class AskQuestionHandler implements ICommandHandler<AskQuestionCommand> {
   constructor(
@@ -12,6 +12,11 @@ export class AskQuestionHandler implements ICommandHandler<AskQuestionCommand> {
   ) {}
 
   async execute(command: AskQuestionCommand) {
-    return await this.questionModel.create(command.payload);
+    return await this.questionModel.create({
+      ...command.payload,
+      tags: command.payload.tags.map(t=>({ name: t }))
+    });
   }
 }
+
+export const handlers = [AskQuestionHandler];
