@@ -12,6 +12,11 @@ type GetAuthTokenResult {
   user: UserObject!
 }
 
+type SchoolObject {
+  id: String!
+  name: String!
+}
+
 type Query {
   hello: String!
 }
@@ -20,6 +25,7 @@ type Mutation {
   getAuthToken(input: GetAuthTokenInput!): GetAuthTokenResult!
   verifyToken(input: VerifyTokenInput!): UserObject
   askQuestion(input: QuestionCreateInput!): QuestionObject!
+  registerSchool(input: SchoolCreateInput!): SchoolObject!
 }
 
 input GetAuthTokenInput {
@@ -44,4 +50,8 @@ input QuestionCreateInput {
   title: String!
   content: String!
   tags: [String!]!
+}
+
+input SchoolCreateInput {
+  name: String!
 }

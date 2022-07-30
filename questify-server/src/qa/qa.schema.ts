@@ -6,7 +6,7 @@ import { User, UserDocument } from 'src/user-social/user-social.schemas';
 import { Payload } from 'src/utils/payload';
 
 
-//#region Question Model
+ 
 
 interface QuestionBase {
   title: any;
@@ -69,10 +69,6 @@ export class QuestionCreateInput extends OmitType(QuestionObject, ["author", "sc
 @InputType()
 export class QuestionUpdateInput extends PartialType(QuestionCreateInput, InputType) {}
 
-//#endregion
-
-//#region Tag model
-
 
 
 @Schema()
@@ -82,7 +78,7 @@ export class Tag {
 export type TagDocument = Tag & Document;
 export const tagSchema = SchemaFactory.createForClass(Tag);
 
-//#endregion
+ 
 
 export const models = [
   { name: Question.name, schema: questionSchema },

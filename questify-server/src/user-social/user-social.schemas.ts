@@ -1,9 +1,10 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
+import { SchoolDocument } from "src/school-management/school-management.schemas";
 
 
-//#region User Object
+ 
 @Schema()
 export class User {
 
@@ -12,6 +13,12 @@ export class User {
 
   @Prop({ required: true })
   password: string;
+
+  @Prop({ type: String, required: true, default: "STUDENT" })
+  role: "STUDENT" | "MANAGER" | "TEACHER" |"ADMIN";
+
+  @Prop({ type: Types.ObjectId, ref: 'School', required: true })
+  school: SchoolDocument;
   
 }
 
@@ -23,4 +30,4 @@ export class UserObject {
   @Field() username: string;
   @Field() id?: string;
 }
-//#endregion
+ 

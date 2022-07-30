@@ -8,6 +8,7 @@ import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { MongooseModule } from '@nestjs/mongoose';
 import { QaModule } from './qa/qa.module';
 import { AppResolver } from './app.resolver';
+import { SchoolManagementModule } from './school-management/school-management.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { AppResolver } from './app.resolver';
       autoSchemaFile: './schema.graphql'
     }),
     MongooseModule.forRoot(`mongodb://localhost:27017/questify`),
+    SchoolManagementModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver],

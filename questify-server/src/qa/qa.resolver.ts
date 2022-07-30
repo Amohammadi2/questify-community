@@ -10,7 +10,7 @@ import { AskQuestionCommand } from './qa.commands';
 import { Question, QuestionCreateInput, QuestionDocument, QuestionObject } from './qa.schema';
 
 
-//#region QA Resolver
+ 
 
 @Resolver(()=>QuestionObject)
 export class QaResolver {
@@ -35,9 +35,9 @@ export class QaResolver {
 
 }
 
-//#endregion
+ 
 
-//#region Question Resolver
+ 
 
 @Resolver(()=>QuestionObject)
 export class QuestionResolver {
@@ -60,4 +60,4 @@ export const resolvers = [
   QuestionResolver
 ];
 
-//#endregion
+ 

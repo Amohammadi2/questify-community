@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { AuthService, RoleCheckService } from './auth.service';
 import { UserSocialModule } from '../user-social/user-social.module';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './strategies/local.strategy';
@@ -21,12 +21,13 @@ import { resolvers } from './auth.resolver';
   ],
   providers: [
     AuthService,
+    RoleCheckService,
     LocalStrategy,
     JwtStrategy,
     GqlLocalGuard,
     GqlJwtGuard,
     ...resolvers,
   ],
-  exports: [AuthService],
+  exports: [AuthService, RoleCheckService],
 })
 export class AuthModule {}

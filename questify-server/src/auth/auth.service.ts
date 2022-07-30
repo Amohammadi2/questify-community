@@ -41,3 +41,35 @@ export class AuthService {
     }
   }
 }
+
+@Injectable()
+export class RoleCheckService {
+
+  public isManagerOrAdmin(user: UserDocument) {
+    return this.isManager(user) || this.isAdmin(user);
+  }
+
+  private isManager(user: UserDocument) {
+    return user.role == "MANAGER";
+  }
+
+  public isStudentOrAdmin(user: UserDocument) {
+    return this.isStudent(user) || this.isAdmin(user);
+  }
+
+  private isStudent(user: UserDocument) {
+    return user.role == "STUDENT";
+  }
+
+  public isTeacherOrAdmin(user: UserDocument) {
+    return this.isTeacher(user) || this.isAdmin(user);
+  }
+
+  public isTeacher(user: UserDocument) {
+    return user.role == "TEACHER";
+  }
+
+  public isAdmin(user: UserDocument) {
+    return user.role == "ADMIN";
+  }
+}

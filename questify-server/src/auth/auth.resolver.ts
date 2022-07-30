@@ -6,7 +6,7 @@ import { User, UserDocument, UserObject } from "src/user-social/user-social.sche
 import { AuthService } from "./auth.service";
 
 
-//#region Get Auth Token
+ 
 @InputType()
 class GetAuthTokenInput {
   @Field() username: string;
@@ -35,9 +35,7 @@ export class GetAuthTokenResolver {
   }
 
 }
-//#endregion
-
-//#region Verify Token
+ 
 
 @InputType()
 class VerifyTokenInput {
@@ -59,7 +57,7 @@ export class VerifyTokenResolver {
     return await this.userModel.findOne({ id: sub });
   }
 }
-//#endregion
+ 
 
 export const resolvers = [
   GetAuthTokenResolver,
