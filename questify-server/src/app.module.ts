@@ -7,6 +7,7 @@ import { GraphQLModule } from "@nestjs/graphql";
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { MongooseModule } from '@nestjs/mongoose';
 import { QaModule } from './qa/qa.module';
+import { AppResolver } from './app.resolver';
 
 @Module({
   imports: [
@@ -20,6 +21,6 @@ import { QaModule } from './qa/qa.module';
     MongooseModule.forRoot(`mongodb://localhost:27017/questify`),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AppResolver],
 })
 export class AppModule {}

@@ -2,11 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type User {
-  username: String!
-  password: String!
-}
-
 type UserObject {
   username: String!
   id: String!
@@ -23,6 +18,7 @@ type Query {
 
 type Mutation {
   getAuthToken(input: GetAuthTokenInput!): GetAuthTokenResult!
+  verifyToken(input: VerifyTokenInput!): UserObject
   askQuestion(input: QuestionCreateInput!): QuestionObject!
 }
 
@@ -31,12 +27,16 @@ input GetAuthTokenInput {
   password: String!
 }
 
+input VerifyTokenInput {
+  token: String!
+}
+
 type QuestionObject {
   id: String!
   title: String!
   content: String!
   tags: [String!]!
-  author: User!
+  author: UserObject!
   score: Int!
 }
 

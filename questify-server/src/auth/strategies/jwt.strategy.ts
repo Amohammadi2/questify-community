@@ -3,7 +3,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { PassportStrategy } from "@nestjs/passport";
 import { Model } from "mongoose";
 import { ExtractJwt, Strategy } from "passport-jwt";
-import { User } from "src/user-social/user.schema";
+import { User } from "src/user-social/user-social.schemas";
 import { jwtConstants } from "../constants";
 
 @Injectable()
@@ -13,7 +13,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      ignoreExpiration: false,
+      ignoreExpiration: true, // Todo: implement the refresh token feature
       secretOrKey: jwtConstants.secret
     })
   }

@@ -1,8 +1,8 @@
 import { ObjectType, Field, Int, OmitType, InputType, PartialType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { UserObject } from 'src/user-social/graphql/object-types/user.object';
-import { User, UserDocument } from 'src/user-social/user.schema';
+import { UserObject } from 'src/user-social/user-social.schemas';
+import { User, UserDocument } from 'src/user-social/user-social.schemas';
 import { Payload } from 'src/utils/payload';
 
 
@@ -57,7 +57,7 @@ export class QuestionObject implements QuestionBase {
   @Field(() => [String])
   tags: string[];
   
-  @Field(() => User)
+  @Field(() => UserObject)
   author: UserObject;
   
   @Field(() => Int)

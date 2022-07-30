@@ -5,7 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { GqlJwtGuard } from 'src/auth/guards/jwt-gql.guard';
 import { CUser } from 'src/auth/user.decorator';
-import { User, UserDocument } from 'src/user-social/user.schema';
+import { User, UserDocument } from 'src/user-social/user-social.schemas';
 import { AskQuestionCommand } from './qa.commands';
 import { Question, QuestionCreateInput, QuestionDocument, QuestionObject } from './qa.schema';
 

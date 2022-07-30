@@ -8,7 +8,7 @@ import { jwtConstants } from './constants';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { GqlLocalGuard } from './guards/local-gql.guard';
 import { GqlJwtGuard } from './guards/jwt-gql.guard';
-import { AuthResolver } from './graphql/auth.resolver';
+import { resolvers } from './auth.resolver';
 
 @Module({
   imports: [
@@ -25,7 +25,7 @@ import { AuthResolver } from './graphql/auth.resolver';
     JwtStrategy,
     GqlLocalGuard,
     GqlJwtGuard,
-    AuthResolver,
+    ...resolvers,
   ],
   exports: [AuthService],
 })
