@@ -5,7 +5,7 @@ import { RoleCheckService } from 'src/auth/auth.service';
 import { GqlJwtGuard } from 'src/auth/guards/jwt-gql.guard';
 import { CUser } from 'src/auth/user.decorator';
 import { UserDocument } from 'src/user-social/user-social.schemas';
-import { CreateSchoolCommand } from './school-management.commands';
+import { CreateSchoolCommand, DeleteSchoolCommand, UpdateSchoolCommand } from './school-management.commands';
 import {
   SchoolCreateInput,
   SchoolObject,
@@ -35,19 +35,20 @@ export class CreateSchoolResolver {
   @UseGuards(GqlJwtGuard)
   @Mutation(() => SchoolObject)
   public async updateSchool(
+    @Args('id') id: string,
     @Args('input') input: SchoolUpdateInput,
     @CUser() user: UserDocument,
   ) {
-    // Todo: implement
+    return await this.commandBus.execute(new UpdateSchoolCommand(id, input));
   }
 
   @UseGuards(GqlJwtGuard)
-  @Mutation(() => SchoolObject)
+  @Mutation(() => Boolean)
   public async removeSchool(
-    @Args('input') input: SchoolUpdateInput,
+    @Args('id') id: string,
     @CUser() user: UserDocument,
   ) {
-    // Todo: implement
+    return await this.commandBus.execute(new DeleteSchoolCommand(id));
   }
 }
 

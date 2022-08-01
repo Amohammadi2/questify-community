@@ -7,7 +7,7 @@ export class CreateSchoolCommand {
 export class UpdateSchoolCommand {
   constructor(
     public readonly id: string,
-    public readonly school: SchoolPayload,
+    public readonly school: Partial<SchoolPayload>,
   ) {}
 }
 

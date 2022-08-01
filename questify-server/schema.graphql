@@ -26,8 +26,8 @@ type Mutation {
   verifyToken(input: VerifyTokenInput!): UserObject
   askQuestion(input: QuestionCreateInput!): QuestionObject!
   registerSchool(input: SchoolCreateInput!): SchoolObject!
-  updateSchool(input: SchoolUpdateInput!): SchoolObject!
-  removeSchool(input: SchoolUpdateInput!): SchoolObject!
+  updateSchool(id: String!, input: SchoolUpdateInput!): SchoolObject!
+  removeSchool(id: String!): Boolean!
 }
 
 input GetAuthTokenInput {

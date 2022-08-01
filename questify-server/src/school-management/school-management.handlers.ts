@@ -29,10 +29,10 @@ export class DeleteSchoolHandler
     @InjectModel(School.name) private schoolModel: Model<SchoolDocument>,
   ) {}
 
-  async execute(command: DeleteSchoolCommand): Promise<'ok' | 'not-found'> {
+  async execute(command: DeleteSchoolCommand): Promise<boolean> {
     if (await this.schoolModel.findOneAndDelete({ id: command.id }))
-      return 'ok';
-    else return 'not-found';
+      return true;
+    else return false;
   }
 }
 
@@ -47,13 +47,17 @@ export class UpdateSchoolHandler
   async execute(
     command: UpdateSchoolCommand,
   ): Promise<SchoolDocument | 'not-found'> {
-    const res = await this.schoolModel.findOneAndUpdate(
+    const res = await this.schoolModel.updateOne(
       { id: command.id },
       command.school,
     );
-    if (!res) return 'not-found';
-    return;
+    if (!res.modifiedCount) return 'not-found';
+    return await this.schoolModel.findOne({ id: command.id });
   }
 }
 
-export const handlers = [CreateSchoolHandler];
+export const handlers = [
+  CreateSchoolHandler,
+  UpdateSchoolHandler,
+  DeleteSchoolHandler
+];
