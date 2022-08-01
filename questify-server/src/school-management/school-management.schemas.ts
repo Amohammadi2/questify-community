@@ -1,6 +1,12 @@
-import { Field, InputType, ObjectType, OmitType, PartialType } from "@nestjs/graphql";
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Payload } from "src/utils/payload";
+import {
+  Field,
+  InputType,
+  ObjectType,
+  OmitType,
+  PartialType,
+} from '@nestjs/graphql';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Payload } from 'src/utils/payload';
 
 interface SchoolBase {
   name: any;
@@ -20,10 +26,15 @@ export class SchoolObject implements SchoolBase {
   @Field() name: string;
 }
 @InputType()
-export class SchoolCreateInput extends OmitType(SchoolObject, ["id"], InputType) {}
+export class SchoolCreateInput extends OmitType(
+  SchoolObject,
+  ['id'],
+  InputType,
+) {}
 @InputType()
-export class SchoolUpdateInput extends PartialType(SchoolCreateInput, InputType) {} 
+export class SchoolUpdateInput extends PartialType(
+  SchoolCreateInput,
+  InputType,
+) {}
 
-export const models = [
-  { name: School.name, schema: schoolSchema }
-];
+export const models = [{ name: School.name, schema: schoolSchema }];

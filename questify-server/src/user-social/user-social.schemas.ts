@@ -1,22 +1,22 @@
-import { Field, ObjectType } from "@nestjs/graphql";
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Field, ObjectType } from '@nestjs/graphql';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { SchoolDocument, schoolSchema } from "src/school-management/school-management.schemas";
-
+import {
+  SchoolDocument,
+  schoolSchema,
+} from 'src/school-management/school-management.schemas';
 
 //#region User schema
-@Schema({ discriminatorKey: "role" })
+@Schema({ discriminatorKey: 'role' })
 export class User {
-
   @Prop({ required: true })
   username: string;
 
   @Prop({ required: true })
   password: string;
 
-  @Prop({ type: String, required: true, default: "STUDENT" })
-  role: "STUDENT" | "MANAGER" | "TEACHER" |"ADMIN";
-
+  @Prop({ type: String, required: true, default: 'STUDENT' })
+  role: 'STUDENT' | 'MANAGER' | 'TEACHER' | 'ADMIN';
 }
 
 export type UserDocument = User & Document;
@@ -45,11 +45,11 @@ userSchema.discriminator('STUDENT', studentSchema);
 @Schema()
 export class Admin {
   @Prop({ type: Number, required: true, default: true }) isAdmin: boolean;
-  // Todo: Probably, we'll need a set of privillages 
+  // Todo: Probably, we'll need a set of privillages
   //       for our admins to determine their access rights
 }
 
-export const adminSchema = SchemaFactory.createForClass(Admin)
+export const adminSchema = SchemaFactory.createForClass(Admin);
 userSchema.discriminator('ADMIN', adminSchema);
 //#endregion
 
@@ -66,7 +66,7 @@ userSchema.discriminator('TEACHER', teacherSchema);
 //#region Manager Schema
 @Schema()
 export class Manager {
-  @Prop({ type: [schoolSchema], default: []}) schools: SchoolDocument[];
+  @Prop({ type: [schoolSchema], default: [] }) schools: SchoolDocument[];
 }
 export const managerSchema = SchemaFactory.createForClass(Manager);
 userSchema.discriminator('MANAGER', managerSchema);

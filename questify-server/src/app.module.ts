@@ -3,8 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UserSocialModule } from './user-social/user-social.module';
-import { GraphQLModule } from "@nestjs/graphql";
-import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { MongooseModule } from '@nestjs/mongoose';
 import { QaModule } from './qa/qa.module';
 import { AppResolver } from './app.resolver';
@@ -18,7 +18,7 @@ import { ProtoModule } from './proto/proto.module';
     UserSocialModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: './schema.graphql'
+      autoSchemaFile: './schema.graphql',
     }),
     MongooseModule.forRoot(`mongodb://localhost:27017/questify`),
     SchoolManagementModule,

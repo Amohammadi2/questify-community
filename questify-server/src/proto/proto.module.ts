@@ -4,6 +4,6 @@ import { ProtoController } from './proto.controller';
 
 @Module({
   imports: [UserSocialModule],
-  controllers: [ProtoController]
+  controllers: [ProtoController],
 })
 export class ProtoModule {}

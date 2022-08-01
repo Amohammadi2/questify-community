@@ -5,16 +5,12 @@ import { User, UserDocument } from 'src/user-social/user-social.schemas';
 
 @Controller('proto')
 export class ProtoController {
-
-  constructor(
-    @InjectModel(User.name) private userModel: Model<UserDocument>
-  ) {}
+  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   @Get()
   async runProto() {
-    const user = await this.userModel.findOne({ username: "ashkan" });
+    const user = await this.userModel.findOne({ username: 'ashkan' });
     console.log(user);
-    return { role: user.role }
+    return { role: user.role };
   }
-
 }

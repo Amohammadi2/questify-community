@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from 'src/user-social/user-social.schemas';
-import * as bcrypt from "bcrypt";
+import * as bcrypt from 'bcrypt';
 
 interface JwtPayload {
   sub: string;
@@ -14,12 +14,15 @@ interface JwtPayload {
 export class AuthService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
-    private jwtService: JwtService
+    private jwtService: JwtService,
   ) {}
 
-  async authenticateUser(username: string, password: string): Promise<UserDocument> {
+  async authenticateUser(
+    username: string,
+    password: string,
+  ): Promise<UserDocument> {
     const user = await this.userModel.findOne({ username });
-    if (user && await bcrypt.compare(password, user.password)) {
+    if (user && (await bcrypt.compare(password, user.password))) {
       return user;
     }
     return null;
@@ -27,7 +30,8 @@ export class AuthService {
 
   async generateAccessToken(user: UserDocument) {
     const accessToken = this.jwtService.sign({
-      username: user.username, sub: user.id
+      username: user.username,
+      sub: user.id,
     });
     return { access_token: accessToken };
   }
@@ -35,8 +39,7 @@ export class AuthService {
   async validateToken(token: string): Promise<JwtPayload> {
     try {
       return await this.jwtService.verify<JwtPayload>(token);
-    }
-    catch(e) {
+    } catch (e) {
       return { sub: null, username: null };
     }
   }
@@ -44,13 +47,12 @@ export class AuthService {
 
 @Injectable()
 export class RoleCheckService {
-
   public isManagerOrAdmin(user: UserDocument) {
     return this.isManager(user) || this.isAdmin(user);
   }
 
   private isManager(user: UserDocument) {
-    return user.role == "MANAGER";
+    return user.role == 'MANAGER';
   }
 
   public isStudentOrAdmin(user: UserDocument) {
@@ -58,7 +60,7 @@ export class RoleCheckService {
   }
 
   private isStudent(user: UserDocument) {
-    return user.role == "STUDENT";
+    return user.role == 'STUDENT';
   }
 
   public isTeacherOrAdmin(user: UserDocument) {
@@ -66,10 +68,10 @@ export class RoleCheckService {
   }
 
   public isTeacher(user: UserDocument) {
-    return user.role == "TEACHER";
+    return user.role == 'TEACHER';
   }
 
   public isAdmin(user: UserDocument) {
-    return user.role == "ADMIN";
+    return user.role == 'ADMIN';
   }
 }

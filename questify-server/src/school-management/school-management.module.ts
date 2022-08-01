@@ -11,9 +11,6 @@ const mongooseModule = MongooseModule.forFeature(models);
 @Module({
   imports: [mongooseModule, CqrsModule, AuthModule],
   exports: [mongooseModule],
-  providers: [
-    ...handlers,
-    ...resolvers
-  ]
+  providers: [...handlers, ...resolvers],
 })
 export class SchoolManagementModule {}
