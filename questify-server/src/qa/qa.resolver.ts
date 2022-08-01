@@ -35,9 +35,6 @@ export class QaResolver {
 
 }
 
- 
-
- 
 
 @Resolver(()=>QuestionObject)
 export class QuestionResolver {
@@ -49,7 +46,7 @@ export class QuestionResolver {
 
   @ResolveField()
   async author(@Parent() question: QuestionDocument) {
-    await question.populate('author');
+    await question.populate('author'); // Todo: implement a data loader here
     return question.author;
   }
 }

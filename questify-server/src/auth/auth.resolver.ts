@@ -6,6 +6,11 @@ import { User, UserDocument, UserObject } from "src/user-social/user-social.sche
 import { AuthService } from "./auth.service";
 
 
+
+@InputType()
+class VerifyTokenInput {
+ @Field() token: string;
+}
  
 @InputType()
 class GetAuthTokenInput {
@@ -20,10 +25,11 @@ class GetAuthTokenResult {
 }
 
 @Resolver()
-export class GetAuthTokenResolver {
+export class AuthResolver {
   
   constructor(
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    @InjectModel(User.name) private userModel: Model<UserDocument>
   ) {}
 
   @Mutation(() => GetAuthTokenResult)
@@ -34,32 +40,16 @@ export class GetAuthTokenResolver {
     return { token: result.access_token, user }
   }
 
-}
- 
-
-@InputType()
-class VerifyTokenInput {
-  @Field() token: string;
-}
-
-@Resolver()
-export class VerifyTokenResolver {
-
-  constructor(
-    private readonly authService: AuthService,
-    @InjectModel(User.name) private userModel: Model<UserDocument>
-  ) {}
-
   @Mutation(() => UserObject, { nullable: true })
   public async verifyToken(@Args('input') input: VerifyTokenInput) {
     const { sub } = await this.authService.validateToken(input.token);
     if (!sub) return null;
     return await this.userModel.findOne({ id: sub });
   }
+
 }
- 
+
 
 export const resolvers = [
-  GetAuthTokenResolver,
-  VerifyTokenResolver
+  AuthResolver,
 ];

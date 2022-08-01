@@ -9,6 +9,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { QaModule } from './qa/qa.module';
 import { AppResolver } from './app.resolver';
 import { SchoolManagementModule } from './school-management/school-management.module';
+import { ProtoModule } from './proto/proto.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { SchoolManagementModule } from './school-management/school-management.mo
     }),
     MongooseModule.forRoot(`mongodb://localhost:27017/questify`),
     SchoolManagementModule,
+    ProtoModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver],

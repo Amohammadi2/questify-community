@@ -12,7 +12,7 @@ export class School implements SchoolBase {
 }
 export type SchoolDocument = School & Document;
 export type SchoolPayload = Payload<School>;
-const schoolSchema = SchemaFactory.createForClass(School);
+export const schoolSchema = SchemaFactory.createForClass(School);
 
 @ObjectType()
 export class SchoolObject implements SchoolBase {
