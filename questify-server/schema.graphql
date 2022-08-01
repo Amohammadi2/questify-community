@@ -26,6 +26,7 @@ type Mutation {
   verifyToken(input: VerifyTokenInput!): UserObject
   askQuestion(input: QuestionCreateInput!): QuestionObject!
   registerSchool(input: SchoolCreateInput!): SchoolObject!
+  updateSchoolInfo(input: SchoolUpdateInput!): SchoolObject!
 }
 
 input GetAuthTokenInput {
@@ -54,4 +55,8 @@ input QuestionCreateInput {
 
 input SchoolCreateInput {
   name: String!
+}
+
+input SchoolUpdateInput {
+  name: String
 }
