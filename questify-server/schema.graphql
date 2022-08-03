@@ -28,6 +28,7 @@ type Mutation {
   registerSchool(input: SchoolCreateInput!): SchoolObject!
   updateSchool(id: String!, input: SchoolUpdateInput!): SchoolObject!
   removeSchool(id: String!): Boolean!
+  changeSchoolMemberRole(userId: String!, newRole: String!): Boolean!
 }
 
 input GetAuthTokenInput {

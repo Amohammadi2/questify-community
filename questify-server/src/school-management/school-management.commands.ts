@@ -14,3 +14,10 @@ export class UpdateSchoolCommand {
 export class DeleteSchoolCommand {
   constructor(public readonly id: string) {}
 }
+
+export class ChangeRoleCommand {
+  constructor(
+    public readonly userId: string,
+    public readonly newRole: 'STUDENT' | 'TEACHER'
+  ) {}
+}

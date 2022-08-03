@@ -1,10 +1,12 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { User, UserDocument } from 'src/user-social/user-social.schemas';
 import {
   CreateSchoolCommand,
   DeleteSchoolCommand,
   UpdateSchoolCommand,
+  ChangeRoleCommand,
 } from './school-management.commands';
 import { School, SchoolDocument } from './school-management.schemas';
 
@@ -56,8 +58,25 @@ export class UpdateSchoolHandler
   }
 }
 
+@CommandHandler(ChangeRoleCommand)
+export class ChangeRoleHandler implements ICommandHandler<ChangeRoleCommand> {
+  constructor(
+    @InjectModel(User.name) private readonly userModel: Model<UserDocument>
+  ) {}
+
+  async execute({ userId, newRole }: ChangeRoleCommand): Promise<boolean> {
+    const res = await this.userModel.updateOne({ id: userId }, {
+      role: newRole
+    });
+    if (res.modifiedCount == 0) return false;
+    return true;
+  }
+}
+
+
 export const handlers = [
   CreateSchoolHandler,
   UpdateSchoolHandler,
-  DeleteSchoolHandler
+  DeleteSchoolHandler,
+  ChangeRoleHandler
 ];
