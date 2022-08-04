@@ -51,7 +51,7 @@ export class RoleCheckService {
     return this.isManager(user) || this.isAdmin(user);
   }
 
-  private isManager(user: UserDocument) {
+  public isManager(user: UserDocument) {
     return user.role == 'MANAGER';
   }
 

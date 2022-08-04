@@ -13,8 +13,8 @@ import { Model } from 'mongoose';
 import {
   User,
   UserDocument,
-  UserObject,
 } from 'src/user-social/user-social.schemas';
+import { UserObject } from "src/user-social/user-social.objects";
 import { AuthService } from './auth.service';
 
 @InputType()

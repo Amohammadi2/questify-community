@@ -8,7 +8,7 @@ import {
 } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { UserObject } from 'src/user-social/user-social.schemas';
+import { UserObject } from "src/user-social/user-social.objects";
 import { User, UserDocument } from 'src/user-social/user-social.schemas';
 import { Payload } from 'src/utils/payload';
 

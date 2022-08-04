@@ -1,14 +1,24 @@
-import { Field, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import {
+  School,
   SchoolDocument,
   schoolSchema,
 } from 'src/school-management/school-management.schemas';
+import { Payload } from 'src/utils/payload';
+
+export type UserRole = 'STUDENT' | 'MANAGER' | 'TEACHER' | 'ADMIN';
 
 //#region User schema
+
+export interface UserBase {
+  username: any;
+  password: any;
+  role: any;
+}
+
 @Schema({ discriminatorKey: 'role' })
-export class User {
+export class User implements UserBase {
   @Prop({ required: true })
   username: string;
 
@@ -16,17 +26,12 @@ export class User {
   password: string;
 
   @Prop({ type: String, required: true, default: 'STUDENT' })
-  role: 'STUDENT' | 'MANAGER' | 'TEACHER' | 'ADMIN';
+  role: UserRole;
 }
 
 export type UserDocument = User & Document;
+export type UserPayload = Payload<User>;
 export const userSchema = SchemaFactory.createForClass(User);
-
-@ObjectType()
-export class UserObject {
-  @Field() username: string;
-  @Field() id?: string;
-}
 
 //#endregion
 
@@ -39,14 +44,16 @@ export class Student {
 
 export const studentSchema = SchemaFactory.createForClass(Student);
 userSchema.discriminator('STUDENT', studentSchema);
+
+export type StudentPayload = UserPayload & Payload<Student, null, { school: string }>;
 //#endregion
 
 //#region Admin Schema
 @Schema()
 export class Admin {
   @Prop({ type: Number, required: true, default: true }) isAdmin: boolean;
-  // Todo: Probably, we'll need a set of privillages
-  //       for our admins to determine their access rights
+  // Probably, we'll need a set of privillages
+  // for our admins to determine their access rights
 }
 
 export const adminSchema = SchemaFactory.createForClass(Admin);
@@ -61,13 +68,46 @@ export class Teacher {
 
 export const teacherSchema = SchemaFactory.createForClass(Teacher);
 userSchema.discriminator('TEACHER', teacherSchema);
+
+export type TeacherPayload = UserPayload & Payload<Teacher, null, { schools: string[] }>;
 //#endregion
 
 //#region Manager Schema
 @Schema()
 export class Manager {
-  @Prop({ type: [schoolSchema], default: [] }) schools: SchoolDocument[];
+  @Prop({ type: [Types.ObjectId], ref: School.name, default: [] }) schools: SchoolDocument[];
 }
+export type ManagerDocument = Manager & UserDocument & Document
 export const managerSchema = SchemaFactory.createForClass(Manager);
 userSchema.discriminator('MANAGER', managerSchema);
+//#endregion
+
+//#region Invitation Code Schema
+
+export interface InvitationCodeBase {
+  daysValid: number;
+  targetRole: any;
+  targetSchool: any;
+  ownerUser: any;
+}
+
+@Schema({ timestamps: true })
+export class InvitationCode implements InvitationCodeBase {
+
+  @Prop({ required: true }) 
+  daysValid: number;
+
+  @Prop({ type: String, required: true }) 
+  targetRole: UserRole;
+
+  @Prop({ type: String, required: true })
+  targetSchool: string;
+
+  @Prop({ type: Types.ObjectId, required: true, ref: User.name })
+  ownerUser: UserDocument;
+
+}
+export const invitationCodeSchema =
+  SchemaFactory.createForClass(InvitationCode);
+export type InvitationCodeDocument = InvitationCode & Document;
 //#endregion

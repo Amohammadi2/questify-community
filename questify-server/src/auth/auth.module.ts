@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { AuthService, RoleCheckService } from './auth.service';
 import { UserSocialModule } from '../user-social/user-social.module';
 import { PassportModule } from '@nestjs/passport';
@@ -10,6 +10,7 @@ import { GqlLocalGuard } from './guards/local-gql.guard';
 import { GqlJwtGuard } from './guards/jwt-gql.guard';
 import { resolvers } from './auth.resolver';
 
+@Global()
 @Module({
   imports: [
     UserSocialModule,

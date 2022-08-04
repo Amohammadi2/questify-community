@@ -9,6 +9,7 @@ type SchoolObject {
 
 type UserObject {
   username: String!
+  role: String!
   id: String!
 }
 
@@ -24,11 +25,13 @@ type Query {
 type Mutation {
   getAuthToken(input: GetAuthTokenInput!): GetAuthTokenResult!
   verifyToken(input: VerifyTokenInput!): UserObject
-  askQuestion(input: QuestionCreateInput!): QuestionObject!
+  createInvitationCode(input: InvitationCodeInput!): String!
+  signUpWithInviation(code: String!, input: UserCreateInput!): UserObject!
   registerSchool(input: SchoolCreateInput!): SchoolObject!
   updateSchool(id: String!, input: SchoolUpdateInput!): SchoolObject!
   removeSchool(id: String!): Boolean!
   changeSchoolMemberRole(userId: String!, newRole: String!): Boolean!
+  askQuestion(input: QuestionCreateInput!): QuestionObject!
 }
 
 input GetAuthTokenInput {
@@ -38,6 +41,25 @@ input GetAuthTokenInput {
 
 input VerifyTokenInput {
   token: String!
+}
+
+input InvitationCodeInput {
+  daysValid: Float!
+  targetRole: String!
+  targetSchool: String!
+}
+
+input UserCreateInput {
+  username: String!
+  password: String!
+}
+
+input SchoolCreateInput {
+  name: String!
+}
+
+input SchoolUpdateInput {
+  name: String
 }
 
 type QuestionObject {
@@ -53,12 +75,4 @@ input QuestionCreateInput {
   title: String!
   content: String!
   tags: [String!]!
-}
-
-input SchoolCreateInput {
-  name: String!
-}
-
-input SchoolUpdateInput {
-  name: String
 }
