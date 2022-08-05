@@ -3,7 +3,6 @@ import { Document, Types } from 'mongoose';
 import {
   School,
   SchoolDocument,
-  schoolSchema,
 } from 'src/school-management/school-management.schemas';
 import { Payload } from 'src/utils/payload';
 
@@ -63,7 +62,7 @@ userSchema.discriminator('ADMIN', adminSchema);
 //#region Teacher Schema
 @Schema()
 export class Teacher {
-  @Prop({ type: [schoolSchema], default: [] }) schools: SchoolDocument[];
+  @Prop({ type: [Types.ObjectId], default: [], ref: School.name }) schools: SchoolDocument[];
 }
 
 export const teacherSchema = SchemaFactory.createForClass(Teacher);
