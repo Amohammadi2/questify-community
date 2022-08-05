@@ -19,7 +19,6 @@ export function useAuthLoader() {
   const token = localStorage.getItem('token') || "";
 
   useEffect(() => {
-    console.log('authenticating user');
     verifyToken({
       variables: { input: token }
     })
