@@ -10,7 +10,6 @@ export class ProtoController {
   @Get()
   async runProto() {
     const user = await this.userModel.findOne({ username: 'ashkan' });
-    console.log(user);
     return { role: user.role };
   }
 }

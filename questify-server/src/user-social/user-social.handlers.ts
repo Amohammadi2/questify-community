@@ -1,8 +1,10 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { toObjectId } from 'src/utils/to-object-id';
 import { CreateInvitationCodeCommand, RegisterUserCommand, ValidateInvitationCodeCommand } from './user-social.commands';
 import { InvitationCode, InvitationCodeDocument, UserDocument, User } from './user-social.schemas';
+import * as bcrypt from "bcrypt";
 
 @CommandHandler(CreateInvitationCodeCommand)
 export class CreateInvitationCodeHandler
@@ -33,12 +35,15 @@ export class ValidateInvitationCodeHandler implements ICommandHandler<ValidateIn
   ) {}
 
   async execute(command: ValidateInvitationCodeCommand) {
-    const codeObj = await this.invitationCodeModel.findOne({ id: command.codeId });
-    if (!codeObj)
-      return 'not-found';
-    if ((new Date().getDate()) - ((<any>codeObj).createdAt.getDate()) > (codeObj.daysValid * 24 * 60 * 60 * 1000))
-      return 'expired';
-    return codeObj;
+    try {
+      const codeObj = await this.invitationCodeModel.findById(toObjectId(command.codeId));
+      if (!codeObj)
+        return 'not-found';
+      if ((new Date().getDate()) - ((<any>codeObj).createdAt.getDate()) > (codeObj.daysValid * 24 * 60 * 60 * 1000))
+        return 'expired';
+      return codeObj;
+    }
+    catch(e) { return 'not-found' }
   }
 
 }
@@ -50,7 +55,11 @@ export class RegisterUserHandler implements ICommandHandler<RegisterUserCommand<
   ) {}
 
   async execute(command: RegisterUserCommand<any>) {
-    return await this.userModel.create(command.userInfo);
+    const userInfo = {
+      ...command.userInfo,
+      password: bcrypt.hashSync(command.userInfo.password, bcrypt.genSaltSync())
+    }
+    return await this.userModel.create(userInfo);
   }
 }
 
