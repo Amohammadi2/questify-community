@@ -37,7 +37,7 @@ export const userSchema = SchemaFactory.createForClass(User);
 //#region Student Schema
 @Schema()
 export class Student {
-  @Prop({ type: Types.ObjectId, ref: 'School', required: true })
+  @Prop({ type: Types.ObjectId, ref: School.name, required: true })
   school: SchoolDocument;
 }
 
