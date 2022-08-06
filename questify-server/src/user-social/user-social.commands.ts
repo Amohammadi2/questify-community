@@ -1,3 +1,4 @@
+import { UserCreateInput } from "./user-social.objects";
 import { UserDocument, UserPayload, UserRole } from "./user-social.schemas";
 
 export class CreateInvitationCodeCommand {
@@ -18,5 +19,12 @@ export class ValidateInvitationCodeCommand {
 export class RegisterUserCommand <T extends UserPayload> {
   constructor(
     public readonly userInfo: T
+  ) {}
+}
+
+export class SignUpWithInvitationCommand {
+  constructor(
+    public readonly code: string,
+    public readonly userInfo: UserCreateInput
   ) {}
 }

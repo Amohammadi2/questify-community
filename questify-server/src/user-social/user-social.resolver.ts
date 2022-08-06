@@ -11,6 +11,7 @@ import { Model } from 'mongoose';
 import {
   CreateInvitationCodeCommand,
   RegisterUserCommand,
+  SignUpWithInvitationCommand,
   ValidateInvitationCodeCommand,
 } from './user-social.commands';
 import {
@@ -39,9 +40,6 @@ import { toObjectId } from 'src/utils/to-object-id';
 export class UserSocialServiceResolver {
   constructor(
     private readonly commandBus: CommandBus,
-    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
-    @InjectModel(School.name)
-    private readonly schoolModel: Model<SchoolDocument>,
   ) {}
 
   @UseGuards(GqlJwtGuard, RoleGuard('isManager'))
@@ -50,8 +48,9 @@ export class UserSocialServiceResolver {
     @Args('input') input: InvitationCodeInput,
     @CUser() manager: ManagerDocument,
   ) {
-    const allowedRoles = ['TEACHER', 'STUDENT'];
 
+    // Todo: Move the validation logic inside the command
+    const allowedRoles = ['TEACHER', 'STUDENT'];
     // validate input here
     if (!allowedRoles.includes(input.targetRole))
       throw new UnauthorizedException(
@@ -80,67 +79,23 @@ export class UserSocialServiceResolver {
     @Args('code') code: string,
     @Args('input') input: UserCreateInput,
   ) {
-    // Todo: resolve the error handling issue not catching the expected errors
-
-    // Todo: move this whole shit into a one single command handler
-    //       with a bunch of methods each doing one part of the process
-
-    const validityStatus = await this.commandBus.execute(
-      new ValidateInvitationCodeCommand(code),
-    );
-
-
-    // handle error cases
-    if (validityStatus == 'not-found')
-      throw new BadRequestException('The invitation code is invalid');
-    else if (validityStatus == 'expire')
-      throw new BadRequestException('The invitation code has been expired');
-
-    // if there are no errors, the object will be returned
-    const codeObj: InvitationCodeDocument = validityStatus;
-    
-    // make sure the manager still exists
-    const manager = await this.userModel.findById(toObjectId(codeObj.ownerUser)) as unknown as ManagerDocument;
-    if (!manager)
-      throw new UnauthorizedException(
-        'The one who has invited you is now out of the system',
+    try {
+      const newUser = await this.commandBus.execute(
+        new SignUpWithInvitationCommand(code, input)
       );
-
-    // make sure the school still exists
-    const school = await this.schoolModel.findById(toObjectId(codeObj.targetSchool));
-    if (!school)
-      throw new BadRequestException(
-        'The school that you have been invited to is now deleted from the system',
-      );
-
-    // register the user based on roles
-    let user = null;
-    switch (codeObj.targetRole) {
-      case 'STUDENT':
-        user = await this.commandBus.execute(
-          new RegisterUserCommand<StudentPayload>({
-            ...input,
-            role: codeObj.targetRole,
-            school: codeObj.targetSchool,
-          }),
-        );
-        break;
-      case 'TEACHER':
-        user = await this.commandBus.execute(
-          new RegisterUserCommand<TeacherPayload>({
-            ...input,
-            role: codeObj.targetRole,
-            schools: [codeObj.targetSchool],
-          }),
-        );
-        break;
+      return newUser;
     }
-
-    if (!user)
-      throw new InternalServerErrorException(
-        'Could not register user into the system',
-      );
-
-    return user;
+    catch(e) {
+      switch(e.message) {
+        case "code-invalid": throw new BadRequestException('The invitation code is invalid');
+        case "code-expired": throw new BadRequestException('The invitation code is expired');
+        case "manager-not-exists": throw new BadRequestException('The manager who invited you does not exist');
+        case "school-not-exists": throw new BadRequestException('The school does not exist');
+        case "could-not-register": throw new InternalServerErrorException('Could not register the user, try again later');
+        case "username-taken": throw new BadRequestException('This username is already taken');
+        default:
+          throw e;
+      }
+    }
   }
 }
