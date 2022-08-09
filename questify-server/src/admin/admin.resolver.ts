@@ -4,8 +4,10 @@ import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { GqlJwtGuard } from 'src/auth/guards/jwt-gql.guard';
 import { RoleGuard } from 'src/auth/guards/role-gql.guard';
 import { RegisterUserCommand } from 'src/user-social/user-social.commands';
+import { registerUserErrorMap } from 'src/user-social/user-social.gateway-errors';
 import { ManagerCreateInput, ManagerObject } from 'src/user-social/user-social.objects';
 import { ManagerPayload } from 'src/user-social/user-social.schemas';
+import { safeCall } from 'src/utils/safe-call';
 import { toObjectId } from 'src/utils/to-object-id';
 
 @Resolver()
@@ -20,11 +22,13 @@ export class AdminResolver {
   public async registerManager(
     @Args('input') input: ManagerCreateInput
   ) {
-    return await this.commandBus.execute(new RegisterUserCommand<ManagerPayload>({
-      ...input,
-      schools: input.schools.map(s => toObjectId(s)),
-      role: 'MANAGER'
-    }));
+    return safeCall(registerUserErrorMap, async () => (
+      await this.commandBus.execute(new RegisterUserCommand<ManagerPayload>({
+        ...input,
+        schools: input.schools.map(s => toObjectId(s)),
+        role: 'MANAGER'
+      }))
+    ))
   }
 
 }

@@ -35,6 +35,8 @@ import { CUser } from 'src/auth/user.decorator';
 import { GqlJwtGuard } from 'src/auth/guards/jwt-gql.guard';
 import { RoleGuard } from 'src/auth/guards/role-gql.guard';
 import { toObjectId } from 'src/utils/to-object-id';
+import { safeCall } from 'src/utils/safe-call';
+import { registerUserErrorMap, signUpWithInvitationErrorMap } from './user-social.gateway-errors';
 
 @Resolver()
 export class UserSocialServiceResolver {
@@ -79,23 +81,11 @@ export class UserSocialServiceResolver {
     @Args('code') code: string,
     @Args('input') input: UserCreateInput,
   ) {
-    try {
+    return await safeCall({...registerUserErrorMap, ...signUpWithInvitationErrorMap}, async () => {
       const newUser = await this.commandBus.execute(
         new SignUpWithInvitationCommand(code, input)
       );
       return newUser;
-    }
-    catch(e) {
-      switch(e.message) {
-        case "code-invalid": throw new BadRequestException('The invitation code is invalid');
-        case "code-expired": throw new BadRequestException('The invitation code is expired');
-        case "manager-not-exists": throw new BadRequestException('The manager who invited you does not exist');
-        case "school-not-exists": throw new BadRequestException('The school does not exist');
-        case "could-not-register": throw new InternalServerErrorException('Could not register the user, try again later');
-        case "username-taken": throw new BadRequestException('This username is already taken');
-        default:
-          throw e;
-      }
-    }
+    });
   }
 }

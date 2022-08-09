@@ -58,7 +58,9 @@ export class RegisterUserHandler
         bcrypt.genSaltSync(),
       ),
     };
-    return await this.userModel.create(payload);
+    const user = await this.userModel.create(payload);
+    if (!user) throw Error('could-not-register');
+    return user;
   }
 }
 
@@ -137,7 +139,6 @@ export class SignUpWithInvitationHandler
         );
         break;
     }
-    if (!user) throw Error('could-not-register');
     return user;
   }
 }
