@@ -10,6 +10,7 @@ import { QaModule } from './qa/qa.module';
 import { AppResolver } from './app.resolver';
 import { SchoolManagementModule } from './school-management/school-management.module';
 import { ProtoModule } from './proto/proto.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ProtoModule } from './proto/proto.module';
     MongooseModule.forRoot(`mongodb://localhost:27017/questify`),
     SchoolManagementModule,
     ProtoModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver],

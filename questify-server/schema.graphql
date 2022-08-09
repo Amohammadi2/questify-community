@@ -13,6 +13,13 @@ type UserObject {
   id: String!
 }
 
+type ManagerObject {
+  username: String!
+  role: String!
+  id: String!
+  schools: [SchoolObject!]!
+}
+
 type GetAuthTokenResult {
   token: String!
   user: UserObject!
@@ -32,6 +39,7 @@ type Mutation {
   removeSchool(id: String!): Boolean!
   changeSchoolMemberRole(userId: String!, newRole: String!): Boolean!
   askQuestion(input: QuestionCreateInput!): QuestionObject!
+  registerManager(input: ManagerCreateInput!): ManagerObject!
 }
 
 input GetAuthTokenInput {
@@ -75,4 +83,10 @@ input QuestionCreateInput {
   title: String!
   content: String!
   tags: [String!]!
+}
+
+input ManagerCreateInput {
+  username: String!
+  schools: [String!]!
+  password: String!
 }
