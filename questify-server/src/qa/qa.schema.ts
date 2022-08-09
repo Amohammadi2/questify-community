@@ -1,18 +1,10 @@
-import {
-  ObjectType,
-  Field,
-  Int,
-  OmitType,
-  InputType,
-  PartialType,
-} from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { UserObject } from "src/user-social/user-social.objects";
+import { School, SchoolDocument } from 'src/school-management/school-management.schemas';
 import { User, UserDocument } from 'src/user-social/user-social.schemas';
 import { Payload } from 'src/utils/payload';
 
-interface QuestionBase {
+export interface QuestionBase {
   title: any;
   content: any;
   tags: any;
@@ -20,8 +12,13 @@ interface QuestionBase {
   score: any;
 }
 
-@Schema({ timestamps: true })
+//#region Question Schema
+@Schema({ timestamps: true, discriminatorKey: 'type' })
 export class Question implements QuestionBase {
+
+  @Prop({ required: true })
+  type: string;
+
   @Prop({ required: true })
   title: string;
 
@@ -45,44 +42,28 @@ export class Question implements QuestionBase {
 export type QuestionDocument = Question & Document;
 export type QuestionPayload = Payload<
   Question,
-  'score',
+  'score' | 'type',
   { author: string; tags: string[] }
 >;
 export const questionSchema = SchemaFactory.createForClass(Question);
+//#endregion
 
-@ObjectType({ isAbstract: true })
-export class QuestionObject implements QuestionBase {
-  @Field(() => String)
-  id: string;
-
-  @Field(() => String)
-  title: string;
-
-  @Field(() => String)
-  content: string;
-
-  @Field(() => [String])
-  tags: string[];
-
-  @Field(() => UserObject)
-  author: UserObject;
-
-  @Field(() => Int)
-  score: number;
+//#region School Question Schema
+export interface SchoolQuestionBase {
+  school: any;
 }
+@Schema()
+class SchoolQuestionSchema implements SchoolQuestionBase {
+  @Prop({ type: Types.ObjectId, ref: School.name, required: true })
+  school: SchoolDocument
+}
+const schoolQuestionSchema = SchemaFactory.createForClass(SchoolQuestionSchema);
+questionSchema.discriminator('SCHOOL_QUESTION', schoolQuestionSchema);
+export type SchoolQuestionDocument = SchoolQuestionSchema & QuestionDocument;
+export type SchoolQuestionPayload = Payload<SchoolQuestionSchema, null, { school: string }> & QuestionPayload;
+//#endregion
 
-@InputType()
-export class QuestionCreateInput extends OmitType(
-  QuestionObject,
-  ['author', 'score', 'id'],
-  InputType,
-) {}
-@InputType()
-export class QuestionUpdateInput extends PartialType(
-  QuestionCreateInput,
-  InputType,
-) {}
-
+//#region Tag Schema
 @Schema()
 export class Tag {
   @Prop() name: string;
@@ -94,3 +75,4 @@ export const models = [
   { name: Question.name, schema: questionSchema },
   { name: Tag.name, schema: tagSchema },
 ];
+//#endregion

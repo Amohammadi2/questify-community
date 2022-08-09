@@ -16,10 +16,13 @@ import { User, UserDocument } from 'src/user-social/user-social.schemas';
 import { AskQuestionCommand } from './qa.commands';
 import {
   Question,
-  QuestionCreateInput,
   QuestionDocument,
-  QuestionObject,
 } from './qa.schema';
+import {
+  QuestionCreateInput,
+
+  QuestionObject
+} from "./qa.objects";
 
 @Resolver(() => QuestionObject)
 export class QaResolver {
