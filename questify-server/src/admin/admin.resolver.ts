@@ -5,30 +5,41 @@ import { GqlJwtGuard } from 'src/auth/guards/jwt-gql.guard';
 import { RoleGuard } from 'src/auth/guards/role-gql.guard';
 import { RegisterUserCommand } from 'src/user-social/user-social.commands';
 import { registerUserErrorMap } from 'src/user-social/user-social.gateway-errors';
-import { ManagerCreateInput, ManagerObject } from 'src/user-social/user-social.objects';
+import {
+  ManagerCreateInput,
+  ManagerObject,
+} from 'src/user-social/user-social.objects';
 import { ManagerPayload } from 'src/user-social/user-social.schemas';
 import { safeCall } from 'src/utils/safe-call';
 import { toObjectId } from 'src/utils/to-object-id';
+import { SetAccountActiveStatusCommand } from './admin.commands';
 
 @Resolver()
 export class AdminResolver {
-
-  constructor(
-    private readonly commandBus: CommandBus
-  ) {}
+  constructor(private readonly commandBus: CommandBus) {}
 
   @UseGuards(GqlJwtGuard, RoleGuard('isAdmin'))
   @Mutation(() => ManagerObject)
-  public async registerManager(
-    @Args('input') input: ManagerCreateInput
-  ) {
-    return safeCall(registerUserErrorMap, async () => (
-      await this.commandBus.execute(new RegisterUserCommand<ManagerPayload>({
-        ...input,
-        schools: input.schools.map(s => toObjectId(s)),
-        role: 'MANAGER'
-      }))
-    ))
+  public async registerManager(@Args('input') input: ManagerCreateInput) {
+    return safeCall(
+      registerUserErrorMap,
+      async () =>
+        await this.commandBus.execute(
+          new RegisterUserCommand<ManagerPayload>({
+            ...input,
+            schools: input.schools.map((s) => toObjectId(s)),
+            role: 'MANAGER',
+          }),
+        ),
+    );
   }
 
+  @UseGuards(GqlJwtGuard, RoleGuard('isAdmin'))
+  @Mutation(() => Boolean)
+  public async setAccountActiveStatus(
+    @Args('userId') userId: string,
+    @Args('isActive') isActive: boolean,
+  ) {
+    return await this.commandBus.execute(new SetAccountActiveStatusCommand(userId, isActive));
+  }
 }

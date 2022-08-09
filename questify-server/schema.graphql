@@ -40,6 +40,7 @@ type Mutation {
   changeSchoolMemberRole(userId: String!, newRole: String!): Boolean!
   askQuestion(input: QuestionCreateInput!): QuestionObject!
   registerManager(input: ManagerCreateInput!): ManagerObject!
+  setAccountActiveStatus(userId: String!, isActive: Boolean!): Boolean!
 }
 
 input GetAuthTokenInput {
