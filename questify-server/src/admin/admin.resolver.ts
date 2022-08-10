@@ -12,7 +12,10 @@ import {
 import { ManagerPayload } from 'src/user-social/user-social.schemas';
 import { safeCall } from 'src/utils/safe-call';
 import { toObjectId } from 'src/utils/to-object-id';
-import { SetAccountActiveStatusCommand } from './admin.commands';
+import {
+  SetAccountActiveStatusCommand,
+  SetSchoolActiveStatusCommand,
+} from './admin.commands';
 
 @Resolver()
 export class AdminResolver {
@@ -40,6 +43,21 @@ export class AdminResolver {
     @Args('userId') userId: string,
     @Args('isActive') isActive: boolean,
   ) {
-    return await this.commandBus.execute(new SetAccountActiveStatusCommand(userId, isActive));
+    return await this.commandBus.execute(
+      new SetAccountActiveStatusCommand(userId, isActive),
+    );
   }
+
+  @UseGuards(GqlJwtGuard, RoleGuard('isAdmin'))
+  @Mutation(() => Boolean)
+  public async setSchoolActiveStatsus(
+    @Args('schoolId') schoolId: string,
+    @Args('isActive') isActive: boolean,
+  ) {
+    return await this.commandBus.execute(
+      new SetSchoolActiveStatusCommand(schoolId, isActive),
+    );
+  }
+
+  
 }

@@ -15,9 +15,10 @@ interface SchoolBase {
 @Schema()
 export class School implements SchoolBase {
   @Prop({ required: true }) name: string;
+  @Prop({ required: true, default: true }) isActive: boolean;
 }
 export type SchoolDocument = School & Document;
-export type SchoolPayload = Payload<School>;
+export type SchoolPayload = Payload<School, "isActive">;
 export const schoolSchema = SchemaFactory.createForClass(School);
 
 @ObjectType()
