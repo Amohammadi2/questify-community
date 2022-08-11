@@ -25,7 +25,7 @@ import {
 import {
   InvitationCodeInput,
   UserCreateInput,
-  UserObject,
+  UserInterface,
 } from './user-social.objects';
 import {
   School,
@@ -76,7 +76,7 @@ export class UserSocialServiceResolver {
     return code.id;
   }
 
-  @Mutation(() => UserObject)
+  @Mutation(() => UserInterface)
   public async signUpWithInviation(
     @Args('code') code: string,
     @Args('input') input: UserCreateInput,

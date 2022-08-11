@@ -7,7 +7,7 @@ import {
   InputType,
 } from '@nestjs/graphql';
 import { SchoolObject } from 'src/school-management/school-management.schemas';
-import { UserObject } from 'src/user-social/user-social.objects';
+import { UserInterface } from 'src/user-social/user-social.objects';
 import { QuestionBase, SchoolQuestionBase } from './qa.schema';
 
 //#region Question Object
@@ -25,8 +25,8 @@ export class QuestionObject implements QuestionBase {
   @Field(() => [String])
   tags: string[];
 
-  @Field(() => UserObject)
-  author: UserObject;
+  @Field(() => UserInterface)
+  author: UserInterface;
 
   @Field(() => Int)
   score: number;

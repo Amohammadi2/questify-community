@@ -14,7 +14,7 @@ import {
   User,
   UserDocument,
 } from 'src/user-social/user-social.schemas';
-import { UserObject } from "src/user-social/user-social.objects";
+import { UserInterface } from "src/user-social/user-social.objects";
 import { AuthService } from './auth.service';
 
 @InputType()
@@ -31,7 +31,7 @@ class GetAuthTokenInput {
 @ObjectType()
 class GetAuthTokenResult {
   @Field() token: string;
-  @Field(() => UserObject) user: UserObject;
+  @Field(() => UserInterface) user: UserInterface;
 }
 
 @Resolver()
@@ -55,7 +55,7 @@ export class AuthResolver {
     return { token: result.access_token, user };
   }
 
-  @Mutation(() => UserObject, { nullable: true })
+  @Mutation(() => UserInterface, { nullable: true })
   public async verifyToken(@Args('input') input: VerifyTokenInput) {
     const { sub } = await this.authService.validateToken(input.token);
     if (!sub) return null;

@@ -2,18 +2,18 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type SchoolObject {
-  id: String!
-  name: String!
-}
-
-type UserObject {
+interface UserInterface {
   username: String!
   role: String!
   id: String!
 }
 
-type ManagerObject {
+type SchoolObject {
+  id: String!
+  name: String!
+}
+
+type ManagerObject implements UserInterface {
   username: String!
   role: String!
   id: String!
@@ -22,7 +22,7 @@ type ManagerObject {
 
 type GetAuthTokenResult {
   token: String!
-  user: UserObject!
+  user: UserInterface!
 }
 
 type Query {
@@ -31,9 +31,9 @@ type Query {
 
 type Mutation {
   getAuthToken(input: GetAuthTokenInput!): GetAuthTokenResult!
-  verifyToken(input: VerifyTokenInput!): UserObject
+  verifyToken(input: VerifyTokenInput!): UserInterface
   createInvitationCode(input: InvitationCodeInput!): String!
-  signUpWithInviation(code: String!, input: UserCreateInput!): UserObject!
+  signUpWithInviation(code: String!, input: UserCreateInput!): UserInterface!
   registerSchool(input: SchoolCreateInput!): SchoolObject!
   updateSchool(id: String!, input: SchoolUpdateInput!): SchoolObject!
   removeSchool(id: String!): Boolean!
@@ -77,7 +77,7 @@ type QuestionObject {
   title: String!
   content: String!
   tags: [String!]!
-  author: UserObject!
+  author: UserInterface!
   score: Int!
 }
 

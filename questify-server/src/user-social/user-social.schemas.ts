@@ -27,7 +27,7 @@ export class User implements UserBase {
   @Prop({ type: String, required: true, default: 'STUDENT' })
   role: UserRole;
 
-  @Prop({ default: true }) isActive: boolean;
+  @Prop({ default: true, required: true }) isActive: boolean;
 }
 
 export type UserDocument = User & Document;

@@ -1,6 +1,7 @@
 import {
   Field,
   InputType,
+  InterfaceType,
   ObjectType,
   OmitType,
   PartialType,
@@ -14,8 +15,8 @@ import {
 } from './user-social.schemas';
 
 //#region User Object
-@ObjectType()
-export class UserObject implements Omit<UserBase, 'password'> {
+@InterfaceType()
+export class UserInterface implements Omit<UserBase, 'password'> {
   @Field() username: string;
   @Field() role: UserRole;
   @Field() id?: string;
@@ -23,7 +24,7 @@ export class UserObject implements Omit<UserBase, 'password'> {
 
 @InputType()
 export class UserCreateInput extends OmitType(
-  UserObject,
+  UserInterface,
   ['id', 'role'],
   InputType,
 ) {
@@ -31,21 +32,12 @@ export class UserCreateInput extends OmitType(
 }
 
 @InputType()
-export class UserUpdateInput extends PartialType(UserCreateInput, InputType) {}
-
-@InputType()
-export class InvitationCodeInput
-  implements Omit<InvitationCodeBase, 'ownerUser'>
-{
-  @Field() daysValid: number;
-  @Field() targetRole: UserRole;
-  @Field() targetSchool: string;
-}
+export class UserUpdateInput extends PartialType(UserCreateInput) {}
 //#endregion
 
 //#region Manager Object
-@ObjectType()
-export class ManagerObject extends UserObject implements ManagerBase {
+@ObjectType({ implements: UserInterface })
+export class ManagerObject extends UserInterface implements ManagerBase {
   @Field(() => [SchoolObject]) schools: SchoolObject[];
 }
 
@@ -61,4 +53,15 @@ export class ManagerCreateInput extends OmitType(
 
 @InputType()
 export class ManagerUpdateInput extends PartialType(ManagerCreateInput) {}
+//#endregion
+
+//#region Invitation Code Object
+@InputType()
+export class InvitationCodeInput
+  implements Omit<InvitationCodeBase, 'ownerUser'>
+{
+  @Field() daysValid: number;
+  @Field() targetRole: UserRole;
+  @Field() targetSchool: string;
+}
 //#endregion
