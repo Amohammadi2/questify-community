@@ -1,5 +1,5 @@
-import { UserCreateInput } from "./user-social.objects";
-import { UserDocument, UserPayload, UserRole } from "./user-social.schemas";
+import { UserCreateInput } from "../user-social.objects";
+import { UserDocument, UserPayload, UserRole } from "../user-social.schemas";
 
 export class CreateInvitationCodeCommand {
   constructor(
@@ -7,12 +7,6 @@ export class CreateInvitationCodeCommand {
     public readonly targetRole: UserRole,
     public readonly daysValid: number,
     public readonly targetSchool: string
-  ) {}
-}
-
-export class ValidateInvitationCodeCommand {
-  constructor(
-    public readonly codeId: string
   ) {}
 }
 

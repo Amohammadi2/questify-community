@@ -3,8 +3,8 @@ import { CommandBus } from '@nestjs/cqrs';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { GqlJwtGuard } from 'src/auth/guards/jwt-gql.guard';
 import { RoleGuard } from 'src/auth/guards/role-gql.guard';
-import { RegisterUserCommand } from 'src/user-social/user-social.commands';
-import { registerUserErrorMap } from 'src/user-social/user-social.gateway-errors';
+import { RegisterUserCommand } from 'src/user-social/commands/commands';
+import { registerUserErrorMap } from 'src/user-social/graphql/error-map';
 import {
   ManagerCreateInput,
   ManagerObject,
