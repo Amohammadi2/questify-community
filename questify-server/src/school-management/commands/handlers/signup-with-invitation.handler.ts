@@ -3,22 +3,28 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { toObjectId } from 'src/utils/to-object-id';
 import {
-  RegisterUserCommand,
   SignUpWithInvitationCommand
-} from './commands';
+} from '../commands';
+import {
+  UserDocument,
+  User
+} from "../../../user-social/database/user";
+import { StudentPayload } from "../../../user-social/database/user";
+import { TeacherPayload } from "../../../user-social/database/user";
 import {
   InvitationCode,
-  InvitationCodeDocument,
-  UserDocument,
-  User,
-  StudentPayload,
-  TeacherPayload
-} from '../user-social.schemas';
+  InvitationCodeDocument
+} from "../../../user-social/database/invitation-code";
 import {
   School,
   SchoolDocument
-} from 'src/school-management/school-management.schemas';
+} from "src/school-management/database/school";
 
+
+/**
+ * this command handler will be split into two processes, one for signing up
+ * and the other for joining the schools.
+ */
 
 @CommandHandler(SignUpWithInvitationCommand)
 export class SignUpWithInvitationHandler
@@ -73,23 +79,23 @@ export class SignUpWithInvitationHandler
     switch (codeDoc.targetRole) {
       // register a student
       case 'STUDENT':
-        user = await this.commandBus.execute(
-          new RegisterUserCommand<StudentPayload>({
-            ...userInfo,
-            role: codeDoc.targetRole,
-            school: codeDoc.targetSchool,
-          })
-        );
+        // user = await this.commandBus.execute(
+        //   new RegisterUserCommand<StudentPayload>({
+        //     ...userInfo,
+        //     role: codeDoc.targetRole,
+        //     school: codeDoc.targetSchool,
+        //   })
+        // );
         break;
       // register a teacher
       case 'TEACHER':
-        user = await this.commandBus.execute(
-          new RegisterUserCommand<TeacherPayload>({
-            ...userInfo,
-            role: codeDoc.targetRole,
-            schools: [codeDoc.targetSchool],
-          })
-        );
+        // user = await this.commandBus.execute(
+        //   new RegisterUserCommand<TeacherPayload>({
+        //     ...userInfo,
+        //     role: codeDoc.targetRole,
+        //     schools: [codeDoc.targetSchool],
+        //   })
+        // );
         break;
     }
     return user;

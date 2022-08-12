@@ -1,12 +1,20 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreateInvitationCodeCommand } from './commands';
+import { CreateInvitationCodeCommand } from '../commands';
 import {
   InvitationCode,
   InvitationCodeDocument
-} from '../user-social.schemas';
+} from "../../../user-social/database/invitation-code";
 
+/**
+ * This command handler is going to be moved to the school management module
+ * in the next phase. The reason is that users will be able to sign up
+ * without an invitation. The invitation process is only required when 
+ * joining schools.
+ * 
+ * Todo: move this command handler to the school management module
+ */
 
 @CommandHandler(CreateInvitationCodeCommand)
 export class CreateInvitationCodeHandler

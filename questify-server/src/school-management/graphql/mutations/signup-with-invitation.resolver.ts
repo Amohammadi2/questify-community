@@ -1,12 +1,12 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { SignUpWithInvitationCommand } from '../commands/commands';
+import { SignUpWithInvitationCommand } from '../../commands';
 import {
-  UserCreateInput,
+  CreateUserInput,
   UserInterface
-} from '../user-social.objects';
+} from "../../../user-social/graphql/typedefs/user/user.defs";
 import { safeCall } from 'src/utils/safe-call';
-import { registerUserErrorMap, signUpWithInvitationErrorMap } from './error-map';
+import { registerUserErrorMap, signUpWithInvitationErrorMap } from '../../../user-social/graphql/error-map';
 
 
 @Resolver()
@@ -19,7 +19,7 @@ export class SignUpWithInvitationResolver {
   @Mutation(() => UserInterface)
   public async signUpWithInviation(
     @Args('code') code: string,
-    @Args('input') input: UserCreateInput
+    @Args('input') input: CreateUserInput
   ) {
     return await safeCall({ ...registerUserErrorMap, ...signUpWithInvitationErrorMap }, async () => {
       const newUser = await this.commandBus.execute(

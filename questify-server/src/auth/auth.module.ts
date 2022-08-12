@@ -9,10 +9,18 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { GqlLocalGuard } from './guards/local-gql.guard';
 import { GqlJwtGuard } from './guards/jwt-gql.guard';
 import { resolvers } from './auth.resolver';
+import { CqrsModule } from '@nestjs/cqrs';
+import { handlers } from './commands';
+import { MongooseModule } from '@nestjs/mongoose';
+import { schemas } from './database';
+
+const mongooseModule = MongooseModule.forFeature(schemas);
 
 @Global()
 @Module({
   imports: [
+    CqrsModule,
+    mongooseModule,
     UserSocialModule,
     PassportModule,
     JwtModule.register({
@@ -28,7 +36,8 @@ import { resolvers } from './auth.resolver';
     GqlLocalGuard,
     GqlJwtGuard,
     ...resolvers,
+    ...handlers
   ],
-  exports: [AuthService, RoleCheckService],
+  exports: [AuthService, RoleCheckService, mongooseModule],
 })
 export class AuthModule {}

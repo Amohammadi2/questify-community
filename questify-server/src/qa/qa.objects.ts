@@ -6,8 +6,8 @@ import {
   ObjectType,
   InputType,
 } from '@nestjs/graphql';
-import { SchoolObject } from 'src/school-management/school-management.schemas';
-import { UserInterface } from 'src/user-social/user-social.objects';
+import { SchoolObject } from "src/school-management/graphql/typedefs/school.defs";
+import { UserInterface } from "src/user-social/graphql/typedefs/user/user.defs";
 import { QuestionBase, SchoolQuestionBase } from './qa.schema';
 
 //#region Question Object

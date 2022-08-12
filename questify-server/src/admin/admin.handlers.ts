@@ -1,17 +1,17 @@
 import { ICommandHandler, CommandHandler } from '@nestjs/cqrs';
 import { Model } from 'mongoose';
-import { UserDocument } from 'src/user-social/user-social.schemas';
+import { UserDocument } from "src/user-social/database/user";
 import {
   SetAccountActiveStatusCommand,
   SetSchoolActiveStatusCommand,
 } from './admin.commands';
-import { User } from 'src/user-social/user-social.schemas';
+import { User } from "src/user-social/database/user";
 import { InjectModel } from '@nestjs/mongoose';
 import { toObjectId } from 'src/utils/to-object-id';
 import {
   School,
-  SchoolDocument,
-} from 'src/school-management/school-management.schemas';
+  SchoolDocument
+} from "src/school-management/database/school";
 
 @CommandHandler(SetAccountActiveStatusCommand)
 export class SetAccountActiveStatusHandler

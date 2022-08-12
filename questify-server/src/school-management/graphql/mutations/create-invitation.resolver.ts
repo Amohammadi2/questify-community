@@ -4,12 +4,10 @@ import {
 } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CreateInvitationCodeCommand } from '../commands/commands';
-import {
-  InvitationCodeDocument,
-  ManagerDocument
-} from '../user-social.schemas';
-import { InvitationCodeInput } from '../user-social.objects';
+import { CreateInvitationCodeCommand } from '../../commands';
+import { ManagerDocument } from "../../../user-social/database/user/discriminators/manager";
+import { InvitationCodeDocument } from "../../../user-social/database/invitation-code";
+import { InvitationCodeCreateInput } from "../../../user-social/graphql/typedefs/invitation-code.defs";
 import { CUser } from 'src/auth/user.decorator';
 import { GqlJwtGuard } from 'src/auth/guards/jwt-gql.guard';
 import { RoleGuard } from 'src/auth/guards/role-gql.guard';
@@ -24,7 +22,7 @@ export class CreateInvitationCodeResolver {
   @UseGuards(GqlJwtGuard, RoleGuard('isManager'))
   @Mutation(() => String)
   public async createInvitationCode(
-    @Args('input') input: InvitationCodeInput,
+    @Args('input') input: InvitationCodeCreateInput,
     @CUser() manager: ManagerDocument
   ) {
 

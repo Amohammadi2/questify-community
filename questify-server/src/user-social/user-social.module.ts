@@ -2,7 +2,8 @@ import { forwardRef, Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { MongooseModule } from '@nestjs/mongoose';
 import { SchoolManagementModule } from 'src/school-management/school-management.module';
-import { InvitationCode, invitationCodeSchema, User, userSchema } from './user-social.schemas';
+import { User, userSchema } from "./database/user";
+import { InvitationCode, invitationCodeSchema } from "./database/invitation-code";
 import { handlers } from "./commands";
 import { resolvers } from './graphql';
 

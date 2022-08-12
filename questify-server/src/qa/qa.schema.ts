@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { School, SchoolDocument } from 'src/school-management/school-management.schemas';
-import { User, UserDocument } from 'src/user-social/user-social.schemas';
+import { School, SchoolDocument } from "src/school-management/database/school";
+import { User, UserDocument } from "src/user-social/database/user";
 import { Payload } from 'src/utils/payload';
 
 export interface QuestionBase {

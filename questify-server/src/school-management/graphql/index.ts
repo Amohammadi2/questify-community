@@ -1,9 +1,10 @@
 import { UnauthorizedException } from '@nestjs/common';
-import { ChangeSchoolMemberRoleResolver } from './change-member-role.resolver';
-import { CreateSchoolResolver } from './create-school.resolver';
-import { RemoveSchoolResolver } from './remove-school.resolver';
-import { UpdateSchoolResolver } from './update-school.resolver';
+import { ChangeSchoolMemberRoleResolver } from './mutations/update-school.resolver';
+import { CreateSchoolResolver } from './mutations/create-school.resolver';
+import { RemoveSchoolResolver } from './mutations/remove-school.resolver';
+import { UpdateSchoolResolver } from './mutations/change-member-role.resolver';
 
+export * from "./typedefs/school.defs";
 
 export const resolvers = [
   CreateSchoolResolver,

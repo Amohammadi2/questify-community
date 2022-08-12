@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, ForbiddenException, Injectable } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { Observable } from 'rxjs';
-import { UserDocument } from 'src/user-social/user-social.schemas';
+import { UserDocument } from "src/user-social/database/user";
 import { RoleCheckService } from '../auth.service';
 
 

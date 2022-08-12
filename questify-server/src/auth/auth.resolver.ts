@@ -12,9 +12,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import {
   User,
-  UserDocument,
-} from 'src/user-social/user-social.schemas';
-import { UserInterface } from "src/user-social/user-social.objects";
+  UserDocument
+} from "src/user-social/database/user";
+import { UserInterface } from "src/user-social/graphql/typedefs/user/user.defs";
 import { AuthService } from './auth.service';
 
 @InputType()

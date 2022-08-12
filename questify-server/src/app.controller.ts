@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { AuthGuard } from '@nestjs/passport';
 import { Model } from 'mongoose';
 import { AppService } from './app.service';
-import { User } from './user-social/user-social.schemas';
+import { User } from "./user-social/database/UserRole";
 import * as bcrypt from 'bcrypt';
 import { Question, QuestionDocument } from './qa/qa.schema';
 

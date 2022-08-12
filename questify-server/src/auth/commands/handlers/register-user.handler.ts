@@ -1,11 +1,11 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { RegisterUserCommand } from './commands';
+import { RegisterUserCommand } from '../commands';
 import {
   UserDocument,
   User
-} from '../user-social.schemas';
+} from "../../../user-social/database/user";
 import * as bcrypt from 'bcrypt';
 
 

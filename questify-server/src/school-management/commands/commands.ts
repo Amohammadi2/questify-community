@@ -1,4 +1,4 @@
-import { SchoolPayload } from '../school-management.schemas';
+import { SchoolPayload } from "../database/school";
 
 export class CreateSchoolCommand {
   constructor(public readonly school: SchoolPayload) {}
@@ -13,6 +13,22 @@ export class UpdateSchoolCommand {
 
 export class DeleteSchoolCommand {
   constructor(public readonly id: string) {}
+}
+
+export class CreateInvitationCodeCommand {
+  constructor(
+    public readonly user: UserDocument,
+    public readonly targetRole: UserRole,
+    public readonly daysValid: number,
+    public readonly targetSchool: string
+  ) {}
+}
+
+export class SignUpWithInvitationCommand {
+  constructor(
+    public readonly code: string,
+    public readonly userInfo: CreateUserInput
+  ) {}
 }
 
 export class ChangeRoleCommand {

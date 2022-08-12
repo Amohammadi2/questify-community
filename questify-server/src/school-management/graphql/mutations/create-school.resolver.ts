@@ -4,27 +4,27 @@ import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { GqlJwtGuard } from 'src/auth/guards/jwt-gql.guard';
 import { RoleGuard } from 'src/auth/guards/role-gql.guard';
 import { CUser } from 'src/auth/user.decorator';
-import { UserDocument } from 'src/user-social/user-social.schemas';
-import { UpdateSchoolCommand } from '../commands/commands';
+import { UserDocument } from "src/user-social/database/user";
+import { CreateSchoolCommand } from '../commands/commands';
 import {
-  SchoolObject,
-  SchoolUpdateInput
-} from '../school-management.schemas';
+  SchoolCreateInput,
+  SchoolObject
+} from "./typedefs/school.defs";
+
 
 
 @Resolver()
-export class ChangeSchoolMemberRoleResolver {
+export class CreateSchoolResolver {
   constructor(
     private readonly commandBus: CommandBus
   ) { }
 
   @UseGuards(GqlJwtGuard, RoleGuard('isManagerOrAdmin'))
   @Mutation(() => SchoolObject)
-  public async updateSchool(
-    @Args('id') id: string,
-    @Args('input') input: SchoolUpdateInput,
+  public async registerSchool(
+    @Args('input') input: SchoolCreateInput,
     @CUser() user: UserDocument
   ) {
-    return await this.commandBus.execute(new UpdateSchoolCommand(id, input));
+    return await this.commandBus.execute(new CreateSchoolCommand(input));
   }
 }

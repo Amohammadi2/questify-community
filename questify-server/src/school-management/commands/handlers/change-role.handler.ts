@@ -1,8 +1,8 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User, UserDocument } from 'src/user-social/user-social.schemas';
-import { ChangeRoleCommand } from './commands';
+import { User, UserDocument } from "../../../user-social/database/user";
+import { ChangeRoleCommand } from '../commands';
 
 
 @CommandHandler(ChangeRoleCommand)

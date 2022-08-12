@@ -4,7 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserSocialModule } from 'src/user-social/user-social.module';
 import { handlers } from './commands';
 import { resolvers } from './graphql';
-import { models } from './school-management.schemas';
+import { models } from './database';
 
 const mongooseModule = MongooseModule.forFeature(models);
 

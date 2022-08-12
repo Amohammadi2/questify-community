@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User, UserDocument } from 'src/user-social/user-social.schemas';
+import { User, UserDocument } from "src/user-social/database/user";
 import * as bcrypt from 'bcrypt';
 
 interface JwtPayload {

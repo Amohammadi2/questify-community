@@ -7,9 +7,9 @@ import { RegisterUserCommand } from 'src/user-social/commands/commands';
 import { registerUserErrorMap } from 'src/user-social/graphql/error-map';
 import {
   ManagerCreateInput,
-  ManagerObject,
-} from 'src/user-social/user-social.objects';
-import { ManagerPayload } from 'src/user-social/user-social.schemas';
+  ManagerObject
+} from "src/user-social/graphql/typedefs/user/manager.defs";
+import { ManagerPayload } from "src/user-social/database/user";
 import { safeCall } from 'src/utils/safe-call';
 import { toObjectId } from 'src/utils/to-object-id';
 import {

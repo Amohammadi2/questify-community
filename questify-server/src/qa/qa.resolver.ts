@@ -12,7 +12,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { GqlJwtGuard } from 'src/auth/guards/jwt-gql.guard';
 import { CUser } from 'src/auth/user.decorator';
-import { User, UserDocument } from 'src/user-social/user-social.schemas';
+import { User, UserDocument } from "src/user-social/database/user";
 import { AskQuestionCommand } from './qa.commands';
 import {
   Question,
