@@ -1,20 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
+import { UserAccount, UserAccountDoc } from 'src/auth/database/user-account';
 import { School, SchoolDocument } from "src/school-management/database/school";
-import { User, UserDocument } from "src/user-social/database/user";
 import { Payload } from 'src/utils/payload';
-
-export interface QuestionBase {
-  title: any;
-  content: any;
-  tags: any;
-  author: any;
-  score: any;
-}
 
 //#region Question Schema
 @Schema({ timestamps: true, discriminatorKey: 'type' })
-export class Question implements QuestionBase {
+export class Question {
 
   @Prop({ required: true })
   type: string;
@@ -28,15 +20,11 @@ export class Question implements QuestionBase {
   @Prop({ type: () => [tagSchema], required: true })
   tags: Tag[];
 
-  @Prop({ type: Types.ObjectId, ref: User.name, required: true })
-  author: UserDocument | string;
+  @Prop({ type: Types.ObjectId, ref: UserAccount.name, required: true })
+  author: UserAccountDoc;
 
   @Prop({ type: Number, required: true, default: 0 })
   score: number;
-
-  constructor(props: Partial<QuestionBase>) {
-    Object.assign(this, props);
-  }
 }
 
 export type QuestionDocument = Question & Document;
@@ -49,11 +37,8 @@ export const questionSchema = SchemaFactory.createForClass(Question);
 //#endregion
 
 //#region School Question Schema
-export interface SchoolQuestionBase {
-  school: any;
-}
 @Schema()
-class SchoolQuestionSchema implements SchoolQuestionBase {
+class SchoolQuestionSchema {
   @Prop({ type: Types.ObjectId, ref: School.name, required: true })
   school: SchoolDocument
 }

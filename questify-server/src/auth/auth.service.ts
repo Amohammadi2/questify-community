@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User, UserDocument } from "src/user-social/database/user";
+import { UserAccount, UserAccountDoc } from "./database/user-account";
 import * as bcrypt from 'bcrypt';
 
 interface JwtPayload {
@@ -13,15 +13,15 @@ interface JwtPayload {
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(UserAccount.name) private userAccount: Model<UserAccountDoc>,
     private jwtService: JwtService,
   ) {}
 
   async authenticateUser(
     username: string,
     password: string,
-  ): Promise<UserDocument> {
-    const user = await this.userModel.findOne({ username });
+  ): Promise<UserAccountDoc> {
+    const user = await this.userAccount.findOne({ username });
     if (user && !user.isActive) {
       throw new UnauthorizedException('Your account is disabled');
     }
@@ -31,7 +31,7 @@ export class AuthService {
     return null;
   }
 
-  async generateAccessToken(user: UserDocument) {
+  async generateAccessToken(user: UserAccountDoc) {
     const accessToken = this.jwtService.sign({
       username: user.username,
       sub: user.id,
@@ -48,33 +48,4 @@ export class AuthService {
   }
 }
 
-@Injectable()
-export class RoleCheckService {
-  public isManagerOrAdmin(user: UserDocument) {
-    return this.isManager(user) || this.isAdmin(user);
-  }
 
-  public isManager(user: UserDocument) {
-    return user.role == 'MANAGER';
-  }
-
-  public isStudentOrAdmin(user: UserDocument) {
-    return this.isStudent(user) || this.isAdmin(user);
-  }
-
-  private isStudent(user: UserDocument) {
-    return user.role == 'STUDENT';
-  }
-
-  public isTeacherOrAdmin(user: UserDocument) {
-    return this.isTeacher(user) || this.isAdmin(user);
-  }
-
-  public isTeacher(user: UserDocument) {
-    return user.role == 'TEACHER';
-  }
-
-  public isAdmin(user: UserDocument) {
-    return user.role == 'ADMIN';
-  }
-}

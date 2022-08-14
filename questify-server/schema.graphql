@@ -2,10 +2,9 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-interface UserInterface {
-  username: String!
-  role: String!
+type UserAccountObject {
   id: String!
+  username: String!
 }
 
 type SchoolObject {
@@ -13,16 +12,9 @@ type SchoolObject {
   name: String!
 }
 
-type ManagerObject implements UserInterface {
-  username: String!
-  role: String!
-  id: String!
-  schools: [SchoolObject!]!
-}
-
 type GetAuthTokenResult {
   token: String!
-  user: UserInterface!
+  user: UserAccountObject!
 }
 
 type Query {
@@ -30,18 +22,35 @@ type Query {
 }
 
 type Mutation {
-  getAuthToken(input: GetAuthTokenInput!): GetAuthTokenResult!
-  verifyToken(input: VerifyTokenInput!): UserInterface
-  createInvitationCode(input: InvitationCodeInput!): String!
-  signUpWithInviation(code: String!, input: UserCreateInput!): UserInterface!
-  registerSchool(input: SchoolCreateInput!): SchoolObject!
-  updateSchool(id: String!, input: SchoolUpdateInput!): SchoolObject!
-  removeSchool(id: String!): Boolean!
-  changeSchoolMemberRole(userId: String!, newRole: String!): Boolean!
-  askQuestion(input: QuestionCreateInput!): QuestionObject!
-  registerManager(input: ManagerCreateInput!): ManagerObject!
+  createAccount(input: CreateUserAccountInput!): UserAccountObject!
   setAccountActiveStatus(userId: String!, isActive: Boolean!): Boolean!
-  setSchoolActiveStatsus(schoolId: String!, isActive: Boolean!): Boolean!
+  registerSchool(input: CreateSchoolInput!): SchoolObject!
+  changeSchoolMemberRole(userId: String!, newRole: String!): Boolean!
+  removeSchool(id: String!): Boolean!
+  updateSchool(id: String!, input: UpdateSchoolInput!): SchoolObject!
+  setSchoolActiveStatus(schoolId: String!, isActive: Boolean!): Boolean!
+  createInvitationCode(input: InvitationCodeCreateInput!): String!
+  getAuthToken(input: GetAuthTokenInput!): GetAuthTokenResult!
+  verifyToken(input: VerifyTokenInput!): UserAccountObject
+}
+
+input CreateUserAccountInput {
+  username: String!
+  password: String!
+}
+
+input CreateSchoolInput {
+  name: String!
+}
+
+input UpdateSchoolInput {
+  name: String
+}
+
+input InvitationCodeCreateInput {
+  daysValid: Float!
+  targetRole: String!
+  targetSchool: String!
 }
 
 input GetAuthTokenInput {
@@ -51,44 +60,4 @@ input GetAuthTokenInput {
 
 input VerifyTokenInput {
   token: String!
-}
-
-input InvitationCodeInput {
-  daysValid: Float!
-  targetRole: String!
-  targetSchool: String!
-}
-
-input UserCreateInput {
-  username: String!
-  password: String!
-}
-
-input SchoolCreateInput {
-  name: String!
-}
-
-input SchoolUpdateInput {
-  name: String
-}
-
-type QuestionObject {
-  id: String!
-  title: String!
-  content: String!
-  tags: [String!]!
-  author: UserInterface!
-  score: Int!
-}
-
-input QuestionCreateInput {
-  title: String!
-  content: String!
-  tags: [String!]!
-}
-
-input ManagerCreateInput {
-  username: String!
-  schools: [String!]!
-  password: String!
 }

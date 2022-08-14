@@ -5,16 +5,9 @@ import { CreateInvitationCodeCommand } from '../commands';
 import {
   InvitationCode,
   InvitationCodeDocument
-} from "../../../user-social/database/invitation-code";
+} from "../../database/invitation-code";
+import { toObjectId } from 'src/utils/to-object-id';
 
-/**
- * This command handler is going to be moved to the school management module
- * in the next phase. The reason is that users will be able to sign up
- * without an invitation. The invitation process is only required when 
- * joining schools.
- * 
- * Todo: move this command handler to the school management module
- */
 
 @CommandHandler(CreateInvitationCodeCommand)
 export class CreateInvitationCodeHandler
@@ -28,9 +21,9 @@ export class CreateInvitationCodeHandler
   async execute(command: CreateInvitationCodeCommand) {
     return await this.invitationCodeModel.create({
       daysValid: command.daysValid,
-      ownerUser: command.user.id,
+      ownerUser: toObjectId(command.userId),
       targetRole: command.targetRole,
-      targetSchool: command.targetSchool,
+      targetSchool: toObjectId(command.targetSchoolId),
     });
   }
 }

@@ -1,5 +1,6 @@
 import { Global, Module } from '@nestjs/common';
-import { AuthService, RoleCheckService } from './auth.service';
+import { AuthService } from './auth.service';
+import { RoleCheckService } from "../school-management/role-check.service";
 import { UserSocialModule } from '../user-social/user-social.module';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './strategies/local.strategy';
@@ -8,11 +9,11 @@ import { jwtConstants } from './constants';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { GqlLocalGuard } from './guards/local-gql.guard';
 import { GqlJwtGuard } from './guards/jwt-gql.guard';
-import { resolvers } from './auth.resolver';
 import { CqrsModule } from '@nestjs/cqrs';
 import { handlers } from './commands';
 import { MongooseModule } from '@nestjs/mongoose';
 import { schemas } from './database';
+import { SchoolManagementModule } from 'src/school-management/school-management.module';
 
 const mongooseModule = MongooseModule.forFeature(schemas);
 
@@ -27,6 +28,7 @@ const mongooseModule = MongooseModule.forFeature(schemas);
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '1d' },
     }),
+    SchoolManagementModule
   ],
   providers: [
     AuthService,
@@ -35,7 +37,6 @@ const mongooseModule = MongooseModule.forFeature(schemas);
     JwtStrategy,
     GqlLocalGuard,
     GqlJwtGuard,
-    ...resolvers,
     ...handlers
   ],
   exports: [AuthService, RoleCheckService, mongooseModule],

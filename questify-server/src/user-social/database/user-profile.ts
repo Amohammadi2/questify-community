@@ -1,14 +1,14 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Types } from "mongoose";
+import { UserAccount, UserAccountDoc } from "src/auth/database/user-account";
 import { Payload } from "src/utils/payload";
-import { UserAccount, UserAccountDoc } from "../resources";
 
 @Schema()
 export class UserProfile {
   @Prop({ required: true }) nickName: string;
   @Prop({ default: '' }) bio: string;
-  @Prop({ default: [] }) followers: UserProfileDoc; 
-  @Prop({ default: [] }) following: UserProfileDoc;
+  @Prop({ type: [Types.ObjectId], default: [] }) followers: UserProfileDoc; 
+  @Prop({ type: [Types.ObjectId], default: [] }) following: UserProfileDoc;
   @Prop({ type: Types.ObjectId, ref: UserAccount.name, required: true }) account: UserAccountDoc;
 }
 

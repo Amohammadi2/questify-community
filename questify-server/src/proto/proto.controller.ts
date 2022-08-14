@@ -1,15 +1,18 @@
 import { Controller, Get } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User, UserDocument } from "src/user-social/database/user";
+import { UserAccount, UserAccountDoc } from 'src/auth/database/user-account';
+
 
 @Controller('proto')
 export class ProtoController {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(@InjectModel(UserAccount.name) private userAccount: Model<UserAccountDoc>) {}
 
   @Get()
   async runProto() {
-    const user = await this.userModel.findOne({ username: 'ashkan' });
-    return { role: user.role };
+    const user = await this.userAccount.findOne({ username: 'ashkan' });
+    return {
+      isAdmin: user.isAdmin
+    };
   }
 }

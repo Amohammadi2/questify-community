@@ -1,1 +1,0 @@
-export { UserAccount, UserAccountDoc } from "src/auth/database/user-account";

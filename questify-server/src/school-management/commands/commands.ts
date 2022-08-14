@@ -1,4 +1,5 @@
 import { SchoolPayload } from "../database/school";
+import { SchoolMemberRole } from "../database/school-member";
 
 export class CreateSchoolCommand {
   constructor(public readonly school: SchoolPayload) {}
@@ -17,23 +18,30 @@ export class DeleteSchoolCommand {
 
 export class CreateInvitationCodeCommand {
   constructor(
-    public readonly user: UserDocument,
-    public readonly targetRole: UserRole,
+    public readonly userId: string,
+    public readonly targetRole: SchoolMemberRole,
     public readonly daysValid: number,
-    public readonly targetSchool: string
-  ) {}
-}
-
-export class SignUpWithInvitationCommand {
-  constructor(
-    public readonly code: string,
-    public readonly userInfo: CreateUserInput
+    public readonly targetSchoolId: string
   ) {}
 }
 
 export class ChangeRoleCommand {
   constructor(
-    public readonly userId: string,
+    public readonly userAccountID: string,
     public readonly newRole: 'STUDENT' | 'TEACHER'
+  ) {}
+}
+
+export class SetSchoolActiveStatusCommand {
+  constructor(
+    public readonly schoolId: string,
+    public readonly isActive: boolean
+  ) {}
+}
+
+export class AddManagerCommand {
+  constructor (
+    public readonly schoolId: string,
+    public readonly userAccountId: string
   ) {}
 }
