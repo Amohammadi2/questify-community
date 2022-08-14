@@ -1,1 +1,0 @@
-neomodel_remove_labels --db bolt://neo4j:admin@localhost:7687
