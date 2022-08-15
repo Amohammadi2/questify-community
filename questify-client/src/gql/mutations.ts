@@ -1,35 +1,24 @@
 import { gql } from "@apollo/client";
 
 export const OBTAIN_AUTH_TOKEN = gql`
-  mutation ObtainAuthToken($input: ObtainAuthTokenInput!) {
-    obtainAuthToken(input: $input) {
+  mutation ObtainAuthToken($input: GetAuthTokenInput!) {
+    getAuthToken(input: $input) {
       token
       user {
-        id username bio profileImageUrl
+        username
       }
     }
   }
 `;
 
 export const VERIFY_TOKEN = gql`
-  mutation VerifyToken($input: String!) {
-    verifyToken(token: $input) {
-      user {
-        id username bio profileImageUrl
-      }
+  mutation VerifyToken($token: String!) {
+    verifyToken(input: { token: $token }) {
+      username
     }
   }
 `;
 
 export const ASK_QUESTION = gql`
-  mutation AskQuestion($input: AskQuestionInput!) {
-    askQuestion(input: $input) {
-      title
-      body
-      tags
-      attachments
-      coverImage
-      scores
-    }
-  }
+
 `
