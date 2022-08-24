@@ -1,9 +1,9 @@
 import type { NextPage } from "next";
+import Link from "next/link";
 import { LoginForm } from "../modules/user-login";
 import { Navbar } from "../modules/app-ui";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import Link from "next/link";
 import { LoginFormArea } from "../modules/user-login/components/LoginFormArea";
 import { LoginFormContainer } from "../modules/login-page/components/LoginFormContainer";
 
@@ -17,7 +17,7 @@ const LoginPage: NextPage = () => {
       </Navbar>
       <LoginFormContainer>
         <LoginFormArea>
-          <LoginForm redirectUrl="/" />
+          <LoginForm redirectUrl="/school-questions" />
         </LoginFormArea>
       </LoginFormContainer>
     </>
