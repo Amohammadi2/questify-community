@@ -54,7 +54,7 @@ export const LoginForm = ClientOnly(({ redirectUrl } : ILoginFormProps = {redire
         }}
       />
       <FormSpacer />
-      <Button type="submit" disabled={(!username || !password || loading) ? true:false }>
+      <Button shadow type="submit" disabled={(!username || !password || loading) ? true:false }>
         {loading ? <Loading size="sm" /> : 'ورود'}
       </Button>
     </form>
