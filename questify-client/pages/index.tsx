@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { Card, styled } from "@nextui-org/react";
+import { Card, styled, Button} from "@nextui-org/react";
 import Link from 'next/link';
 import { useRecoilValue } from 'recoil';
 import { accountAtom } from '../modules/auth-store/states';
@@ -12,6 +12,14 @@ import { PrimaryNavbar, BigHeader, HeaderDescription } from '../modules/landing-
 const Home: NextPage = () => {
 
   const account = useRecoilValue(accountAtom);
+
+  const EnterButton = (
+    <Link href={account ? '/school-questions' : '/login'}>
+      <Button>
+        {account ? 'ورود به صفحه سوالات' : 'ورود به حساب کاربری'}
+      </Button>
+    </Link>
+  );
 
   return (
     <>
@@ -37,7 +45,8 @@ const Home: NextPage = () => {
             <ItemCard>
               <Tick />
               <span>امکان گلچین سولات برای ارجاع به دبیر</span>
-            </ItemCard>  
+            </ItemCard>
+            {EnterButton}
           </FlexColumn>
         </FlexRow>
       </NavSpacer>
