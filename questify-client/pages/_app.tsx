@@ -9,6 +9,7 @@ import { SSRStateRoot } from '../modules/ssr-state/SSRStateRoot';
 import { AuthenticatorRoot } from '../modules/startup-authenticator/components/AuthenticatorRoot';
 import { AppPropsWithLayout } from '../utils/next-layout';
 import { ReactNode } from 'react';
+import NextNProgress from 'nextjs-progressbar';
 
 fontAwesomeConfig.autoAddCss = false;
 
@@ -21,6 +22,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       <RecoilRoot>
         <SSRStateRoot>
           <AuthenticatorRoot>
+            <NextNProgress color="#FFF" />
             {getLayout(<Component {...pageProps} />)}
           </AuthenticatorRoot>
         </SSRStateRoot>

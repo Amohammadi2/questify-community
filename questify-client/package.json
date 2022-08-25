@@ -19,6 +19,7 @@
     "graphql": "^16.6.0",
     "intercept-stdout": "^0.1.2",
     "next": "12.2.5",
+    "nextjs-progressbar": "^0.0.14",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "recoil": "^0.7.5"
