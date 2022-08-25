@@ -1,11 +1,11 @@
 import { styled } from "@nextui-org/react";
 import { navbarHeight } from "../../constants";
 import Logo from "../../../assets/logo.svg";
+import Link from "next/link";
 
 
 const StyledNavbarUI = styled('nav', {
   '&': {
-    position: 'fixed',
     top: '0',
     width: '100%',
     height: navbarHeight,
@@ -20,7 +20,7 @@ const StyledNavbarUI = styled('nav', {
 export default function Navbar({ children }) {
   return (
     <StyledNavbarUI>
-      <Logo />
+      <Link href="/"><Logo style={{ cursor: 'pointer' }} /></Link>
       <div style={{ flexGrow: '1' }} />
       {children}
     </StyledNavbarUI>
