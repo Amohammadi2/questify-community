@@ -1,7 +1,7 @@
 import { atom } from "recoil";
 import { localStorageEffect } from "../recoil-effects-utils/local-storage.effect";
 
-interface IToken {
+export interface IToken {
   access: string;
 }
 
@@ -14,7 +14,7 @@ export const tokenAtom = atom<IToken | null>({
   ]
 });
 
-interface IAccount {
+export interface IAccount {
   id: string;
   username: string;
 }

@@ -2,14 +2,16 @@ import { faBookmark, faGears, faHeart, faListCheck, faPowerOff, faProcedures, fa
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Avatar, Spacer, Text } from "@nextui-org/react";
 import { Sidebar, SidebarItem, SidebarDivider, SidebarSection } from "../../app-ui";
+import { useLogout } from "../../auth-store";
 import { AppSideBarLink } from "./AppSidebarLink";
 
 export default function AppSidebar() {
 
+  const { logout } = useLogout();
 
   const sidebarLinks = [
     { group: 'account', type:'link', link: '/user-account', text: 'تنظیمات حساب کاربری', icon: faGears},
-    { group: 'account', type:'action', action: ()=>{}, text: 'خروج از حساب کاربری', icon: faPowerOff},
+    { group: 'account', type:'action', action: ()=>logout(), text: 'خروج از حساب کاربری', icon: faPowerOff},
     { group: 'app', type: 'link', link: '/school-space', text: 'فضای درون مدرسه ای', icon: faSchool},
     { group: 'app', type: 'link', link: '/shared-space', text: 'فضای اشتراکی', icon: faShareNodes},
     { group: 'app', type: 'link', link: '/my-questions', text: 'سوالات من', icon: faQuestionCircle},
