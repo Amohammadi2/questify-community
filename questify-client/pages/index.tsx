@@ -3,11 +3,11 @@ import { Card, styled, Button, Spacer} from "@nextui-org/react";
 import Link from 'next/link';
 import { useRecoilValue } from 'recoil';
 import { accountAtom } from '../modules/auth/auth-store/states';
-import LandingIllustration from "../modules/landing/assets/landing-illustration.svg";
-import Tick from "../modules/landing/assets/custom-icons/tick.svg";
+import LandingIllustration from "../modules/product-intro/assets/landing-illustration.svg";
+import Tick from "../modules/product-intro/assets/custom-icons/tick.svg";
 import { FlexColumn, FlexRow } from '../modules/app-ui';
-import { ItemCard } from "../modules/landing";
-import { BigHeader, HeaderDescription } from '../modules/landing';
+import { ItemCard } from "../modules/product-intro";
+import { BigHeader, HeaderDescription } from '../modules/product-intro';
 import { getNavLayout } from '../modules/app-navigation/layouts/NavLayout';
 import { NextPageWithLayout } from '../utils/next-layout';
 
