@@ -6,6 +6,7 @@ import { useGetAuthToken } from "../graphql/useGetAuthToken.mutation";
 import { Button, Input, Loading, Spacer } from "@nextui-org/react";
 import { ClientOnly } from "../../../utils/nextjs/ClientOnly";
 import styles from "./LoginForm.module.css";
+import { useLogin } from "../../auth-store";
 
 interface ILoginFormProps {
   redirectUrl: string;
@@ -15,8 +16,7 @@ const FormSpacer = () => <Spacer y={1.5} />;
 
 export const LoginForm = ClientOnly(({ redirectUrl } : ILoginFormProps = {redirectUrl:"/"}) => {
   const { getAuthToken, data, loading, error } = useGetAuthToken();
-  const [,setToken] = useRecoilState(tokenAtom);
-  const [,setAccount] = useRecoilState(accountAtom);
+  const { login } = useLogin();
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -26,8 +26,7 @@ export const LoginForm = ClientOnly(({ redirectUrl } : ILoginFormProps = {redire
   useEffect(() => {
     if (data) {
       console.log(data);
-      setToken({ access: data.token });
-      setAccount(data.user);
+      login(data.token, data.user);
       if (redirectUrl) {
         router.push(redirectUrl);
       }
