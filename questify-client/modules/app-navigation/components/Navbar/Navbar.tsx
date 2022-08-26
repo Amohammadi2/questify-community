@@ -1,6 +1,6 @@
 import { styled } from "@nextui-org/react";
-import { navbarHeight } from "../../constants";
-import Logo from "../../../assets/logo.svg";
+import { navbarHeight } from "../../../app-ui/constants";
+import Logo from "../../assets/logo.svg";
 import Link from "next/link";
 
 

@@ -4,7 +4,7 @@ import { useRecoilState } from "recoil";
 import { accountAtom, tokenAtom } from "../../auth-store/states";
 import { useGetAuthToken } from "../graphql/useGetAuthToken.mutation";
 import { Button, Input, Loading, Spacer } from "@nextui-org/react";
-import { ClientOnly } from "../../nextjs-utils/components/ClientOnly";
+import { ClientOnly } from "../../../utils/nextjs/ClientOnly";
 import styles from "./LoginForm.module.css";
 
 interface ILoginFormProps {

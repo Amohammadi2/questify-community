@@ -1,11 +1,11 @@
 import { styled } from "@nextui-org/react";
-import type { NextPage } from "next";
-import type { ComponentType, ReactElement, ReactNode } from "react";
-import { Sidebar } from "..";
+import type { ReactElement, ReactNode } from "react";
+import AppSidebar from "../components/AppSidebar";
+import Navbar from "../components/Navbar";
 
 
 const GridContainer = {
-  FullScreen : {
+  FullScreen: {
     Normal: styled('div', {
       d: 'grid',
       gridTemplateColumns: '250px auto',
@@ -35,7 +35,7 @@ interface IAppLayout {
   children: ReactElement;
 };
 
-export function AppLayout(props: IAppLayout) {
+export function NavLayout(props: IAppLayout) {
 
   const ContentFragment = () => (
     <div style={{ gridArea: 'content', position: 'relative' }}>
@@ -48,10 +48,10 @@ export function AppLayout(props: IAppLayout) {
   if (props.sidebar) {
     return (
       <GridContainer.FullScreen.Normal>
-        <Sidebar css={{ gridArea: 'sidebar', position: 'sticky' }}>
+        <div style={{ gridArea: 'sidebar', position: 'sticky' }}>
           {props.sidebar}
-        </Sidebar>
-        <div style={{ gridArea: 'navbar', backgroundColor: 'blue', position: 'sticky' }}>
+        </div>
+        <div style={{ gridArea: 'navbar', position: 'sticky' }}>
           {props.navbar}
         </div>
         <ContentFragment />
@@ -70,10 +70,16 @@ export function AppLayout(props: IAppLayout) {
   }
 }
 
-export function getAppLayout(props: Omit<IAppLayout, 'children'>) {
+
+export function getNavLayout({ navbarContent = <></>, activateSidebar = false }: {
+  navbarContent?: ReactNode | ReactNode[], activateSidebar?: boolean
+} = {}) {
   return (page: ReactElement) => (
-    <AppLayout {...props}>
+    <NavLayout
+      navbar={<Navbar>{navbarContent}</Navbar>}
+      sidebar={activateSidebar ? <AppSidebar /> : null}
+    >
       {page}
-    </AppLayout>
+    </NavLayout>
   ) as ReactNode;
 }

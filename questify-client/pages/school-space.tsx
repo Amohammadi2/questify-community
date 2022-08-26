@@ -1,7 +1,5 @@
-import type { NextPage } from "next";
-import { AppSidebar, PrimaryNavbar } from "../modules/app-navigation";
-import { getAppLayout } from "../modules/app-ui/layouts/AppLayout";
-import { useRequireAuthentication } from "../modules/route-protector";
+import { getNavLayout } from "../modules/app-navigation/layouts/NavLayout";
+import { useRequireAuthentication } from "../modules/auth/route-protector";
 import { NextPageWithLayout } from "../utils/next-layout";
 
 const SchoolQuestion: NextPageWithLayout = ( ) => {
@@ -10,9 +8,6 @@ const SchoolQuestion: NextPageWithLayout = ( ) => {
   return <h1>اینجا لیست سوالات پرسیده شده در مدرسه را خواهید دید</h1>
 }
 
-SchoolQuestion.getLayout = getAppLayout({
-  navbar: <PrimaryNavbar />,
-  sidebar: <AppSidebar />
-});
+SchoolQuestion.getLayout = getNavLayout({ activateSidebar: true });
 
 export default SchoolQuestion;

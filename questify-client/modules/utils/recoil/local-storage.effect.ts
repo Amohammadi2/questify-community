@@ -1,4 +1,4 @@
-import { isSSRCompleteAtom } from "../ssr-state/states";
+import { isSSRCompleteAtom } from "../../ssr-state/states";
 
 export function localStorageEffect(key: string) {
   return ({ onSet, setSelf, getPromise }) => {

@@ -1,15 +1,15 @@
 import { useRecoilState } from "recoil";
-import { ChComponent } from "../../../utils/ChComponent";
+import { ChComponent } from "../../../../utils/ChComponent";
 import { useVerifyToken } from "../graphql/useVerifyToken";
 import { isAuthCompleteAtom, tokenAtom, accountAtom } from "../../auth-store/states";
 import { useEffect } from "react";
-import { ClientOnly } from "../../nextjs-utils/components/ClientOnly";
+import { ClientOnly } from "../../../utils/nextjs/ClientOnly";
 
 export const AuthenticatorRoot: ChComponent = ClientOnly(({ children }) => {
   
   const [isAuthComplete,setIsAuthComplete] = useRecoilState(isAuthCompleteAtom);
   const [authToken,] = useRecoilState(tokenAtom);
-  const [account, setAccount] = useRecoilState(accountAtom);
+  const [,setAccount] = useRecoilState(accountAtom);
   const { verifyToken, data, error, called } = useVerifyToken();
   
   useEffect(() => {

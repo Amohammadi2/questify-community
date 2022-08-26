@@ -2,9 +2,9 @@ import { faBookmark, faGears, faHeart, faListCheck, faPowerOff, faProcedures, fa
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Avatar, Spacer, Text } from "@nextui-org/react";
 import { useRecoilValue } from "recoil";
-import { Sidebar, SidebarItem, SidebarDivider, SidebarSection } from "../../app-ui";
-import { useLogout } from "../../auth-store";
-import { accountAtom } from "../../auth-store/states";
+import { Sidebar, SidebarItem, SidebarDivider, SidebarSection } from "./Sidebar";
+import { useLogout } from "../../auth/auth-store";
+import { accountAtom } from "../../auth/auth-store/states";
 import { AppSideBarLink } from "./AppSidebarLink";
 
 export default function AppSidebar() {

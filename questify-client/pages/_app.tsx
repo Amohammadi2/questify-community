@@ -6,7 +6,7 @@ import client from "../modules/apollo/client";
 import { ApolloProvider } from '@apollo/client';
 import { RecoilRoot } from 'recoil';
 import { SSRStateRoot } from '../modules/ssr-state/SSRStateRoot';
-import { AuthenticatorRoot } from '../modules/startup-authenticator/components/AuthenticatorRoot';
+import { AuthenticatorRoot } from '../modules/auth/startup-authenticator/components/AuthenticatorRoot';
 import { AppPropsWithLayout } from '../utils/next-layout';
 import { ReactNode } from 'react';
 import NextNProgress from 'nextjs-progressbar';

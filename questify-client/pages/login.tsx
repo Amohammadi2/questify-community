@@ -1,12 +1,11 @@
 import type { NextPage } from "next";
 import Link from "next/link";
-import { LoginForm } from "../modules/user-login";
-import { Navbar } from "../modules/app-ui";
+import { LoginForm } from "../modules/auth/user-login";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { LoginFormArea } from "../modules/user-login/components/LoginFormArea";
+import { LoginFormArea } from "../modules/auth/user-login/components/LoginFormArea";
 import { NextPageWithLayout } from "../utils/next-layout";
-import { getAppLayout } from "../modules/app-ui/layouts/AppLayout";
+import { getNavLayout } from "../modules/app-navigation/layouts/NavLayout";
 import { styled } from "@nextui-org/react";
 import { FullScreenContainer } from "../modules/app-ui";
 
@@ -24,13 +23,11 @@ const LoginPage: NextPageWithLayout = () => {
   )
 }
 
-LoginPage.getLayout = getAppLayout({
-  navbar: (
-    <Navbar>
-      <Link href="/">
-        <FontAwesomeIcon icon={faArrowLeft} style={{ cursor: 'pointer' }} />
-      </Link>
-    </Navbar>
+LoginPage.getLayout = getNavLayout({
+  navbarContent: (
+    <Link href="/">
+      <FontAwesomeIcon icon={faArrowLeft} style={{ cursor: 'pointer' }} />
+    </Link>
   )
 });
 

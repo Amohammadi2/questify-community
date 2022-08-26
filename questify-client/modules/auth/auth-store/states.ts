@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { localStorageEffect } from "../recoil-effects-utils/local-storage.effect";
+import { localStorageEffect } from "../../utils/recoil/local-storage.effect";
 
 export interface IToken {
   access: string;

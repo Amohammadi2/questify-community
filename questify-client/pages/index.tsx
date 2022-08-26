@@ -2,13 +2,13 @@ import type { NextPage } from 'next';
 import { Card, styled, Button, Spacer} from "@nextui-org/react";
 import Link from 'next/link';
 import { useRecoilValue } from 'recoil';
-import { accountAtom } from '../modules/auth-store/states';
-import LandingIllustration from "../modules/assets/landing-illustration.svg";
-import Tick from "../modules/assets/custom-icons/tick.svg";
-import { FlexColumn, FlexRow, ItemCard, NavSpacer } from '../modules/app-ui';
-import { BigHeader, HeaderDescription } from '../modules/typography';
-import { AppSidebar, PrimaryNavbar } from "../modules/app-navigation";
-import { getAppLayout } from '../modules/app-ui/layouts/AppLayout';
+import { accountAtom } from '../modules/auth/auth-store/states';
+import LandingIllustration from "../modules/landing/assets/landing-illustration.svg";
+import Tick from "../modules/landing/assets/custom-icons/tick.svg";
+import { FlexColumn, FlexRow } from '../modules/app-ui';
+import { ItemCard } from "../modules/landing";
+import { BigHeader, HeaderDescription } from '../modules/landing';
+import { getNavLayout } from '../modules/app-navigation/layouts/NavLayout';
 import { NextPageWithLayout } from '../utils/next-layout';
 
 
@@ -55,8 +55,6 @@ const Home: NextPageWithLayout = () => {
   );
 }
 
-Home.getLayout = getAppLayout({
-  navbar: <PrimaryNavbar />
-});
+Home.getLayout = getNavLayout({});
 
 export default Home;
