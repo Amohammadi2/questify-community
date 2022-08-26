@@ -6,7 +6,7 @@ import { accountAtom } from '../modules/auth-store/states';
 import LandingIllustration from "../modules/assets/landing-illustration.svg";
 import Tick from "../modules/assets/custom-icons/tick.svg";
 import { FlexColumn, FlexRow, ItemCard, NavSpacer } from '../modules/app-ui';
-import { BigHeader, HeaderDescription } from '../modules/landing-page';
+import { BigHeader, HeaderDescription } from '../modules/typography';
 import { AppSidebar, PrimaryNavbar } from "../modules/app-navigation";
 import { getAppLayout } from '../modules/app-ui/layouts/AppLayout';
 import { NextPageWithLayout } from '../utils/next-layout';

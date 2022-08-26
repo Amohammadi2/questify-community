@@ -4,6 +4,7 @@ import { useRecoilValue } from "recoil";
 import { accountAtom, isAuthCompleteAtom } from "../../auth-store/states";
 
 export function useRequireAuthentication({ redirectUrl='/login' }={}) {
+
   const account = useRecoilValue(accountAtom);
   const isAuthComplete = useRecoilValue(isAuthCompleteAtom);
   const router = useRouter();

@@ -5,19 +5,22 @@ import { Navbar } from "../modules/app-ui";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { LoginFormArea } from "../modules/user-login/components/LoginFormArea";
-import { LoginFormContainer } from "../modules/login-page/components/LoginFormContainer";
 import { NextPageWithLayout } from "../utils/next-layout";
 import { getAppLayout } from "../modules/app-ui/layouts/AppLayout";
+import { styled } from "@nextui-org/react";
+import { FullScreenContainer } from "../modules/app-ui";
+
+const BackgroundContainer = styled(FullScreenContainer, {
+  backgroundImage: 'url(/Background.png)'
+});
 
 const LoginPage: NextPageWithLayout = () => {
   return (
-    <>
-      <LoginFormContainer>
-        <LoginFormArea>
-          <LoginForm redirectUrl="/school-space" />
-        </LoginFormArea>
-      </LoginFormContainer>
-    </>
+    <BackgroundContainer>
+      <LoginFormArea>
+        <LoginForm redirectUrl="/school-space" />
+      </LoginFormArea>
+    </BackgroundContainer>
   )
 }
 

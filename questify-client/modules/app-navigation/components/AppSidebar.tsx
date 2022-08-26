@@ -1,13 +1,16 @@
 import { faBookmark, faGears, faHeart, faListCheck, faPowerOff, faProcedures, faQuestionCircle, faSchool, faShareNodes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Avatar, Spacer, Text } from "@nextui-org/react";
+import { useRecoilValue } from "recoil";
 import { Sidebar, SidebarItem, SidebarDivider, SidebarSection } from "../../app-ui";
 import { useLogout } from "../../auth-store";
+import { accountAtom } from "../../auth-store/states";
 import { AppSideBarLink } from "./AppSidebarLink";
 
 export default function AppSidebar() {
 
   const { logout } = useLogout();
+  const account = useRecoilValue(accountAtom);
 
   const sidebarLinks = [
     { group: 'account', type:'link', link: '/user-account', text: 'تنظیمات حساب کاربری', icon: faGears},
@@ -22,9 +25,11 @@ export default function AppSidebar() {
 
   const SidebarProfileSection = () => (
     <SidebarSection>
-      <Avatar squared text="A" size="md" />
+      <Avatar squared text={account?.username[0].toUpperCase()} size="md" />
       <Spacer x={.4} />
-      <Text css={{ color: 'white', fontSize: '$xl' }}>Ashkan</Text>
+      <Text css={{ color: 'white', fontSize: '$xl' }}>
+        {account?.username}
+      </Text>
     </SidebarSection>
   )
 
