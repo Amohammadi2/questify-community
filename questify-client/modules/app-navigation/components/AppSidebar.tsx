@@ -1,4 +1,4 @@
-import { faBookmark, faGears, faHeart, faListCheck, faPowerOff, faProcedures, faQuestionCircle, faSchool, faShareNodes } from "@fortawesome/free-solid-svg-icons";
+import { faBookmark, faGears, faHeart, faListCheck, faPeopleGroup, faPowerOff, faProcedures, faQuestionCircle, faSchool, faShareNodes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Avatar, Spacer, Text } from "@nextui-org/react";
 import { useRecoilValue } from "recoil";
@@ -16,6 +16,7 @@ export default function AppSidebar() {
     { group: 'account', type:'link', link: '/user-account', text: 'تنظیمات حساب کاربری', icon: faGears},
     { group: 'account', type:'action', action: ()=>logout(), text: 'خروج از حساب کاربری', icon: faPowerOff},
     { group: 'app', type: 'link', link: '/school-space', text: 'فضای درون مدرسه ای', icon: faSchool},
+    { group: 'app', type: 'link', link: '/community-space', text: 'فضای انجمن ها', icon: faPeopleGroup},
     { group: 'app', type: 'link', link: '/shared-space', text: 'فضای اشتراکی', icon: faShareNodes},
     { group: 'app', type: 'link', link: '/my-questions', text: 'سوالات من', icon: faQuestionCircle},
     { group: 'app', type: 'link', link: '/likes', text: 'پست های پسندیده شده', icon: faHeart},

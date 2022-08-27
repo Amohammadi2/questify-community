@@ -35,12 +35,18 @@ interface IAppLayout {
   children: ReactElement;
 };
 
+// Todo: This part requires a really deep refactoring of component structure
+//       currently we often rely on random placement of logic, style and html
+//       to get this piece of shit to work.
+//
+//       They all have to be organized using reusable, well-defined components
+
 export function NavLayout(props: IAppLayout) {
 
-  const ContentFragment = () => (
-    <div style={{ gridArea: 'content', position: 'relative' }}>
-      <div style={{ position: 'absolute', top: '0', right: 0, height: '100%', width: '100%', overflowY: 'auto' }}>
-        {(props.children as unknown as ReactNode)}
+  const FixedArea = ({ area, children, bg="unset" }) => (
+    <div style={{ gridArea: area, position: 'relative' }}>
+      <div style={{ position: 'absolute', top: '0', right: 0, height: '100%', width: '100%', overflowY: 'auto', backgroundColor: bg }}>
+        {children}
       </div>
     </div>
   );
@@ -48,13 +54,15 @@ export function NavLayout(props: IAppLayout) {
   if (props.sidebar) {
     return (
       <GridContainer.FullScreen.Normal>
-        <div style={{ gridArea: 'sidebar', position: 'sticky' }}>
+        <FixedArea area="sidebar" bg="#393939">
           {props.sidebar}
-        </div>
+        </FixedArea>
         <div style={{ gridArea: 'navbar', position: 'sticky' }}>
           {props.navbar}
         </div>
-        <ContentFragment />
+        <FixedArea area="content">
+          {props.children}
+        </FixedArea>
       </GridContainer.FullScreen.Normal>
     );
   }
@@ -64,7 +72,9 @@ export function NavLayout(props: IAppLayout) {
         <div style={{ gridArea: 'navbar', backgroundColor: 'blue', position: 'sticky' }}>
           {props.navbar}
         </div>
-        <ContentFragment />
+        <FixedArea area="content">
+          {props.children}
+        </FixedArea>
       </GridContainer.FullScreen.WithoutSidebar>
     );
   }
