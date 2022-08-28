@@ -1,4 +1,4 @@
-import { faAngleDown, faAngleUp, faArrowDown, faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { faAngleDown, faAngleUp, faArrowDown, faArrowUp, faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Grid, styled, Text } from "@nextui-org/react";
 import { Avatar } from "@nextui-org/react";
@@ -34,6 +34,10 @@ export default function QuestionPost({ title, content, score, tags, author }) {
         <Avatar squared text="A" />
         <UsernamePortion>{author.username}</UsernamePortion>
         <div style={{flexGrow:'1'}}/>
+        <Text>34 ذخیره</Text>
+        <IconButton>
+          <FontAwesomeIcon icon={faBookmark} color="rgb(200,200,200)" />
+        </IconButton>
         <IconButton css={{mx: '$2'}}>
           <FontAwesomeIcon icon={faAngleUp} color="green" />
         </IconButton>
