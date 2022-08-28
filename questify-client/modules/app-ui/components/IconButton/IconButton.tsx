@@ -10,11 +10,12 @@ const IconButton = styled('div', {
   transition: 'all 0.02s ease-out',
   cursor: 'pointer',
   '&:hover': {
-    bg: '$gray50',
+    bg: 'rgba(240,240,240,0.3)',
+    transform: 'scale(1.05)'
   },
   '&:active': {
     transform: 'scale(0.95)',
-    bg: '$gray100'
+    bg: 'rgba(240,240,240,0.5)'
   }
 })
 
