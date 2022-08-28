@@ -22,6 +22,10 @@ export const LoginForm = ClientOnly(({ redirectUrl } : ILoginFormProps = {redire
 
   const router = useRouter();
 
+  useEffect(()=> {
+    router.prefetch(redirectUrl);
+  }, []);
+
   // handle success status
   useEffect(() => {
     if (data) {
