@@ -1,4 +1,7 @@
+import { faAdd } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "@nextui-org/react";
+import Link from "next/link";
 import { getNavLayout } from "../modules/app-navigation/layouts/NavLayout";
 import { useRequireAuthentication } from "../modules/auth/route-protector";
 import { SchoolQuestionsList } from "../modules/questions";
@@ -15,7 +18,15 @@ const SchoolQuestion: NextPageWithLayout = ( ) => {
 SchoolQuestion.getLayout = getNavLayout({
   activateSidebar: true,
   navbarContent: (
-    <></>
+    <Link href="/ask-question">
+      <Button
+        flat
+        icon={<FontAwesomeIcon icon={faAdd} />}
+        size="sm"
+      >
+        پرسش سوال
+      </Button>
+    </Link>
   )
 });
 
