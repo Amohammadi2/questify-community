@@ -26,8 +26,18 @@ const Home: NextPageWithLayout = () => {
 
   return (
     <>
-      <FlexRow css={{ justifyContent: 'space-around', px: '$5'}}>
-        <LandingIllustration width={600} />
+      <FlexRow css={{
+        justifyContent: 'space-around',
+        px: '$5',
+        pb: '$18',
+        ':is(svg)': {
+          display: 'none',
+          '@sm': {
+            display: 'block'
+          }
+        },
+      }}>
+        <LandingIllustration />
         <FlexColumn css={{ px: '$4' }}>
           <BigHeader>Questify</BigHeader>
           <HeaderDescription>پلتفرم جامع پرسش و پاسخ درسی</HeaderDescription>

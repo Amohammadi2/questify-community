@@ -8,6 +8,7 @@ const FullScreenContainer = styled('div', {
   justifyContent: 'center',
   alignItems: 'center',
   backgroundSize: 'cover',
+  backgroundPosition: 'center'
 });
 
 export default FullScreenContainer;
