@@ -9,7 +9,8 @@ const QuestionContainer = styled('div', {
     transform: 'translateY(-10px)',
     boxShadow: '0px 4px 5px 1px rgb(200,200,200)'
   },
-  my: '$10'
+  my: '$10',
+  maxWidth: '600px'
 })
 
 const QuestionBox = styled('div', {
@@ -19,7 +20,7 @@ const QuestionBox = styled('div', {
   py: '$5',
   px: '$7',
   my: '$6',
-  cursor: 'pointer'
+  cursor: 'pointer',
 })
 
 const UsernamePortion = styled('strong', {

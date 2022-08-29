@@ -3,6 +3,8 @@ import { ComponentType, ReactElement } from "react";
 import SidebarSection from "./SidebarSection";
 
 const SidebarItemUI = styled(SidebarSection, {
+  d: 'flex',
+  justifyContent: 'center',
   px: '$7',
   backgroundColor: '#484848',
   borderRadius: '$sm',
@@ -11,6 +13,10 @@ const SidebarItemUI = styled(SidebarSection, {
   cursor: 'pointer',
   color: '$gray500',
 
+  '& > :not(:is(svg))': {
+    display: 'none',
+  },
+
   '&:hover': {
     backgroundColor: '#4E4E4E'
   },
@@ -18,6 +24,13 @@ const SidebarItemUI = styled(SidebarSection, {
   '&.active': {
     backgroundColor: '$primary',
     color: '$primarySolidContrast'
+  },
+  
+  '@xs': {
+    '& > :not(:is(svg))': {
+      display: 'block'
+    },
+    justifyContent: 'unset'
   }
 });
 
@@ -33,7 +46,7 @@ const SidebarItem: ComponentType<ISidebarItemProps> = ({ icon=<div/>, text, isAc
     <SidebarItemUI className={isActive ? 'active' : ''} onClick={(e)=>onClick()}>
       {icon}
       <Spacer x={.5} />
-      {text}
+      <span className="item-text">{text}</span>
     </SidebarItemUI>
   );
 }

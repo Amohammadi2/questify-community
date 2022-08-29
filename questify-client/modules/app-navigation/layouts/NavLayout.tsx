@@ -8,13 +8,16 @@ const GridContainer = {
   FullScreen: {
     Normal: styled('div', {
       d: 'grid',
-      gridTemplateColumns: '250px auto',
+      gridTemplateColumns: '60px auto',
       gridTemplateRows: '60px auto',
       gridTemplateAreas: `
         "sidebar navbar"
         "sidebar content"
       `,
-      height: '100vh'
+      height: '100vh',
+      '@xs': {
+        gridTemplateColumns: '250px auto'
+      }
     }),
     WithoutSidebar: styled('div', {
       d: 'grid',

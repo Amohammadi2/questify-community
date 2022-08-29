@@ -6,7 +6,14 @@ const SidebarSection = styled('div', {
   d: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
-  verticalAlign: 'center'
+  verticalAlign: 'center',
+  
+  '& .large-only': {
+    display: 'none',
+    '@xs': {
+      display: 'unset'
+    }
+  }
 });
 
 export default SidebarSection;
