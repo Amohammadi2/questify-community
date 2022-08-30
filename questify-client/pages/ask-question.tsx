@@ -1,11 +1,11 @@
-import { Input } from "@nextui-org/react";
 import { getNavLayout } from "../modules/app-navigation";
 import { BackArrow } from "../modules/app-navigation/components/BackArrow";
+import { PostEditor } from "../modules/questions";
 import { NextPageWithLayout } from "../utils/next-layout";
 
 const AskQuestion: NextPageWithLayout = () => {
   return (
-    <Input labelPlaceholder="عنوان را وارد کنید" />
+    <PostEditor onContentEdited={(c)=>null} />
   );
 }
 
