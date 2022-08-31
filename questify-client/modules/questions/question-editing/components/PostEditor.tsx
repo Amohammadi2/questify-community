@@ -1,4 +1,5 @@
 import { Grid, Input, styled } from "@nextui-org/react";
+import { useEditorBlocks } from "../hooks/useEditorBlocks";
 import CellTypeSelector from "./CellTypeSelector";
 import QuestionSectionMap from "./QuestionSectionMap";
 
@@ -18,6 +19,9 @@ const TitleInput = styled('input', {
 
 
 export default function PostEditor({ onContentEdited } : IPostEditorProps) {
+  
+  const { blocks, addBlock } = useEditorBlocks();
+  
   return (
     <Grid.Container css={{ py: '$5', px: '$15', height: '100%' }} direction="row">
       <Grid.Container direction="column" xs={9}>
