@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useId } from "../../../utils/useId";
 
-interface IBlock {
+export interface IBlock {
   type: "text" | "file";
   content: object;
 }
@@ -22,8 +22,11 @@ export function useEditorBlocks() {
     removeBlock(blockId: number) {
       setEditorBlocks(editorBlocks.filter(bl=>bl.id!=blockId));
     },
-    updateBlock(blockId, block:IBlock) {
-      setEditorBlocks([...editorBlocks.filter(bl=>bl.id!=blockId), {...block, id:blockId }])
+    updateBlock(blockId, content: object) {
+      const affectedBlock = editorBlocks.find((b)=>b.id==blockId);
+      if (!affectedBlock)
+        throw Error('The updating block with the id of ' + blockId + ' does not exist');
+      setEditorBlocks([...editorBlocks.filter(b=>b.id!=blockId), {...affectedBlock, content}]);
     }
   };
 
