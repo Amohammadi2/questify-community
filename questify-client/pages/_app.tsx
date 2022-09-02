@@ -10,6 +10,8 @@ import { AuthenticatorRoot } from '../modules/auth/startup-authenticator/compone
 import { AppPropsWithLayout } from '../utils/next-layout';
 import { ReactNode } from 'react';
 import NextNProgress from 'nextjs-progressbar';
+import { NextUIProvider } from '@nextui-org/react';
+import { theme } from '../modules/nextui-theme';
 
 fontAwesomeConfig.autoAddCss = false;
 
@@ -21,10 +23,12 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     <ApolloProvider client={client}>
       <RecoilRoot>
         <SSRStateRoot>
-          <AuthenticatorRoot>
-            <NextNProgress color="#FFF" />
-            {getLayout(<Component {...pageProps} />)}
-          </AuthenticatorRoot>
+          <NextUIProvider theme={theme}>
+            <AuthenticatorRoot>
+              <NextNProgress color="#FFF" />
+              {getLayout(<Component {...pageProps} />)}
+            </AuthenticatorRoot>
+          </NextUIProvider>
         </SSRStateRoot>
       </RecoilRoot>
     </ApolloProvider>
