@@ -46,7 +46,6 @@ const CellTypeBoxUI = styled('div', {
 })
 
 const MainBox = styled('div', {
-  boxShadow: '$md',
   justifyContent: 'center',
   alignItems: 'center',
   d: 'flex',
