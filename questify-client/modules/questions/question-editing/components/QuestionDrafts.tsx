@@ -1,6 +1,6 @@
 import { Grid, styled, Text } from "@nextui-org/react";
 
-const QuestionSectionMap = styled('div', {
+const QuestionSectionMapUI = styled('div', {
   bg: '$gray100', px: '$6', py: '$5',
   mr: '$10',
   borderRadius: '$lg',
@@ -12,10 +12,10 @@ const QuestionSectionMap = styled('div', {
   }
 })
 
-export default function({ editorContent }) {
+export default function QuestionDrafts({ editorContent }) {
   return (
-    <QuestionSectionMap>
-      <Text h3>بخش های پست</Text>
-    </QuestionSectionMap>
+    <QuestionSectionMapUI>
+      <Text h3>پیش‌نویس ها</Text>
+    </QuestionSectionMapUI>
   )
 }
