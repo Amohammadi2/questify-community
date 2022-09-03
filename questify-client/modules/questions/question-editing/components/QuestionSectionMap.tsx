@@ -2,6 +2,7 @@ import { Grid, styled, Text } from "@nextui-org/react";
 
 const QuestionSectionMap = styled('div', {
   bg: '$gray100', px: '$6', py: '$5',
+  mr: '$10',
   borderRadius: '$lg',
   boxShadow: '$md',
   w: '100%', d: 'none',

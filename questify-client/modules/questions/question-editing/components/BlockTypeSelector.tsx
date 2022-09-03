@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Card, Grid, styled, Text } from "@nextui-org/react";
 
 interface ISelectorProps {
-  onCellSelected: (cellType: string) => void
+  onBlockSelected: (blockType: "text" | "file") => void
 }
 
 const CellTypeBoxUI = styled('div', {
@@ -61,12 +61,12 @@ const CellTypeBox = ({ text, icon, onClick }) => (
   </CellTypeBoxUI>
 )
 
-export default function CellTypeSelector({ onCellSelected }: ISelectorProps) {
+export default function BlockTypeSelector({ onBlockSelected }: ISelectorProps) {
   return (
     <Grid.Container direction="row" justify="center" alignItems="center">
       <MainBox>
-        <CellTypeBox icon={faPenToSquare} text="متن" onClick={()=>onCellSelected("text")} />
-        <CellTypeBox icon={faFileText} text="فایل" onClick={()=>onCellSelected("file")} />
+        <CellTypeBox icon={faPenToSquare} text="متن" onClick={()=>onBlockSelected("text")} />
+        <CellTypeBox icon={faFileText} text="فایل" onClick={()=>onBlockSelected("file")} />
       </MainBox>
     </Grid.Container>
   )

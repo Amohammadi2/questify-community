@@ -25,8 +25,12 @@ export function useEditorBlocks() {
     updateBlock(blockId, content: object) {
       const affectedBlock = editorBlocks.find((b)=>b.id==blockId);
       if (!affectedBlock)
-        throw Error('The updating block with the id of ' + blockId + ' does not exist');
-      setEditorBlocks([...editorBlocks.filter(b=>b.id!=blockId), {...affectedBlock, content}]);
+        throw Error('The block with the id of ' + blockId + ' does not exist');
+      setEditorBlocks(
+        [...editorBlocks.filter(b=>b.id!=blockId), {...affectedBlock, content}]
+        // :Note: we need to sort the list so that the order of ids doesn't change upon update
+          .sort((a,b)=>a.id-b.id)
+      );
     }
   };
 
