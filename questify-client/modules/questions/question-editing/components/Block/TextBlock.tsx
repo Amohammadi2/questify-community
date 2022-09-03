@@ -1,3 +1,4 @@
+import TextareaAutosize from 'react-textarea-autosize';
 import { faTimes } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { styled } from "@nextui-org/react"
@@ -12,28 +13,23 @@ const TextBlockUI = styled('div', {
   px: '$5'
 })
 
-const BlockTextArea = styled('textarea', {
+const BlockTextArea = styled(TextareaAutosize, {
   border: 'none',
   outline: 'none',
   resize: 'none',
   px: '$5',
   width: '100%',
-  height: '200px',
 })
 
-export default function TextBlock({ content, onUpdate, onRemove }) {
+export default function TextBlock({ content, onContentChanged }) {
   return (
     <TextBlockUI>
-      <div>
-        <IconButton onClick={()=>onRemove()}>
-          <FontAwesomeIcon icon={faTimes} />
-        </IconButton>
-      </div>
-      <BlockTextArea 
+      <BlockTextArea
+        minRows={10} 
         placeholder="نوشته را وارد کنید" 
         value={content.text} 
-        onChange={e => onUpdate({ text: e.target.value })}
-      ></BlockTextArea>
+        onChange={e => onContentChanged(e.target.value)}
+      />
     </TextBlockUI>
   )
 }
