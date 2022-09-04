@@ -64,7 +64,16 @@ export default function PostEditor({ onContentEdited } : IPostEditorProps) {
         <Modal.Header>
           <Text h1>{title}</Text>
         </Modal.Header>
-        <Modal.Body css={{ textAlign: 'right' }}>
+        <Modal.Body css={{
+          textAlign: 'right',
+          px: '5%',
+          '@xs': {
+            px: '10%'
+          },
+          '@sm': {
+            px: '20%'
+          }
+        }}>
           <ReactMarkdown
             components={{
               h1: 'h3',
