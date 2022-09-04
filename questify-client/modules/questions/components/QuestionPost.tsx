@@ -2,7 +2,7 @@ import { faAngleDown, faAngleUp, faArrowDown, faArrowUp, faBookmark } from "@for
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Grid, styled, Text } from "@nextui-org/react";
 import { Avatar } from "@nextui-org/react";
-import { IconButton } from "../../app-ui";
+import { Badge, IconButton } from "../../app-ui";
 
 const QuestionContainer = styled('div', {
   '&:hover > .q-box': {
@@ -10,12 +10,12 @@ const QuestionContainer = styled('div', {
     boxShadow: '0px 4px 5px 1px rgb(200,200,200)'
   },
   my: '$10',
-  maxWidth: '600px'
+  maxWidth: '650px'
 })
 
 const QuestionBox = styled('div', {
   transition: 'all 0.2s ease-out',
-  backgroundColor: '$gray100',
+  backgroundColor: '$gray50',
   borderRadius: '$sm',
   py: '$5',
   px: '$7',
@@ -51,6 +51,12 @@ export default function QuestionPost({ title, content, score, tags, author }) {
         <Text h2>{title}</Text>
         <Text>{content}</Text>
       </QuestionBox>
+      <Grid.Container direction="row" alignItems="center">
+        <Badge content="#ریاضی" attentionWorthy={true} />
+        <Badge content="#فیزیک" />
+        <Badge content="#هندسه" />
+        <Badge content="#شیمی" />
+      </Grid.Container>
     </QuestionContainer>
   );
 }

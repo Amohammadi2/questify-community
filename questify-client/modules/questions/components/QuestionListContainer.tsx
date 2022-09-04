@@ -8,7 +8,7 @@ const QuestionContainer = styled('div', {
   flexDirection: 'column',
   flexBasis: '100%',
   '@sm': {
-    flexBasis: '60%'
+    flexBasis: '70%'
   }
 });
 
@@ -28,7 +28,7 @@ export default function QuestionListContainer({ questions }: { questions: any[] 
           />
         ))}
       </QuestionContainer>
-      heell
+      
     </Grid.Container>
   )
 }
