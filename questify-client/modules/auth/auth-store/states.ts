@@ -1,9 +1,7 @@
 import { atom } from "recoil";
 import { localStorageEffect } from "../../utils/recoil/local-storage.effect";
 
-export interface IToken {
-  access: string;
-}
+import { IAccount, IToken } from '../entities';
 
 export const tokenAtom = atom<IToken | null>({
   key: 'auth-token',
@@ -13,11 +11,6 @@ export const tokenAtom = atom<IToken | null>({
     localStorageEffect('auth-token')
   ]
 });
-
-export interface IAccount {
-  id: string;
-  username: string;
-}
 
 export const accountAtom = atom<IAccount | null>({
   key: 'auth-account',

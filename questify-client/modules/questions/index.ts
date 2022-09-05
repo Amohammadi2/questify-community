@@ -1,2 +1,2 @@
 export { SchoolQuestionsList } from "./school-questions";
-export { PostEditor } from "./question-editing";
+export { AskQuestionProcess } from './ask-question';

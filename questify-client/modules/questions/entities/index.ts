@@ -1,0 +1,1 @@
+export type { IQuestion, IQuestionInput } from './question.interface';

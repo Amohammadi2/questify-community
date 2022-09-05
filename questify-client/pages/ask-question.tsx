@@ -1,11 +1,14 @@
 import { getNavLayout } from "../modules/app-navigation";
 import { BackArrow } from "../modules/app-navigation/components/BackArrow";
-import { PostEditor } from "../modules/questions";
+import { AskQuestionProcess } from "../modules/questions";
 import { NextPageWithLayout } from "../utils/next-layout";
 
 const AskQuestion: NextPageWithLayout = () => {
+  
+  // Todo: add capabilities to determine question type from url parameters
+  
   return (
-    <PostEditor onContentEdited={(c)=>null} />
+    <AskQuestionProcess questionType="school" />
   );
 }
 

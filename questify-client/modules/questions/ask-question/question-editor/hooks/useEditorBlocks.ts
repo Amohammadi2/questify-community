@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useId } from "../../../utils/useId";
+import { useId } from "../../../../utils/useId";
 
 export interface IBlock {
   type: "text" | "file";

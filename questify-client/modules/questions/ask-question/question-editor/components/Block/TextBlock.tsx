@@ -2,7 +2,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { faTimes } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { styled } from "@nextui-org/react"
-import { IconButton } from "../../../../app-ui"
+import { IconButton } from "../../../../../app-ui"
 
 const TextBlockUI = styled('div', {
   my: '$3',
