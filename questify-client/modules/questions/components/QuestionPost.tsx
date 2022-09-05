@@ -2,6 +2,7 @@ import { faAngleDown, faAngleUp, faArrowDown, faArrowUp, faBookmark } from "@for
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Grid, styled, Text } from "@nextui-org/react";
 import { Avatar } from "@nextui-org/react";
+import Link from "next/link";
 import { Badge, IconButton } from "../../app-ui";
 
 const QuestionContainer = styled('div', {
@@ -47,10 +48,13 @@ export default function QuestionPost({ title, content, score, tags, author }) {
           <FontAwesomeIcon icon={faAngleDown} color="red" />
         </IconButton>
       </Grid.Container>
-      <QuestionBox className="q-box">
-        <Text h2>{title}</Text>
-        <Text>{content}</Text>
-      </QuestionBox>
+      {/* :ref:(1)  */}
+      <Link href="/question-details?qid=some-sort-of-id">
+        <QuestionBox className="q-box">
+          <Text h2>{title}</Text>
+          <Text>{content}</Text>
+        </QuestionBox>
+      </Link>
       <Grid.Container direction="row" alignItems="center">
         <Badge content="#ریاضی" attentionWorthy={true} />
         <Badge content="#فیزیک" />

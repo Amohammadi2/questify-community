@@ -21,7 +21,8 @@ export default function AskQuestionProcess({ questionType }: IQuestionProcess) {
 
   useEffect(() => {
     if (questionStats.data)
-      router.push('/?success=true');
+      // :ref:(1)
+      router.push('/question-details?qid='+questionStats.data.id);
   }, [questionStats.data]);
 
   let finalQuestionAPI: {

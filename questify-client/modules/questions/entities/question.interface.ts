@@ -4,7 +4,8 @@ export interface IQuestion {
   title: string;
   content: string;
   tags: string[];
-  author: IUserProfile
+  score: number;
+  author: IUserProfile;
 }
 
 export interface IQuestionInput {
