@@ -11,7 +11,6 @@ const QuestionContainer = styled('div', {
     boxShadow: '0px 4px 5px 1px rgb(200,200,200)'
   },
   my: '$10',
-  maxWidth: '650px'
 })
 
 const QuestionBox = styled('div', {
