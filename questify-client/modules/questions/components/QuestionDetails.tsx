@@ -4,7 +4,7 @@ import useQuestionDetails from "../graphql/useQuestionDetail";
 const MainContainer = styled('div', {
   d: 'flex',
   flexDirection: 'column',
-  mx: '$15',
+  mx: '$5',
   my: '$10',
   '@md': {
     mx: '$15'

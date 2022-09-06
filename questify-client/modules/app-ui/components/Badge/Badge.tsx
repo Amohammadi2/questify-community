@@ -12,7 +12,7 @@ const BadgeUI = styled('div', {
 export default function Badge({ content, attentionWorthy=false }) {
   return (
     <BadgeUI css={{
-      bg: attentionWorthy ? '$green600' : '$gray400',
+      bg: attentionWorthy ? '$c_indigo900' : '$gray100',
       color: attentionWorthy ? '$white' : '$black'
     }}>
       {content}

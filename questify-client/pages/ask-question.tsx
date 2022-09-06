@@ -1,5 +1,5 @@
 import { getNavLayout } from "../modules/app-navigation";
-import { BackArrow } from "../modules/app-navigation/components/BackArrow";
+import { BackArrow } from "../modules/app-navigation";
 import { AskQuestionProcess } from "../modules/questions";
 import { NextPageWithLayout } from "../utils/next-layout";
 

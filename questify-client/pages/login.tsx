@@ -8,6 +8,7 @@ import { NextPageWithLayout } from "../utils/next-layout";
 import { getNavLayout } from "../modules/app-navigation/layouts/NavLayout";
 import { styled } from "@nextui-org/react";
 import { FullScreenContainer } from "../modules/app-ui";
+import { BackArrow } from "modules/app-navigation";
 
 const BackgroundContainer = styled(FullScreenContainer, {
   backgroundImage: 'url(/Background.png)'
@@ -25,9 +26,7 @@ const LoginPage: NextPageWithLayout = () => {
 
 LoginPage.getLayout = getNavLayout({
   navbarContent: (
-    <Link href="/">
-      <FontAwesomeIcon icon={faArrowLeft} style={{ cursor: 'pointer' }} />
-    </Link>
+    <BackArrow />
   )
 });
 

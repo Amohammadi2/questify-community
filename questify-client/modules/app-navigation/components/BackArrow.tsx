@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
 import { IconButton } from "../../app-ui";
 
-export function BackArrow() {
+export default function BackArrow() {
   
   const router = useRouter();
 
@@ -13,7 +13,8 @@ export function BackArrow() {
   
   return (
     <IconButton onClick={e=>popBack()}>
-      <FontAwesomeIcon icon={faArrowLeft} />
+      {/* @theme:ref: */}
+      <FontAwesomeIcon icon={faArrowLeft} style={{ color: 'white' }} />
     </IconButton>
   )
 }

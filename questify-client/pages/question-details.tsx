@@ -1,5 +1,5 @@
 import { getNavLayout } from "modules/app-navigation";
-import { BackArrow } from "modules/app-navigation/components/BackArrow";
+import { BackArrow } from "modules/app-navigation";
 import { QuestionDetails } from "modules/questions";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Error from "next/error";

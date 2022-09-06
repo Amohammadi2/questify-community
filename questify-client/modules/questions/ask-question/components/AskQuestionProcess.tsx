@@ -22,7 +22,7 @@ export default function AskQuestionProcess({ questionType }: IQuestionProcess) {
   useEffect(() => {
     if (questionStats.data)
       // :ref:(1)
-      router.push('/question-details?qid='+questionStats.data.id);
+      router.push('/question-details?qid=' + questionStats.data.id);
   }, [questionStats.data]);
 
   let finalQuestionAPI: {
@@ -30,10 +30,10 @@ export default function AskQuestionProcess({ questionType }: IQuestionProcess) {
     publishStats: APIStats
   } | null = null;
 
-  switch(questionType) {
+  switch (questionType) {
     default: // Todo: We'll add other types of question handling strategies later on
       finalQuestionAPI = {
-        onPublish: (content)=>askQuestion(content),
+        onPublish: (content) => askQuestion(content),
         publishStats: questionStats
       };
       break;
@@ -41,16 +41,16 @@ export default function AskQuestionProcess({ questionType }: IQuestionProcess) {
 
   return (
     <Grid.Container css={{ py: '$5', px: '$10', height: '100%' }} direction="row">
-        <Grid.Container direction="column" xs={12} sm={8} md={9}>
-          <PostEditor
-            {...finalQuestionAPI}
-            onDraftSave={(content)=>saveDraft(content)}
-            draftStats={draftStats}
-          />
-        </Grid.Container>
-        <Grid xs={0} sm={4} md={3}>
-          <QuestionDrafts editorContent={''} />
-        </Grid>
+      <Grid.Container css={{ pb: '$5' }} direction="column" xs={12} sm={8} md={9}>
+        <PostEditor
+          {...finalQuestionAPI}
+          onDraftSave={(content) => saveDraft(content)}
+          draftStats={draftStats}
+        />
       </Grid.Container>
+      <Grid xs={0} sm={4} md={3}>
+        <QuestionDrafts editorContent={''} />
+      </Grid>
+    </Grid.Container>
   )
 }
