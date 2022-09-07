@@ -86,6 +86,7 @@ export default function QuestionListContainer({ useQuestions, sideContent=<></> 
           !loading
             ? questions && questions.map(q => (
                 <QuestionPost
+                  id={q.id}
                   title={q.title}
                   content={q.content}
                   score={q.score}

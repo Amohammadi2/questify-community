@@ -4,6 +4,7 @@ import { Grid, styled, Text } from "@nextui-org/react";
 import { Avatar } from "@nextui-org/react";
 import Link from "next/link";
 import { Badge, IconButton } from "../../app-ui";
+import { IQuestion } from "../entities";
 
 const QuestionContainer = styled('div', {
   '&:hover > .q-box': {
@@ -27,7 +28,7 @@ const UsernamePortion = styled('strong', {
   px: '$3'
 })
 
-export default function QuestionPost({ title, content, score, tags, author }) {
+export default function QuestionPost({ title, content, score, tags, author } : IQuestion) {
   return (
     <QuestionContainer>
       <Grid.Container direction="row" alignItems="center">
