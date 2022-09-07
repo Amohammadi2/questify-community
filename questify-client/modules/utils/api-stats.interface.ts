@@ -1,5 +1,5 @@
 export interface APIStats <T=any> {
   loading: boolean;
-  data: T;
+  data: T | null;
   error?: string | null;
 }

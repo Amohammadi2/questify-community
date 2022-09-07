@@ -1,10 +1,10 @@
 import { QuestionListContainer } from "../../components";
-import { useSchoolQuestions } from "../hooks/useSchoolQuestions";
+import { useSchoolQuestions } from "../graphql/useSchoolQuestions";
 
 export default function SchoolQuestionsList({ schoolId }) {
-  const { questions } = useSchoolQuestions(schoolId);
-
   return (
-    <QuestionListContainer questions={questions} />
+    <QuestionListContainer
+      useQuestions={(searchTerm, filter)=>useSchoolQuestions(schoolId, filter, searchTerm)}
+    />
   )
 }

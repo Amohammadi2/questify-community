@@ -4,7 +4,7 @@ import { IQuestionInput } from "../../entities";
 import { PostEditor } from "../question-editor";
 import { useSaveDraft } from "../hooks/useSaveDraft";
 import QuestionDrafts from './QuestionDrafts';
-import { useAskSchoolQuestion } from "modules/questions/school-questions/hooks/useAskSchoolQuestion";
+import { useAskSchoolQuestion } from "modules/questions/school-questions/graphql/useAskSchoolQuestion";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 

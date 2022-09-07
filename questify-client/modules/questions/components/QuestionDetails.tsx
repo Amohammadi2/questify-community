@@ -25,7 +25,7 @@ export default function QuestionDetails({ questionId }:{questionId: string}) {
 
   return (
     <MainContainer>
-      <Text h1>{data?.title}</Text>
+      <Text h2>{data?.title}</Text>
       <Text>{data?.content}</Text>
     </MainContainer>
   );

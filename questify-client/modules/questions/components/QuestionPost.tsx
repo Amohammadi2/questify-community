@@ -27,13 +27,12 @@ const UsernamePortion = styled('strong', {
   px: '$3'
 })
 
-
 export default function QuestionPost({ title, content, score, tags, author }) {
   return (
     <QuestionContainer>
       <Grid.Container direction="row" alignItems="center">
         <Avatar squared text="A" />
-        <UsernamePortion>{author.username}</UsernamePortion>
+        <UsernamePortion>{author.account.username}</UsernamePortion>
         <div style={{flexGrow:'1'}}/>
         <Text>34 ذخیره</Text>
         <IconButton>
@@ -50,7 +49,7 @@ export default function QuestionPost({ title, content, score, tags, author }) {
       {/* :ref:(1)  */}
       <Link href="/question-details?qid=some-sort-of-id">
         <QuestionBox className="q-box">
-          <Text h2>{title}</Text>
+          <Text h3>{title}</Text>
           <Text>{content}</Text>
         </QuestionBox>
       </Link>

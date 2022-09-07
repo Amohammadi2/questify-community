@@ -1,1 +1,1 @@
-export type { IQuestion, IQuestionInput } from './question.interface';
+export type { IQuestion, IQuestionInput, IQuestionFilter } from './question.interface';

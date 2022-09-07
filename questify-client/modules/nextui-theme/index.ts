@@ -50,10 +50,10 @@ export const theme = createTheme({
       primaryLightHover: '$c_indigo300', // commonly used on hover state
       primaryLightActive: '$c_indigo400', // commonly used on pressed state
       primaryLightContrast: '$black', // commonly used for text inside the component
-      primary: '$c_indigo600',
-      primaryBorder: '$c_indigo700',
+      primary: '$c_indigo700',
+      primaryBorder: '$c_indigo800',
       primaryBorderHover: '$c_indigo800',
-      primarySolidHover: '$c_indigo700',
+      primarySolidHover: '$c_indigo800',
       primarySolidContrast: '$white', // commonly used for text inside the component
       primaryShadow: '$c_indigo300',
 
