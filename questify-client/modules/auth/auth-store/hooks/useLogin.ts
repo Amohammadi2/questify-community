@@ -1,4 +1,4 @@
-import { IAccount } from "../states";
+import { IAccount } from "../../entities";
 import { useSetRecoilState } from "recoil";
 import { accountAtom, tokenAtom } from "../states";
 

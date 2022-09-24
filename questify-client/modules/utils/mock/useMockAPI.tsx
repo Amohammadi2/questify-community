@@ -24,7 +24,7 @@ export function useMockAPI <InT, OutT> ({ handler, delay }: IMockAPIOpts<InT, Ou
         setData(handler(params) || null);
       }
       catch(e) {
-        setError(e.message);
+        setError((e as any).message);
       }
       setLoading(false);
     }, delay);

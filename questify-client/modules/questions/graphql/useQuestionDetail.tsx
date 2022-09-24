@@ -7,6 +7,7 @@ export default function useQuestionDetails(questionId: string) {
     delay: 1500,
     handler() {
       return {
+        id: 'somefakeid',
         author: {
           profileImageUrl: null,
           account: {
