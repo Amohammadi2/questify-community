@@ -1,0 +1,1 @@
+export { useTagsReducer } from './hooks/useTagsReducer';
