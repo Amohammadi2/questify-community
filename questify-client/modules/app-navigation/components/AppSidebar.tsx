@@ -19,8 +19,8 @@ export default function AppSidebar() {
     { group: 'app', type: 'link', link: '/community-space', text: 'فضای انجمن ها', icon: faPeopleGroup},
     { group: 'app', type: 'link', link: '/shared-space', text: 'فضای اشتراکی', icon: faShareNodes},
     { group: 'app', type: 'link', link: '/my-questions', text: 'سوالات من', icon: faQuestionCircle},
-    { group: 'app', type: 'link', link: '/bookmarkes', text: 'پست های ذخیره شده', icon: faBookmark},
-    { group: 'app', type: 'link', link: '/in-progress', text: 'لیست پیگیری ها', icon: faListCheck},
+    { group: 'app', type: 'link', link: '/bookmarks', text: 'پست های ذخیره شده', icon: faBookmark},
+    { group: 'app', type: 'link', link: '/in-progress-list', text: 'لیست پیگیری ها', icon: faListCheck},
   ];
 
   const SidebarProfileSection = () => (

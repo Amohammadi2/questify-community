@@ -22,8 +22,8 @@ export default function QuestionList({ data: questions, loading, error, Question
   
   return (
     <>
-      {questions?.map(q=>(
-        <QuestionRenderer {...q} />
+      {questions?.map((q,i)=>(
+        <QuestionRenderer key={i} {...q} />
       ))}
     </>
   );

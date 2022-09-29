@@ -1,18 +1,18 @@
 import { getNavLayout } from "modules/app-navigation";
 import { useRequireAuthentication } from "modules/auth/route-protector";
-import { MyQuestionsList } from "modules/questions";
+import { BookmarkedQuestionsList } from "modules/questions";
 import { NextPageWithLayout } from "utils/next-layout";
 
-const MyQuestionsPage: NextPageWithLayout = () => {
+const BookmarksPage: NextPageWithLayout = () => {
   useRequireAuthentication();
 
   return (
-    <MyQuestionsList />
-  )
+    <BookmarkedQuestionsList />
+  );
 }
 
-MyQuestionsPage.getLayout = getNavLayout({
+BookmarksPage.getLayout = getNavLayout({
   activateSidebar: true
-});
+})
 
-export default MyQuestionsPage;
+export default BookmarksPage;

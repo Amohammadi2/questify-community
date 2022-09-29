@@ -38,8 +38,6 @@ export default function QuestionFilter({ useQuestions, questionLister } : IQuest
   const [filter, setFilter] = useState<IQuestionFilter>('new');
   const stats = useQuestions(filter, searchTerm);
 
-  
-
   return (
     // some real nice ui
     <>

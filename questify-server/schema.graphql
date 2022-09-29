@@ -7,14 +7,14 @@ type UserAccountObject {
   username: String!
 }
 
-type SchoolObject {
-  id: String!
-  name: String!
-}
-
 type GetAuthTokenResult {
   token: String!
   user: UserAccountObject!
+}
+
+type SchoolObject {
+  id: String!
+  name: String!
 }
 
 type Query {
@@ -22,6 +22,8 @@ type Query {
 }
 
 type Mutation {
+  getAuthToken(input: GetAuthTokenInput!): GetAuthTokenResult!
+  verifyToken(input: VerifyTokenInput!): UserAccountObject
   createAccount(input: CreateUserAccountInput!): UserAccountObject!
   setAccountActiveStatus(userId: String!, isActive: Boolean!): Boolean!
   registerSchool(input: CreateSchoolInput!): SchoolObject!
@@ -30,8 +32,16 @@ type Mutation {
   updateSchool(id: String!, input: UpdateSchoolInput!): SchoolObject!
   setSchoolActiveStatus(schoolId: String!, isActive: Boolean!): Boolean!
   createInvitationCode(input: InvitationCodeCreateInput!): String!
-  getAuthToken(input: GetAuthTokenInput!): GetAuthTokenResult!
-  verifyToken(input: VerifyTokenInput!): UserAccountObject
+  askQuestion(input: QuestionCreateInput!): QuestionObject!
+}
+
+input GetAuthTokenInput {
+  username: String!
+  password: String!
+}
+
+input VerifyTokenInput {
+  token: String!
 }
 
 input CreateUserAccountInput {
@@ -53,11 +63,17 @@ input InvitationCodeCreateInput {
   targetSchool: String!
 }
 
-input GetAuthTokenInput {
-  username: String!
-  password: String!
+type QuestionObject {
+  id: String!
+  title: String!
+  content: String!
+  tags: [String!]!
+  author: UserAccountObject!
+  score: Int!
 }
 
-input VerifyTokenInput {
-  token: String!
+input QuestionCreateInput {
+  title: String!
+  content: String!
+  tags: [String!]!
 }

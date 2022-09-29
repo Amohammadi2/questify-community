@@ -7,6 +7,7 @@ import ActionButton from "./ActionButton";
 import PreviewModal  from "./PreviewModal";
 import { useSaveDraft } from "../../hooks/useSaveDraft";
 import { APIStats } from "@utils/api-stats.interface";
+import PublishModal from "./PublishModal";
 
 interface IPostEditorProps {
   onPublish: (content: IQuestionInput) => void;
@@ -38,6 +39,7 @@ export default function PostEditor({ onPublish, publishStats, onDraftSave, draft
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [previewOpen, setPreviewOpen] = useState(false);
+  const [publishModalOpen, setPublishModalOpen] = useState(false);
   const [APIError, setAPIError] = useState<string | null>(null);
   const { allChecksPass, contentAvailable, errorMessage } = canPublish(title, content);
 
@@ -47,9 +49,9 @@ export default function PostEditor({ onPublish, publishStats, onDraftSave, draft
   useEffect(() => {setAPIError(null)}, [errorMessage]);
 
   // format and publish the content
-  const handlePublish = () => {
+  const handlePublish = (_tags: string[]) => {
     setAPIError('');
-    onPublish({ title, content, tags: [] })
+    onPublish({ title, content, tags: _tags })
   }
   const handleDraftSave = () => {
     setAPIError('');
@@ -65,6 +67,13 @@ export default function PostEditor({ onPublish, publishStats, onDraftSave, draft
         content={content}
       />
 
+      <PublishModal
+        open={publishModalOpen}
+        onClose={()=>setPublishModalOpen(false)}
+        onPublish={(_tags) => handlePublish(_tags)}
+        publishLoading={publishStats.loading}
+      />
+
       <TitleInput placeholder="عنوان سوال را وارد کنید" onChange={e => setTitle(e.target.value)} />
       <TextBlock
         content={content}
@@ -74,10 +83,10 @@ export default function PostEditor({ onPublish, publishStats, onDraftSave, draft
       <ActionButtonContainer>
         <ActionButton
           size="sm"
-          disabled={!(allChecksPass) || publishStats.loading}
-          onPress={() => handlePublish()}
+          disabled={(!(allChecksPass) || publishStats.loading) || publishModalOpen}
+          onPress={() => setPublishModalOpen(true)}
         >
-          {publishStats.loading ? <Loading size="sm" /> : "انتشار"}
+          انتشار
         </ActionButton>
         <ActionButton size="sm" color="secondary" disabled={!(contentAvailable)} onClick={() => setPreviewOpen(true)}>پیش‌نمایش</ActionButton>
         <ActionButton

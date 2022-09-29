@@ -3,7 +3,7 @@ import QuestionOneLiner from "modules/questions/question-listing/QuestionOneLine
 import QuestionListLayout from "../../question-listing/QuestionListLayout";
 import { useMyQuestions } from "../graphql/useMyQuestions";
 
-export function MyQuestionsList() {
+export default function MyQuestionsList() {
   
   const { data, loading } = useMyQuestions();
 
@@ -11,7 +11,7 @@ export function MyQuestionsList() {
     <QuestionListLayout>
       {
         loading
-          ? <Loading size="lg" />
+          ? <Loading size="lg" css={{ my: '$4' }}/>
           : data?.map((q, i) => (
             <QuestionOneLiner key={i} title={q.title} id={'some-sort-of-fake-id'} />
           ))

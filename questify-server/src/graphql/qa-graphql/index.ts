@@ -1,5 +1,5 @@
-import { AuthResolver } from "../auth-graphql/auth.resolver";
+import { QaResolver } from "./qa.resolver";
 
 export const qaResolvers = [
-  AuthResolver
+  QaResolver
 ];
