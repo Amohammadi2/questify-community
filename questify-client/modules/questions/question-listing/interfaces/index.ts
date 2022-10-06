@@ -1,0 +1,1 @@
+export type { IQuestionListHookParams } from './question-list-hook-params.interface';

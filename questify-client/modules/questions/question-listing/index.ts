@@ -4,3 +4,4 @@ export { default as QuestionDetails } from './QuestionDetails';
 export { default as QuestionList } from './QuestionListV2';
 export { default as QuestionListLayout } from './QuestionListLayout';
 export { default as QuestionOneLiner } from './QuestionOneLiner';
+export { default as QuestionPostRenderer } from './QuestionListRenderer';

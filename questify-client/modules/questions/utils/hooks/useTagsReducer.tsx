@@ -1,7 +1,13 @@
 import { useReducer } from 'react';
 
 // :Q: maybe we can make this mechanism shared across the filtering system and post publish modal?
-export function useTagsReducer() {
+
+interface ITagReducerActions {
+  addTag: (tag: string) => void;
+  removeTag: (tag: string) => void;
+}
+
+export function useTagsReducer(): readonly [tags: string[], api: ITagReducerActions] {
   const [tags, dispatch] = useReducer<(state: string[], action: { type: 'add-tag' | 'remove-tag'; payload: string; }) => string[]>(
     (state, action) => {
       switch (action.type) {

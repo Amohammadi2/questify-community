@@ -20,11 +20,13 @@ const FilterOption = styled('div', {
   textAlign: 'center',
   cursor: 'pointer',
   transition: '$button',
+  userSelect: 'none',
   '&:hover': {
-    bg: '$gray300'
+    bg: '$gray300',
   },
   '&.active': {
-    bg: '$primaryLight'
+    bg: '$primaryLight',
+    cursor: 'unset'
   }
 })
 

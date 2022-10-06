@@ -1,18 +1,17 @@
 import { useMockAPI } from "@utils/mock/useMockAPI";
 import { IQuestion, IQuestionFilter } from "modules/questions/entities"
+import { IQuestionListHookParams } from "modules/questions/question-listing/interfaces";
 import { useEffect } from "react";
 
-export function useSchoolQuestions(schoolId: string, filter: IQuestionFilter = 'new', searchTerm:string|null=null) {
+
+
+export function useSchoolQuestions(schoolId: string, filters: IQuestionListHookParams) {
   
-  let title = {
-    'new': 'این یک پست جدید است',
-    'top': 'این یک پست محبوب است',
-    'controversial': 'این یک پست بحث برانگیز است'
-  }[filter];
+  const { category, searchTerm, selectedTags } = filters;
   
   const sampleQuestion: IQuestion = {
     id: 'some-real-nice-id',
-    title,
+    title: 'این یک پست خاص است: ' + category + searchTerm,
     content: 'یک توضیح کوتاه راجع به سوال برای خلاصه کردن مطلب', 
     author: {
       profileImageUrl: '',
@@ -21,7 +20,7 @@ export function useSchoolQuestions(schoolId: string, filter: IQuestionFilter = '
         username: 'Ashkan'
       }
     }, 
-    tags: ['ریاضی', 'فیزیک', 'هندسه', 'شیمی'],
+    tags: selectedTags ? selectedTags : ['ریاضی', 'فیزیک', 'هندسه', 'شیمی'],
     score: 3
   };
   
@@ -34,7 +33,7 @@ export function useSchoolQuestions(schoolId: string, filter: IQuestionFilter = '
 
   useEffect(() => {
     sendRequest();
-  },[schoolId, filter, searchTerm]);
+  },[schoolId, category, searchTerm]);
 
   return stats;
 }
