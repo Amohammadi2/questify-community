@@ -1,21 +1,22 @@
-import { Loading } from "@nextui-org/react";
-import QuestionOneLiner from "modules/questions/question-listing/QuestionOneLiner";
-import QuestionListLayout from "../../question-listing/QuestionListLayout";
+import useQuestionTagList from "modules/questions/graphql/useQuestionTagList";
+import { QuestionOneLiner, QuestionList } from "modules/questions/question-listing";
+import QuestionListRenderer from "modules/questions/question-listing/QuestionListRenderer";
 import { useMyQuestions } from "../graphql/useMyQuestions";
 
-export default function MyQuestionsList() {
+export default function BookmarkedQuestionsList() {
   
-  const { data, loading } = useMyQuestions();
-
   return (
-    <QuestionListLayout>
-      {
-        loading
-          ? <Loading size="lg" css={{ my: '$4' }}/>
-          : data?.map((q, i) => (
-            <QuestionOneLiner key={i} title={q.title} id={'some-sort-of-fake-id'} />
-          ))
-      }
-    </QuestionListLayout>
+    <QuestionList <{title:string,id:string}>
+      searchEnabled
+      tagFilterEnabled
+      useQuestions={(filters) => useMyQuestions()}
+      useTags={()=>useQuestionTagList('my-questions')}
+      listRenderer={(stats) => (
+        <QuestionListRenderer <{title:string,id:string}>
+          {...stats}  
+          QuestionRenderer={QuestionOneLiner}
+        />
+      )}
+    />
   )
 }

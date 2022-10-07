@@ -3,11 +3,11 @@ import { APIStats } from "@utils/api-stats.interface";
 import { ReactElement } from "react-markdown/lib/react-markdown";
 import { IQuestion } from "../entities";
 
-interface IQuestionListProps extends APIStats<IQuestion[]> {
-  QuestionRenderer: <T extends IQuestion> (props: T) => ReactElement;
+interface IQuestionListProps <TQuestion> extends APIStats<TQuestion[]> {
+  QuestionRenderer: <T extends TQuestion> (props: T) => ReactElement;
 }
 
-export default function QuestionListRenderer({ data: questions, loading, error, QuestionRenderer } : IQuestionListProps) {
+export default function QuestionListRenderer <TQuestion=IQuestion> ({ data: questions, loading, error, QuestionRenderer } : IQuestionListProps<TQuestion>) {
   
   if (loading)
     return (

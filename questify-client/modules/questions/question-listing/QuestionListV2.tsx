@@ -13,10 +13,10 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { IconButton } from "modules/app-ui";
 import type { IQuestionListHookParams } from "./interfaces";
 
-interface IQuestionListProps {
-  useQuestions: (filters: IQuestionListHookParams) => APIStats<IQuestion[]>;
+interface IQuestionListProps <TQuestion=IQuestion> {
+  useQuestions: (filters: IQuestionListHookParams) => APIStats<TQuestion[]>;
   useTags: () => APIStats<ITag[]>;
-  listRenderer: (stats: APIStats<IQuestion[]>) => ReactNode | ReactNode[];
+  listRenderer: (stats: APIStats<TQuestion[]>) => ReactNode | ReactNode[];
   categories?: string[];
   searchEnabled?: boolean;
   tagFilterEnabled?: boolean;
@@ -25,7 +25,7 @@ interface IQuestionListProps {
 }
 
 
-export default function QuestionList({
+export default function QuestionList <TQuestion=IQuestion> ({
   useQuestions,
   useTags,
   listRenderer,
@@ -33,7 +33,7 @@ export default function QuestionList({
   tagFilterEnabled=true,
   sideContentHead=<></>,
   sideContentEnd=<></>,
-} : IQuestionListProps) {
+} : IQuestionListProps<TQuestion>) {
 
 
   const [category, setCategory] = useState<string>(categories[0] || '__DEFAULT__');
