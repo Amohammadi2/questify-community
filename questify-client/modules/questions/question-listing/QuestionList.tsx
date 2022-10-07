@@ -1,30 +1,85 @@
-import { Loading, Text } from "@nextui-org/react";
-import { APIStats } from "@utils/api-stats.interface";
-import { ReactNode } from "react";
-import { ReactElement } from "react-markdown/lib/react-markdown";
-import { IQuestion } from "../entities";
+// a very large, well-defined component allowing you to list, filter and render questions
 
-interface IQuestionListProps extends APIStats<IQuestion[]> {
-  QuestionRenderer: (props: IQuestion) => ReactElement;
+import { APIStats } from "@utils/api-stats.interface";
+import { Grid, Input } from '@nextui-org/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ReactNode, useState } from "react";
+import { IQuestion, ITag } from "../entities";
+import { useTagsReducer } from "../utils";
+import { CategoryBox } from "./category-filter";
+import QuestionListLayout from "./QuestionListLayout";
+import TagFilterBox from './tag-filter/TagFilterBox';
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { IconButton } from "modules/app-ui";
+import type { IQuestionListHookParams } from "./interfaces";
+
+interface IQuestionListProps <TQuestion=IQuestion> {
+  useQuestions: (filters: IQuestionListHookParams) => APIStats<TQuestion[]>;
+  useTags: () => APIStats<ITag[]>;
+  listRenderer: (stats: APIStats<TQuestion[]>) => ReactNode | ReactNode[];
+  categories?: string[];
+  searchEnabled?: boolean;
+  tagFilterEnabled?: boolean;
+  sideContentHead?: ReactNode | ReactNode[];
+  sideContentEnd?: ReactNode | ReactNode[];
 }
 
-export default function QuestionList({ data: questions, loading, error, QuestionRenderer } : IQuestionListProps) {
-  
-  if (loading)
-    return (
-      <Loading css={{ mt: '$15' }} />
-    );
-  
-  if (error)
-    return (
-      <Text color="$red600" css={{ mt: '$15' }}>we are in error?{error}</Text>
-    )
-  
+
+export default function QuestionList <TQuestion=IQuestion> ({
+  useQuestions,
+  useTags,
+  listRenderer,
+  categories=[],
+  tagFilterEnabled=true,
+  sideContentHead=<></>,
+  sideContentEnd=<></>,
+} : IQuestionListProps<TQuestion>) {
+
+
+  const [category, setCategory] = useState<string>(categories[0] || '__DEFAULT__');
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [selectedTags, { addTag, removeTag }] = useTagsReducer();
+  const questionsStats = useQuestions({
+    category,
+    selectedTags,
+    searchTerm
+  })
+  const tagsStats = useTags();
+
   return (
-    <>
-      {questions?.map((q,i)=>(
-        <QuestionRenderer key={i} {...q} />
-      ))}
-    </>
-  );
+    <QuestionListLayout
+      sideContent={
+        <Grid css={{ mt: '$10' }}>
+          {sideContentHead}
+          {tagFilterEnabled &&
+            <TagFilterBox
+              tags={tagsStats.data || []}
+              addTag={addTag}
+              removeTag={removeTag}
+              selectedTags={selectedTags}
+            />
+          }
+          {sideContentEnd}
+        </Grid>
+      }
+    >
+      <Input
+        type="search"
+        underlined
+        placeholder="جست‌وجو"
+        contentRight={<IconButton><FontAwesomeIcon icon={faSearch} style={{color:'gray'}} /></IconButton>}
+        onKeyDown={(e)=>{
+          if (e.key == "Enter")
+            setSearchTerm(e.currentTarget.value);
+        }}
+      />
+      <CategoryBox
+        categories={categories}
+        onCategorySelected={c=>setCategory(c)}
+        selectedCategory={category}
+      />
+      {listRenderer(questionsStats)}
+    </QuestionListLayout>
+  )
+
 }

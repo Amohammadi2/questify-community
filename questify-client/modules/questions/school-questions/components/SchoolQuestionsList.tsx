@@ -1,7 +1,7 @@
 import QuestionFilter from "modules/questions/question-filtering/QuestionFilter";
 import QuestionListLayout from "modules/questions/question-listing/QuestionListLayout";
 import QuestionListRenderer from "modules/questions/question-listing/QuestionListRenderer";
-import { QuestionListContainer, QuestionPost, QuestionList } from "../../question-listing";
+import { QuestionPost, QuestionList } from "../../question-listing";
 import { useSchoolQuestions } from "../graphql/useSchoolQuestions";
 import { useSchoolQuestionTags } from "../graphql/useSchoolQuestionTags";
 
