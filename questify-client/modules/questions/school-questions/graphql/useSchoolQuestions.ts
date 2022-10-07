@@ -8,7 +8,7 @@ import { useEffect } from "react";
 export function useSchoolQuestions(schoolId: string, filters: IQuestionListHookParams) {
   
   const { category, searchTerm, selectedTags } = filters;
-  
+
   const sampleQuestion: IQuestion = {
     id: 'some-real-nice-id',
     title: 'این یک پست خاص است: ' + category + searchTerm,
@@ -20,7 +20,7 @@ export function useSchoolQuestions(schoolId: string, filters: IQuestionListHookP
         username: 'Ashkan'
       }
     }, 
-    tags: selectedTags ? selectedTags : ['ریاضی', 'فیزیک', 'هندسه', 'شیمی'],
+    tags: selectedTags,
     score: 3
   };
   
@@ -33,7 +33,7 @@ export function useSchoolQuestions(schoolId: string, filters: IQuestionListHookP
 
   useEffect(() => {
     sendRequest();
-  },[schoolId, category, searchTerm]);
+  },[schoolId, category, searchTerm, selectedTags]);
 
   return stats;
 }
