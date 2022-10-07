@@ -55,10 +55,7 @@ export default function QuestionPost({ title, content, score, tags, author } : I
         </QuestionBox>
       </Link>
       <Grid.Container direction="row" alignItems="center">
-        <Badge content="#ریاضی" attentionWorthy={true} />
-        <Badge content="#فیزیک" />
-        <Badge content="#هندسه" />
-        <Badge content="#شیمی" />
+        {tags.map(t=><Badge content={t} key={t} />)}
       </Grid.Container>
     </QuestionContainer>
   );
