@@ -1,7 +1,8 @@
 import { useMockAPI } from "@utils/mock/useMockAPI";
-import { IQuestion, IQuestionFilter } from "modules/questions/entities"
+import { IQuestionWD, IQuestionFilter } from "modules/questions/entities"
 import { IQuestionListHookParams } from "modules/questions/question-listing/interfaces";
 import { useEffect } from "react";
+import { ISchoolQuestion } from "../interfaces/school-question.interface";
 
 
 
@@ -9,10 +10,9 @@ export function useSchoolQuestions(schoolId: string, filters: IQuestionListHookP
   
   const { category, searchTerm, selectedTags } = filters;
 
-  const sampleQuestion: IQuestion = {
+  const sampleQuestion: ISchoolQuestion = {
     id: 'some-real-nice-id',
     title: 'این یک پست خاص است: ' + category + searchTerm,
-    content: 'یک توضیح کوتاه راجع به سوال برای خلاصه کردن مطلب', 
     author: {
       profileImageUrl: '',
       account: {
@@ -21,10 +21,15 @@ export function useSchoolQuestions(schoolId: string, filters: IQuestionListHookP
       }
     }, 
     tags: selectedTags,
-    score: 3
+    nLikes: 23,
+    nComments: 43,
+    nAnswers: 5,
+    hasTextExplanation: true,
+    hasVideoExplanation: true,
+    isChallenge: true,
   };
   
-  const [sendRequest, stats] =  useMockAPI<void, IQuestion[]>({
+  const [sendRequest, stats] =  useMockAPI<void, ISchoolQuestion[]>({
     delay: 1000,
     handler: () => {
       return new Array(30).fill(sampleQuestion);

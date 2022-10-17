@@ -1,9 +1,9 @@
 import { useMockAPI } from "@utils/mock/useMockAPI";
 import { useEffect } from "react";
-import { IQuestion } from "../entities";
+import { IQuestionWD } from "../entities";
 
 export default function useQuestionDetails(questionId: string) {
-  const [getQuestionDetails, stats] = useMockAPI<void,IQuestion>({
+  const [getQuestionDetails, stats] = useMockAPI<void,IQuestionWD>({
     delay: 1500,
     handler() {
       return {

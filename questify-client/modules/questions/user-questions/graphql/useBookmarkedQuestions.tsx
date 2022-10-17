@@ -1,7 +1,8 @@
 import { useMockAPI } from "@utils/mock/useMockAPI";
+import { IQuestionListHookParams } from "modules/questions/question-listing/interfaces";
 import { useEffect } from "react";
 
-export function useBookmarkedQuestions() {
+export function useBookmarkedQuestions({ searchTerm, selectedTags }: IQuestionListHookParams) {
   const [call, stats] = useMockAPI<void, {title:string,id:string}[]>({
     delay: 500,
     handler: () => {
@@ -12,7 +13,7 @@ export function useBookmarkedQuestions() {
     }
   })
   
-  useEffect(() => call(), []);
+  useEffect(() => call(), [searchTerm, selectedTags]);
 
   return stats;
 }

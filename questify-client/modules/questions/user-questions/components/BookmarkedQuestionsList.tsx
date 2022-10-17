@@ -9,7 +9,7 @@ export default function BookmarkedQuestionsList() {
     <QuestionList <{title:string,id:string}>
       searchEnabled
       tagFilterEnabled
-      useQuestions={(filters) => useBookmarkedQuestions()}
+      useQuestions={(filters) => useBookmarkedQuestions(filters)}
       useTags={()=>useQuestionTagList('bookmarked')}
       listRenderer={(stats) => (
         <QuestionListRenderer <{title:string,id:string}>

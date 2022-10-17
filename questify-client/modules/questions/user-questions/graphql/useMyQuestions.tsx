@@ -1,7 +1,8 @@
 import { useMockAPI } from "@utils/mock/useMockAPI"
+import { IQuestionListHookParams } from "modules/questions/question-listing/interfaces";
 import { useEffect } from "react";
 
-export function useMyQuestions() {
+export function useMyQuestions({ searchTerm, selectedTags }: IQuestionListHookParams) {
 
   const sampleQuestion = {
     title: 'این یکی از سوالات من است',
@@ -15,7 +16,7 @@ export function useMyQuestions() {
     }
   })
 
-  useEffect(() => call(), []);
+  useEffect(() => call(), [searchTerm, selectedTags]);
 
   return stats;
 }

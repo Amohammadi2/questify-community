@@ -1,9 +1,10 @@
-import QuestionFilter from "modules/questions/question-filtering/QuestionFilter";
+import useQuestionTagList from "modules/questions/graphql/useQuestionTagList";
 import QuestionListLayout from "modules/questions/question-listing/QuestionListLayout";
 import QuestionListRenderer from "modules/questions/question-listing/QuestionListRenderer";
 import { QuestionPost, QuestionList } from "../../question-listing";
 import { useSchoolQuestions } from "../graphql/useSchoolQuestions";
-import { useSchoolQuestionTags } from "../graphql/useSchoolQuestionTags";
+import { ISchoolQuestion } from "../interfaces/school-question.interface";
+import SchoolQuestion from "./SchoolQuestion";
 
 export default function SchoolQuestionsList({ schoolId }) {
   // return (
@@ -21,16 +22,16 @@ export default function SchoolQuestionsList({ schoolId }) {
   // )
 
   return (
-    <QuestionList
+    <QuestionList <ISchoolQuestion>
       searchEnabled
       tagFilterEnabled
       categories={['جدید', 'پرطرفدار', 'بحث برانگیز']}
       useQuestions={(filters) => useSchoolQuestions(schoolId, filters)}
-      useTags={()=>useSchoolQuestionTags(schoolId)}
+      useTags={()=>useQuestionTagList('school')}
       listRenderer={(stats) => 
         <QuestionListRenderer
           {...stats}
-          QuestionRenderer={QuestionPost}
+          QuestionRenderer={SchoolQuestion}
         />
       }
     />

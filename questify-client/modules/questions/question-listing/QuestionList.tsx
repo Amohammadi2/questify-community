@@ -4,7 +4,7 @@ import { APIStats } from "@utils/api-stats.interface";
 import { Grid, Input } from '@nextui-org/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ReactNode, useState } from "react";
-import { IQuestion, ITag } from "../entities";
+import { IQuestionWD, ITag } from "../entities";
 import { useTagsReducer } from "../utils";
 import { CategoryBox } from "./category-filter";
 import QuestionListLayout from "./QuestionListLayout";
@@ -13,7 +13,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { IconButton } from "modules/app-ui";
 import type { IQuestionListHookParams } from "./interfaces";
 
-interface IQuestionListProps <TQuestion=IQuestion> {
+interface IQuestionListProps <TQuestion=IQuestionWD> {
   useQuestions: (filters: IQuestionListHookParams) => APIStats<TQuestion[]>;
   useTags: () => APIStats<ITag[]>;
   listRenderer: (stats: APIStats<TQuestion[]>) => ReactNode | ReactNode[];
@@ -25,7 +25,7 @@ interface IQuestionListProps <TQuestion=IQuestion> {
 }
 
 
-export default function QuestionList <TQuestion=IQuestion> ({
+export default function QuestionList <TQuestion=IQuestionWD> ({
   useQuestions,
   useTags,
   listRenderer,
