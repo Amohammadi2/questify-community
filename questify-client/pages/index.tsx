@@ -39,7 +39,7 @@ const Home: NextPageWithLayout = () => {
       }}>
         <LandingIllustration />
         <FlexColumn css={{ px: '$4', pt: '$15' }}>
-          <BigHeader>Questify</BigHeader>
+          <BigHeader>𝓠𝓾𝓮𝓼𝓽𝓲𝓯𝔂</BigHeader>
           <HeaderDescription>پلتفرم جامع پرسش و پاسخ درسی</HeaderDescription>
           <ItemCard>
             <Tick />

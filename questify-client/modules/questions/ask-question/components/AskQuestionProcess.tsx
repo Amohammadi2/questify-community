@@ -40,17 +40,12 @@ export default function AskQuestionProcess({ questionType }: IQuestionProcess) {
   }
 
   return (
-    <Grid.Container css={{ py: '$5', px: '$10', height: '100%' }} direction="row">
-      <Grid.Container css={{ pb: '$5' }} direction="column" xs={12} sm={8} md={9}>
-        <PostEditor
-          {...finalQuestionAPI}
-          onDraftSave={(content) => saveDraft(content)}
-          draftStats={draftStats}
-        />
-      </Grid.Container>
-      <Grid xs={0} sm={4} md={3}>
-        <QuestionDrafts editorContent={''} />
-      </Grid>
+    <Grid.Container css={{ py: '$5', px: '$10', height: '100%' }} direction="column" alignContent="center" >
+      <PostEditor
+        {...finalQuestionAPI}
+        onDraftSave={(content) => saveDraft(content)}
+        draftStats={draftStats}
+      />
     </Grid.Container>
   )
 }

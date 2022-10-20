@@ -8,6 +8,9 @@ import PreviewModal  from "./PreviewModal";
 import { useSaveDraft } from "../../hooks/useSaveDraft";
 import { APIStats } from "@utils/api-stats.interface";
 import PublishModal from "./PublishModal";
+import { useEditor, EditorContent, FloatingMenu } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import Placeholder from '@tiptap/extension-placeholder';
 
 interface IPostEditorProps {
   onPublish: (content: IQuestionInput) => void;
@@ -34,6 +37,15 @@ const ActionButtonContainer = styled(Grid.Container, {
   }
 })
 
+const PostEditorContainer = styled('div', {
+  w: '100%',
+  maxW: '900px',
+  borderRadius: '$md',
+  border: '1px solid $gray400',
+  px: '$5',
+  py: '$4'
+})
+
 export default function PostEditor({ onPublish, publishStats, onDraftSave, draftStats }: IPostEditorProps) {
 
   const [title, setTitle] = useState('');
@@ -42,6 +54,19 @@ export default function PostEditor({ onPublish, publishStats, onDraftSave, draft
   const [publishModalOpen, setPublishModalOpen] = useState(false);
   const [APIError, setAPIError] = useState<string | null>(null);
   const { allChecksPass, contentAvailable, errorMessage } = canPublish(title, content);
+
+  const editor = useEditor({
+    extensions: [
+      StarterKit.configure({
+        heading: {
+          levels: [3,4]
+        }
+      }),
+      Placeholder.configure({
+        placeholder: 'سوال خود را وارد کنید...'
+      }) // Fix::ref: https://tiptap.dev/api/extensions/placeholder#source-code
+    ]
+  })
 
   // track error status
   useEffect(() => {setAPIError(publishStats.error || null)}, [publishStats.error]);
@@ -59,8 +84,11 @@ export default function PostEditor({ onPublish, publishStats, onDraftSave, draft
   }
 
   return (
-    <>
-      <PreviewModal 
+    <PostEditorContainer>
+
+      <EditorContent editor={editor}  />
+
+      {/* <PreviewModal 
         previewOpen={previewOpen}
         setPreviewOpen={setPreviewOpen}
         title={title}
@@ -102,9 +130,9 @@ export default function PostEditor({ onPublish, publishStats, onDraftSave, draft
         )}
         {APIError && errorMessage ? '|':''}
         <Text color="$red600" css={{ mx: '$2' }}>{APIError}</Text>
-      </ActionButtonContainer>
+      </ActionButtonContainer> */}
   
-    </>
+    </PostEditorContainer>
   );
 
 }

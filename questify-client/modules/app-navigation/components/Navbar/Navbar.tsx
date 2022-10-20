@@ -20,7 +20,9 @@ const StyledNavbarUI = styled('nav', {
 export default function Navbar({ children }) {
   return (
     <StyledNavbarUI>
-      <Link href="/"><Logo style={{ cursor: 'pointer' }} /></Link>
+      <Link href="/">
+        <div style={{userSelect: 'none', cursor: 'pointer'}}>𝓠𝓾𝓮𝓼𝓽𝓲𝓯𝔂</div>
+      </Link>
       <div style={{ flexGrow: '1' }} />
       {children}
     </StyledNavbarUI>

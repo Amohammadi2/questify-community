@@ -11,7 +11,7 @@ const GridContainer = {
       gridTemplateColumns: '60px auto',
       gridTemplateRows: '60px auto',
       gridTemplateAreas: `
-        "sidebar navbar"
+        "navbar navbar"
         "sidebar content"
       `,
       height: '100vh',

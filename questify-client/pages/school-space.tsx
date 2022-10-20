@@ -1,4 +1,4 @@
-import { faAdd } from "@fortawesome/free-solid-svg-icons";
+import { faAdd, faPenClip } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
@@ -20,7 +20,7 @@ SchoolQuestion.getLayout = getNavLayout({
   navbarContent: (
     <Link href="/ask-question">
       <Button
-        icon={<FontAwesomeIcon icon={faAdd} />}
+        icon={<FontAwesomeIcon icon={faPenClip} />}
         size="sm"
       >
         پرسش سوال
