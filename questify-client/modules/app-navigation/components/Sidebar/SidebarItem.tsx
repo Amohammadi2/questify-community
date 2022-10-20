@@ -6,24 +6,23 @@ const SidebarItemUI = styled(SidebarSection, {
   d: 'flex',
   justifyContent: 'center',
   px: '$7',
-  backgroundColor: '#484848',
+  backgroundColor: 'gray100',
   borderRadius: '$sm',
   transition: 'all 0.07s ease-out',
   userSelect: 'none',
   cursor: 'pointer',
-  color: '$gray500',
+  color: '$gray600',
 
   '& > :not(:is(svg))': {
     display: 'none',
   },
 
   '&:hover': {
-    backgroundColor: '#4E4E4E'
+    backgroundColor: '$gray200'
   },
 
   '&.active': {
-    backgroundColor: '$primary',
-    color: '$primarySolidContrast'
+    color: '$primaryLightContrast'
   },
   
   '@xs': {
@@ -33,6 +32,7 @@ const SidebarItemUI = styled(SidebarSection, {
     justifyContent: 'unset'
   }
 });
+
 
 interface ISidebarItemProps {
   icon?: ReactElement,

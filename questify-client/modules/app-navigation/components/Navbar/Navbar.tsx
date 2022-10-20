@@ -9,7 +9,7 @@ const StyledNavbarUI = styled('nav', {
     top: '0',
     width: '100%',
     height: navbarHeight,
-    backgroundColor: '$primary',
+    backgroundColor: '$gray100',
     color: '$primaryContrast',
     d: 'flex',
     alignItems: 'center',

@@ -57,7 +57,7 @@ export function NavLayout(props: IAppLayout) {
   if (props.sidebar) {
     return (
       <GridContainer.FullScreen.Normal>
-        <FixedArea area="sidebar" bg="#393939">
+        <FixedArea area="sidebar" bg="rgb(244, 244, 244)">
           {props.sidebar}
         </FixedArea>
         <div style={{ gridArea: 'navbar', position: 'sticky' }}>

@@ -27,7 +27,7 @@ export default function AppSidebar() {
     <SidebarSection>
       <Avatar squared text={account?.username[0].toUpperCase()} size="md" />
       <Spacer x={.4} className="large-only" />
-      <Text className="large-only" css={{ color: 'white', fontSize: '$xl' }}>
+      <Text className="large-only" css={{ color: '$primaryLightContrast', fontSize: '$xl' }}>
         {account?.username}
       </Text>
     </SidebarSection>

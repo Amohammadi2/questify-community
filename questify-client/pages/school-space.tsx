@@ -20,7 +20,6 @@ SchoolQuestion.getLayout = getNavLayout({
   navbarContent: (
     <Link href="/ask-question">
       <Button
-        flat
         icon={<FontAwesomeIcon icon={faAdd} />}
         size="sm"
       >

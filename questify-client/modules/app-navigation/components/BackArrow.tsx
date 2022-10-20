@@ -14,7 +14,7 @@ export default function BackArrow() {
   return (
     <IconButton onClick={e=>popBack()}>
       {/* @theme:ref: */}
-      <FontAwesomeIcon icon={faArrowLeft} style={{ color: 'white' }} />
+      <FontAwesomeIcon icon={faArrowLeft} style={{ color: 'black' }} />
     </IconButton>
   )
 }
