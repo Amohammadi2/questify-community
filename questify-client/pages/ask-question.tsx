@@ -1,7 +1,7 @@
 import { useRequireAuthentication } from "modules/auth/route-protector";
 import { getNavLayout } from "../modules/app-navigation";
 import { BackArrow } from "../modules/app-navigation";
-import { AskQuestionProcess } from "../modules/questions";
+import { AskQuestionNavContent, AskQuestionProcess } from "modules/questions";
 import { NextPageWithLayout } from "../utils/next-layout";
 
 const AskQuestion: NextPageWithLayout = () => {
@@ -15,7 +15,12 @@ const AskQuestion: NextPageWithLayout = () => {
 }
 
 AskQuestion.getLayout = getNavLayout({
-  navbarContent: <BackArrow />
+  navbarContent: (
+    <>
+      <AskQuestionNavContent />
+      <BackArrow />
+    </>
+  )
 });
 
 export default AskQuestion;

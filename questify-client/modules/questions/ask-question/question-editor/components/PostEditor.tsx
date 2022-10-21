@@ -1,5 +1,6 @@
 import { Grid, styled, Text, Loading } from "@nextui-org/react";
 import { useEffect, useState } from "react";
+import { useRecoilState } from 'recoil';
 import { canPublish } from "../validators/can-publish.validator";
 import TextBlock from "./Block/TextBlock";
 import { IQuestionInput } from "../../../entities";
@@ -11,6 +12,7 @@ import PublishModal from "./PublishModal";
 import { useEditor, EditorContent, FloatingMenu } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Placeholder from '@tiptap/extension-placeholder';
+import { canBePublishedAtom, isPublishModalOpenAtom } from "../states";
 
 interface IPostEditorProps {
   onPublish: (content: IQuestionInput) => void;
@@ -50,10 +52,10 @@ export default function PostEditor({ onPublish, publishStats, onDraftSave, draft
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [publishModalOpen, setPublishModalOpen] = useState(false);
   const [APIError, setAPIError] = useState<string | null>(null);
-  const { allChecksPass, contentAvailable, errorMessage } = canPublish(title, content);
+  const [,setCanBePublished] = useRecoilState(canBePublishedAtom);
+  const [isPublishModalOpen, setIsPublishModalOpen] = useRecoilState(isPublishModalOpenAtom);
+  const { allChecksPass, errorMessage, nOfWords } = canPublish(content);
 
   const editor = useEditor({
     extensions: [
@@ -68,10 +70,27 @@ export default function PostEditor({ onPublish, publishStats, onDraftSave, draft
     ]
   })
 
+  // update the content
+  useEffect(() => {
+    setContent(editor?.getHTML() || '');
+  }, [editor?.getText()])
+
+  // validate the content and inform the navbar publish button
+  useEffect(() => {
+    setCanBePublished(allChecksPass);
+  }, [allChecksPass]);
+
   // track error status
   useEffect(() => {setAPIError(publishStats.error || null)}, [publishStats.error]);
   useEffect(() => {setAPIError(draftStats.error || null)}, [draftStats.error]);
   useEffect(() => {setAPIError(null)}, [errorMessage]);
+
+  // close the publish modal after the api call data has been received
+  useEffect(()=>{
+    if (publishStats.data) {
+      setIsPublishModalOpen(false);
+    }
+  }, [publishStats.data]);
 
   // format and publish the content
   const handlePublish = (_tags: string[]) => {
@@ -83,10 +102,27 @@ export default function PostEditor({ onPublish, publishStats, onDraftSave, draft
     onDraftSave({ title, content, tags: []});
   }
 
+
   return (
     <PostEditorContainer>
 
+      <PublishModal
+        open={isPublishModalOpen}
+        onClose={()=>setIsPublishModalOpen(false)}
+        onPublish={(_tags) => handlePublish(_tags)}
+        publishLoading={publishStats.loading}
+      />
+
       <EditorContent editor={editor}  />
+
+
+      {editor?.getText() != ''
+        ? <Grid.Container direction="row">
+            <Text color="$red500">{errorMessage}</Text>
+            <Text css={{ mx: '$3' }}>/</Text>
+            <Text color="$gray600">{nOfWords} کلمه</Text>
+          </Grid.Container>
+        : <></>}
 
       {/* <PreviewModal 
         previewOpen={previewOpen}

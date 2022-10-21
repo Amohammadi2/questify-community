@@ -39,7 +39,7 @@ export default function PublishModal({ open, onClose, onPublish, publishLoading 
           {tags.map(t => <Badge content={t} dismissable onDismiss={() => removeTag(t)} />)}
         </FlexRow>
         <FlexRow css={{ justifyContent: 'center' }}>
-          <Button size="sm" css={{ mx: '$3'}} disabled={tags.length <= 0 || publishLoading} onClick={()=>onPublish(tags)}>
+          <Button size="sm" css={{ mx: '$3'}} disabled={tags.length <= 0 || publishLoading} onClick={()=>{onPublish(tags)}}>
             {publishLoading ? <Loading size="sm" /> : "انتشار"}
           </Button>
           <Button size="sm" color="error" flat css={{ mx: '$3'}} onClick={()=>onClose()}>انصراف</Button>
