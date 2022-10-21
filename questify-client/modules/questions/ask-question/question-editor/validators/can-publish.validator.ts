@@ -1,27 +1,25 @@
-export function canPublish(title: string, content: string) {
-  const contentAvailable = title && content;
+export function canPublish(content: string) {
+  const contentAvailable = content;
   const nOfWords = content.split(' ').length;
-  const minLengthChecked = nOfWords >= 50;
-  const allChecksPass = contentAvailable && minLengthChecked;
+  const minLengthChecked = nOfWords >= 25;
+  const allChecksPass: boolean = (contentAvailable && minLengthChecked) ? true : false;
 
   const getErrorMessage = () => {
     if (minLengthChecked) return;
-    if (nOfWords > 0 && nOfWords < 15) 
+    if (nOfWords > 0 && nOfWords < 5) 
       return 'خیلی کمه هنوز';
-    else if (nOfWords >= 15 && nOfWords < 30)
+    else if (nOfWords >= 5 && nOfWords < 10)
       return 'بیشتر بنویس';
-    else if (nOfWords >= 30 && nOfWords < 40)
+    else if (nOfWords >= 10 && nOfWords < 15)
       return 'یکم دیگه ادامه بده';
-    else if (nOfWords >= 40 && nOfWords < 45)
+    else if (nOfWords >= 15 && nOfWords < 20)
       return 'فقط کمی مونده';
-    else if (nOfWords >= 45 && nOfWords < 50)
+    else if (nOfWords >= 20 && nOfWords < 25)
       return 'فقط چند کلمه دیگه';
   }
 
   return {
-    contentAvailable,
     nOfWords,
-    minLengthChecked,
     allChecksPass,
     errorMessage: getErrorMessage()
   }
