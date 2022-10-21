@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         <SSRStateRoot>
           <NextUIProvider theme={theme}>
             <AuthenticatorRoot>
-              <NextNProgress color="#FFF" />
+              <NextNProgress color="#607fff" />
               {getLayout(<Component {...pageProps} />)}
             </AuthenticatorRoot>
           </NextUIProvider>
