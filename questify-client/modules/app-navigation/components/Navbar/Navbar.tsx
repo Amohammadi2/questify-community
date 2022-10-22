@@ -1,4 +1,4 @@
-import { styled } from "@nextui-org/react";
+import { styled, Text } from "@nextui-org/react";
 import { navbarHeight } from "../../../app-ui/constants";
 import Logo from "../../assets/logo.svg";
 import Link from "next/link";
@@ -21,7 +21,9 @@ export default function Navbar({ children }) {
   return (
     <StyledNavbarUI>
       <Link href="/">
-        <div style={{userSelect: 'none', cursor: 'pointer'}}>𝓠𝓾𝓮𝓼𝓽𝓲𝓯𝔂</div>
+        <div style={{userSelect: 'none', cursor: 'pointer'}}>
+          <Text h3>𝓠𝓾𝓮𝓼𝓽𝓲𝓯𝔂</Text>
+        </div>
       </Link>
       <div style={{ flexGrow: '1' }} />
       {children}
