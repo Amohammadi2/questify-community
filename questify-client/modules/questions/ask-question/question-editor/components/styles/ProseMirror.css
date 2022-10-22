@@ -7,3 +7,7 @@
   color: gray;
   position: absolute;
 }
+
+.ProseMirror a {
+  color: rgb(5, 102, 212);
+}
