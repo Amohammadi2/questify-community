@@ -68,7 +68,6 @@ export default function SchoolQuestion({title, nAnswers, nLikes, nComments, isCh
       <Grid.Container direction="row" alignItems="center" css={{ my: '$4' }}>
         <AnswerBadge className="">3 پاسخ ارسال شده</AnswerBadge>
         <Filler />
-        <Text css={{ mx: '$5' }}>پاسخ ها توسط: </Text>
         <Avatar size="sm" text="A" css={{ mx: '-$1' }}/>
         <Avatar size="sm" text="A" css={{ mx: '-$1' }}/>
         <Avatar size="sm" text="A" css={{ mx: '-$1' }}/>
