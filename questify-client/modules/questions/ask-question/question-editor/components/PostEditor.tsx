@@ -12,7 +12,9 @@ import PublishModal from "./PublishModal";
 import { useEditor, EditorContent, FloatingMenu } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Placeholder from '@tiptap/extension-placeholder';
+import Link from '@tiptap/extension-link';
 import { canBePublishedAtom, isPublishModalOpenAtom } from "../states";
+import EditorToolbar from "./EditorToolbar";
 
 interface IPostEditorProps {
   onPublish: (content: IQuestionInput) => void;
@@ -45,7 +47,8 @@ const PostEditorContainer = styled('div', {
   borderRadius: '$md',
   border: '1px solid $gray400',
   px: '$5',
-  py: '$4'
+  py: '$4',
+  my: '$5',
 })
 
 export default function PostEditor({ onPublish, publishStats, onDraftSave, draftStats }: IPostEditorProps) {
@@ -66,7 +69,10 @@ export default function PostEditor({ onPublish, publishStats, onDraftSave, draft
       }),
       Placeholder.configure({
         placeholder: 'سوال خود را وارد کنید...'
-      }) // Fix::ref: https://tiptap.dev/api/extensions/placeholder#source-code
+      }),
+      Link.configure({
+        linkOnPaste: true
+      })
     ]
   })
 
@@ -104,71 +110,28 @@ export default function PostEditor({ onPublish, publishStats, onDraftSave, draft
 
 
   return (
-    <PostEditorContainer>
-
+    <>
       <PublishModal
         open={isPublishModalOpen}
         onClose={()=>setIsPublishModalOpen(false)}
         onPublish={(_tags) => handlePublish(_tags)}
         publishLoading={publishStats.loading}
       />
+      <PostEditorContainer>
 
-      <EditorContent editor={editor}  />
+        <EditorContent editor={editor}  />
+    
+        {editor?.getText() != ''
+          ? <Grid.Container direction="row">
+              <Text color="$red500">{errorMessage}</Text>
+              <Text css={{ mx: '$3' }}>/</Text>
+              <Text color="$gray600">{nOfWords} کلمه</Text>
+            </Grid.Container>
+          : <></>}
 
-
-      {editor?.getText() != ''
-        ? <Grid.Container direction="row">
-            <Text color="$red500">{errorMessage}</Text>
-            <Text css={{ mx: '$3' }}>/</Text>
-            <Text color="$gray600">{nOfWords} کلمه</Text>
-          </Grid.Container>
-        : <></>}
-
-      {/* <PreviewModal 
-        previewOpen={previewOpen}
-        setPreviewOpen={setPreviewOpen}
-        title={title}
-        content={content}
-      />
-
-      <PublishModal
-        open={publishModalOpen}
-        onClose={()=>setPublishModalOpen(false)}
-        onPublish={(_tags) => handlePublish(_tags)}
-        publishLoading={publishStats.loading}
-      />
-
-      <TitleInput placeholder="عنوان سوال را وارد کنید" onChange={e => setTitle(e.target.value)} />
-      <TextBlock
-        content={content}
-        onContentChanged={(content) => setContent(content)}
-      />
-
-      <ActionButtonContainer>
-        <ActionButton
-          size="sm"
-          disabled={(!(allChecksPass) || publishStats.loading) || publishModalOpen}
-          onPress={() => setPublishModalOpen(true)}
-        >
-          انتشار
-        </ActionButton>
-        <ActionButton size="sm" color="secondary" disabled={!(contentAvailable)} onClick={() => setPreviewOpen(true)}>پیش‌نمایش</ActionButton>
-        <ActionButton
-          size="sm"
-          flat
-          disabled={!(contentAvailable) || draftStats.loading}
-          onClick={()=>handleDraftSave()}
-        >
-          {draftStats.loading ? <Loading size="sm" /> : "ذخیره پیش‌نویس"}
-        </ActionButton>
-        {(contentAvailable) && (
-          <Text color="$red600" css={{ mx: '$2' }}>{errorMessage}</Text>
-        )}
-        {APIError && errorMessage ? '|':''}
-        <Text color="$red600" css={{ mx: '$2' }}>{APIError}</Text>
-      </ActionButtonContainer> */}
-  
-    </PostEditorContainer>
+      </PostEditorContainer>
+      <EditorToolbar editor={editor} />
+    </>
   );
 
 }
