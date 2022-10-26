@@ -1,43 +1,25 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBold, faCalculator, faCode, faHeading, faImage, faItalic, faLink } from '@fortawesome/free-solid-svg-icons';
+import { faAlignRight, faBold, faCalculator, faCode, faHeading, faImage, faItalic, faLink, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { styled } from "@nextui-org/react";
 import { Editor } from "@tiptap/react";
+import { IEditorAPI } from "../interfaces";
+import EditorToolbarItem from "./EditorToolbarItem";
 
 const ToolbarUI = styled('div', {
   d: 'flex',
   flexDirection: 'row',
-  justifyContent: 'center',
+  justifyContent: 'space-around',
   alignItems: 'center',
-  bg: '$gray50',
-  borderRadius: '$md',
+  bg: '$white',
+  borderTopRightRadius: '5px',
+  borderTopLeftRadius: '5px',
+  border: '1px solid $gray400',
   w: '90%',
   maxW: '400px',
   position: 'fixed',
-  bottom: '$5',
+  bottom: '0',
   left: '50%',
   transform: 'translateX(-50%)'
-})
-
-const ToolbarItemUI = styled('div', {
-  d: 'flex',
-  flexDirection: 'row',
-  justifyContent: 'center',
-  alignItems: 'center',
-  px: '$5',
-  py: '$5',
-  h: '50px',
-  transition: '$dropdownItem',
-  boxSizing: 'border-box',
-  border: '1px solid transparent',
-  flexGrow: '1',
-  '&:hover': {
-    bg: '$gray200',
-    cursor: 'pointer',
-    border: '1px solid $primary'
-  },
-  '&.active': {
-    bg: '$primaryLight'
-  }
 })
 
 interface IEditorToolbarProps {
@@ -46,72 +28,38 @@ interface IEditorToolbarProps {
 
 export default function EditorToolbar({ editor } : IEditorToolbarProps) {
 
-  const api = {
+  const api: IEditorAPI = {
     toggleH1() {
-      editor?.commands.toggleHeading({ level: 3 });
+      editor?.chain().focus().toggleHeading({ level: 3 }).run();
     },
     toggleH2() {
-      editor?.commands.toggleHeading({ level: 4 });
+      editor?.chain().focus().toggleHeading({ level: 4 }).run();
     },
     toggleBold() {
-      editor?.commands.toggleBold();
+      editor?.chain().focus().toggleBold().run();
     },
     toggleItalic() {
-      editor?.commands.toggleItalic();
+      editor?.chain().focus().toggleItalic().run();
     },
     toggleLink() {
       if (editor?.isActive('link')) {
-        editor?.commands.unsetLink()
+        editor?.chain().focus().unsetLink().run();
       }
       else {
         const textURL = prompt('لطفا لینک مورد نظر را وارد کنید');
         if (textURL)
-          editor?.commands.setLink({ href:textURL, target: '_blank' });
+          editor?.chain().focus().setLink({ href:textURL, target: '_blank' });
       }
     }
   }
 
   return (
     <ToolbarUI>
-      <ToolbarItemUI
-        className={editor?.isActive('heading', { level: 3 }) ? 'active' : ''}
-        onClick={()=>api.toggleH1()}
-      >
-        <FontAwesomeIcon icon={faHeading} /><sub>1</sub>
-      </ToolbarItemUI>
-      <ToolbarItemUI
-        className={editor?.isActive('heading', { level: 4 }) ? 'active' : ''}
-        onClick={()=>api.toggleH2()}
-      >
-        <FontAwesomeIcon icon={faHeading} /><sub>2</sub>
-      </ToolbarItemUI>
-      <ToolbarItemUI
-        className={editor?.isActive('bold') ? 'active' : ''}
-        onClick={()=>api.toggleBold()}
-      >
-        <FontAwesomeIcon icon={faBold} />
-      </ToolbarItemUI>
-      <ToolbarItemUI
-        className={editor?.isActive('italic') ? 'active' : ''}
-        onClick={()=>api.toggleItalic()}
-      >
-        <FontAwesomeIcon icon={faItalic} />
-      </ToolbarItemUI>
-      <ToolbarItemUI
-        className={editor?.isActive('link') ? 'active' : ''}
-        onClick={()=>api.toggleLink()}
-      >
-        <FontAwesomeIcon icon={faLink} />
-      </ToolbarItemUI>
-      <ToolbarItemUI>
-        <FontAwesomeIcon icon={faImage} />
-      </ToolbarItemUI>
-      <ToolbarItemUI>
-        <FontAwesomeIcon icon={faCode} />
-      </ToolbarItemUI>
-      <ToolbarItemUI>
-        <FontAwesomeIcon icon={faCalculator} />
-      </ToolbarItemUI>
+      <EditorToolbarItem icon={faAlignRight} />
+      <EditorToolbarItem icon={faHeading} />
+      <EditorToolbarItem icon={faBold} />
+      <EditorToolbarItem icon={faUpload} />
+      <EditorToolbarItem icon={faCode} />
     </ToolbarUI>
   );
 }

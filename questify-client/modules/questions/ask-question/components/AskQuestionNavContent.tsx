@@ -13,7 +13,7 @@ export default function AskQuestionNavContent() {
     <Button
       disabled={!canBePublished || isPublishModalOpen}
       onPress={()=>setIsPublishModalOpen(true)}
-      size="xs"
+      size="sm"
       css={{ ml: '$7', minWidth: 'unset' }}
     >
       انتشار
