@@ -13,13 +13,13 @@ export default function AskQuestionNavContent() {
     <Button
       disabled={!canBePublished || isPublishModalOpen}
       onPress={()=>setIsPublishModalOpen(true)}
-      size="sm"
-      css={{ ml: '$7' }}
+      size="xs"
+      css={{ ml: '$7', minWidth: 'unset' }}
     >
       انتشار
     </Button>
     <Link href="/drafts-list">
-      <Button flat size="sm" css={{ ml: '$7' }} color="primary">پیش‌نویس ها</Button>
+      <Button flat size="sm" css={{ ml: '$7', minWidth: 'unset' }} color="primary">پیش‌نویس ها</Button>
     </Link>
     </>
   );
