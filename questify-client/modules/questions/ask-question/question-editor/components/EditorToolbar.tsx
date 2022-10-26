@@ -93,7 +93,7 @@ export default function EditorToolbar({ editor } : IEditorToolbarProps) {
       </ToolbarItemUI>
       <ToolbarItemUI
         className={editor?.isActive('italic') ? 'active' : ''}
-        onClick={()=>api.toggleBold()}
+        onClick={()=>api.toggleItalic()}
       >
         <FontAwesomeIcon icon={faItalic} />
       </ToolbarItemUI>
