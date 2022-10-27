@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAlignCenter, faAlignLeft, faAlignRight, faBold, faCalculator, faCode, faHeading, faImage, faItalic, faLink, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faAlignCenter, faAlignLeft, faAlignRight, faBold, faCalculator, faCode, faHeading, faImage, faItalic, faLink, faUnderline, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { styled } from "@nextui-org/react";
 import { Editor } from "@tiptap/react";
 import { IEditorAPI } from "../interfaces";
 import EditorToolbarItem from "./EditorToolbarItem";
 import EditorToolbarMenu from "./EditorToolbarMenu";
-import EditorToolbarAction from "./EditorToolbarMenuItem";
+import EditorToolbarAction from "./EditorToolbarAction";
 
 const ToolbarUI = styled('div', {
   d: 'flex',
@@ -58,32 +58,39 @@ export default function EditorToolbar({ editor } : IEditorToolbarProps) {
   return (
     <ToolbarUI>
       <EditorToolbarItem
-        menu={
+        menu={({ toggleMenu }) => 
           <>
-            <EditorToolbarAction
-              icon={faAlignLeft}
-              onClick={()=>null}
-            />
-            <EditorToolbarAction
-              icon={faAlignCenter}
-              onClick={()=>null}
-            />
+            <EditorToolbarAction icon={faAlignLeft} onClick={()=>toggleMenu()} text="چپ" />
+            <EditorToolbarAction icon={faAlignCenter} onClick={()=>toggleMenu()} text="مرکز" />
           </>
         }
-        item={<EditorToolbarAction icon={faAlignRight} onClick={()=>null} />}
+        item={({ toggleMenu })=><EditorToolbarAction icon={faAlignRight} onClick={()=>toggleMenu()} />}
       />
       {/* heading, bold, upload, code*/}
       <EditorToolbarItem
-        item={<EditorToolbarAction icon={faHeading} onClick={()=>null} />}
+        menu={({ toggleMenu }) => 
+          <>
+            <EditorToolbarAction icon={faHeading} onClick={()=>toggleMenu()} text="تیتر 1" />
+            <EditorToolbarAction icon={faHeading} onClick={()=>toggleMenu()} text="تیتر 2" />
+          </>
+        }
+        item={({ toggleMenu })=><EditorToolbarAction icon={faHeading} onClick={()=>toggleMenu()} />}
       />
       <EditorToolbarItem
-        item={<EditorToolbarAction icon={faBold} onClick={()=>null} />}
+        menu={({ toggleMenu }) => 
+          <>
+            <EditorToolbarAction icon={faBold} onClick={()=>toggleMenu()} text="بولد" />
+            <EditorToolbarAction icon={faItalic} onClick={()=>toggleMenu()} text="ایتالیک" />
+            <EditorToolbarAction icon={faUnderline} onClick={()=>toggleMenu()} text="زیرخط" />
+          </>
+        }
+        item={({ toggleMenu })=><EditorToolbarAction icon={faBold} onClick={()=>toggleMenu()} />}
       />
       <EditorToolbarItem
-        item={<EditorToolbarAction icon={faUpload} onClick={()=>null} />}
+        item={()=><EditorToolbarAction icon={faUpload} onClick={()=>null} />}
       />
       <EditorToolbarItem
-        item={<EditorToolbarAction icon={faCode} onClick={()=>null} />}
+        item={()=><EditorToolbarAction icon={faCode} onClick={()=>null} />}
       />
     </ToolbarUI>
   );

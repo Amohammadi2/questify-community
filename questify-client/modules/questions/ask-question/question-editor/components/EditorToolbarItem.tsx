@@ -24,21 +24,28 @@ const ItemContainer = styled('div', {
   position: 'relative',
 })
 
+interface ItemActions {
+  toggleMenu: () => void;
+}
+
 interface IEditorToolbarItemProps {
-  menu?: ReactNode | ReactNode[];
-  item: ReactNode;
+  menu?: (actions: ItemActions) => ReactNode | ReactNode[];
+  item: (actions: ItemActions) => ReactNode;
 }
 
 export default function EditorToolbarItem({ menu, item } : IEditorToolbarItemProps) {
   
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   
+  const actions = { toggleMenu: () => setMenuIsOpen(!menuIsOpen) };
   return (
     <ItemContainer>
-      <MenuAbsolutePositioner>
-        {menu}
-      </MenuAbsolutePositioner>
-      {item}
+      {menuIsOpen &&
+        <MenuAbsolutePositioner>
+          {menu ? menu(actions) : null}
+        </MenuAbsolutePositioner>
+      }
+      {item(actions)}
     </ItemContainer>
   )
 }
