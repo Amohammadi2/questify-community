@@ -6,7 +6,7 @@ import { ReactNode } from "react";
 const EditorToolbarMenuUI = styled('div', {
   d: 'flex',
   flexDirection: 'column',
-  minW: '90px'
+  w: '100%'
 })
 
 interface IEditorToolbarMenuProps {

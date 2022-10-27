@@ -1,9 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAlignRight, faBold, faCalculator, faCode, faHeading, faImage, faItalic, faLink, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faAlignCenter, faAlignLeft, faAlignRight, faBold, faCalculator, faCode, faHeading, faImage, faItalic, faLink, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { styled } from "@nextui-org/react";
 import { Editor } from "@tiptap/react";
 import { IEditorAPI } from "../interfaces";
 import EditorToolbarItem from "./EditorToolbarItem";
+import EditorToolbarMenu from "./EditorToolbarMenu";
+import EditorToolbarAction from "./EditorToolbarMenuItem";
 
 const ToolbarUI = styled('div', {
   d: 'flex',
@@ -55,11 +57,34 @@ export default function EditorToolbar({ editor } : IEditorToolbarProps) {
 
   return (
     <ToolbarUI>
-      <EditorToolbarItem icon={faAlignRight} />
-      <EditorToolbarItem icon={faHeading} />
-      <EditorToolbarItem icon={faBold} />
-      <EditorToolbarItem icon={faUpload} />
-      <EditorToolbarItem icon={faCode} />
+      <EditorToolbarItem
+        menu={
+          <>
+            <EditorToolbarAction
+              icon={faAlignLeft}
+              onClick={()=>null}
+            />
+            <EditorToolbarAction
+              icon={faAlignCenter}
+              onClick={()=>null}
+            />
+          </>
+        }
+        item={<EditorToolbarAction icon={faAlignRight} onClick={()=>null} />}
+      />
+      {/* heading, bold, upload, code*/}
+      <EditorToolbarItem
+        item={<EditorToolbarAction icon={faHeading} onClick={()=>null} />}
+      />
+      <EditorToolbarItem
+        item={<EditorToolbarAction icon={faBold} onClick={()=>null} />}
+      />
+      <EditorToolbarItem
+        item={<EditorToolbarAction icon={faUpload} onClick={()=>null} />}
+      />
+      <EditorToolbarItem
+        item={<EditorToolbarAction icon={faCode} onClick={()=>null} />}
+      />
     </ToolbarUI>
   );
 }

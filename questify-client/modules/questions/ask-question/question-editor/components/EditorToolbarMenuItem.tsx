@@ -1,22 +1,35 @@
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { styled } from "@nextui-org/react";
 
-const EditorToolbarMenuItemUI = styled('div', {
+const EditorToolbarActionUI = styled('div', {
   d: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
   px: '$2',
   py: '$1',
   '&:hover': {
-    bg: '$gray300',
+    bg: '$gray100',
     cursor: 'pointer',
   },
-  w: '100%'
+  '&:active': {
+    bg: '$gray300'
+  },
+  w: '100%',
+  h: '40px'
 });
 
+interface IEditorToolbarActionProps {
+  icon: IconProp;
+  onClick: ()=>void;
+}
 
-
-export default function EditortoolbarMenuItem() {
+export default function EditorToolbarAction({ icon, onClick } : IEditorToolbarActionProps) {
   return (
-    <EditorToolbarMenuItemUI>
-
-    </EditorToolbarMenuItemUI>
+    <EditorToolbarActionUI onClick={()=>onClick()}>
+      <FontAwesomeIcon
+        icon={icon}
+      />
+    </EditorToolbarActionUI>
   );
 }
