@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAlignCenter, faAlignLeft, faAlignRight, faBold, faCalculator, faCode, faHeading, faImage, faItalic, faLink, faUnderline, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faAlignCenter, faAlignLeft, faAlignRight, faBold, faCalculator, faCode, faFile, faHeading, faImage, faItalic, faLink, faQuoteLeft, faUnderline, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { styled } from "@nextui-org/react";
 import { Editor } from "@tiptap/react";
 import { IEditorAPI } from "../interfaces";
@@ -87,10 +87,22 @@ export default function EditorToolbar({ editor } : IEditorToolbarProps) {
         item={({ toggleMenu })=><EditorToolbarAction icon={faBold} onClick={()=>toggleMenu()} />}
       />
       <EditorToolbarItem
-        item={()=><EditorToolbarAction icon={faUpload} onClick={()=>null} />}
+        menu={({ toggleMenu }) =>
+          <>
+            <EditorToolbarAction icon={faImage} onClick={()=>toggleMenu()} text="تصویر" />
+            <EditorToolbarAction icon={faFile} onClick={()=>toggleMenu()} text="فایل" />
+          </>
+        }
+        item={({ toggleMenu })=><EditorToolbarAction icon={faUpload} onClick={()=>toggleMenu()} />}
       />
       <EditorToolbarItem
-        item={()=><EditorToolbarAction icon={faCode} onClick={()=>null} />}
+        menu={({ toggleMenu }) =>
+          <>
+            <EditorToolbarAction icon={faCode} onClick={()=>toggleMenu()} text="کد" />
+            <EditorToolbarAction icon={faQuoteLeft} onClick={()=>toggleMenu()} text="نقل قول" />
+          </>
+        }
+        item={({ toggleMenu })=><EditorToolbarAction icon={faCode} onClick={()=>toggleMenu()} />}
       />
     </ToolbarUI>
   );
