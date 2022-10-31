@@ -57,7 +57,7 @@ export const theme = createTheme({
       primarySolidContrast: '$white', // commonly used for text inside the component
       primaryShadow: '$c_indigo300',
 
-      secondaryLight: '$c_blue200',
+      secondaryLight: '$c_blue100',
       secondaryLightHover: '$c_blue300', // commonly used on hover state
       secondaryLightActive: '$c_blue400', // commonly used on pressed state
       secondaryLightContrast: '$black', // commonly used for text inside the component

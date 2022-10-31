@@ -60,7 +60,7 @@ export default function EditorToolbar({ editor } : IEditorToolbarProps) {
       <EditorToolbarItem
         menu={({ toggleMenu }) => 
           <>
-            <EditorToolbarAction icon={faAlignLeft} onClick={()=>toggleMenu()} text="چپ" />
+            <EditorToolbarAction active icon={faAlignLeft} onClick={()=>toggleMenu()} text="چپ" />
             <EditorToolbarAction icon={faAlignCenter} onClick={()=>toggleMenu()} text="مرکز" />
           </>
         }

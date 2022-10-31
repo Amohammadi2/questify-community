@@ -9,12 +9,17 @@ const EditorToolbarActionUI = styled('div', {
   alignItems: 'center',
   px: '$2',
   py: '$1',
+  transition: '.09s ease-out',
   '&:hover': {
-    bg: '$gray100',
+    bg: '$secondaryLight',
     cursor: 'pointer',
   },
   '&:active': {
     bg: '$gray300'
+  },
+  '&.active': {
+    bg: '$secondary',
+    color: '$secondarySolidContrast'
   },
   w: '100%',
   h: '40px'
@@ -24,17 +29,18 @@ interface IEditorToolbarActionProps {
   icon: IconProp;
   text?: string;
   pretext?: string;
+  active?: boolean;
   onClick: ()=>void;
 }
 
-export default function EditorToolbarAction({ icon, onClick, text, pretext } : IEditorToolbarActionProps) {
+export default function EditorToolbarAction({ icon, onClick, text, pretext, active=false } : IEditorToolbarActionProps) {
   return (
-    <EditorToolbarActionUI onClick={()=>onClick()} css={{ justifyContent: text ? 'unset' : 'center' }}>
+    <EditorToolbarActionUI onClick={()=>onClick()} css={{ justifyContent: text ? 'unset' : 'center' }} className={active ? 'active':''}>
       {pretext}
       <FontAwesomeIcon style={{ verticalAlign: 'center', margin: '0px 4px' }}
         icon={icon}
       />
-      <Text css={{ px: '$2', fontSize: '$sm' }}>{text}</Text>
+      <Text css={{ px: '$2', fontSize: '$sm', color: active ? '$secondarySolidContrast' : '' }}>{text}</Text>
     </EditorToolbarActionUI>
   );
 }
