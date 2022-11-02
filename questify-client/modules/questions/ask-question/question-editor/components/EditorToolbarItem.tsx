@@ -3,7 +3,8 @@ import { faHeading } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { styled } from "@nextui-org/react";
 import { IconButton } from "modules/app-ui";
-import { ReactNode, useState } from "react";
+import { ReactNode, useRef, useState } from "react";
+import { useClickAway } from "react-use";
 
 
 const MenuAbsolutePositioner = styled('div', {
@@ -36,10 +37,15 @@ interface IEditorToolbarItemProps {
 export default function EditorToolbarItem({ menu, item } : IEditorToolbarItemProps) {
   
   const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const containerRef = useRef(null);
+
+  useClickAway(containerRef, () => {
+    setMenuIsOpen(false);
+  })
   
   const actions = { toggleMenu: () => setMenuIsOpen(!menuIsOpen) };
   return (
-    <ItemContainer>
+    <ItemContainer ref={containerRef}>
       {menuIsOpen &&
         <MenuAbsolutePositioner>
           {menu ? menu(actions) : null}
