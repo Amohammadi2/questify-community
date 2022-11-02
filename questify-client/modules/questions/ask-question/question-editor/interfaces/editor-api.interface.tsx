@@ -4,4 +4,5 @@ export interface IEditorAPI {
   toggleBold: () => void;
   toggleItalic: () => void;
   toggleLink: () => void;
+  toggleUnderline: () => void;
 }

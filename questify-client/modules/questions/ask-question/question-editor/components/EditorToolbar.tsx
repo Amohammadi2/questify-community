@@ -52,6 +52,9 @@ export default function EditorToolbar({ editor } : IEditorToolbarProps) {
         if (textURL)
           editor?.chain().focus().setLink({ href:textURL, target: '_blank' });
       }
+    },
+    toggleUnderline() {
+      editor?.chain().focus();
     }
   }
 
@@ -60,49 +63,50 @@ export default function EditorToolbar({ editor } : IEditorToolbarProps) {
       <EditorToolbarItem
         menu={({ toggleMenu }) => 
           <>
-            <EditorToolbarAction active icon={faAlignLeft} onClick={()=>toggleMenu()} text="چپ" />
-            <EditorToolbarAction icon={faAlignCenter} onClick={()=>toggleMenu()} text="مرکز" />
+            <EditorToolbarAction icon={faAlignLeft} onClick={()=>{toggleMenu();}} text="چپ" />
+            <EditorToolbarAction icon={faAlignCenter} onClick={()=>{toggleMenu();}} text="مرکز" />
           </>
         }
-        item={({ toggleMenu })=><EditorToolbarAction icon={faAlignRight} onClick={()=>toggleMenu()} />}
+        item={({ toggleMenu })=><EditorToolbarAction icon={faAlignRight} onClick={()=>{toggleMenu();}} />}
       />
       {/* heading, bold, upload, code*/}
       <EditorToolbarItem
         menu={({ toggleMenu }) => 
           <>
-            <EditorToolbarAction icon={faHeading} onClick={()=>toggleMenu()} text="تیتر 1" />
-            <EditorToolbarAction icon={faHeading} onClick={()=>toggleMenu()} text="تیتر 2" />
+            <EditorToolbarAction active={editor?.isActive('heading', {level: 3}) ? true : false} icon={faHeading} onClick={()=>{toggleMenu();api.toggleH1()}} text="تیتر 1" />
+            <EditorToolbarAction active={editor?.isActive('heading', {level: 4})} icon={faHeading} onClick={()=>{toggleMenu();api.toggleH2()}} text="تیتر 2" />
           </>
         }
-        item={({ toggleMenu })=><EditorToolbarAction icon={faHeading} onClick={()=>toggleMenu()} />}
+        item={({ toggleMenu })=><EditorToolbarAction icon={faHeading} onClick={()=>{toggleMenu();}} />}
       />
       <EditorToolbarItem
         menu={({ toggleMenu }) => 
           <>
-            <EditorToolbarAction icon={faBold} onClick={()=>toggleMenu()} text="بولد" />
-            <EditorToolbarAction icon={faItalic} onClick={()=>toggleMenu()} text="ایتالیک" />
-            <EditorToolbarAction icon={faUnderline} onClick={()=>toggleMenu()} text="زیرخط" />
+            <EditorToolbarAction active={editor?.isActive('bold')} icon={faBold} onClick={()=>{toggleMenu();api.toggleBold()}} text="بولد" />
+            <EditorToolbarAction active={editor?.isActive('italic')} icon={faItalic} onClick={()=>{toggleMenu();api.toggleItalic()}} text="ایتالیک" />
+            <EditorToolbarAction icon={faUnderline} onClick={()=>{toggleMenu();}} text="زیرخط" />
           </>
         }
-        item={({ toggleMenu })=><EditorToolbarAction icon={faBold} onClick={()=>toggleMenu()} />}
+        item={({ toggleMenu })=><EditorToolbarAction icon={faBold} onClick={()=>{toggleMenu();}} />}
       />
       <EditorToolbarItem
         menu={({ toggleMenu }) =>
           <>
-            <EditorToolbarAction icon={faImage} onClick={()=>toggleMenu()} text="تصویر" />
-            <EditorToolbarAction icon={faFile} onClick={()=>toggleMenu()} text="فایل" />
+            <EditorToolbarAction icon={faLink} onClick={()=>{toggleMenu();}} text="لینک" />
+            <EditorToolbarAction icon={faImage} onClick={()=>{toggleMenu();}} text="تصویر" />
+            <EditorToolbarAction icon={faFile} onClick={()=>{toggleMenu();}} text="فایل" />
           </>
         }
-        item={({ toggleMenu })=><EditorToolbarAction icon={faUpload} onClick={()=>toggleMenu()} />}
+        item={({ toggleMenu })=><EditorToolbarAction icon={faLink} onClick={()=>{toggleMenu();}} />}
       />
       <EditorToolbarItem
         menu={({ toggleMenu }) =>
           <>
-            <EditorToolbarAction icon={faCode} onClick={()=>toggleMenu()} text="کد" />
-            <EditorToolbarAction icon={faQuoteLeft} onClick={()=>toggleMenu()} text="نقل قول" />
+            <EditorToolbarAction icon={faCode} onClick={()=>{toggleMenu();}} text="کد" />
+            <EditorToolbarAction icon={faQuoteLeft} onClick={()=>{toggleMenu();}} text="نقل قول" />
           </>
         }
-        item={({ toggleMenu })=><EditorToolbarAction icon={faCode} onClick={()=>toggleMenu()} />}
+        item={({ toggleMenu })=><EditorToolbarAction icon={faCode} onClick={()=>{toggleMenu();}} />}
       />
     </ToolbarUI>
   );
