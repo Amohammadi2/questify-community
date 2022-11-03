@@ -8,9 +8,10 @@ import PublishModal from "./PublishModal";
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Placeholder from '@tiptap/extension-placeholder';
+import Underline from '@tiptap/extension-underline';
 import Link from '@tiptap/extension-link';
 import { canBePublishedAtom, isPublishModalOpenAtom } from "../states";
-import EditorToolbar from "./EditorToolbar";
+import EditorToolbar from "../editor-toolbar/components/EditorToolbar";
 
 interface IPostEditorProps {
   onPublish: (content: IQuestionInput) => void;
@@ -68,7 +69,8 @@ export default function PostEditor({ onPublish, publishStats, onDraftSave, draft
       }),
       Link.configure({
         linkOnPaste: true
-      })
+      }),
+      Underline
     ]
   })
 

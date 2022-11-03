@@ -1,1 +1,1 @@
-export { default as SuggestedTagsBox } from './components/SuggestedTagsBox';
+export { default as SuggestedTagsBox } from '../question-editor/components/TagSuggestor';

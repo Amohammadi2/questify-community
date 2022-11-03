@@ -5,6 +5,7 @@ import { styled } from "@nextui-org/react";
 import { IconButton } from "modules/app-ui";
 import { ReactNode, useRef, useState } from "react";
 import { useClickAway } from "react-use";
+import ToolbarMenuContextProvider from "../contexts/ToolbarMenuContext";
 
 
 const MenuAbsolutePositioner = styled('div', {
@@ -30,8 +31,8 @@ interface ItemActions {
 }
 
 interface IEditorToolbarItemProps {
-  menu?: (actions: ItemActions) => ReactNode | ReactNode[];
-  item: (actions: ItemActions) => ReactNode;
+  menu?: ReactNode | ReactNode[];
+  item: ReactNode | ReactNode[];
 }
 
 export default function EditorToolbarItem({ menu, item } : IEditorToolbarItemProps) {
@@ -45,13 +46,15 @@ export default function EditorToolbarItem({ menu, item } : IEditorToolbarItemPro
   
   const actions = { toggleMenu: () => setMenuIsOpen(!menuIsOpen) };
   return (
-    <ItemContainer ref={containerRef}>
-      {menuIsOpen &&
-        <MenuAbsolutePositioner>
-          {menu ? menu(actions) : null}
-        </MenuAbsolutePositioner>
-      }
-      {item(actions)}
-    </ItemContainer>
+    <ToolbarMenuContextProvider value={actions}>
+      <ItemContainer ref={containerRef}>
+        {menuIsOpen &&
+          <MenuAbsolutePositioner>
+            {menu}
+          </MenuAbsolutePositioner>
+        }
+        {item}
+      </ItemContainer>
+    </ToolbarMenuContextProvider>
   )
 }

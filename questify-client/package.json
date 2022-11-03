@@ -16,9 +16,12 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@nextui-org/react": "^1.0.0-beta.9",
     "@svgr/webpack": "^6.3.1",
+    "@tiptap/extension-dropcursor": "^2.0.0-beta.199",
     "@tiptap/extension-floating-menu": "^2.0.0-beta.199",
+    "@tiptap/extension-image": "^2.0.0-beta.199",
     "@tiptap/extension-link": "^2.0.0-beta.199",
     "@tiptap/extension-placeholder": "^2.0.0-beta.199",
+    "@tiptap/extension-underline": "^2.0.0-beta.199",
     "@tiptap/react": "^2.0.0-beta.199",
     "@tiptap/starter-kit": "^2.0.0-beta.199",
     "graphql": "^16.6.0",
@@ -30,7 +33,8 @@
     "react-markdown": "^8.0.3",
     "react-textarea-autosize": "^8.3.4",
     "react-use": "^17.4.0",
-    "recoil": "^0.7.5"
+    "recoil": "^0.7.5",
+    "tiptap-text-direction-extension": "^1.0.7"
   },
   "devDependencies": {
     "@types/node": "18.7.6",

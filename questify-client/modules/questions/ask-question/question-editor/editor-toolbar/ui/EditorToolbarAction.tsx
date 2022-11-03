@@ -2,6 +2,7 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { styled } from "@nextui-org/react";
 import { Text } from "@nextui-org/react";
+import { useToolbarMenuContext } from "../hooks/useToolbarMenuContext";
 
 const EditorToolbarActionUI = styled('div', {
   d: 'flex',
@@ -30,12 +31,24 @@ interface IEditorToolbarActionProps {
   text?: string;
   pretext?: string;
   active?: boolean;
-  onClick: ()=>void;
+  preventClose?: boolean;
+  onClick: (e)=>void;
 }
 
-export default function EditorToolbarAction({ icon, onClick, text, pretext, active=false } : IEditorToolbarActionProps) {
+export default function EditorToolbarAction({ icon, onClick, text, pretext, active=false, preventClose=false } : IEditorToolbarActionProps) {
+  
+  const { toggleMenu } = useToolbarMenuContext();
+
   return (
-    <EditorToolbarActionUI onClick={()=>onClick()} css={{ justifyContent: text ? 'unset' : 'center' }} className={active ? 'active':''}>
+    <EditorToolbarActionUI
+      onClick={(e)=>{
+        if (!preventClose)
+          toggleMenu();
+        onClick(e);
+      }}
+      css={{ justifyContent: text ? 'unset' : 'center' }}
+      className={active ? 'active':''}
+    >
       {pretext}
       <FontAwesomeIcon style={{ verticalAlign: 'center', margin: '0px 4px' }}
         icon={icon}
