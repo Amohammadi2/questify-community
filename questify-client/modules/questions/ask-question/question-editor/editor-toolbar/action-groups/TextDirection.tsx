@@ -5,15 +5,47 @@ import { HasEditor } from './interfaces';
 
 
 export default function TextDirection({ editor } : HasEditor) {
+
+  window.editor = editor;
+  
+  const getActiveIcon = () => {
+    return editor?.isActive({ textDirection: 'rtl' })  ? faAlignRight : faAlignLeft;
+  }
+
+  const isActive = direction => {
+    return editor?.isActive({ textDirection: direction });
+  }
+
+  const editorCommands = {
+    setDirection(direction: string) {
+      editor?.chain().focus().setTextDirection(direction).run();
+    }
+  }
+  
   return (
     <EditorToolbarItem
       menu={
         <>
-          <EditorToolbarAction icon={faAlignLeft} onClick={()=>null} text="چپ" />
-          <EditorToolbarAction icon={faAlignCenter} onClick={()=>null} text="مرکز" />
+          <EditorToolbarAction
+            active={isActive('ltr')}
+            icon={faAlignLeft}
+            onClick={()=>editorCommands.setDirection('ltr')}
+            text="چ.ب.ر" 
+          />
+          <EditorToolbarAction
+            active={isActive('rtl')}
+            icon={faAlignRight}
+            onClick={()=>editorCommands.setDirection('rtl')}
+            text="ر.ب.چ"
+          />
         </>
       }
-      item={<EditorToolbarAction icon={faAlignRight} onClick={()=>null} />}
+      item={
+        <EditorToolbarAction
+          icon={getActiveIcon()}
+          onClick={()=>null} 
+        />
+      }
     />
   )
 }

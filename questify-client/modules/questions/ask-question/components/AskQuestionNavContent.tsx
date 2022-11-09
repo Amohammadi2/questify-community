@@ -19,7 +19,7 @@ export default function AskQuestionNavContent() {
       انتشار
     </Button>
     <Link href="/drafts-list">
-      <Button flat size="sm" css={{ ml: '$7', minWidth: 'unset' }} color="primary">پیش‌نویس ها</Button>
+      <Button flat size="sm" css={{ ml: '$7', minWidth: 'unset' }} color="primary">چرک‌نویس ها</Button>
     </Link>
     </>
   );

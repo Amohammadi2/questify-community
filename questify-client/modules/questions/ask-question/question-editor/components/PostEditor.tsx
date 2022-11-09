@@ -10,6 +10,7 @@ import StarterKit from '@tiptap/starter-kit';
 import Placeholder from '@tiptap/extension-placeholder';
 import Underline from '@tiptap/extension-underline';
 import Link from '@tiptap/extension-link';
+import { TextDirection } from '../tiptap-extensions';
 import { canBePublishedAtom, isPublishModalOpenAtom } from "../states";
 import EditorToolbar from "../editor-toolbar/components/EditorToolbar";
 
@@ -70,7 +71,8 @@ export default function PostEditor({ onPublish, publishStats, onDraftSave, draft
       Link.configure({
         linkOnPaste: true
       }),
-      Underline
+      Underline,
+      TextDirection
     ]
   })
 
