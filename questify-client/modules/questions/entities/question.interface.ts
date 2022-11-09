@@ -39,4 +39,3 @@ export interface IQuestionInput {
   tags: string[];
 }
 
-export type IQuestionFilter = "top" | "new" | "controversial";

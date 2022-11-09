@@ -9,6 +9,7 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Placeholder from '@tiptap/extension-placeholder';
 import Underline from '@tiptap/extension-underline';
+import Image from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
 import { TextDirection } from '../tiptap-extensions';
 import { canBePublishedAtom, isPublishModalOpenAtom } from "../states";
@@ -56,6 +57,7 @@ export default function PostEditor({ onPublish, publishStats, onDraftSave, draft
   const [APIError, setAPIError] = useState<string | null>(null);
   const [,setCanBePublished] = useRecoilState(canBePublishedAtom);
   const [isPublishModalOpen, setIsPublishModalOpen] = useRecoilState(isPublishModalOpenAtom);
+  
   const { allChecksPass, errorMessage, nOfWords } = canPublish(content);
 
   const editor = useEditor({
@@ -72,7 +74,10 @@ export default function PostEditor({ onPublish, publishStats, onDraftSave, draft
         linkOnPaste: true
       }),
       Underline,
-      TextDirection
+      TextDirection,
+      Image.configure({
+        inline: true
+      })
     ]
   })
 

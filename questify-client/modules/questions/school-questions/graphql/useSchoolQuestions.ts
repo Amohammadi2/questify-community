@@ -1,5 +1,4 @@
 import { useMockAPI } from "@utils/mock/useMockAPI";
-import { IQuestionWD, IQuestionFilter } from "modules/questions/entities"
 import { IQuestionListHookParams } from "modules/questions/question-listing/interfaces";
 import { useEffect } from "react";
 import { ISchoolQuestion } from "../interfaces/school-question.interface";

@@ -1,10 +1,14 @@
+import { useState } from 'react';
 import EditorToolbarItem from '../ui/EditorToolbarItem';
 import EditorToolbarAction from '../ui/EditorToolbarAction';
 import { faImage, faFile, faLink } from '@fortawesome/free-solid-svg-icons';
 import { HasEditor } from './interfaces';
+import { UploadImageModal } from '../../file-upload';
 
 export default function Attachments({ editor } : HasEditor) {
   
+  const [isImageUploadModalOpen, setIsImageUploadModalOpen] = useState(false);
+
   const editorActions = {
     toggleLink() {
       if (editor?.isActive('link')) {
@@ -15,19 +19,30 @@ export default function Attachments({ editor } : HasEditor) {
         if (textURL)
           editor?.chain().focus().setLink({ href:textURL, target: '_blank' }).run();
       }
+    },
+    insertImage() {
+      setIsImageUploadModalOpen(true);
     }
   };
   
   return (
-    <EditorToolbarItem
-      menu={
-        <>
-          <EditorToolbarAction active={editor?.isActive('link')} icon={faLink} onClick={()=>{editorActions.toggleLink()}} text="لینک" />
-          <EditorToolbarAction icon={faImage} onClick={()=>null} text="تصویر" />
-          <EditorToolbarAction icon={faFile} onClick={()=>null} text="فایل" />
-        </>
-      }
-      item={<EditorToolbarAction icon={faLink} onClick={()=>null} />}
-    />
+    <>
+      <UploadImageModal
+        open={isImageUploadModalOpen}
+        onClose={()=>setIsImageUploadModalOpen(false)}
+        onImageSelected={()=>null}
+        onUploadComplete={()=>null}
+      />
+      <EditorToolbarItem
+        menu={
+          <>
+            <EditorToolbarAction active={editor?.isActive('link')} icon={faLink} onClick={()=>{editorActions.toggleLink()}} text="لینک" />
+            <EditorToolbarAction icon={faImage} onClick={()=>editorActions.insertImage()} text="تصویر" />
+            <EditorToolbarAction icon={faFile} onClick={()=>null} text="فایل" />
+          </>
+        }
+        item={<EditorToolbarAction icon={faLink} onClick={()=>null} />}
+      />
+    </>
   );
 }
