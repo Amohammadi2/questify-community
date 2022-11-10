@@ -3,7 +3,6 @@ import { APIStats } from "@utils/api-stats.interface";
 import { IQuestionInput } from "../../entities";
 import { PostEditor } from "../question-editor";
 import { useSaveDraft } from "../hooks/useSaveDraft";
-import QuestionDrafts from './QuestionDrafts';
 import { useAskSchoolQuestion } from "modules/questions/school-questions/graphql/useAskSchoolQuestion";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -13,7 +12,7 @@ interface IQuestionProcess {
 }
 
 
-export default function AskQuestionProcess({ questionType }: IQuestionProcess) {
+export default function AskQuestionPage({ questionType }: IQuestionProcess) {
 
   const router = useRouter();
   const [saveDraft, draftStats] = useSaveDraft();

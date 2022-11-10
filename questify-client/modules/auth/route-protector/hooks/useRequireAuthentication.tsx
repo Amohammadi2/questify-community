@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { accountAtom, isAuthCompleteAtom } from "../../auth-store/states";
 
-export function useRequireAuthentication({ redirectUrl='/login' }={}) {
+export function useAuthGuard({ redirectUrl='/login' }={}) {
 
   const account = useRecoilValue(accountAtom);
   const isAuthComplete = useRecoilValue(isAuthCompleteAtom);

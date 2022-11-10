@@ -1,10 +1,10 @@
 import { getNavLayout } from "modules/app-navigation";
-import { useRequireAuthentication } from "modules/auth/route-protector";
+import { useAuthGuard } from "modules/auth/route-protector";
 import { BookmarkedQuestionsList } from "modules/questions";
 import { NextPageWithLayout } from "utils/next-layout";
 
 const BookmarksPage: NextPageWithLayout = () => {
-  useRequireAuthentication();
+  useAuthGuard();
 
   return (
     <BookmarkedQuestionsList />

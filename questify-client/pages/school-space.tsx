@@ -3,12 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
 import { getNavLayout } from "../modules/app-navigation/layouts/NavLayout";
-import { useRequireAuthentication } from "../modules/auth/route-protector";
+import { useAuthGuard } from "../modules/auth/route-protector";
 import { SchoolQuestionsList } from "../modules/questions";
 import { NextPageWithLayout } from "../utils/next-layout";
 
 const SchoolQuestion: NextPageWithLayout = ( ) => {
-  useRequireAuthentication();
+  useAuthGuard();
   
   return (
     <SchoolQuestionsList schoolId={'sdfsf'} />

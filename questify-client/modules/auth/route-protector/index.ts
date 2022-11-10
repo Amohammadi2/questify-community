@@ -1,1 +1,1 @@
-export { useRequireAuthentication } from "./hooks/useRequireAuthentication";
+export { useAuthGuard } from "./hooks/useRequireAuthentication";
