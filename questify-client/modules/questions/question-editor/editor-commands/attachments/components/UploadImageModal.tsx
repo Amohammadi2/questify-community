@@ -10,7 +10,6 @@ interface IUploadImageModal {
 }
 
 
-
 export default function UploadImageModal({ open, onImageSelected, onClose } : IUploadImageModal) {
   return (
     <Modal

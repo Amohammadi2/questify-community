@@ -1,12 +1,9 @@
-import { faAlignLeft, faAlignRight, faAlignCenter } from '@fortawesome/free-solid-svg-icons';
-import EditorToolbarItem from '../ui/EditorToolbarItem';
-import EditorToolbarAction from '../ui/EditorToolbarAction';
-import { HasEditor } from './interfaces';
+import { faAlignLeft, faAlignRight } from '@fortawesome/free-solid-svg-icons';
+import { EditorToolbarItem, EditorToolbarAction } from '../toolbar-ui';
+import { HasEditor } from '../../interfaces';
 
 
 export default function TextDirection({ editor } : HasEditor) {
-
-  window.editor = editor;
   
   const getActiveIcon = () => {
     return editor?.isActive({ textDirection: 'rtl' })  ? faAlignRight : faAlignLeft;

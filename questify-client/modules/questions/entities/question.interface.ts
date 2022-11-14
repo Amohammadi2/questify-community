@@ -34,7 +34,6 @@ export interface IQuestionWD {
 }
 
 export interface IQuestionInput {
-  title: string;
   content: string;
   tags: string[];
 }

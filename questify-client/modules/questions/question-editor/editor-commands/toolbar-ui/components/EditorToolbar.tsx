@@ -1,6 +1,6 @@
 import { Editor } from "@tiptap/react";
-import EditorToolbarContainer from "../ui/EditorToolbarContainer";
-import { Attachments, Heading, TextBlocks, TextDirection, TextStyle } from "../action-groups";
+import EditorToolbarContainer from "./EditorToolbarContainer";
+import { Attachments, Heading, TextBlocks, TextDirection, TextStyle } from "../..";
 
 
 interface IEditorToolbarProps {

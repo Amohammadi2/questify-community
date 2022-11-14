@@ -1,7 +1,6 @@
 import { faHeading } from '@fortawesome/free-solid-svg-icons';
-import EditorToolbarItem from '../ui/EditorToolbarItem';
-import EditorToolbarAction from '../ui/EditorToolbarAction';
-import { HasEditor } from './interfaces';
+import { EditorToolbarItem, EditorToolbarAction } from '../toolbar-ui';
+import { HasEditor } from '../../interfaces';
 
 
 export default function Heading({ editor } : HasEditor) {

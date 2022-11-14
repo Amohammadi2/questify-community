@@ -1,6 +1,6 @@
 // a very large, well-defined component allowing you to list, filter and render questions
 
-import { APIStats } from "@utils/api-stats.interface";
+import { APIStats } from "@utils/api-utils";
 import { Grid, Input } from '@nextui-org/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ReactNode, useState } from "react";

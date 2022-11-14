@@ -1,5 +1,5 @@
 import { Loading, Text } from "@nextui-org/react";
-import { APIStats } from "@utils/api-stats.interface";
+import { APIStats } from "@utils/api-utils";
 import { ReactElement } from "react-markdown/lib/react-markdown";
 import { IQuestionWD } from "../entities";
 

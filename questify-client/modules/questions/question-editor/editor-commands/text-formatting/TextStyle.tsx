@@ -1,6 +1,5 @@
-import EditorToolbarItem from '../ui/EditorToolbarItem';
-import EditorToolbarAction from '../ui/EditorToolbarAction';
-import { HasEditor } from './interfaces';
+import { EditorToolbarItem, EditorToolbarAction } from '../toolbar-ui';
+import { HasEditor } from '../../interfaces';
 import { faBold, faItalic, faUnderline } from '@fortawesome/free-solid-svg-icons';
 
 export default function TextStyle({ editor } : HasEditor) {

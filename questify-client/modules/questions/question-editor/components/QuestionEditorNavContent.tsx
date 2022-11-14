@@ -1,9 +1,9 @@
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { canBePublishedAtom, isPublishModalOpenAtom } from '../question-editor';
+import { canBePublishedAtom, isPublishModalOpenAtom } from '../editor-input';
 
-export default function AskQuestionNavContent() {
+export default function QuestionEditorNavContent() {
   
   const canBePublished = useRecoilValue(canBePublishedAtom);
   const [isPublishModalOpen, setIsPublishModalOpen] = useRecoilState(isPublishModalOpenAtom);

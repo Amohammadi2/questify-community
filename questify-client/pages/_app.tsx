@@ -12,7 +12,7 @@ import { ReactNode } from 'react';
 import NextNProgress from 'nextjs-progressbar';
 import { NextUIProvider } from '@nextui-org/react';
 import { theme } from '../modules/nextui-theme';
-import "modules/questions/ask-question/question-editor/styles/ProseMirror.css";
+import "modules/questions/question-editor/editor-input/styles/ProseMirror.css";
 
 fontAwesomeConfig.autoAddCss = false;
 

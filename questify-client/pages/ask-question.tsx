@@ -1,16 +1,18 @@
 import { useAuthGuard } from "modules/auth/route-protector";
 import { getNavLayout } from "../modules/app-navigation";
 import { BackArrow } from "../modules/app-navigation";
-import { AskQuestionNavContent, AskQuestionPage } from "modules/questions";
+import { AskQuestionNavContent, QuestionEditorPage } from "modules/questions";
 import { NextPageWithLayout } from "../utils/next-layout";
+import { useAskSchoolQuestion } from "modules/questions/school-questions/graphql/useAskSchoolQuestion";
 
 const AskQuestion: NextPageWithLayout = () => {
   
   useAuthGuard();
-  // Todo: add capabilities to determine question type from url parameters
   
   return (
-    <AskQuestionPage questionType="school" />
+    <QuestionEditorPage
+      useAskQuestionAPI={useAskSchoolQuestion}
+    />
   );
 }
 

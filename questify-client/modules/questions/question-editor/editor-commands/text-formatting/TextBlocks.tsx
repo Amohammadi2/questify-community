@@ -1,7 +1,6 @@
-import EditorToolbarItem from '../ui/EditorToolbarItem';
-import EditorToolbarAction from '../ui/EditorToolbarAction';
+import { EditorToolbarItem, EditorToolbarAction } from '../toolbar-ui';
 import { faCode, faQuoteLeft } from '@fortawesome/free-solid-svg-icons';
-import { HasEditor } from './interfaces';
+import { HasEditor } from '../../interfaces';
 
 export default function TextBlocks({ editor } : HasEditor) {
   

@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import EditorToolbarItem from '../ui/EditorToolbarItem';
-import EditorToolbarAction from '../ui/EditorToolbarAction';
+import EditorToolbarItem from '../../toolbar-ui/components/EditorToolbarItem';
+import EditorToolbarAction from '../../toolbar-ui/components/EditorToolbarAction';
 import { faImage, faFile, faLink } from '@fortawesome/free-solid-svg-icons';
-import { HasEditor } from './interfaces';
-import { UploadImageModal } from '../../file-upload';
+import { HasEditor } from '../../../interfaces';
+import UploadImageModal from './UploadImageModal';
 
 export default function Attachments({ editor } : HasEditor) {
   
@@ -31,7 +31,6 @@ export default function Attachments({ editor } : HasEditor) {
         open={isImageUploadModalOpen}
         onClose={()=>setIsImageUploadModalOpen(false)}
         onImageSelected={()=>null}
-        onUploadComplete={()=>null}
       />
       <EditorToolbarItem
         menu={
