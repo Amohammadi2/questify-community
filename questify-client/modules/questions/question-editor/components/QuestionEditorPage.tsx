@@ -19,10 +19,11 @@ import { useRecoilState } from "recoil";
 
 interface IQuestionEditorPageOpts {
   useAskQuestionAPI: () => readonly [(input: IQuestionInput)=>void, APIStats<Entity>];
+  onPublishCompleted: (obj: Entity) => void;
 }
 
 
-export default function QuestionEditorPage({ useAskQuestionAPI }: IQuestionEditorPageOpts) {
+export default function QuestionEditorPage({ useAskQuestionAPI, onPublishCompleted }: IQuestionEditorPageOpts) {
 
   const [saveDraft, draftStats] = useSaveDraft();
   const [askQuestion, questionStats] = useAskQuestionAPI();
@@ -50,8 +51,9 @@ export default function QuestionEditorPage({ useAskQuestionAPI }: IQuestionEdito
   })
 
   useEffect(() => {
-    if (questionStats.data) {
+    if (questionStats.data && !questionStats.loading) {
       setPublishModalOpen(false); // close the modal after the question has been published
+      onPublishCompleted(questionStats.data);
     }
   }, [questionStats.loading])
 
