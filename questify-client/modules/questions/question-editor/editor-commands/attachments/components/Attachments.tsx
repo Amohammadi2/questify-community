@@ -3,7 +3,7 @@ import EditorToolbarItem from '../../toolbar-ui/components/EditorToolbarItem';
 import EditorToolbarAction from '../../toolbar-ui/components/EditorToolbarAction';
 import { faImage, faFile, faLink } from '@fortawesome/free-solid-svg-icons';
 import { HasEditor } from '../../../interfaces';
-import UploadImageModal from './UploadImageModal';
+import UploadImageModal from '../file-upload/components/UploadImageModal';
 
 export default function Attachments({ editor } : HasEditor) {
   
