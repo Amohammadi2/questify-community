@@ -1,4 +1,6 @@
+import { UseGuards } from '@nestjs/common';
 import { Resolver, Mutation, Query, Directive, InputType, Field, Args } from '@nestjs/graphql';
+import { AuthTokenGuard } from './auth.guard';
 import { AuthToken, User } from './auth.objects';
 import { AuthService } from './auth.service';
 
@@ -15,7 +17,13 @@ export class AuthResolver {
     private readonly authService: AuthService
   ) {}
 
-  @Mutation(()=>AuthToken)
+  @Query(()=>String)
+  @UseGuards(AuthTokenGuard)
+  async hello() {
+    return 'hello';
+  }
+
+  @Mutation(()=>User)
   async signup(@Args('input') input: UserCredentialsInput) {
     const user = await this.authService.signup(input);
     return {
@@ -36,10 +44,4 @@ export class AuthResolver {
   async verifyAuthToken(@Args('token') token: string) {
     return await this.authService.verifyAuthToken(token);
   }
-
-  @Mutation(()=>User)
-  async getAshkan() {
-    return await this.authService.getAshkan()
-  }
-
 }

@@ -2,19 +2,13 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type UserAccountObject {
+type AuthToken {
+  accessToken: String!
+}
+
+type User {
   id: String!
   username: String!
-}
-
-type GetAuthTokenResult {
-  token: String!
-  user: UserAccountObject!
-}
-
-type SchoolObject {
-  id: String!
-  name: String!
 }
 
 type Query {
@@ -22,58 +16,12 @@ type Query {
 }
 
 type Mutation {
-  getAuthToken(input: GetAuthTokenInput!): GetAuthTokenResult!
-  verifyToken(input: VerifyTokenInput!): UserAccountObject
-  createAccount(input: CreateUserAccountInput!): UserAccountObject!
-  setAccountActiveStatus(userId: String!, isActive: Boolean!): Boolean!
-  registerSchool(input: CreateSchoolInput!): SchoolObject!
-  changeSchoolMemberRole(userId: String!, newRole: String!): Boolean!
-  removeSchool(id: String!): Boolean!
-  updateSchool(id: String!, input: UpdateSchoolInput!): SchoolObject!
-  setSchoolActiveStatus(schoolId: String!, isActive: Boolean!): Boolean!
-  createInvitationCode(input: InvitationCodeCreateInput!): String!
-  askQuestion(input: QuestionCreateInput!): QuestionObject!
+  signup(input: UserCredentialsInput!): User!
+  getAuthToken(input: UserCredentialsInput!): AuthToken!
+  verifyAuthToken(token: String!): Boolean!
 }
 
-input GetAuthTokenInput {
+input UserCredentialsInput {
   username: String!
   password: String!
-}
-
-input VerifyTokenInput {
-  token: String!
-}
-
-input CreateUserAccountInput {
-  username: String!
-  password: String!
-}
-
-input CreateSchoolInput {
-  name: String!
-}
-
-input UpdateSchoolInput {
-  name: String
-}
-
-input InvitationCodeCreateInput {
-  daysValid: Float!
-  targetRole: String!
-  targetSchool: String!
-}
-
-type QuestionObject {
-  id: String!
-  title: String!
-  content: String!
-  tags: [String!]!
-  author: UserAccountObject!
-  score: Int!
-}
-
-input QuestionCreateInput {
-  title: String!
-  content: String!
-  tags: [String!]!
 }

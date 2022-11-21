@@ -33,15 +33,23 @@ export class AuthService {
   }
 
   async verifyAuthToken(token: string) {
-    return await this.jwtService.verifyAsync(token);
+    try {
+      return await this.jwtService.verifyAsync(token, { secret: '#$sdfjiosd89f2y35DFjk' }) as Promise<boolean>;
+    }
+    catch(e) {
+      console.log(token);
+      console.log("MSG: ", e.message);
+      raiseError('invalid-token', 'The token is invalid');
+    }
+  }
+
+  async getUserByUsername(username: string) {
+    return await this.userModel.findOne({ username });
   }
 
   async signup({ username, password }: UserCredentials) {
+    if (await this.getUserByUsername(username))
+      raiseError('username-taken', 'This username has been taken before');
     return await this.userModel.create({ username, password: this.encryptPassword(password) });
-  }
-
-  // Review: later, remove it. it is just for debugging
-  async getAshkan() {
-    return await this.userModel.findOne({ username: 'ashkan' });
   }
 }
