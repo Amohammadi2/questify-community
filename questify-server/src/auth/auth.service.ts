@@ -5,10 +5,16 @@ import { UserDoc, UserEntity } from "./auth.entities";
 import { raiseError } from 'src/utils/error-handling';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from "@nestjs/jwt";
+import { JWT_SECRET } from "./auth.constants";
 
 interface UserCredentials {
   username: string;
   password: string;
+}
+
+interface AuthTokenPayload {
+  uid: string;
+  isAdmin: boolean;
 }
 
 @Injectable()
@@ -28,19 +34,24 @@ export class AuthService {
       raiseError('not-found');
     const isPasswordTrue = await bcrypt.compare(password, user.password);
     if (isPasswordTrue) {
-      return await this.jwtService.signAsync({ uid: user.id });
+      return await this.jwtService.signAsync({
+        uid: user.id,
+        isAdmin: user.isAdmin || false
+      });
     }
   }
 
   async verifyAuthToken(token: string) {
     try {
-      return await this.jwtService.verifyAsync(token, { secret: '#$sdfjiosd89f2y35DFjk' }) as Promise<boolean>;
+      return await this.jwtService.verifyAsync(token, { secret: JWT_SECRET }) as Promise<boolean>;
     }
     catch(e) {
-      console.log(token);
-      console.log("MSG: ", e.message);
       raiseError('invalid-token', 'The token is invalid');
     }
+  }
+
+  getTokenPayload(token: string) {
+    return this.jwtService.decode(token) as AuthTokenPayload;
   }
 
   async getUserByUsername(username: string) {

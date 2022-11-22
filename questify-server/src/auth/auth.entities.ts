@@ -5,6 +5,7 @@ import { Document } from 'mongoose';
 export class UserEntity {
   @Prop({ required: true }) username: string;
   @Prop({ required: true }) password: string;
+  @Prop({ required: true, default: false }) isAdmin: boolean;
 }
 
 export type UserDoc = UserEntity & Document;

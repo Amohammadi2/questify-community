@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
+import { JWT_SECRET } from './auth.constants';
 import { config } from './auth.entities';
 import { AuthTokenGuard } from './auth.guard';
 import { AuthResolver } from './auth.resolver';
@@ -19,8 +20,8 @@ const mongooseModule = MongooseModule.forFeature(config);
       verifyOptions: {
         ignoreExpiration: false
       },
-      privateKey: "#$sdfjiosd89f2y35DFjk",
-      publicKey: "%#ji98$%&^$ji9"
+      privateKey: JWT_SECRET,
+      publicKey: JWT_SECRET
     })
   ],
   providers: [AuthService, AuthResolver, AuthTokenGuard],

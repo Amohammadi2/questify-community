@@ -8,13 +8,31 @@ import { AuthService } from "./auth.service";
 export class AuthTokenGuard implements CanActivate {
   
   constructor(
-    private readonly authService: AuthService
+    protected readonly authService: AuthService
   ) {}
   
   
-  canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
-    const { headers } = GqlExecutionContext.create(context).getArgByIndex(2).req;
-    
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const { headers } = this.getRequest(context);
+    const token = await this.extractToken(headers);
+    if (!token) return;
+    try {
+      const isVerified = await this.verifyToken(token);
+      return await this.onVerificationComplete(token, isVerified);
+    }
+    catch(e) {
+      const { code } = getErrorDetails(e);
+      if (code == "invalid-token")
+      throw new UnauthorizedException(e.message);
+      throw(e);
+    }
+  }
+
+  getRequest(context: ExecutionContext) {
+    return GqlExecutionContext.create(context).getArgByIndex(2).req;
+  }
+
+  async extractToken(headers: Record<string, string>) {
     if (!headers.authorization)
       return false;
     if (!headers.authorization.startsWith('Bearer'))
@@ -25,18 +43,37 @@ export class AuthTokenGuard implements CanActivate {
       return false;
     const [,token] = authHeader;
 
-    try {
-      return this.verifyToken(token);
-    }
-    catch(e) {
-      const { code } = getErrorDetails(e);
-      if (code == "invalid-token")
-        throw new UnauthorizedException(e.message);
-      throw(e);
-    }
+    return token;
   }
 
   async verifyToken(token: string): Promise<boolean> {
     return await this.authService.verifyAuthToken(token);
   }
+
+  // this method can be overridden to provide extra verification steps
+  protected async onVerificationComplete(token: string, isVerified: boolean): Promise<boolean> {
+    return isVerified;
+  }
+}
+
+type UserRoles = 'admin' | 'normal-user'
+
+// we need to use type `any` to avoid errors related to
+// the private internal function types (:ref: ts4060)
+export function RoleGuard(role: UserRoles): any { 
+  @Injectable()
+  class RoleGuardCls extends AuthTokenGuard implements CanActivate {
+    async onVerificationComplete(token: string, isVerified: boolean): Promise<boolean> {
+      if (!isVerified) return false;
+      const { isAdmin } = this.authService.getTokenPayload(token);
+      switch(role) {
+        case "admin":
+          if(!isAdmin) throw new UnauthorizedException(
+            'admins-only:Only admins have the right to perform this action'
+          );
+        default: isVerified
+      }
+    }
+  }
+  return RoleGuardCls;
 }
