@@ -7,7 +7,7 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from "@nestjs/jwt";
 import { JWT_SECRET } from "./auth.constants";
 
-interface UserCredentials {
+export interface UserCredentials {
   username: string;
   password: string;
 }
@@ -58,9 +58,9 @@ export class AuthService {
     return await this.userModel.findOne({ username });
   }
 
-  async signup({ username, password }: UserCredentials) {
+  async signup({ username, password }: UserCredentials, isAdmin:boolean=false) {
     if (await this.getUserByUsername(username))
       raiseError('username-taken', 'This username has been taken before');
-    return await this.userModel.create({ username, password: this.encryptPassword(password) });
+    return await this.userModel.create({ username, isAdmin, password: this.encryptPassword(password) });
   }
 }

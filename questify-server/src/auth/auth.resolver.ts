@@ -5,7 +5,7 @@ import { AuthToken, User } from './auth.objects';
 import { AuthService } from './auth.service';
 
 @InputType()
-class UserCredentialsInput {
+export class UserCredentialsInput {
   @Field() username: string;
   @Field() password: string;
 }
