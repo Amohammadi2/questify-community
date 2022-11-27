@@ -11,10 +11,10 @@ const SchoolSchema = SchemaFactory.createForClass(SchoolEntity);
 
 @Schema()
 export class RegistrationRequestEntity {
-  @Prop() schoolName: string;
-  @Prop() managerName: string;
-  @Prop() managerEmail: string;
-  @Prop() managerPhoneNumber: string;
+  @Prop({ required: true }) schoolName: string;
+  @Prop({ required: true }) managerName: string;
+  @Prop({ required: true }) managerEmail: string;
+  @Prop({ required: true }) managerPhoneNumber: string;
 }
 
 export type RegistrationRequestDoc = RegistrationRequestEntity & Document;
@@ -22,7 +22,9 @@ const RegistrationRequestSchema = SchemaFactory.createForClass(RegistrationReque
 
 @Schema()
 export class InvitationEntity {
-  @Prop({ type: S.Types.ObjectId }) schoolId: string;
+  @Prop({ type: S.Types.ObjectId, required: true }) schoolId: string;
+  @Prop({ required: true }) type: 'student' | 'teacher';
+  @Prop() description: string;
 }
 
 export type InvitationDoc = InvitationEntity & Document;
@@ -31,8 +33,9 @@ const InvitationSchema = SchemaFactory.createForClass(InvitationEntity);
 
 @Schema()
 export class SchoolMemberEntity {
-  @Prop() role: 'student' | 'teacher' | 'manager';
-  @Prop() schools: string[];
+  @Prop({ required: true }) userId: string;
+  @Prop({ required: true }) role: 'student' | 'teacher' | 'manager';
+  @Prop({ default: [] }) schools: string[];
 }
 
 export type SchoolMemberDoc = SchoolMemberEntity & Document;
