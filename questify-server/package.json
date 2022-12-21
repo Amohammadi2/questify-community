@@ -23,6 +23,7 @@
   "dependencies": {
     "@nestjs/apollo": "^10.0.19",
     "@nestjs/common": "^8.0.0",
+    "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^8.0.0",
     "@nestjs/cqrs": "^9.0.1",
     "@nestjs/graphql": "^10.0.21",
@@ -30,16 +31,19 @@
     "@nestjs/mongoose": "^9.2.0",
     "@nestjs/passport": "^9.0.0",
     "@nestjs/platform-express": "^8.0.0",
+    "@types/uuid": "^9.0.0",
     "apollo-server-express": "^3.10.0",
     "bcrypt": "^5.0.1",
     "graphql": "^16.5.0",
     "mongoose": "^6.4.6",
+    "nest-neo4j": "^0.2.0",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

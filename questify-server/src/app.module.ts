@@ -4,9 +4,11 @@ import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { MongooseModule } from '@nestjs/mongoose';
+import { Neo4jModule } from 'nest-neo4j'
+import { AppResolver } from './app.resolver';
 import { AuthModule } from './auth/auth.module';
-import { QuestionsModule } from './questions/questions.module';
-import { SchoolModule } from './school/school.module';
+import { GuardsModule } from './graphql/guards/guards.module';
+import { RegistrationModule } from './registration/registration.module';
 
 @Module({
   imports: [
@@ -14,12 +16,18 @@ import { SchoolModule } from './school/school.module';
       driver: ApolloDriver,
       autoSchemaFile: './schema.graphql',
     }),
-    MongooseModule.forRoot(`mongodb://localhost:27017/questify`),
+    Neo4jModule.forRoot({
+      username: 'neo4j',
+      password: 'ashkansiteadmin',
+      host: 'localhost',
+      port: '7687',
+      scheme: 'bolt'
+    }),
     AuthModule,
-    QuestionsModule,
-    SchoolModule,
+    GuardsModule,
+    RegistrationModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AppResolver],
 })
 export class AppModule {}

@@ -2,26 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type AuthToken {
-  accessToken: String!
-}
-
-type User {
-  id: String!
-  username: String!
-}
-
 type Query {
   hello: String!
-}
-
-type Mutation {
-  signup(input: UserCredentialsInput!): User!
-  getAuthToken(input: UserCredentialsInput!): AuthToken!
-  verifyAuthToken(token: String!): Boolean!
-}
-
-input UserCredentialsInput {
-  username: String!
-  password: String!
 }
