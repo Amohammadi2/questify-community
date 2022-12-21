@@ -1,6 +1,7 @@
 import { Profile } from "./profile.entity";
 import { Repository } from "../../shared/repository.absclass";
-import { IValidator } from "../../shared/validator.interface";
+import { IAsyncValidator, IValidator } from "../../shared/validator.interface";
+import { ITransactionUnit } from "src/domain/integrations/transaction-manager.integration";
 
 interface IProfileMetadata {
   userId: string;
@@ -9,12 +10,11 @@ interface IProfileMetadata {
 export abstract class ProfileRepository extends Repository<Profile, IProfileMetadata> {
 
   abstract getByUserId(userId: string);
-  abstract getValidator(): IValidator<Profile>;
-  abstract persist(entity: Profile, metadata: IProfileMetadata): Promise<boolean>;
+  abstract persist(tx: ITransactionUnit, entity: Profile, metadata: IProfileMetadata): Promise<boolean>;
   abstract instantiate(): Profile;
   
   // just to make metatdata required
-  save(entity: Profile, metadata: IProfileMetadata) {
-    return super.save(entity, metadata);
+  save(tx: ITransactionUnit, entity: Profile, metadata: IProfileMetadata) {
+    return super.save(tx, entity, metadata);
   }
 }

@@ -1,4 +1,5 @@
 import { ValidationErr } from "../exceptions/validation.exception";
+import { ITransactionUnit } from "../integrations/transaction-manager.integration";
 import { Entity } from "./entity.absclass";
 import { IAsyncValidator, IValidator } from "./validator.interface";
 
@@ -20,12 +21,12 @@ export abstract class Repository <E extends Entity<unknown, unknown>, Persistanc
   }
 
   abstract instantiate(): E;
-  protected abstract persist(entity: E, metadata: PersistanceMetadata): Promise<boolean>;
+  protected abstract persist(tx: ITransactionUnit, entity: E, metadata: PersistanceMetadata): Promise<boolean>;
 
-  async save(entity: E, metadata: PersistanceMetadata = null) {
+  async save(tx: ITransactionUnit, entity: E, metadata: PersistanceMetadata = null) {
     const [isValid, errors] = await this.validator.validate(entity);
     if (isValid)
-      return await this.persist(entity, metadata);
+      return await this.persist(tx, entity, metadata);
     else
       throw new ValidationErr(errors);
   }

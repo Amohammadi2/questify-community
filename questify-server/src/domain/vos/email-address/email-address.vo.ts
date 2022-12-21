@@ -7,11 +7,8 @@ interface IEmailAddressRestore {
   address: string;
 }
 
-interface IEmailAddressInit {
-  address: string;
-}
 
-export class EmailAddress implements Restorable<IEmailAddressRestore>, Initializable<IEmailAddressInit> {
+export class EmailAddress implements Restorable<IEmailAddressRestore>, Initializable<string> {
   private address: string;
   private validator: EmailAddressValidator;
   
@@ -19,7 +16,7 @@ export class EmailAddress implements Restorable<IEmailAddressRestore>, Initializ
     this.validator = new EmailAddressValidator();
   }
 
-  init(data: IEmailAddressInit): EmailAddress {
+  init(data: string): EmailAddress {
     Object.assign(this, data);
     const [isValid, errors] = this.validator.validate(this);
     if (!isValid)
