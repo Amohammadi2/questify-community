@@ -7,21 +7,21 @@ import { ProfileRepository } from "../entities/profile/profile.repository";
 import { EmailAddress } from "../vos/email-address/email-address.vo";
 import { SchoolRepository } from "../entities/school/school.repository";
 import { ITransactionManager } from "../integrations/transaction-manager.integration";
+import { NotFoundErr } from "../exceptions/not-found.exception";
 
-export class RegistrationService {
+export class UserManagementService {
 
   constructor(
-    private readonly mt: ITransactionManager,
+    private readonly tm: ITransactionManager,
     private readonly hashService: IHashService,
     private readonly userRepo: UserRepository,
     private readonly profileRepo: ProfileRepository,
     private readonly schoolRepo: SchoolRepository
   ) {}
 
-  // Todo: Enginear the transaction control system
   async requestRegistration(request: RegistrationRequestDTO) {
     const { username, password } = request.credentials;
-    await this.mt.beginTransaction(async tx => {
+    await this.tm.beginTransaction(async tx => {
       // create user
       const user = this.userRepo.instantiate().init({
         username,
@@ -45,6 +45,16 @@ export class RegistrationService {
       await this.schoolRepo.save(tx, school, { managerUserId: user.getId() });
     })
     .catch(e=>{ throw new OpertationFailedErr("Couldn't register your request") })
+  }
+
+  async activateAccount(accountId: string, activate:boolean=true) {
+    return await this.tm.beginTransaction(async tx => {
+      const user = await this.userRepo.findById(accountId);
+      if (!user) throw new NotFoundErr('Could not find any user with this id');
+      user.setIsActive(activate);
+      await this.userRepo.save(tx, user);
+      return user;
+    })
   }
 
 }

@@ -18,7 +18,6 @@ export abstract class Entity<InitData, RestorableData>
   
   init(data: InitData): Entity<InitData, RestorableData> {
     const isValid = this.getValidator().validate(data);
-    
     Object.assign(this, data);
     return this;
   }

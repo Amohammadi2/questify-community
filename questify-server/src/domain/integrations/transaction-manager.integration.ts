@@ -1,7 +1,8 @@
 export interface ITransactionUnit {
-  run(dbType: string, query: string): Promise<any>;
+  run(dbType: string, query: string, params: any): Promise<any>;
   commit(): Promise<boolean>;
   rollback(): Promise<boolean>;
+  isActive(): boolean;
 }
 
 export interface ITransactionManager {

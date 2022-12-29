@@ -1,14 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Neo4jModule } from 'nest-neo4j'
-import { AppResolver } from './app.resolver';
-import { AuthModule } from './auth/auth.module';
-import { GuardsModule } from './graphql/guards/guards.module';
-import { RegistrationModule } from './registration/registration.module';
+import { DomainModule } from './app/injection/domain.module';
+import { AppGraphqlModule } from './app/graphql/app-graphql.module';
 
 @Module({
   imports: [
@@ -23,11 +19,10 @@ import { RegistrationModule } from './registration/registration.module';
       port: '7687',
       scheme: 'bolt'
     }),
-    AuthModule,
-    GuardsModule,
-    RegistrationModule
+    DomainModule,
+    AppGraphqlModule
   ],
-  controllers: [AppController],
-  providers: [AppService, AppResolver],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

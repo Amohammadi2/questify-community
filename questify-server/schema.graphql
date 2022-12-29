@@ -2,6 +2,25 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type UserObject {
+  id: String!
+  username: String!
+}
+
+type LoginResultsObject {
+  token: String!
+  user: UserObject!
+}
+
 type Query {
-  hello: String!
+  sayHello: String!
+}
+
+type Mutation {
+  login(input: CredentialsInput!): LoginResultsObject!
+}
+
+input CredentialsInput {
+  username: String!
+  password: String!
 }

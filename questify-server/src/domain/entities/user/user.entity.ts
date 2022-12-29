@@ -34,6 +34,11 @@ export class User extends Entity<IUserInit, IUserRaw> {
     return this;
   }
 
+  restore(data: IUserRaw): User {
+    super.restore(data);
+    return this;
+  }
+
   async setPassword(hashedPassword: HashedPassword) {
     this.hashedPassword = hashedPassword;
   }
