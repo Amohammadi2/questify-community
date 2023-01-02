@@ -22,4 +22,14 @@ export class AuthAppService {
     return { token, user };
   }
 
+  async verify(token: string) {
+    return this.jwtService.verify(token);
+  }
+
+  async decode(token: string) {
+    const content = this.jwtService.decode(token);
+    if (typeof content == "string")
+      return { content }
+    return content;
+  }
 }

@@ -3,7 +3,7 @@ import { Repository } from "src/domain/shared/repository.absclass";
 import { IValidator } from "src/domain/shared/validator.interface";
 import { School } from "./school.entity";
 
-interface SchoolMetadata {
+export interface SchoolMetadata {
   managerUserId: string;
 }
 

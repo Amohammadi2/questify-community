@@ -3,7 +3,7 @@ import { Repository } from "../../shared/repository.absclass";
 import { IAsyncValidator, IValidator } from "../../shared/validator.interface";
 import { ITransactionUnit } from "src/domain/integrations/transaction-manager.integration";
 
-interface IProfileMetadata {
+export interface IProfileMetadata {
   userId: string;
 }
 

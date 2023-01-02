@@ -1,8 +1,8 @@
 import { gql, useMutation } from "@apollo/client";
 
 const GET_AUTH_TOKEN = gql`
-  mutation GetAuthToken($input: GetAuthTokenInput!) {
-    getAuthToken(input: $input) {
+  mutation GetAuthToken($input: UserCredentialsInput!) {
+    login(input: $input) {
       token
       user {
         id
@@ -25,7 +25,7 @@ export function useGetAuthToken() {
         }
       })
     },
-    data: data?.getAuthToken,
+    data: data?.login,
     ...states
   }
 }

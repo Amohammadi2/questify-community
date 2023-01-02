@@ -19,6 +19,11 @@ export class School extends Entity<SchoolInit, SchoolRestore> {
     return this;
   }
 
+  restore(data: SchoolRestore): School {
+    super.restore(data);
+    return this;
+  }
+
   getFields(): SchoolRestore {
     return {
       name: this.name,

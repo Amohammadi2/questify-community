@@ -26,6 +26,11 @@ export class Profile extends Entity<IProfileInit, IProfileRestore> {
     throw new Error("Method not implemented.");
   }
 
+  restore(data: IProfileRestore): Profile {
+    super.restore(data);
+    return this;
+  }
+
   getFields(): IProfileRestore {
     return {
       bio: this.bio,

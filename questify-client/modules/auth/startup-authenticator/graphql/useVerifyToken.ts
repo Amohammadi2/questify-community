@@ -1,8 +1,8 @@
 import { gql, useMutation } from "@apollo/client";
 
 const VERIFY_TOKEN = gql`
-  mutation VerifyToken($input: VerifyTokenInput!) {
-    verifyToken(input: $input) {
+  mutation VerifyToken($token: String!) {
+    verify(token: $token) {
       id
       username
     }
@@ -16,13 +16,11 @@ export function useVerifyToken() {
     verifyToken(token: string) {
       return verifyToken({
         variables: {
-          input: {
-            token
-          }
+          token
         }
       })
     },
-    data: data?.verifyToken,
+    data: data?.verify,
     ...states
   };
 }

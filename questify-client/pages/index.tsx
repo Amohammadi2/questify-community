@@ -10,6 +10,8 @@ import { ItemCard } from "../modules/product-intro";
 import { BigHeader, HeaderDescription } from '../modules/product-intro';
 import { getNavLayout } from '../modules/app-navigation/layouts/NavLayout';
 import { NextPageWithLayout } from '../utils/next-layout';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRightToBracket, faRegistered, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 
 const Home: NextPageWithLayout = () => {
@@ -20,6 +22,7 @@ const Home: NextPageWithLayout = () => {
     <Link href={account ? '/school-space' : '/login'}>
       <Button>
         {account ? 'ورود به صفحه سوالات' : 'ورود به حساب کاربری'}
+        <FontAwesomeIcon icon={faArrowRightToBracket} style={{ margin: '0px 8px' }} />
       </Button>
     </Link>
   );
@@ -65,6 +68,15 @@ const Home: NextPageWithLayout = () => {
   );
 }
 
-Home.getLayout = getNavLayout({});
+Home.getLayout = getNavLayout({
+  navbarContent: (
+    <Link href="/registration-request">
+      <Button size="sm">
+        <span>ثبت نام</span>
+        <FontAwesomeIcon icon={faUserPlus} style={{ margin: '0px 8px' }} />
+      </Button>
+    </Link>
+  )
+});
 
 export default Home;
