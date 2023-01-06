@@ -6,9 +6,14 @@ interface ManagerInfoDTO {
   email: string
 }
 
+interface SchoolInfoDTO {
+  name: string;
+  description: string;
+  websiteAddress: string;
+}
 
 export class RegistrationRequestDTO {
   managerInfo: ManagerInfoDTO;
   credentials: CredentialsDTO;
-  schoolName: string;
+  schoolInfo: SchoolInfoDTO;
 }

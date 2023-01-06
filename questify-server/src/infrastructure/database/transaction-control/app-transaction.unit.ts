@@ -38,7 +38,7 @@ export class AppTransactionUnit implements ITransactionUnit {
   async rollback(): Promise<boolean> {
     return await Object.values(this.getUnits())
       .filter(unit => unit.isActive())
-      .map(async unit => unit.rollback())
+      .map(async unit => await unit.rollback())
       .reduce((previous, current) => previous && current);
   }
 

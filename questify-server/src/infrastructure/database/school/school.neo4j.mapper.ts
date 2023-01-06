@@ -7,17 +7,19 @@ import { SchoolNeo4j } from "./school.neo4j.model";
 export class SchoolNeo4jMapper implements Neo4jMapper<School, SchoolNeo4j> {
 
   toNeo4j(entity: School): SchoolNeo4j {
-    const { name, websiteAddress } = entity.getFields();
+    const { name, websiteAddress, description } = entity.getFields();
     return {
       name,
-      websiteAddress
+      websiteAddress,
+      description
     }
   }
 
   toEntity(neo4j: SchoolNeo4j): School {
     return new School().restore({
       name: neo4j.name,
-      websiteAddress: neo4j.websiteAddress
+      websiteAddress: neo4j.websiteAddress,
+      description: neo4j.description
     })
   }
 

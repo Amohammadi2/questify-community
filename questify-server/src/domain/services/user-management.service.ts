@@ -39,10 +39,12 @@ export class UserManagementService {
       await this.profileRepo.save(tx, profile, { userId: user.getId() });
       // create a school and assign the user as its manager
       const school = this.schoolRepo.instantiate().init({
-        name: request.schoolName,
-        websiteAddress: ''
+        name: request.schoolInfo.name,
+        websiteAddress: request.schoolInfo.websiteAddress,
+        description: request.schoolInfo.description
       })
       await this.schoolRepo.save(tx, school, { managerUserId: user.getId() });
+      return true;
     })
     .catch(e=>{ throw new OpertationFailedErr("Couldn't register your request") })
   }

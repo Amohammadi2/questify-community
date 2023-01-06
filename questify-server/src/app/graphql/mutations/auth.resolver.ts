@@ -34,4 +34,9 @@ export class AuthResolver {
     }
   }
 
+  @Mutation(()=>Boolean)
+  async isUsernameFree(@Args('username') username: string) {
+    return this.authService.isUsernameFree(username);
+  }
+
 }

@@ -19,6 +19,7 @@ type Query {
 type Mutation {
   login(input: UserCredentialsInput!): LoginResultsObject!
   verify(token: String!): UserObject!
+  isUsernameFree(username: String!): Boolean!
 }
 
 input UserCredentialsInput {

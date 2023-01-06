@@ -32,4 +32,8 @@ export class AuthAppService {
       return { content }
     return content;
   }
+
+  async isUsernameFree(username: string): Promise<boolean> {
+    return !(await this.userRepository.checkUsernameExists(username));
+  }
 }

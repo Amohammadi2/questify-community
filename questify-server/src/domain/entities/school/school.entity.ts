@@ -3,16 +3,19 @@ import { Entity } from "src/domain/shared/entity.absclass";
 export interface SchoolInit {
   name: string;
   websiteAddress: string;
+  description: string;
 }
 
 export interface SchoolRestore {
   name: string;
   websiteAddress: string;
+  description: string;
 }
 
 export class School extends Entity<SchoolInit, SchoolRestore> {
   private name: string;
   private websiteAddress: string; // Todo:(VO)
+  private description: string; // Todo:(VO) length checker
 
   init(data: SchoolInit): School {
     Object.assign(this, data);
@@ -27,7 +30,8 @@ export class School extends Entity<SchoolInit, SchoolRestore> {
   getFields(): SchoolRestore {
     return {
       name: this.name,
-      websiteAddress: this.websiteAddress
+      websiteAddress: this.websiteAddress,
+      description: this.description
     }
   }
 
@@ -36,4 +40,7 @@ export class School extends Entity<SchoolInit, SchoolRestore> {
 
   getWebsiteAddress() { return this.websiteAddress }
   setWebsiteAddress(websiteAddress: string) { this.websiteAddress = websiteAddress }
+
+  getDescription() { return this.description }
+  setDescription(description: string) { this.description = description }
 }

@@ -3,9 +3,9 @@ import { Neo4jService } from "nest-neo4j/dist";
 import { CredentialsDTO } from "src/domain/dtos/credentials.dto";
 import { User } from "src/domain/entities/user/user.entity";
 import { UserRepository } from "src/domain/entities/user/user.repository";
+import { IHashService } from "src/domain/integrations/hash.service.integration";
 import { ITransactionUnit } from "src/domain/integrations/transaction-manager.integration";
 import { HashedPassword } from "src/domain/vos/hashed-password.vo";
-import { HashService } from "src/infrastructure/hash/hash.service";
 import { UserNeo4jMapper } from "./user.neo4j.mapper";
 import { UserNeo4j } from "./user.neo4j.model";
 
@@ -15,7 +15,7 @@ export class UserNeo4jRepository extends UserRepository {
   private label: string = 'User';
   
   constructor(
-    private readonly hashService: HashService,
+    private readonly hashService: IHashService,
     private readonly neo4jService: Neo4jService,
     private readonly userNeo4jMapper: UserNeo4jMapper
   ) { super() }
@@ -30,7 +30,7 @@ export class UserNeo4jRepository extends UserRepository {
   
   async checkUsernameExists(username: string): Promise<boolean> {
     const { records } = await this.neo4jService.read(
-      `RETURN exists((:${this.label} { username: $username })) as e`,
+      `MATCH (u:${this.label} { username: $username }) WITH count(u) > 0 as e RETURN e`,
       { username }
     );
     // its always going to have exactly one record

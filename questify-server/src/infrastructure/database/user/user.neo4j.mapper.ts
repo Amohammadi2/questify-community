@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { User } from "src/domain/entities/user/user.entity";
+import { IHashService } from "src/domain/integrations/hash.service.integration";
 import { HashedPassword } from "src/domain/vos/hashed-password.vo";
-import { HashService } from "src/infrastructure/hash/hash.service";
 import { Neo4jMapper } from "../shared/neo4j.mapper.interface";
 import { UserNeo4j } from "./user.neo4j.model";
 
@@ -11,7 +11,7 @@ import { UserNeo4j } from "./user.neo4j.model";
 export class UserNeo4jMapper implements Neo4jMapper<User, UserNeo4j> {
 
   constructor(
-    private readonly hashService: HashService 
+    private readonly hashService: IHashService 
   ) {}
   
   toNeo4j(entity: User): UserNeo4j {

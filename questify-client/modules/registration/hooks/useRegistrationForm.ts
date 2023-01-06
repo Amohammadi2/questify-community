@@ -1,3 +1,4 @@
+import { exhaust } from "@utils/exhaustive-switch";
 import { useReducer } from "react"
 
 
@@ -9,11 +10,13 @@ export interface IFormState {
   password: string|null;
   schoolName: string|null;
   schoolDescription: string|null;
+  schoolWebsiteAddress: string|null;
 }
 
 export interface IAction {
   type: 'manager-name' | 'manager-email' | 'manager-phone-number' | 
-        'username' | 'password' | 'school-name' | 'school-description';
+        'username' | 'password' | 'school-name' | 'school-description'
+        | 'school-website-address';
   payload: string;
 }
 
@@ -33,6 +36,10 @@ const reducer = (state: IFormState, action: IAction): IFormState => {
       return {...state, schoolName: action.payload};
     case 'school-description':
       return {...state, schoolDescription: action.payload};
+    case 'school-website-address':
+      return { ...state, schoolWebsiteAddress: action.payload};
+    default:
+      exhaust(action.type);
   }
 }
 
@@ -44,7 +51,8 @@ export const useRegistrationForm = () => {
     username: null,
     password: null,
     schoolName: null,
-    schoolDescription: null
+    schoolDescription: null,
+    schoolWebsiteAddress: null
   } as IFormState)
 
   return [state, dispatch] as const;
