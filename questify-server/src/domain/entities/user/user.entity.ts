@@ -9,6 +9,7 @@ export interface IUserInit {
 }
 
 export interface IUserRaw {
+  id: string;
   username: string;
   hashedPassword: HashedPassword;
   isActive: boolean;
@@ -25,12 +26,15 @@ export class User extends Entity<IUserInit, IUserRaw> {
     return {
       username: this.username,
       hashedPassword: this.hashedPassword,
-      isActive: this.isActive
+      isActive: this.isActive,
+      id: this.getId()
     }
   }
 
   init(props: IUserInit) {
-    Object.assign(this, props);
+    this.username = props.username;
+    this.hashedPassword = props.password;
+    this.isActive = props.isActive;
     return this;
   }
 

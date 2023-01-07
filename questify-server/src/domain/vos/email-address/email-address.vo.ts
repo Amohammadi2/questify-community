@@ -17,7 +17,7 @@ export class EmailAddress implements Restorable<IEmailAddressRestore>, Initializ
   }
 
   init(data: string): EmailAddress {
-    Object.assign(this, data);
+    this.address = data;
     const [isValid, errors] = this.validator.validate(this);
     if (!isValid)
       throw new ValidationErr(errors);

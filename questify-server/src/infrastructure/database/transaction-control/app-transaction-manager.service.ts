@@ -15,7 +15,17 @@ export class AppTransactionManager implements ITransactionManager {
     const txUnit = new AppTransactionUnit(
       new Neo4jTransactionUnit(this.neo4jService)
     );
-    return callback(txUnit);
+    return (async ()=>{
+      try {
+        const result = await callback(txUnit);
+        txUnit.commit();
+        return result;
+      }
+      catch(e) {
+        txUnit.rollback();
+        throw e;
+      }
+    })();
   }
 
 }

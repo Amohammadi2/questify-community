@@ -10,7 +10,9 @@ export class Neo4jTransactionUnit implements ITransactionUnit {
 
   constructor(
     private readonly neo4jService: Neo4jService
-  ) {}
+  ) {
+    this.getTransaction();
+  }
 
   isActive(): boolean {
     return this.isOpen;
@@ -53,7 +55,7 @@ export class Neo4jTransactionUnit implements ITransactionUnit {
   }
 
   private assertTxIsOpen() {
-    if (this.isOpen) {
+    if (!this.isOpen) {
       throw new Error('The transaction is already closed');
     }
   }

@@ -21,9 +21,9 @@ export class UserNeo4jRepository extends UserRepository {
   ) { super() }
   
   async findById(id: string): Promise<User> {
-    const { records } = await this.neo4jService.read(`MATCH (u:${this.label} { id: $id }) RETURN u`, {
-      id
-    });
+    const { records } = await this.neo4jService.read(
+      `MATCH (u:${this.label} { id: $id }) RETURN u`, { id }
+    );
     if (records.length === 0) return null;
     return this.userNeo4jMapper.toEntity(records[0].get('u') as UserNeo4j);
   }

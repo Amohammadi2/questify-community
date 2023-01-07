@@ -25,8 +25,10 @@ export class ProfileNeo4jRepository extends ProfileRepository {
 
   private async checkDataRels(userId: string, profileId: string) {
     const { records } = await this.neo4jService.read(`
-      RETURN exists((:User {id: $uid})<-[:BELONGS_TO]-(:Profile)) as userHasProfile,
-             exists((:Profile { id: $pid })) as profileExists;
+      MATCH (:User {id: $uid})<-[:BELONGS_TO]-(pu:Profile)
+      MATCH (pi:Profile { id: $pid })
+      WITH count(pu) > 0 as userHasProfile, count(pi) > 0 as profileExists
+      RETURN userHasProfile, profileExists;
     `, {
       uid: userId,
       pid: profileId
@@ -57,7 +59,7 @@ export class ProfileNeo4jRepository extends ProfileRepository {
         throw new OpertationFailedErr("You can't assign two profiles to one user");
       if (!metadata.userId)
         throw new OpertationFailedErr("You must provide a user ID when creating a new profile");
-      const query = `CREATE (p:Profile $props)-[:BELONGS_TO]->(u:User {id: $uid}) RETURN true as ok`;
+      const query = `MATCH (u:User {id: $uid}) WITH u CREATE (p:Profile $props)-[:BELONGS_TO]->(u) RETURN true as ok`;
       const props = {
         props: this.mapper.toNeo4j(profile),
         uid: metadata.userId

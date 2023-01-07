@@ -15,20 +15,22 @@ export class UserNeo4jMapper implements Neo4jMapper<User, UserNeo4j> {
   ) {}
   
   toNeo4j(entity: User): UserNeo4j {
-    const { hashedPassword, isActive, username } = entity.getFields();
+    const { hashedPassword, isActive, username, id } = entity.getFields();
     return {
       username,
       password: hashedPassword.getValue(),
-      isActive
+      isActive,
+      id
     }
   }
   
   toEntity(neo4j: UserNeo4j): User {
-    const { username, password, isActive } = neo4j;
+    const { username, password, isActive, id } = neo4j;
     return new User().restore({
       hashedPassword: new HashedPassword(this.hashService).restore(password),
       username,
       isActive,
+      id
     })
   }
 

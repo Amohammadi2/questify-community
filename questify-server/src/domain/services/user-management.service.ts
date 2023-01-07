@@ -46,7 +46,7 @@ export class UserManagementService {
       await this.schoolRepo.save(tx, school, { managerUserId: user.getId() });
       return true;
     })
-    .catch(e=>{ throw new OpertationFailedErr("Couldn't register your request") })
+    .catch(e=>{ throw e; throw new OpertationFailedErr("Couldn't register your request") })
   }
 
   async activateAccount(accountId: string, activate:boolean=true) {

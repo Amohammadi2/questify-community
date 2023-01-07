@@ -20,7 +20,7 @@ export class SchoolNeo4jRepository extends SchoolRepository {
   }
 
   private async checkExistsAlready(id: string) {
-    return (await this.neo4jService.read(`RETURN exists((s:${this.label} { id: $id })) as e`))
+    return (await this.neo4jService.read(`MATCH (s:${this.label} { id: $id }) WITH count(s) > 0 as e RETURN e`, { id }))
       .records[0].get('e')
   }
   
@@ -50,27 +50,19 @@ export class SchoolNeo4jRepository extends SchoolRepository {
       else {
         const session = this.neo4jService.getWriteSession();
         const t = await session.beginTransaction()
-        try {
-          await t.run(removeOwnerQuery, {
-            sid: school.getId(),
-          })
-          await t.run(updateQuery, {
-            sid: school.getId(),
-            props: this.neo4jMapper.toNeo4j(school),
-            nid: metadata.managerUserId
-          })
-          await t.commit();
-          session.close();
-          return true;
-        }
-        catch(e) {
-          t.rollback();
-          throw e;
-        }
+        await t.run(removeOwnerQuery, {
+          sid: school.getId(),
+        })
+        await t.run(updateQuery, {
+          sid: school.getId(),
+          props: this.neo4jMapper.toNeo4j(school),
+          nid: metadata.managerUserId
+        })
+        return true;
       }
     }
     else {
-      const query = `CREATE (s:${this.label} $props)-[:OWNED_BY]->(u:User { id: $ownerId }) RETURN true`;
+      const query = `MATCH (u:User { id: $ownerId }) WITH u CREATE (s:${this.label} $props)-[:OWNED_BY]->(u) RETURN true`;
       const { records } = tx
         ? await tx.run('neo4j', query, {
           props: this.neo4jMapper.toNeo4j(school),

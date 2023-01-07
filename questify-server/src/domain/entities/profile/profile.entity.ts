@@ -23,7 +23,11 @@ export class Profile extends Entity<IProfileInit, IProfileRestore> {
   private phoneNumber: string; // Todo:(VO) replace with a value object
 
   init(data: IProfileInit): Profile {
-    throw new Error("Method not implemented.");
+    this.nickname = data.nickname;
+    this.bio = data.bio;
+    this.email = data.email;
+    this.phoneNumber = data.phoneNumber;
+    return this;
   }
 
   restore(data: IProfileRestore): Profile {

@@ -3,7 +3,7 @@ import { EmailAddress } from "./email-address.vo";
 
 export class EmailAddressValidator implements IValidator<EmailAddress> {
 
-  private regexFilter: RegExp = /[A-Za-z0-9\._]+@[a-z]+\.\w{2,3}/;
+  private regexFilter: RegExp = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-]+)(\.[a-zA-Z]{2,5}){1,2}$/;
 
   validate(data: EmailAddress): ValidationErrorReport {
     const matches = this.regexFilter.test(data.getValue());

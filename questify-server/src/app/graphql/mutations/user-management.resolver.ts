@@ -21,6 +21,7 @@ export class UserManagementResolver {
       return true;
     }
     catch(e) {
+      throw e;
       throw new InternalServerErrorException(e.message);
     }
   }
