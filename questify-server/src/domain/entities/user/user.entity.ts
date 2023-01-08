@@ -40,6 +40,9 @@ export class User extends Entity<IUserInit, IUserRaw> {
 
   restore(data: IUserRaw): User {
     super.restore(data);
+    this.username = data.username;
+    this.hashedPassword = data.hashedPassword;
+    this.isActive = data.isActive;
     return this;
   }
 

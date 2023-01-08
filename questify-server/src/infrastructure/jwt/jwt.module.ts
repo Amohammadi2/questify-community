@@ -9,14 +9,15 @@ import { AppJwtService } from "./jwt.service";
       secret: JWT_SECRET,
       signOptions: {
         expiresIn: '1d',
-        algorithm: 'ES256'
+        algorithm: 'HS256'
       },
       verifyOptions: {
         ignoreExpiration: false,
-        algorithms: ['ES256']
+        algorithms: ['HS256']
       }
     })
   ],
-  providers: [AppJwtService]
+  providers: [AppJwtService],
+  exports: [AppJwtService]
 })
 export class AppJwtModule {}

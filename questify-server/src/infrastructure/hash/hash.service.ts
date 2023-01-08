@@ -11,6 +11,7 @@ export class HashService implements IHashService {
   }
   
   async compare(rawPassword: string, hash: string): Promise<boolean> {
+    console.log('R end: ', rawPassword, hash);
     return bcrypt.compare(rawPassword, hash);    
   }
 

@@ -20,7 +20,7 @@ export class ProfileNeo4jRepository extends ProfileRepository {
     `;
     const { records } = await this.neo4jService.read(query, { uid: userId }); 
     if (records.length === 0) return null;
-    return this.mapper.toEntity(records[0].get('p'));
+    return this.mapper.toEntity(records[0].get('p').properties);
   }
 
   private async checkDataRels(userId: string, profileId: string) {

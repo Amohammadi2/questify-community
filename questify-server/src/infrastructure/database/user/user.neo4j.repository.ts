@@ -25,7 +25,7 @@ export class UserNeo4jRepository extends UserRepository {
       `MATCH (u:${this.label} { id: $id }) RETURN u`, { id }
     );
     if (records.length === 0) return null;
-    return this.userNeo4jMapper.toEntity(records[0].get('u') as UserNeo4j);
+    return this.userNeo4jMapper.toEntity(records[0].get('u').properties as UserNeo4j);
   }
   
   async checkUsernameExists(username: string): Promise<boolean> {
@@ -38,13 +38,18 @@ export class UserNeo4jRepository extends UserRepository {
   }
   
   async findByCredentials({ username, password }: CredentialsDTO): Promise<User> {
-    const hashedPassword = new HashedPassword(this.hashService).init(password);
+    const hashedPassword = await new HashedPassword(this.hashService).init(password);
+    console.log('C:', username, hashedPassword.getValue());
     const { records } = await this.neo4jService.read(`
-      MATCH (u:${this.label} { username: $username, password: $password }) RETURN u
-    `, { username, password: hashedPassword });
+      MATCH (u:${this.label} { username: $username }) RETURN u
+    `, { username });
     if (records.length === 0) return null;
-    return this.userNeo4jMapper.toEntity(records[0].get('u') as UserNeo4j);
-  }
+    const user = this.userNeo4jMapper.toEntity(records[0].get('u').properties as UserNeo4j);
+    if (await user.getPassword().check(password)) {
+      return user
+    }
+    return null;
+  }// $2b$10$6GP8mRl3Aj8uQKnpHY.dJuNaX2ZAlvrySQU7K1OmE01sr4lyq.ba.
 
   protected async persist(tx: ITransactionUnit, user: User): Promise<boolean> {
     const neo4jData = this.userNeo4jMapper.toNeo4j(user);
