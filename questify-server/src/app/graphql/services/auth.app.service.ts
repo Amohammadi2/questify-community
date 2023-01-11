@@ -15,8 +15,8 @@ export class AuthAppService {
 
   async login(credentails: CredentialsDTO) {
     const user = await this.userRepository.findByCredentials(credentails);
-    console.log('User Found: ', user);
     if (!user) throw new UnauthorizedException('No user matched your credentials');
+    if (!user.getIsActive()) throw new UnauthorizedException("Your account isn't active");
     const token = this.jwtService.encode({
       username: user.getUsername(),
       userId: user.getId()

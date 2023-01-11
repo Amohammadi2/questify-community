@@ -75,4 +75,18 @@ export class ProfileNeo4jRepository extends ProfileRepository {
     return new Profile();
   }
 
+  async remove(tx: AppTransactionUnit, entity: Profile): Promise<boolean> {
+    const query = `
+      MATCH (p:Profile { id: $pid }) DETACH DELETE p RETURN true
+    `;
+
+    const params = { pid: entity.getId() };
+
+    const { records } = tx
+      ? await tx.run('neo4j', query, params)
+      : await this.neo4jService.write(query, params);
+
+    return records.length !== 0;
+  }
+
 } 

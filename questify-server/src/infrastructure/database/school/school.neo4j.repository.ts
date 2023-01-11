@@ -58,6 +58,8 @@ export class SchoolNeo4jRepository extends SchoolRepository {
           props: this.neo4jMapper.toNeo4j(school),
           nid: metadata.managerUserId
         })
+        t.commit();
+        session.close();
         return true;
       }
     }
@@ -74,5 +76,19 @@ export class SchoolNeo4jRepository extends SchoolRepository {
         })
       return records.length !== 0;
     }
+  }
+
+  async remove(tx: AppTransactionUnit, entity: School): Promise<boolean> {
+    const query = `
+      MATCH (s:School { id: $sid }) DETACH DELETE s RETURN true
+    `;
+
+    const params = { sid: entity.getId() };
+
+    const { records } = tx
+      ? await tx.run('neo4j', query, params)
+      : await this.neo4jService.write(query, params);
+
+    return records.length !== 0;
   }
 } 

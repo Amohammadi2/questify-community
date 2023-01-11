@@ -20,9 +20,8 @@ export class AppJwtService {
     return contents;
   }
 
-  async verify(token: string): Promise<boolean> {
-    await this.jwtService.verify(token, { secret: JWT_SECRET });
-    return true; // if the code above doesn't throw, it's an implication of successful verification
+  async verify(token: string): Promise<object> {
+    return this.jwtService.verify(token, { secret: JWT_SECRET });
   }
   
 }

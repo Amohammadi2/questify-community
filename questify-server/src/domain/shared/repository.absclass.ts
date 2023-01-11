@@ -21,6 +21,7 @@ export abstract class Repository <E extends Entity<unknown, unknown>, Persistanc
   }
 
   abstract instantiate(): E;
+  abstract remove(tx: ITransactionUnit, entity: E): Promise<boolean>;
   protected abstract persist(tx: ITransactionUnit, entity: E, metadata: PersistanceMetadata): Promise<boolean>;
 
   async save(tx: ITransactionUnit, entity: E, metadata: PersistanceMetadata = null) {

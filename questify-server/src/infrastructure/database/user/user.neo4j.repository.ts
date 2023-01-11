@@ -66,4 +66,16 @@ export class UserNeo4jRepository extends UserRepository {
     return new User();
   }
 
+  async remove(tx: ITransactionUnit, entity: User): Promise<boolean> {
+    const query = `
+      MATCH (u:User { id: $uid }) DETACH DELETE u RETURN true
+    `;
+
+    const { records } = tx
+      ? await tx.run('neo4j', query, { uid: entity.getId() })
+      : await this.neo4jService.write(query, { uid: entity.getId() })
+      
+    return records.length === 0 ? false : true;
+  }
+
 }
