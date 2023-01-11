@@ -10,6 +10,7 @@ export interface SchoolRestore {
   name: string;
   websiteAddress: string;
   description: string;
+  id: string;
 }
 
 export class School extends Entity<SchoolInit, SchoolRestore> {
@@ -31,7 +32,8 @@ export class School extends Entity<SchoolInit, SchoolRestore> {
     return {
       name: this.name,
       websiteAddress: this.websiteAddress,
-      description: this.description
+      description: this.description,
+      id: this.getId()
     }
   }
 

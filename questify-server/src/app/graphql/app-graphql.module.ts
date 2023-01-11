@@ -5,12 +5,19 @@ import { AppJwtModule } from "src/infrastructure/jwt/jwt.module";
 import { AuthResolver } from "./mutations/auth.resolver";
 import { UserManagementResolver } from './mutations/user-management.resolver';
 import { RootResolver } from "./queries/root.resolver";
+import { UserResolver } from "./queries/user.resolver";
 import { AuthAppService } from "./services/auth.app.service";
 
 @Module({
   imports: [
     AppJwtModule
   ],
-  providers: [AuthAppService, AuthResolver, RootResolver, UserManagementResolver]
+  providers: [
+    AuthAppService,
+    UserResolver,
+    AuthResolver,
+    RootResolver,
+    UserManagementResolver,
+  ]
 })
 export class AppGraphqlModule {}

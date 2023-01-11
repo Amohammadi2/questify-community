@@ -2,9 +2,16 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type UserRoleObject {
+  role: String!
+  schoolName: String!
+  schoolId: String!
+}
+
 type UserObject {
   id: String!
   username: String!
+  schoolRoles: [UserRoleObject!]!
 }
 
 type LoginResultsObject {
