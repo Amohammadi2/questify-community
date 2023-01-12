@@ -5,6 +5,11 @@ const VERIFY_TOKEN = gql`
     verify(token: $token) {
       id
       username
+      schoolRoles {
+        role
+        schoolName
+        schoolId
+      }
     }
   }
 `;

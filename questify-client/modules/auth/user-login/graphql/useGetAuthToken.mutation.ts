@@ -7,6 +7,11 @@ const GET_AUTH_TOKEN = gql`
       user {
         id
         username
+        schoolRoles {
+          role
+          schoolName
+          schoolId
+        }
       }
     }
   }
