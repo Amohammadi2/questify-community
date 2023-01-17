@@ -27,14 +27,14 @@ export class SchoolNeo4jRepository extends SchoolRepository {
   async persist(tx: AppTransactionUnit, school: School, metadata: SchoolMetadata): Promise<boolean> {
     if (await this.checkExistsAlready(school.getId())) {
       const removeOwnerQuery = `
-        MATCH (:${this.label} { id: $sid })-[rel:OWNED_BY]->(:User)
+        MATCH (:${this.label} { id: $sid })<-[rel:MANAGER_OF]-(:User)
         REMOVE rel;
       `;
       const updateQuery = `
         MATCH (s:${this.label} { id: $sid })
         SET s += $props
         WITH s
-        CREATE (s)-[:OWNED_BY]->(u:User { id: $nid })
+        CREATE (s)<-[:MANAGER_OF]-(u:User { id: $nid })
       `;
       if (tx) {
         await tx.run('neo4j', removeOwnerQuery, {
@@ -64,7 +64,7 @@ export class SchoolNeo4jRepository extends SchoolRepository {
       }
     }
     else {
-      const query = `MATCH (u:User { id: $ownerId }) WITH u CREATE (s:${this.label} $props)-[:OWNED_BY]->(u) RETURN true`;
+      const query = `MATCH (u:User { id: $ownerId }) WITH u CREATE (s:${this.label} $props)<-[:MANAGER_OF]-(u) RETURN true`;
       const { records } = tx
       ? await tx.run('neo4j', query, {
         props: this.neo4jMapper.toNeo4j(school),

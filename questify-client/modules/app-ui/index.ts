@@ -6,3 +6,4 @@ export { default as Badge } from "./components/Badge";
 export { default as Box } from './components/Box';
 export { default as Liner } from './components/Liner';
 export { default as Filler } from './components/Filler';
+export { default as LoaderFlex } from './components/LoaderFlex';

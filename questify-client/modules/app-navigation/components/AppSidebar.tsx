@@ -62,10 +62,16 @@ export default function AppSidebar() {
     <>
       {sidebarLinks
       .filter(l=>l.group=="app")
-      .filter(
-        l=>l.role==="MANAGER" 
+      .filter((l) => {
+        try {
+          return l.role==="MANAGER" 
           ? account?.schoolRoles.map(s=>s.role==="MANAGER").reduce((p,c)=>p||c)
           : true
+        }
+        catch {
+          return false
+        }
+      }
       )
       .map(sidebarItemFactory)}
     </>

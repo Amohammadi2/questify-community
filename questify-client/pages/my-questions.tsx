@@ -1,13 +1,14 @@
 import { getNavLayout } from "modules/app-navigation";
 import { useAuthGuard } from "modules/auth/route-protector";
 import { MyQuestionsList } from "modules/questions";
+import { QuestionList } from "modules/question-list/components/QuestionList";
 import { NextPageWithLayout } from "utils/next-layout";
 
 const MyQuestionsPage: NextPageWithLayout = () => {
   useAuthGuard();
 
   return (
-    <MyQuestionsList />
+    <QuestionList type="asked" />
   )
 }
 

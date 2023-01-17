@@ -36,7 +36,7 @@ export default function PublishModal({ open, onClose, onPublish, publishLoading 
           disabled={tags.length >= 5}
         />
         <FlexRow css={{ flexWrap: 'wrap' }}>
-          {tags.map(t => <Badge content={t} dismissable onDismiss={() => removeTag(t)} />)}
+          {tags.map(t => <Badge key={t} content={t} dismissable onDismiss={() => removeTag(t)} />)}
         </FlexRow>
         <FlexRow css={{ justifyContent: 'center' }}>
           <Button size="sm" css={{ mx: '$3'}} disabled={tags.length <= 0 || publishLoading} onClick={()=>{onPublish(tags)}}>

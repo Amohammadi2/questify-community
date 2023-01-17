@@ -2,9 +2,9 @@ import { faComment, faFileExcel, faFileText, faHeart, faStar, faVideo } from "@f
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Grid, styled, Text } from "@nextui-org/react";
 import { Avatar } from "@nextui-org/react";
-import { Badge, Filler, Liner } from "modules/app-ui";
+import { Badge, Filler, FlexRow, Liner } from "modules/app-ui";
 import Link from "next/link";
-import { ISchoolQuestion } from "../interfaces/school-question.interface";
+import { IQuestionPoster } from "../interfaces/question-poster.interface";
 
 const QuestionBox = styled('div', {
   border: '1px solid $gray500',
@@ -45,32 +45,38 @@ const IconNumberContainer = ({ icon, number }: any) => {
 }
 
 
-export default function SchoolQuestion({title, nAnswers, scores, nComments, isChallenge, author, tags} : ISchoolQuestion) {
+export default function QuestionPoster({ title, tags, scores, author, nAnswers, nComments, recentAnswers, id } : IQuestionPoster) {
   return (
     <QuestionBox>
       <Grid.Container direction="row" alignItems="center" css={{ my: '$5' }}>
-        <Avatar text={author.account.username} css={{ mx: '$3'}} />
-        {author.account.username}
+        <Link href={`/user-profile?id=${author.userId}`}>
+          <FlexRow css={{ cursor: 'pointer', alignItems: 'center' }}>
+            <Avatar text={author.name} src={author.profileImg} css={{ mx: '$3'}} />
+            {author.name}
+          </FlexRow>
+        </Link>
         <Filler />
-        <IconNumberContainer icon={faHeart} number={scores} />
         <IconNumberContainer icon={faComment} number={nComments} />
+        <Text css={{ mx: '$5' }} color="$gray500">|</Text>
+        <Text>امتیاز:</Text>
+        <Text css={{ mx: '$3' }}>{scores}</Text>
       </Grid.Container>
       <Liner />
       <Grid.Container direction="column" css={{ my: '$5' }}>
-        <Link href="/question-details?qid=fake-one">
+        <Link href={`/question-details?qid=${id}`}>
           <Text h3 css={{ cursor: 'pointer' }}>{title}</Text>
         </Link>
         <Grid.Container direction="row">
-          {tags.map(t => <Badge content={t} />)}
+          {tags.map(t => <Badge key={t} content={t} />)}
         </Grid.Container>
       </Grid.Container>
       <Liner />
       <Grid.Container direction="row" alignItems="center" css={{ my: '$4' }}>
-        <AnswerBadge className="">3 پاسخ ارسال شده</AnswerBadge>
+        <AnswerBadge className="">{nAnswers} پاسخ ارسال شده</AnswerBadge>
         <Filler />
-        <Avatar size="sm" text="A" css={{ mx: '-$1' }}/>
-        <Avatar size="sm" text="A" css={{ mx: '-$1' }}/>
-        <Avatar size="sm" text="A" css={{ mx: '-$1' }}/>
+        {recentAnswers.map(
+          r => <Link key={r.answerId} href={`/question-details?qid=${id}&answer=${r.answerId}`}><Avatar src={r.author.profileImg} size="sm" zoomed text={r.author.name} css={{ mx: '-$1' }}/></Link>
+        )}
       </Grid.Container>
     </QuestionBox>
   );

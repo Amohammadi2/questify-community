@@ -1,0 +1,1 @@
+export type QList = 'bookmarked' | 'asked' | 'in-progress';

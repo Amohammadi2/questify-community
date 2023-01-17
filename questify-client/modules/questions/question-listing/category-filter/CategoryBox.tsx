@@ -23,6 +23,7 @@ export default function CategoryBox({
       {categories.map(
         c => (
           <CategoryItem
+            key={c}
             category={c}
             active={selectedCategory === c}
             onSelected={onCategorySelected}

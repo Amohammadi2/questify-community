@@ -14,7 +14,7 @@ const BadgeUI = styled('div', {
   py: '$1',
   my: '$2',
   mx: '$2',
-  d: 'flex',
+  d: 'inline-block',
 })
 
 const DismissButton = styled('div', {

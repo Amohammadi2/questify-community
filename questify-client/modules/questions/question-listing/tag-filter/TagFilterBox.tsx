@@ -15,6 +15,7 @@ export default function TagFilterBox({ tags, selectedTags, addTag, removeTag } :
     <Box>
       {tags.map(t => (
         <TagItem
+          key={t}
           tag={t}
           onTagSelected={addTag}
           onTagDismissed={removeTag}

@@ -3,7 +3,7 @@ import { IUserProfile } from "modules/user-profile/entities";
 export interface ISchoolQuestion {
   id: string;
   title: string;
-  nLikes: number;
+  scores: number;
   nComments: number;
   nAnswers: number;
   author: IUserProfile;

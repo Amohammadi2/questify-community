@@ -20,7 +20,7 @@ export function useSchoolQuestions(schoolId: string, filters: IQuestionListHookP
       }
     }, 
     tags: selectedTags,
-    nLikes: 23,
+    scores: 23,
     nComments: 43,
     nAnswers: 5,
     hasTextExplanation: true,

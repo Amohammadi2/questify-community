@@ -28,12 +28,23 @@ const UsernamePortion = styled('strong', {
   px: '$3'
 })
 
-export default function QuestionPost({ title, content, score, tags, author } : IQuestionWD) {
+interface IQuestionPost {
+  id: string;
+  title: string;
+  tags: string[];
+  score: number;
+  author: {
+    name: string;
+    profileImg: string;
+  }
+}
+
+export default function QuestionPost({ title, score, tags, author }) {
   return (
     <QuestionContainer>
       <Grid.Container direction="row" alignItems="center">
         <Avatar squared text="A" />
-        <UsernamePortion>{author.account.username}</UsernamePortion>
+        <UsernamePortion>{author.name}</UsernamePortion>
         <div style={{flexGrow:'1'}}/>
         <Text>34 ذخیره</Text>
         <IconButton>

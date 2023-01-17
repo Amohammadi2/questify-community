@@ -22,8 +22,8 @@ const AskQuestion: NextPageWithLayout = () => {
 AskQuestion.getLayout = getNavLayout({
   navbarContent: (
     <>
-      <AskQuestionNavContent />
       <BackArrow />
+      <AskQuestionNavContent />
     </>
   )
 });

@@ -1,5 +1,5 @@
 import { useMockAPI } from "@utils/mock/useMockAPI"
-import { IQuestionInput } from "../../entities";
+import { IQuestionInput } from "../../questions/entities";
 
 export function useSaveDraft() {
   return useMockAPI<IQuestionInput, { id: string }>({

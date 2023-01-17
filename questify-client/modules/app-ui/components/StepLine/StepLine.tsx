@@ -78,6 +78,7 @@ export const StepLine = ({ stepCount, inProgress=1 } : IStepLineProps) => {
         .fill(null)
         .map((_, i) =>
           <Step
+            key={i}
             state={(i+1) === inProgress ? 'in-progress' : (i+1) < inProgress ? 'done' : 'ahead'}
             n={i+1}
           />
