@@ -18,7 +18,7 @@ export default function CompactQuestion({ id, title, author, date, tags, nAnswer
       </FlexColumn>
       <FlexColumn>
         <Link href={'/question-details?qid='+id}>
-          <Text h4>{title}</Text>
+          <Text h4 css={{ cursor: 'pointer' }}>{title}</Text>
         </Link>
         <Text color="$gray800" css={{ mx: '$4' }}>
           • {author.name}

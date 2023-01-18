@@ -30,7 +30,7 @@ export default function PublishModal({ open, onClose, onPublish, publishLoading 
         <Text color="$gray700" css={{ textAlign: 'right' }}>در انتخاب تگ ها دقت کنید. تگ ها به ما کمک می کنند پرسش شما را به دست افراد مرتبط تر برسانیم</Text>
         <Input
           css={{ mt: '$8' }}
-          labelPlaceholder="تگ را وارد کنید"
+          labelPlaceholder="تا 5 تگ غیر تکراری وارد کنید"
           bordered
           enterKeyHint="done"
           onKeyDown={e => {
@@ -63,7 +63,7 @@ export default function PublishModal({ open, onClose, onPublish, publishLoading 
               css={{ flexGrow: 1}}
               onChange={e=>setPrice(+(e.currentTarget.value))}
             />
-            <Text css={{ px: '$5' }}>بودجه: {price}</Text>
+            <Text css={{ px: '$5' }}>بودجه: {price} تومان</Text>
           </FlexRow>
         </FlexColumn>
         <FlexRow css={{ justifyContent: 'center' }}>
