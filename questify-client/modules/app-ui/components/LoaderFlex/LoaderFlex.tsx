@@ -1,4 +1,4 @@
-import { Loading } from "@nextui-org/react";
+import { Loading, Text } from "@nextui-org/react";
 import { ReactNode } from "react";
 import FlexColumn from "../FlexColumn";
 
@@ -21,6 +21,7 @@ export default function LoaderFlex <T> ({ dir, loading ,data :d1, children } : I
       ? (
         <FlexColumn css={{ justifyContent: 'center', my: '$5' }}>
           <Loading size="md" />
+          <Text color="$gray800" css={{ textAlign: 'center' }}>درحال بارگذاری...</Text>
         </FlexColumn>
       )
       : children(d1)}

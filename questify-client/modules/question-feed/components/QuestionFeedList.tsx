@@ -20,8 +20,8 @@ export const QuestionFeedList = (p: IQuestionFeed) => {
           questionFeed.loading
           ? (
             <FlexColumn css={{ justifyContent: 'center' }}>
-              <Loading css={{ mt: '$10' }} />
-              <Text color="$gray800">درحال بارگذاری...</Text>
+              <Loading css={{ mt: '$10', mb: '$5' }} />
+              <Text color="$gray800" css={{ textAlign: 'center' }}>درحال بارگذاری...</Text>
             </FlexColumn>
           )
           : (
