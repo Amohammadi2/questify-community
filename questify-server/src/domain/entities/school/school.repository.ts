@@ -20,7 +20,8 @@ export abstract class SchoolRepository extends Repository<School, SchoolMetadata
   abstract persist(tx: ITransactionUnit, entity: School, metadata: SchoolMetadata): Promise<boolean>;
 
   abstract getUserRoles(userId: string): Promise<Role[]>;
-  abstract findByManager(managerUserId: string);
-  abstract findByStudent(studentUserId: string);
+  abstract findByManager(managerUserId: string): Promise<School>;
+  abstract findByStudent(studentUserId: string): Promise<School>;
+  abstract checkExists(id: string): Promise<boolean>;
 
 }

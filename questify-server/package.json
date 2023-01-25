@@ -36,6 +36,7 @@
     "bcrypt": "^5.0.1",
     "graphql": "^16.5.0",
     "mongoose": "^6.4.6",
+    "neo4j-driver": "^5.4.0",
     "nest-neo4j": "^0.2.0",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",

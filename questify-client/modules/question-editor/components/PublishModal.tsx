@@ -27,6 +27,12 @@ export default function PublishModal({ open, onClose, onPublish, publishLoading 
         <Text h3>تنظیمات انتشار</Text>
       </Modal.Header>
       <Modal.Body css={{ py: '$12' }}>
+        <Input
+          css={{ mt: '$8' }}
+          labelPlaceholder="عنوان نوشته را وارد کنید."
+          bordered
+          enterKeyHint="done"
+        />
         <Text color="$gray700" css={{ textAlign: 'right' }}>در انتخاب تگ ها دقت کنید. تگ ها به ما کمک می کنند پرسش شما را به دست افراد مرتبط تر برسانیم</Text>
         <Input
           css={{ mt: '$8' }}
@@ -52,7 +58,10 @@ export default function PublishModal({ open, onClose, onPublish, publishLoading 
           />
         </FlexColumn>
         <FlexColumn>
-          <Text color="$gray700" css={{ textAlign: 'right' }}>بودجه خود را برای این سوال تعیین کنید. سوال های با بودجه بالاتر خیلی سریع تر جواب داده می شوند</Text>
+          <Text color="$gray700" css={{ textAlign: 'right' }}>
+            بودجه سوال را تعیین کنید. هرچه مبلغ بالاتری پیشنهاد بدهید سریع تر جواب میگیرید.
+            همچنین می توانید پاسخ این سوال را به همان قیمت به سایر افراد که سوال مشابهی دارند بفروشید.
+          </Text>
           <FlexRow>
             <RangeInput
               type="range"

@@ -78,4 +78,12 @@ export class UserNeo4jRepository extends UserRepository {
     return records.length === 0 ? false : true;
   }
 
+  async checkIdExists(id: string): Promise<boolean> {
+    const query = `
+      MATCH (u:User { id: $uid}) RETURN count(u) > 0 as exists
+    `;
+    return (await this.neo4jService.read(query, { uid: id }))
+      .records[0].get('exists') as boolean;
+  }
+
 }

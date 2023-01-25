@@ -1,5 +1,5 @@
 import { Module, Global } from "@nestjs/common";
-import { UserManagementService } from "src/domain/services";
+import { InvitationService, UserManagementService } from "src/domain/services";
 import { DatabaseModule } from "src/infrastructure/database/database.module";
 import { AppTransactionManager } from "src/infrastructure/database";
 import { AppJwtModule } from "src/infrastructure/jwt/jwt.module";
@@ -8,6 +8,7 @@ import { UserRepository } from "src/domain/entities/user/user.repository";
 import { ProfileRepository } from "src/domain/entities/profile/profile.repository";
 import { SchoolRepository } from "src/domain/entities/school/school.repository";
 import { HashModule } from "src/infrastructure/hash/hash.module";
+import { InvitationRepository } from "src/domain/entities/invitation/invitation.repository";
 
 
 const UserManagementServiceProvider = {
@@ -22,6 +23,16 @@ const UserManagementServiceProvider = {
   ) => new UserManagementService(tm, hash, urepo, prepo, srepo)
 }
 
+const InvitationServiceProvider = {
+  provide: InvitationService,
+  inject: [InvitationRepository, SchoolRepository, UserRepository],
+  useFactory: (
+    iRepo: InvitationRepository,
+    sRepo: SchoolRepository,
+    uRepo: UserRepository
+  ) => new InvitationService(iRepo, sRepo, uRepo)
+}
+
 @Global()
 @Module({
   imports: [
@@ -31,7 +42,8 @@ const UserManagementServiceProvider = {
   ],
   providers: [
     UserManagementServiceProvider,
+    InvitationServiceProvider
   ],
-  exports: [DatabaseModule, UserManagementServiceProvider],
+  exports: [DatabaseModule, UserManagementServiceProvider, InvitationServiceProvider],
 })
 export class DomainModule {}

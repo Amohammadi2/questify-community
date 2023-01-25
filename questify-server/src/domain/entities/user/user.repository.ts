@@ -12,6 +12,7 @@ export abstract class UserRepository extends Repository<User> {
 
   abstract findById (id: string): Promise<User|null>;
   abstract checkUsernameExists(username: string): Promise<boolean>;
+  abstract checkIdExists(id: string): Promise<boolean>;
   abstract findByCredentials(credentials: CredentialsDTO): Promise<User|null>;
   protected abstract persist(tx: ITransactionUnit, user: User): Promise<boolean>;
 

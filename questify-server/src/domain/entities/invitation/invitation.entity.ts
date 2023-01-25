@@ -8,25 +8,35 @@ export interface InvitationInit {
 export interface InvitationRestore {
   code: string;
   expirationDate: Date;
+  id: string;
 }
 
 export class Invitation extends Entity<InvitationInit, InvitationRestore> {
   private code: string;
-  private expirationDate: Date;
+  public expirationDate: Date;
   
   private static codeGenFeed = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   private static codeLength = 8; 
 
   init(data: InvitationInit): Invitation {
-    Object.assign(this, data);
+    this.expirationDate = data.expirationDate;
+    this.generateCode();
     this._validate();
+    return this;
+  }
+
+  restore(data: InvitationRestore): Invitation {
+    super.restore(data);
+    this.code = data.code;
+    this.expirationDate = data.expirationDate;
     return this;
   }
 
   getFields(): InvitationRestore {
     return {
       code: this.code,
-      expirationDate: this.expirationDate
+      expirationDate: this.expirationDate,
+      id: this.getId()
     }
   }
   

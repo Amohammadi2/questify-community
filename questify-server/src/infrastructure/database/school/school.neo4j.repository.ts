@@ -127,11 +127,19 @@ export class SchoolNeo4jRepository extends SchoolRepository {
     ]
   }
 
-  findByManager(managerUserId: string) {
+  findByManager(managerUserId: string): Promise<School> {
     throw new Error("Method not implemented.");
   }
 
-  findByStudent(studentUserId: string) {
+  findByStudent(studentUserId: string): Promise<School> {
     throw new Error("Method not implemented.");
+  }
+
+  async checkExists(id: string): Promise<boolean> {
+    const query = `
+      MATCH (s:School { id: $sid }) WITH count(s) > 0 as e RETURN e;
+    `;
+    const { records } = await this.neo4jService.read(query, { sid: id });
+    return records[0].get('e') as boolean;
   }
 } 

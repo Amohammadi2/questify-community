@@ -1,3 +1,6 @@
+import { faFirstdraft } from "@fortawesome/free-brands-svg-icons";
+import { faFileArchive, faTowerBroadcast } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -16,10 +19,14 @@ export default function QuestionEditorNavContent() {
       size="sm"
       css={{ ml: '$7', minWidth: 'unset' }}
     >
-      انتشار
+      <span style={{margin: '0px 5px'}}>انتشار</span>
+      <FontAwesomeIcon style={{margin: '0px 5px'}} icon={faTowerBroadcast} />
     </Button>
     <Link href="/drafts-list">
-      <Button flat size="sm" css={{ ml: '$7', minWidth: 'unset' }} color="primary">چرک‌نویس ها</Button>
+      <Button flat size="sm" css={{ ml: '$7', minWidth: 'unset' }} color="primary">
+        <span style={{margin: '0px 5px'}}>چرک‌نویس ها</span>
+        <FontAwesomeIcon style={{margin: '0px 5px'}} icon={faFileArchive} />
+      </Button>
     </Link>
     </>
   );

@@ -7,7 +7,7 @@ import { IQuestionPoster } from '../interfaces/question-poster.interface';
 export const useQuestionFeed = (feedParams: IQuestionFeed):
   APIStats<IQuestionPoster[]> & { setSearchTerm: (s:string)=>void } =>
 {
-  const [searchTerm, setSearchTerm] = useState<string|null>(null);
+  const [searchTerm, setSearchTerm] = useState<string|null>('');
   const [fetchQuestions, stats] = useMockAPI<void, IQuestionPoster[]>({
     delay: 500,
     handler: () => {
