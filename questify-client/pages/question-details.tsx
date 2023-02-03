@@ -1,9 +1,8 @@
 import { getNavLayout } from "modules/app-navigation";
 import { BackArrow } from "modules/app-navigation";
-import { QuestionDetails } from "modules/questions";
+import QuestionDetails from "modules/questions/question-details/components/QuestionDetails";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Error from "next/error";
-import { useRouter } from "next/router";
 import { NextPageWithLayout } from "utils/next-layout";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

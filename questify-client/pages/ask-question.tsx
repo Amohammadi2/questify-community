@@ -1,10 +1,10 @@
 import { useAuthGuard } from "modules/auth/route-protector";
 import { getNavLayout } from "../modules/app-navigation";
 import { BackArrow } from "../modules/app-navigation";
-import { AskQuestionNavContent, QuestionEditorPage } from "modules/questions";
+import { QuestionEditorNavContent, QuestionEditorPage } from "modules/questions";
 import { NextPageWithLayout } from "../utils/next-layout";
-import { useAskSchoolQuestion } from "modules/questions/school-questions/graphql/useAskSchoolQuestion";
 import { useRouter } from "next/router";
+import { useAskQuestion }  from 'modules/questions/question-editor';
 
 const AskQuestion: NextPageWithLayout = () => {
   
@@ -13,7 +13,7 @@ const AskQuestion: NextPageWithLayout = () => {
   
   return (
     <QuestionEditorPage
-      useAskQuestionAPI={useAskSchoolQuestion}
+      useAskQuestionAPI={()=>useAskQuestion('community', 'sdfjdf')}
       onPublishCompleted={({ id }) => router.push('/question-details/?qid='+id)}
     />
   );
@@ -23,7 +23,7 @@ AskQuestion.getLayout = getNavLayout({
   navbarContent: (
     <>
       <BackArrow />
-      <AskQuestionNavContent />
+      <QuestionEditorNavContent />
     </>
   )
 });

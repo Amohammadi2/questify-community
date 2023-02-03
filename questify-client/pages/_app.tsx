@@ -11,7 +11,7 @@ import { AppPropsWithLayout } from '../utils/next-layout';
 import NextNProgress from 'nextjs-progressbar';
 import { NextUIProvider } from '@nextui-org/react';
 import { theme } from '../modules/nextui-theme';
-import "modules/question-editor/editor-input/styles/ProseMirror.css";
+import "modules/questions/question-editor/editor-input/styles/ProseMirror.css";
 import 'react-calendar/dist/Calendar.css';
 
 fontAwesomeConfig.autoAddCss = false;
