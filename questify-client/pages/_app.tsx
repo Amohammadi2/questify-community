@@ -8,11 +8,11 @@ import { RecoilRoot } from 'recoil';
 import { SSRStateRoot } from '../modules/ssr-state/SSRStateRoot';
 import { AuthenticatorRoot } from '../modules/auth/startup-authenticator/components/AuthenticatorRoot';
 import { AppPropsWithLayout } from '../utils/next-layout';
-import { ReactNode } from 'react';
 import NextNProgress from 'nextjs-progressbar';
 import { NextUIProvider } from '@nextui-org/react';
 import { theme } from '../modules/nextui-theme';
 import "modules/question-editor/editor-input/styles/ProseMirror.css";
+import 'react-calendar/dist/Calendar.css';
 
 fontAwesomeConfig.autoAddCss = false;
 

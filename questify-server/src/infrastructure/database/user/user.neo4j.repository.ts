@@ -39,7 +39,6 @@ export class UserNeo4jRepository extends UserRepository {
   
   async findByCredentials({ username, password }: CredentialsDTO): Promise<User> {
     const hashedPassword = await new HashedPassword(this.hashService).init(password);
-    console.log('C:', username, hashedPassword.getValue());
     const { records } = await this.neo4jService.read(`
       MATCH (u:${this.label} { username: $username }) RETURN u
     `, { username });

@@ -17,7 +17,7 @@ export default function AppSidebar() {
     { group: 'account', type:'action', action: ()=>logout(), text: 'خروج از حساب کاربری', icon: faPowerOff},
     { group: 'app', type: 'link', link: '/school-space', text: 'فضای درون مدرسه ای', icon: faSchool},
     { group: 'app', type: 'link', link: '/school-management', text: 'مدیریت اعضای مدرسه', role: 'MANAGER', icon: faUsersRays},
-    { group: 'app', type: 'link', link: '/invitation', text: 'کد های دعوت', role: 'MANAGER', icon: faMailBulk},
+    { group: 'app', type: 'link', link: '/invitation-codes', text: 'کد های دعوت', role: 'MANAGER', icon: faMailBulk},
     { group: 'app', type: 'link', link: '/community-space', text: 'فضای انجمن ها', icon: faPeopleGroup},
     { group: 'app', type: 'link', link: '/shared-space', text: 'فضای اشتراکی', icon: faShareNodes},
     { group: 'app', type: 'link', link: '/my-questions', text: 'سوالات من', icon: faQuestionCircle},

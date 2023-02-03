@@ -20,7 +20,6 @@ export class HashedPassword implements Restorable<string> {
   }
 
   async check(rawPassword: string) {
-    console.log('R vo:', rawPassword, this.hashedPassword);
     return await this.hashService.compare(rawPassword, this.hashedPassword);
   }
 

@@ -61,7 +61,6 @@ export const TextDirection = Extension.create<TextDirectionOptions>({
         if (!this.options.directions.includes(direction)) {
           return false
         }
-        console.log("text direction", direction);
         return this.options.types.every(type => commands.updateAttributes(type, { textDirection: direction }))
       },
     }

@@ -103,8 +103,6 @@ export class SchoolNeo4jRepository extends SchoolRepository {
 
     const { records } = await this.neo4jService.read(query, { uid: userId })
 
-    console.log(records[0].get('manager'))
-
     if (records.length === 0)
       return [];
 

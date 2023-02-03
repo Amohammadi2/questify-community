@@ -7,3 +7,6 @@ export { default as Box } from './components/Box';
 export { default as Liner } from './components/Liner';
 export { default as Filler } from './components/Filler';
 export { default as LoaderFlex } from './components/LoaderFlex';
+export { Tab, TabItem } from './components/Tab';
+export { default as ProfileSummery } from './components/ProfileSummery';
+export { default as FloatingMenu } from './components/FloatingMenu';

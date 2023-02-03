@@ -29,7 +29,6 @@ export const LoginForm = ClientOnly(({ redirectUrl } : ILoginFormProps = {redire
   // handle success status
   useEffect(() => {
     if (data) {
-      console.log(data);
       login(data.token, data.user);
       if (redirectUrl) {
         router.push(redirectUrl);

@@ -1,11 +1,9 @@
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Input, Loading, Text } from '@nextui-org/react';
-import { FlexColumn, IconButton } from "modules/app-ui";
-import SearchBar from 'modules/app-ui/components/SearchBar/SearchBar';
+import { FlexRow } from "modules/app-ui";
+import ListView from 'modules/app-ui/components/ListView';
 import { useEnvProfile } from "../graphql/useEnvProfile";
 import { useQuestionFeed } from "../graphql/useQuestionFeed";
 import { IQuestionFeed } from "../interfaces/feed.type";
+import EnvHeader from "./EnvHeader";
 import QuestionPoster from './QuestionPoster';
 
 export const QuestionFeedList = (p: IQuestionFeed) => {
@@ -13,31 +11,21 @@ export const QuestionFeedList = (p: IQuestionFeed) => {
   const envProfile = useEnvProfile(p);
 
   return (
-    <FlexColumn css={{ alignItems: 'center' }}>
-      <FlexColumn css={{ maxWidth: '800px', w: '100%', pt: '$10', px:'$3' }}>
-        <SearchBar onSearch={(s) => questionFeed.setSearchTerm(s)} />
-        {
-          questionFeed.loading
-          ? (
-            <FlexColumn css={{ justifyContent: 'center' }}>
-              <Loading css={{ mt: '$10', mb: '$5' }} />
-              <Text color="$gray800" css={{ textAlign: 'center' }}>درحال بارگذاری...</Text>
-            </FlexColumn>
-          )
-          : (
-            questionFeed.data
-            ? (
-              questionFeed.data.map((q,i) => (
-                <QuestionPoster
-                  key={i}
-                  {...q}
-                />
-              ))
-            )
-            : (<Text>ایرادی در بارگذاری اطلاعات به وجود آمده است</Text>)
-          )
-        }
-      </FlexColumn>
-    </FlexColumn>
+    <ListView
+      onSearch={(s) => questionFeed.setSearchTerm(s) }
+      data={questionFeed.data}
+      loading={questionFeed.loading}
+      error={questionFeed.error}
+      header={
+        <EnvHeader profileData={envProfile} />
+      }
+    >
+      {(data) => {
+        if (!data) return null;
+        return data.map(d => 
+          <QuestionPoster {...d} />
+        )
+      }}
+    </ListView>
   )
 }

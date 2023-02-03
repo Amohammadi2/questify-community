@@ -9,7 +9,7 @@ interface IQuestionList {
   type: QList;
 }
 
-export const QuestionList = ({ type }) => {
+export const QuestionList = ({ type } : IQuestionList) => {
   const { setSearchTerm, data, error, loading } = useQuestionList(type);
 
   return (
@@ -20,6 +20,7 @@ export const QuestionList = ({ type }) => {
           dir="col"
           loading={loading}
           data={data}
+          error={error}
         >
           {(data) => {
             if (!data) return null;
