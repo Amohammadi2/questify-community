@@ -1,4 +1,4 @@
-import { IUserSummery } from "modules/question-feed/interfaces/user-summery.interface";
+import { IUserSummery } from "../../shared/interfaces/user-summery.interface";
 
 export interface ICompactQuestion {
   id: string;

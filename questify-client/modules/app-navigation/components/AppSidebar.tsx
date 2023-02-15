@@ -13,16 +13,12 @@ export default function AppSidebar() {
   const account = useRecoilValue(accountAtom);
 
   const sidebarLinks = [
-    { group: 'account', type:'link', link: '/user-account', text: 'تنظیمات حساب کاربری', icon: faGears},
-    { group: 'account', type:'action', action: ()=>logout(), text: 'خروج از حساب کاربری', icon: faPowerOff},
-    { group: 'app', type: 'link', link: '/school-space', text: 'فضای درون مدرسه ای', icon: faSchool},
-    { group: 'app', type: 'link', link: '/school-management', text: 'مدیریت اعضای مدرسه', role: 'MANAGER', icon: faUsersRays},
-    { group: 'app', type: 'link', link: '/invitation-codes', text: 'کد های دعوت', role: 'MANAGER', icon: faMailBulk},
-    { group: 'app', type: 'link', link: '/community-space', text: 'فضای انجمن ها', icon: faPeopleGroup},
-    { group: 'app', type: 'link', link: '/shared-space', text: 'فضای اشتراکی', icon: faShareNodes},
+    { group: 'account', type:'link', link: '/user-account', text: 'حساب کاربری', icon: faGears},
+    { group: 'account', type:'action', action: ()=>logout(), text: 'خروج از سیستم', icon: faPowerOff},
+    { group: 'app', type: 'link', link: '/communities', text: 'انجمن ها', icon: faPeopleGroup},
     { group: 'app', type: 'link', link: '/my-questions', text: 'سوالات من', icon: faQuestionCircle},
-    { group: 'app', type: 'link', link: '/bookmarks', text: 'پست های ذخیره شده', icon: faBookmark},
-    { group: 'app', type: 'link', link: '/in-progress-list', text: 'لیست پیگیری ها', icon: faListCheck},
+    { group: 'app', type: 'link', link: '/bookmarks', text: 'ذخیره شده', icon: faBookmark},
+    { group: 'app', type: 'link', link: '/in-progress-list', text: 'پیگیری ها', icon: faListCheck},
   ];
 
   const SidebarProfileSection = () => (

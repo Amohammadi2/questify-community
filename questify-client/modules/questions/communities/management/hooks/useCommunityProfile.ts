@@ -8,11 +8,12 @@ export const useCommunityProfile = (communityId: string): APIStats<ICommuityProf
     delay: 400,
     handler: () => {
       return {
-        name: 'انجمن هکر های ملاصدرا',
-        description: 'ما اینجا جمع شدیم تا از سایت مدرسه به عنوان یک محیط تمرین برای اجرای عملیات های سایبری استفاده کنیم',
-        profileImg: 'https://picsum.photos/100/100',
+        name: 'انجمن تحقیقات ملاصدرا',
+        description: 'واحد دانش‌آموزی علمی-فناوری-سایبری دبیرستان ملاصدرا',
+        profileImg: '/imgs/snow-fall.jpg',
         nMembers: 10,
-        visibility: 'PRIVATE'
+        visibility: 'PRIVATE',
+        id: 'mlsdra-research-community'
       }
     }
   })

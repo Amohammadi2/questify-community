@@ -18,7 +18,7 @@ const LoginPage: NextPageWithLayout = () => {
   return (
     <BackgroundContainer>
       <LoginFormArea>
-        <LoginForm redirectUrl="/school-space" />
+        <LoginForm redirectUrl="/communities" />
       </LoginFormArea>
     </BackgroundContainer>
   )

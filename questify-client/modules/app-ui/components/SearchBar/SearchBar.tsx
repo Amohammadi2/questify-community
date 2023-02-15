@@ -12,7 +12,7 @@ export default function SearchBar({ onSearch } : ISearchBar) {
     <Input
       css={{ my: '$5' }}
       type="search"
-      underlined
+      bordered
       placeholder="جست‌وجو"
       contentRight={<IconButton><FontAwesomeIcon icon={faSearch} style={{color:'gray'}} /></IconButton>}
       onKeyDown={(e)=>{

@@ -3,7 +3,7 @@ import { useClickAway } from 'react-use';
 import { ReactNode } from 'react';
 import FlexColumn from '../FlexColumn';
 import FlexRow from '../FlexRow';
-import MenuContextProvider, { menuContext } from './menuContext';
+import MenuContextProvider, { menuContext } from './MenuContext';
 
 export interface IFloatingMenu {
   children: ReactNode | ReactNode[];
@@ -28,8 +28,7 @@ export default function FloatingMenu({ children, onClose, isOpen } : IFloatingMe
         css={{
           position: 'absolute',
           top: '110%',
-          left: '50%',
-          transform: 'translateX(-20%)',
+          left: '0',
           w: '180px',
           bg: '$gray50',
           zIndex: '450',
@@ -69,7 +68,7 @@ FloatingMenu.Item = ({ children, onClick } : IFloatingMenuItem) => {
           backgroundColor: '$gray300'
         }
       }}
-      onClick={()=>{onClick();close();}}
+      onClick={(e)=>{onClick();close();}}
     >
       {children}
     </FlexRow>

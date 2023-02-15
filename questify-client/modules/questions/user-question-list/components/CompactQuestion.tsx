@@ -1,7 +1,7 @@
 import { Avatar, Text } from "@nextui-org/react";
 import { Badge, FlexColumn, FlexRow } from "modules/app-ui";
 import Link from "next/link";
-import { ICompactQuestion } from "../interfaces/ICompactQuestion.interface";
+import { ICompactQuestion } from "../interfaces/compact-question.interface";
 
 export default function CompactQuestion({ id, title, author, date, tags, nAnswers } : ICompactQuestion) {
   return (

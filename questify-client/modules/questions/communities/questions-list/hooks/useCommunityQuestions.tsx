@@ -2,21 +2,21 @@ import { APIStats } from "@utils/api-utils";
 import { useMockAPI } from "@utils/mock/useMockAPI";
 import { useEffect, useState } from "react";
 import { IQuestionFeed } from "../../interfaces/feed.type";
-import { IQuestionPoster } from '../../interfaces/question-poster.interface';
+import { IQuestionPoster } from '../../../shared/interfaces/question-poster.interface';
 
-export const useQuestionFeed = (feedParams: IQuestionFeed):
+export const useCommunityQuestions = (communityId: string):
   APIStats<IQuestionPoster[]> & { setSearchTerm: (s:string)=>void } =>
 {
   const [searchTerm, setSearchTerm] = useState<string|null>('');
   const [fetchQuestions, stats] = useMockAPI<void, IQuestionPoster[]>({
     delay: 500,
     handler: () => {
-      return new Array<IQuestionPoster>(50).fill({
-        title: 'این یک سوال است از: ' + feedParams.feedType + (searchTerm ? "با سرچ از:" + searchTerm : ''),
+      return new Array<IQuestionPoster>(15).fill({
+        title: 'این یک سوال است: ' + (searchTerm ? "با سرچ از:" + searchTerm : ''),
         id: '23ijfaosi8qt94io-aqi34jrods984',
         author: {
           name: 'اشکان محمدی',
-          profileImg: 'https://picsum.photos/100/100',
+          profileImg: '/imgs/snow-fall.jpg',
           userId: 'qk23joiqsfjzo4q38f'
         },
         nAnswers: 3,
@@ -27,7 +27,7 @@ export const useQuestionFeed = (feedParams: IQuestionFeed):
             author: {
               name: 'Ashkan Mohammadi',
               userId: 'aq3jio2a8s9dfj-asdf2',
-              profileImg: 'https://picsum.photos/100/100'
+              profileImg: '/imgs/snow-fall.jpg'
             }
           },
           {
@@ -35,7 +35,7 @@ export const useQuestionFeed = (feedParams: IQuestionFeed):
             author: {
               name: 'Ilia Mohammadi',
               userId: 'ftkfgjhdfwef235gzadf-hghuhfzu',
-              profileImg: 'https://picsum.photos/100/100'
+              profileImg: '/imgs/snow-fall.jpg'
             }
           },
           {
@@ -43,7 +43,7 @@ export const useQuestionFeed = (feedParams: IQuestionFeed):
             author: {
               name: 'Arshia Mohammadi',
               userId: 'gfjighfdshgo9hf-saugiuigrehigihjuh',
-              profileImg: 'https://picsum.photos/100/100'
+              profileImg: '/imgs/snow-fall.jpg'
             }
           },
         ],
@@ -55,7 +55,7 @@ export const useQuestionFeed = (feedParams: IQuestionFeed):
 
   useEffect(() => {
     fetchQuestions();
-  }, [feedParams, searchTerm])
+  }, [communityId, searchTerm])
 
   return {
     ...stats,

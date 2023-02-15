@@ -19,7 +19,7 @@ const Home: NextPageWithLayout = () => {
   const account = useRecoilValue(accountAtom);
 
   const EnterButton = (
-    <Link href={account ? '/school-space' : '/login'}>
+    <Link href={account ? '/communities' : '/login'}>
       <Button>
         {account ? 'ورود به صفحه سوالات' : 'ورود به حساب کاربری'}
         <FontAwesomeIcon icon={faArrowRightToBracket} style={{ margin: '0px 8px' }} />

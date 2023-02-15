@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Grid, styled, Text } from "@nextui-org/react";
 import { Avatar } from "@nextui-org/react";
 import { Badge, Filler, FlexRow, Liner } from "modules/app-ui";
-import Link from "next/link";
 import { IQuestionPoster } from "../interfaces/question-poster.interface";
+import Link from "next/link";
 
 const QuestionBox = styled('div', {
   border: '1px solid $gray500',

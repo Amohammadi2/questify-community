@@ -26,7 +26,7 @@ const DestinationList = ({ activeTab, dest, setDest } : IDestinationList) => {
             <ProfileSummery
               id={`${i}`}
               text={"یک مدرسه خوب"}
-              img="https://picsum.photos/100/100"
+              img="/imgs/snow-fall.jpg"
               selectable
               onSelect={(id, isSelected) => {
                 if (isSelected)
@@ -49,7 +49,7 @@ const DestinationList = ({ activeTab, dest, setDest } : IDestinationList) => {
             <ProfileSummery
               id={`${i}`}
               text={"یک انجمن جالب"}
-              img="https://picsum.photos/100/100"
+              img="/imgs/snow-fall.jpg"
               selectable
               onSelect={(id, isSelected) => {
                 if (isSelected)

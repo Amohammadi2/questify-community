@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import FlexRow from '../FlexRow';
 import FlexColumn from '../FlexColumn';
 import { Avatar, Checkbox, Text } from '@nextui-org/react';
@@ -12,10 +12,11 @@ interface IProfileSummery {
   onSelect?: (id: string, isSelected: boolean) => void;
   selected?: boolean;
   onClick?: (id: string) => void;
+  sideContent?: ReactNode | ReactNode[];
 }
 
 export default function ProfileSummery({
-  id, text, img, selectable, selected, onSelect, onClick
+  id, text, img, selectable, selected, onSelect, onClick, sideContent
 } : IProfileSummery) {
   
   const CheckBoxRenderer = () => {
@@ -35,16 +36,11 @@ export default function ProfileSummery({
   return (
     <FlexRow css={{
       alignItems: 'center',
-      boxShadow: '$sm',
+      borderBottom: '1px solid $gray100',
       borderRadius: '$sm',
       px: '$5',
       py: '$4',
       transition: '$card',
-      cursor: onClick ? 'pointer' : 'default',
-      userSelect: onClick ? 'none' : 'default',
-      '&:hover': onClick ? {
-        bg: '$gray100'
-      } : {}
     }}
       onClick={()=>onClick ? onClick(id) : null}
     >
@@ -56,6 +52,7 @@ export default function ProfileSummery({
       />
       <Text css={{ px: '$5', mb: '0' }}>{text}</Text>
       <Filler />
+      {sideContent}
       <CheckBoxRenderer />
     </FlexRow>
   )

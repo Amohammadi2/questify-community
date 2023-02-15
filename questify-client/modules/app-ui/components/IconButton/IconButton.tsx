@@ -1,8 +1,8 @@
 import { styled } from "@nextui-org/react";
 
 const IconButton = styled('div', {
-  width: '25px',
-  height: '25px',
+  width: '35px',
+  height: '35px',
   d: 'flex',
   justifyContent: 'center',
   alignItems: 'center',

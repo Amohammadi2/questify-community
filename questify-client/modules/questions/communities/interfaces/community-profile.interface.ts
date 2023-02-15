@@ -1,4 +1,5 @@
 export interface ICommuityProfile {
+  id: string;
   name: string;
   profileImg: string | null;
   description: string | null;

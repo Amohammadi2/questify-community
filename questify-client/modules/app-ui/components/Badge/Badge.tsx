@@ -5,6 +5,7 @@ interface IBadgeProps {
   attentionWorthy?: boolean;
   dismissable?: boolean;
   onDismiss?: ()=>void;
+  round?: boolean;
 }
 
 const BadgeUI = styled('div', {
@@ -15,6 +16,21 @@ const BadgeUI = styled('div', {
   my: '$2',
   mx: '$2',
   d: 'flex',
+})
+
+const RoundBadgeUI = styled('div', {
+  fontSize: '$xs',
+  borderRadius: '50%',
+  w: '25px',
+  h: '25px',
+  bg: '$secondary',
+  color: '$secondarySolidContrast',
+  d: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  '& > *': {
+    transform: 'translateY(1px)'
+  }
 })
 
 const DismissButton = styled('div', {
@@ -29,8 +45,16 @@ const DismissButton = styled('div', {
   alignItems: 'center'
 })
 
-export default function Badge({ content, attentionWorthy=false, dismissable=false, onDismiss} : IBadgeProps) {
+export default function Badge({ content, attentionWorthy=false, dismissable=false, onDismiss, round=false} : IBadgeProps) {
   
+  if (round) {
+    return (
+      <RoundBadgeUI>
+        <span>{content}</span>
+      </RoundBadgeUI>
+    )
+  }
+
   return (
     <BadgeUI css={{
       bg: attentionWorthy ? '$c_indigo900' : '$gray100',

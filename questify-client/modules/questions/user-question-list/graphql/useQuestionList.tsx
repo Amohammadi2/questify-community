@@ -1,6 +1,6 @@
 import { useMockAPI } from "@utils/mock/useMockAPI";
 import { useEffect, useState } from "react";
-import { ICompactQuestion } from "../interfaces/ICompactQuestion.interface";
+import { ICompactQuestion } from "../interfaces/compact-question.interface";
 import { QList } from "../interfaces/QList.type";
 
 export const useQuestionList = (type: QList) => {
@@ -14,7 +14,7 @@ export const useQuestionList = (type: QList) => {
         title: 'وارون فرم کلی معادله درجه دو چه به چه شکل می باشد؟: ' + type,
         author: {
           name: type === "asked" ? 'اشکان محمدی' : 'علی امینی',
-          profileImg: 'https://picsum.photos/100/100',
+          profileImg: '/imgs/snow-fall.jpg',
           userId: '24589435ja04-afjdfwh9ujhgo6'
         },
         date: new Date(),

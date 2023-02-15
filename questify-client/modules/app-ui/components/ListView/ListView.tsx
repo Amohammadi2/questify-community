@@ -1,7 +1,7 @@
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import { Text } from '@nextui-org/react';
 import FlexColumn from '../FlexColumn';
-import LoaderFlex from '../LoaderFlex';
+import LoaderFlex from '../ContentLoader';
 import SearchBar from '../SearchBar/SearchBar';
 
 // Review: remove the `dir` property and add a `css` property with
@@ -19,7 +19,13 @@ interface IListView <T> {
   footer?: ReactNode | ReactNode[] | null;
 }
 
+/**
+ * @deprecated
+ */
 export default function ListView <T> ({ onSearch, title, dir='col', loading, data, error, children, header, footer } : IListView<T>) {
+  
+  const [activeTab, setActiveTab] = useState<number>(1);
+  
   return (
     <FlexColumn css={{ alignItems: 'center' }}>
       <FlexColumn css={{ maxWidth: '800px', w: '100%', pt: '$10', px:'$3' }}>

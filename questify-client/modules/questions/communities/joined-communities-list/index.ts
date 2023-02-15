@@ -1,0 +1,1 @@
+export { default as JoinedCommunitiesList } from './components/JoinedCommunitiesList';

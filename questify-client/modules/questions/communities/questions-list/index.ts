@@ -1,1 +1,1 @@
-export { default as QuestionFeedList } from './components/QuestionFeedList';
+export { default as CommunityQuestionList } from './components/CommunityQuestionList';

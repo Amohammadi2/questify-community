@@ -1,4 +1,4 @@
-import { IUserSummery } from "../../shared/interfaces/user-summery.interface";
+import { IUserSummery } from "./user-summery.interface";
 
 export interface IQuestionPoster {
   title: string;
@@ -9,7 +9,11 @@ export interface IQuestionPoster {
   nAnswers: number;
   recentAnswers: {
     answerId: string;
-    author: IUserSummery
+    author: IUserSummery;
   }[];
-  author: IUserSummery
+  author: IUserSummery;
+  community?: {
+    name: string;
+    link: string;
+  }
 }

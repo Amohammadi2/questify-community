@@ -12,7 +12,7 @@ import NextNProgress from 'nextjs-progressbar';
 import { NextUIProvider } from '@nextui-org/react';
 import { theme } from '../modules/nextui-theme';
 import "modules/questions/question-editor/editor-input/styles/ProseMirror.css";
-import 'react-calendar/dist/Calendar.css';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 fontAwesomeConfig.autoAddCss = false;
 

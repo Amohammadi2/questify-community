@@ -4,7 +4,7 @@ import FlexColumn from "../FlexColumn";
 
 // Review: add a `css` property to support full customization
 
-interface ILoaderFlex <T> {
+interface IContentLoader <T> {
   error: any;
   dir: 'row' | 'col';
   loading: boolean;
@@ -12,7 +12,7 @@ interface ILoaderFlex <T> {
   children: (data: T) => ReactNode | ReactNode[];
 }
 
-export default function LoaderFlex <T> ({ dir, loading ,data, children, error } : ILoaderFlex<T>) {
+export default function ContentLoader <T> ({ dir, loading ,data, children, error } : IContentLoader<T>) {
   
   return (
     <FlexColumn
