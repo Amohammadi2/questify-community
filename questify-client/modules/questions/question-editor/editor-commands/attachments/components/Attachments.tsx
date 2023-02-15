@@ -36,7 +36,7 @@ export default function Attachments({ editor } : HasEditor) {
       alt: 'تصویر',
       title: 'تصویر'
     })
-    .insertContent(' ')
+    .createParagraphNear()
     .run();
   }, [editor])
 
