@@ -43,7 +43,7 @@ export default function QuestionEditorPage({ useAskQuestionAPI, onPublishComplet
       Underline,
       TextDirection,
       Image.configure({
-        inline: true
+        inline: false
       })
     ]
   })
