@@ -1,13 +1,13 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import EditorToolbarItem from '../../toolbar-ui/components/EditorToolbarItem';
 import EditorToolbarAction from '../../toolbar-ui/components/EditorToolbarAction';
 import { faImage, faFile, faLink } from '@fortawesome/free-solid-svg-icons';
 import { HasEditor } from '../../../interfaces';
-import UploadImageModal from '../file-upload/components/UploadImageModal';
+import ImageUploadModal from './ImageUploadModal';
+import { emitter } from '../../events';
+import { useEvent } from '@utils/events/event-emitter';
 
 export default function Attachments({ editor } : HasEditor) {
-  
-  const [isImageUploadModalOpen, setIsImageUploadModalOpen] = useState(false);
 
   const editorActions = {
     toggleLink() {
@@ -20,23 +20,36 @@ export default function Attachments({ editor } : HasEditor) {
           editor?.chain().focus().setLink({ href:textURL, target: '_blank' }).run();
       }
     },
-    insertImage() {
-      setIsImageUploadModalOpen(true);
+    requestImageUpload() {
+      emitter.publish<void>('open-image-upload-modal', null);
+    },
+    requestFileUpload() {
+      emitter.publish<void>('open-file-upload-modal', null);
     }
   };
+
+  const handleInsertImage = useCallback(({ link }) => {
+    editor.chain()
+    .focus()
+    .setImage({
+      src: link,
+      alt: 'تصویر',
+      title: 'تصویر'
+    })
+    .insertContent(' ')
+    .run();
+  }, [editor])
+
+  useEvent(emitter, 'insert-image', handleInsertImage);
   
   return (
     <>
-      <UploadImageModal
-        open={isImageUploadModalOpen}
-        onClose={()=>setIsImageUploadModalOpen(false)}
-        onImageSelected={()=>null}
-      />
+      <ImageUploadModal />
       <EditorToolbarItem
         menu={
           <>
             <EditorToolbarAction active={editor?.isActive('link')} icon={faLink} onClick={()=>{editorActions.toggleLink()}} text="لینک" />
-            <EditorToolbarAction icon={faImage} onClick={()=>editorActions.insertImage()} text="تصویر" />
+            <EditorToolbarAction icon={faImage} onClick={()=>editorActions.requestImageUpload()} text="تصویر" />
             <EditorToolbarAction icon={faFile} onClick={()=>null} text="فایل" />
           </>
         }

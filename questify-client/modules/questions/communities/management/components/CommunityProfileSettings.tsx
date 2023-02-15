@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Avatar } from "@nextui-org/react";
 import { FlexColumn, FlexRow } from "modules/app-ui";
 import { useCommunityProfile } from "../hooks/useCommunityProfile";
-import { EditableTextField } from '../../../../shared/components/EditableTextField';
+import EditableTextField from '../../../../shared/components/EditableTextField';
 import ImageEditor from 'modules/shared/components/ImageEditor';
 import { ICommunityProfileSettingsProps } from './CommunitySettings';
 

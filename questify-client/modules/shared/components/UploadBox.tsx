@@ -49,12 +49,12 @@ export default function UploadBox({ currentFile, onFileSet } : IUploadBoxProps) 
       onDrop={handleFileDrop}
     >
       {!currentFile ? (
-        <label style={{ cursor: 'pointer' }}>
+        <label style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
           <FontAwesomeIcon
             icon={faUpload}
             style={{ fontSize: '25px' }}
           />
-          <Text>
+          <Text css={{ maxWidth: '250px', textAlign: 'center' }}>
             کلیک کنید یا تصویر مد نظر را به اینجا کشیده و رها کنید
           </Text>
           <input type="file" style={{position: 'fixed', pointerEvents: 'none', opacity: 0}} onChange={handleFileSelect} />

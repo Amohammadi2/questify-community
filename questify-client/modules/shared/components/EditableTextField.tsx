@@ -10,7 +10,8 @@ interface IEditableTextField {
   header?: boolean;
   onEditRequest: (newContent: string) => boolean; // you can reject the new input by returning false
 }
-export function EditableTextField({ header, onEditRequest, content }: IEditableTextField) {
+
+export default function EditableTextField({ header, onEditRequest, content }: IEditableTextField) {
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [text, setText] = useState<string>('');

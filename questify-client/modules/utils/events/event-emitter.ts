@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 export class EventEmitter {
   private events: { [_: string]: Array<(payload:any)=>void> } = {};
 
@@ -17,4 +19,10 @@ export class EventEmitter {
       handler(payload);
     })
   }
+}
+
+export const useEvent = <T=any> (emitter: EventEmitter, eventName: string, handler: (payload: T)=>void) => {
+  useEffect(() => {
+    return emitter.subscribe<T>(eventName, handler);
+  }, [emitter, eventName, handler])
 }
