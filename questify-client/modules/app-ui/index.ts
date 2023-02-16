@@ -12,3 +12,4 @@ export { default as ProfileSummery } from './components/ProfileSummery';
 export { default as FloatingMenu } from './components/FloatingMenu';
 export { default as FlexContainer } from './components/FlexContainer';
 export { default as SearchBar } from './components/SearchBar';
+export { default as ProfileImage } from './components/ProfileImage';

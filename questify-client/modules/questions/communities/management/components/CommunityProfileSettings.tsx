@@ -27,7 +27,10 @@ export function CommunityProfileSettings({ communityId }: ICommunityProfileSetti
     <FlexRow css={{ mb: '$15' }}>
       <ImageEditor
         isOpen={isCropperOpen}
-        onClose={() => setIsCropperOpen(false)} />
+        onClose={() => setIsCropperOpen(false)}
+        onImageEdit={link => setProfileImg(link)}
+        imageLink={profileImg}
+      />
       <Avatar
         squared
         text={name}

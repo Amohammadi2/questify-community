@@ -1,15 +1,17 @@
 import { DragEventHandler, ChangeEventHandler, useCallback } from 'react';
-import { faTimes, faUpload } from "@fortawesome/free-solid-svg-icons";
+import { faFile, faFileArchive, faImage, faImages, faTimes, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Text } from "@nextui-org/react";
 import { FlexColumn, FlexRow } from "modules/app-ui";
+import { faDochub } from '@fortawesome/free-brands-svg-icons';
 
 interface IUploadBoxProps {
   onFileSet: (file: File | null) => void;
   currentFile: File | null;
+  image?: boolean;
 }
 
-export default function UploadBox({ currentFile, onFileSet } : IUploadBoxProps) {
+export default function UploadBox({ currentFile, onFileSet, image=false } : IUploadBoxProps) {
 
   const handleFileDrop: DragEventHandler<HTMLDivElement> = useCallback((e) => {
     e.preventDefault();
@@ -51,11 +53,11 @@ export default function UploadBox({ currentFile, onFileSet } : IUploadBoxProps) 
       {!currentFile ? (
         <label style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
           <FontAwesomeIcon
-            icon={faUpload}
+            icon={image ? faImage : faFile}
             style={{ fontSize: '25px' }}
           />
           <Text css={{ maxWidth: '250px', textAlign: 'center' }}>
-            کلیک کنید یا تصویر مد نظر را به اینجا کشیده و رها کنید
+            کلیک کنید یا {image ? 'تصویر':'فایل'} مورد نظر را به اینجا کشیده و رها کنید
           </Text>
           <input type="file" style={{position: 'fixed', pointerEvents: 'none', opacity: 0}} onChange={handleFileSelect} />
         </label>

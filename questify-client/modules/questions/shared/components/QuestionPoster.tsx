@@ -2,7 +2,7 @@ import { faComment, faFileExcel, faFileText, faHeart, faStar, faVideo } from "@f
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Grid, styled, Text } from "@nextui-org/react";
 import { Avatar } from "@nextui-org/react";
-import { Badge, Filler, FlexRow, Liner } from "modules/app-ui";
+import { Badge, Filler, FlexRow, Liner, ProfileImage } from "modules/app-ui";
 import { IQuestionPoster } from "../interfaces/question-poster.interface";
 import Link from "next/link";
 
@@ -49,12 +49,10 @@ export default function QuestionPoster({ title, tags, scores, author, nAnswers, 
   return (
     <QuestionBox>
       <Grid.Container direction="row" alignItems="center" css={{ my: '$5' }}>
-        <Link href={`/user-profile?id=${author.userId}`}>
-          <FlexRow css={{ cursor: 'pointer', alignItems: 'center' }}>
-            <Avatar text={author.name} src={author.profileImg} css={{ mx: '$3'}} />
-            {author.name}
-          </FlexRow>
-        </Link>
+        <FlexRow css={{ cursor: 'pointer', alignItems: 'center' }}>
+          <ProfileImage id={author.userId} name={author.name} img={author.profileImg} avatarCSS={{ mx: '$3'}} />
+          {author.name}
+        </FlexRow>
         <Filler />
         <IconNumberContainer icon={faComment} number={nComments} />
         <Text css={{ mx: '$5' }} color="$gray500">|</Text>
