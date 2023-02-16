@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Avatar, Switch, Text } from '@nextui-org/react';
-import { ContentLoader, FlexContainer, FlexRow, Tab, TabItem, SearchBar } from 'modules/app-ui';
+import { ContentLoader, FlexContainer, FlexRow, Tab, TabItem, SearchBar, ProfileImage } from 'modules/app-ui';
 import QuestionPoster from "modules/questions/shared/components/QuestionPoster";
 import CommunityHeaderBar from "../../management/components/CommunityHeaderBar";
 import { useCommunityProfile } from "../../management/hooks/useCommunityProfile";
@@ -33,17 +33,17 @@ export default function CommunityQuestionList ({ communityId } : { communityId: 
         <Text css={{ mx: '$5', flexShrink: 0 }}>کاربران برتر: </Text>
         <FlexRow css={{ alignItems: 'center', justifyContent: 'center', minWidth: 'content', flexShrink: 0 }}>
           <Text h4 css={{ mx: '$3' }} >1#</Text>
-          <Avatar />
+          <ProfileImage img="/imgs/snow-fall.jpg" name="اشکان محمدی" id="some-fake-id" />
           <Text css={{ mx: '$3' }}>اشکان محمدی (13 امتیاز)</Text>
         </FlexRow>
         <FlexRow css={{ alignItems: 'center', justifyContent: 'center', minWidth: 'content', flexShrink: 0 }}>
           <Text h4 css={{ mx: '$3' }} >2#</Text>
-          <Avatar />
+          <ProfileImage img="/imgs/snow-fall.jpg" name="مهدی فهیمی" id="some-fake-id" />
           <Text css={{ mx: '$3' }}>مهدی فهیمی (10 امتیاز)</Text>
         </FlexRow>
         <FlexRow css={{ alignItems: 'center', justifyContent: 'center', minWidth: 'content', flexShrink: 0 }}>
           <Text h4 css={{ mx: '$3' }} >3#</Text>
-          <Avatar />
+          <ProfileImage img="/imgs/snow-fall.jpg" name="علی حمیدی" id="some-fake-id" />
           <Text css={{ mx: '$3' }}>علی حمیدی (8 امتیاز)</Text>
         </FlexRow>
       </FlexRow>
