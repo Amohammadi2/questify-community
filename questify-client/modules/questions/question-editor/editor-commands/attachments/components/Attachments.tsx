@@ -28,13 +28,13 @@ export default function Attachments({ editor } : HasEditor) {
     }
   };
 
-  const handleInsertImage = useCallback(({ link }) => {
+  const handleInsertImage = useCallback(({ link, title }) => {
     editor.chain()
     .focus()
     .setImage({
       src: link,
-      alt: 'تصویر',
-      title: 'تصویر'
+      alt: title,
+      title: title
     })
     .createParagraphNear()
     .run();
