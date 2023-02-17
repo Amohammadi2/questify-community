@@ -1,1 +1,1 @@
-export { useTagsReducer } from './hooks/useTagsReducer';
+export { useValueList } from './hooks/useTagsReducer';

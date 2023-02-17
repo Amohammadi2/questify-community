@@ -3,31 +3,31 @@ import { useReducer } from 'react';
 // :Q: maybe we can make this mechanism shared across the filtering system and post publish modal?
 
 interface ITagReducerActions {
-  addTag: (tag: string) => void;
-  removeTag: (tag: string) => void;
+  add: (value: string) => void;
+  remove: (value: string) => void;
 }
 
-export function useTagsReducer(): readonly [tags: string[], api: ITagReducerActions] {
-  const [tags, dispatch] = useReducer<(state: string[], action: { type: 'add-tag' | 'remove-tag'; payload: string; }) => string[]>(
+export function useValueList(): readonly [values: string[], api: ITagReducerActions] {
+  const [values, dispatch] = useReducer<(state: string[], action: { type: 'add' | 'remove'; payload: string; }) => string[]>(
     (state, action) => {
       switch (action.type) {
-        case "add-tag":
+        case "add":
           if (state.includes(action.payload))
             return state;
           return [...state, action.payload];
-        case "remove-tag":
+        case "remove":
           return state.filter(t => t != action.payload);
       }
     },
     []
   );
 
-  return [tags, {
-    addTag(tag: string) {
-      dispatch({ type: 'add-tag', payload: tag });
+  return [values, {
+    add(tag: string) {
+      dispatch({ type: 'add', payload: tag });
     },
-    removeTag(tag: string) {
-      dispatch({ type: 'remove-tag', payload: tag });
+    remove(tag: string) {
+      dispatch({ type: 'remove', payload: tag });
     }
   }] as const;
 }
