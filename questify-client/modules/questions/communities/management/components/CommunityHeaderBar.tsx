@@ -8,7 +8,7 @@ import { ManagementMenu } from "./ManagementMenu";
 import { MemberListModal } from "./MemberListModal";
 import { InvitationModal } from "./InvitationModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGear } from "@fortawesome/free-solid-svg-icons";
+import { faGear, faShare, faShareNodes } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
 
 
@@ -62,6 +62,9 @@ export default function CommunityHeaderBar({ profileData } : IEnvHeader) {
               <Filler />
               <IconButton css={{ mx: '$2' }} onClick={()=>router.push(`/communities/${profileData.data.id}/settings`)}>
                 <FontAwesomeIcon icon={faGear} style={{ fontSize: '19px'}} />
+              </IconButton>
+              <IconButton css={{ mx: '$2' }} onClick={()=>null}>
+                <FontAwesomeIcon icon={faShareNodes} style={{ fontSize: '19px'}} />
               </IconButton>
             </>
           )
