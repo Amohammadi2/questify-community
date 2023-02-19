@@ -1,13 +1,13 @@
 import { getNavLayout } from "modules/app-navigation";
 import { useAuthGuard } from "modules/auth/route-protector";
-import { BookmarkedQuestionsList } from "modules/questions";
+import { QuestionList } from "modules/questions/user-question-list/components/QuestionList";
 import { NextPageWithLayout } from "utils/next-layout";
 
 const BookmarksPage: NextPageWithLayout = () => {
   useAuthGuard();
 
   return (
-    <BookmarkedQuestionsList />
+    <QuestionList type="bookmarked" />
   );
 }
 
