@@ -1,32 +1,23 @@
-import { Grid, Loading, styled, Text } from "@nextui-org/react";
-import useQuestionDetails from "../hooks/useQuestionDetail";
+import { Text } from "@nextui-org/react";
+import { Badge, Filler, FlexColumn, FlexRow, IconButton, ProfileSummery } from "modules/app-ui";
+import { IQuestionDetails } from "../interfaces/question-details.interface";
+import Comment from "./Comment";
+import PostDetails from "./PostDetails";
+import ScoreCounter from "./ScoreCounter";
 
-const MainContainer = styled('div', {
-  d: 'flex',
-  flexDirection: 'column',
-  mx: '$5',
-  my: '$10',
-  '@md': {
-    mx: '$15'
-  }
-})
 
-export default function QuestionDetails({ questionId }:{questionId: string}) {
-  
-  const { loading, data, error } = useQuestionDetails(questionId);
-  
-  if (loading) 
-    return (
-      <Grid.Container direction="column" css={{ width: '100%', height: '100%' }} justify="center" alignItems="center">
-        <Loading size="lg" />
-        <Text size="sm" color="$gray500">درحال بارگذاری</Text>
-      </Grid.Container>
-    );
-
+export default function QuestionView({ title, content, author, score, tags, comments, id, publishDate, userVote, loading} : IQuestionDetails & {loading: boolean}) {
   return (
-    <MainContainer>
-      <Text h2>{data?.title}</Text>
-      <Text>{data?.content}</Text>
-    </MainContainer>
-  );
+    <PostDetails
+      author={author}
+      header={<Text h2>{title}</Text>}
+      content={content}
+      loading={loading}
+      comments={comments}
+      publishDate={publishDate}
+      score={score}
+      userVote={userVote}
+      tags={tags}
+    />
+  )
 }

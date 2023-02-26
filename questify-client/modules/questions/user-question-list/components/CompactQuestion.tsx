@@ -1,5 +1,5 @@
 import { Avatar, Text } from "@nextui-org/react";
-import { Badge, FlexColumn, FlexRow } from "modules/app-ui";
+import { Badge, FlexColumn, FlexRow, ProfileImage } from "modules/app-ui";
 import Link from "next/link";
 import { ICompactQuestion } from "../interfaces/compact-question.interface";
 
@@ -8,11 +8,10 @@ export default function CompactQuestion({ id, title, author, date, tags, nAnswer
     <FlexRow css={{ pt: '$10', pb: '$5', borderBottom: '1px solid $gray300' }}>
       <FlexColumn css={{ py: '$5', px: '$4'}}>
         <Link href={"/user-profile?id="+author.userId}>
-          <Avatar
-            zoomed
-            src={author.profileImg}
-            text={author.name}
-            size="sm"
+          <ProfileImage
+            img={author.profileImg}
+            name={author.name}
+            id={author.userId}
           />
         </Link>
       </FlexColumn>

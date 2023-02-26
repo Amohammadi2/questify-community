@@ -1,4 +1,4 @@
-import { Avatar, Loading, Text } from "@nextui-org/react";
+import { Avatar, Loading, Text, Button } from "@nextui-org/react";
 import { APIStats } from "@utils/api-utils";
 import { Filler, IconButton } from "modules/app-ui";
 import { useState } from "react";
@@ -60,6 +60,7 @@ export default function CommunityHeaderBar({ profileData } : IEnvHeader) {
               />
               <Text b css={{ mx: '$2' }}>{data?.name}</Text>
               <Filler />
+              <Button size="xs">عضو شدن</Button>
               <IconButton css={{ mx: '$2' }} onClick={()=>router.push(`/communities/${profileData.data.id}/settings`)}>
                 <FontAwesomeIcon icon={faGear} style={{ fontSize: '19px'}} />
               </IconButton>

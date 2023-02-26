@@ -1,7 +1,7 @@
 import { getNavLayout } from "modules/app-navigation";
 import { BackArrow } from "modules/app-navigation";
-import QuestionDetails from "modules/questions/question-details/components/QuestionDetails";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import QuestionDetailsView from "modules/questions/question-details/components/QuestionDetailsView";
+import { GetServerSideProps } from "next";
 import Error from "next/error";
 import { NextPageWithLayout } from "utils/next-layout";
 
@@ -28,7 +28,7 @@ const QuestionDetailsPage: NextPageWithLayout<{questionId:string}> = ({ question
     questionId = questionId[0];
 
   return (
-    <QuestionDetails questionId={questionId} />
+    <QuestionDetailsView questionId={questionId} />
   );
 }
 
