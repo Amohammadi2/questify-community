@@ -1,16 +1,11 @@
 import { Grid, styled, Text } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import { KeyboardEventHandler, useCallback, useEffect, useRef, useState } from "react";
 import { useRecoilState } from 'recoil';
 import { canPublish } from "../validators/can-publish.validator";
-import { useEditor, EditorContent } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
-import Placeholder from '@tiptap/extension-placeholder';
-import Underline from '@tiptap/extension-underline';
-import Image from '@tiptap/extension-image';
-import Link from '@tiptap/extension-link';
-import { TextDirection } from '../../tiptap-extensions';
+import { EditorContent } from '@tiptap/react';
 import { canBePublishedAtom } from "../../states";
 import { HasEditor } from "../../interfaces";
+import { FlexColumn } from "modules/app-ui";
 
 
 const PostEditorContainer = styled('div', {
@@ -21,6 +16,7 @@ const PostEditorContainer = styled('div', {
   px: '$5',
   py: '$4',
   my: '$5',
+  mb: '50px'
 })
 
 export default function PostEditor({ editor }: HasEditor) {
@@ -28,6 +24,7 @@ export default function PostEditor({ editor }: HasEditor) {
   const [content, setContent] = useState('');
   const [,setCanBePublished] = useRecoilState(canBePublishedAtom);
   const { allChecksPass, errorMessage, nOfWords } = canPublish(content);
+  const containerRef = useRef<HTMLDivElement>()
 
   // update the content
   useEffect(() => {
@@ -39,9 +36,13 @@ export default function PostEditor({ editor }: HasEditor) {
     setCanBePublished(allChecksPass);
   }, [allChecksPass]);
 
+  const scrollOnEnter: KeyboardEventHandler<HTMLDivElement> = useCallback((e) => {
+    containerRef.current?.scrollIntoView();
+  }, [containerRef])
+
   return (
     <>
-      <PostEditorContainer>
+      <PostEditorContainer onKeyDown={scrollOnEnter} >
         <EditorContent editor={editor}  />
         {editor?.getText() != ''
           ? <Grid.Container direction="row">
@@ -50,7 +51,7 @@ export default function PostEditor({ editor }: HasEditor) {
               <Text color="$gray600">{nOfWords} کلمه</Text>
             </Grid.Container>
           : <></>}
-
+        <div ref={containerRef} />
       </PostEditorContainer>
     </>
   );

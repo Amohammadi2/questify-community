@@ -10,6 +10,7 @@ import { InvitationModal } from "./InvitationModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear, faShare, faShareNodes } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
+import { LinkMaker } from "modules/link-maker";
 
 
 export interface IEnvHeader {
@@ -58,10 +59,10 @@ export default function CommunityHeaderBar({ profileData } : IEnvHeader) {
                 text={data?.name}
                 css={{ mx: '$2' }}
               />
-              <Text b css={{ mx: '$2' }}>{data?.name}</Text>
+              <Text b css={{ mx: '$2', cursor: 'pointer' }} onClick={()=>router.push(LinkMaker.community(data?.id))}>{data?.name}</Text>
               <Filler />
               <Button size="xs">عضو شدن</Button>
-              <IconButton css={{ mx: '$2' }} onClick={()=>router.push(`/communities/${profileData.data.id}/settings`)}>
+              <IconButton css={{ mx: '$2' }} onClick={()=>router.push(LinkMaker.communitySettings(data?.id))}>
                 <FontAwesomeIcon icon={faGear} style={{ fontSize: '19px'}} />
               </IconButton>
               <IconButton css={{ mx: '$2' }} onClick={()=>null}>

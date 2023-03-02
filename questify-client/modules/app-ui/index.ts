@@ -14,3 +14,4 @@ export { default as FlexContainer } from './components/FlexContainer';
 export { default as SearchBar } from './components/SearchBar';
 export { default as ProfileImage } from './components/ProfileImage';
 export { default as RelativeContainer } from './components/RelativeContainer';
+export { default as BtnSideIcon } from './components/BtnSideIcon';

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import EditorToolbarItem from '../../toolbar-ui/components/EditorToolbarItem';
 import EditorToolbarAction from '../../toolbar-ui/components/EditorToolbarAction';
 import { faImage, faFile, faLink } from '@fortawesome/free-solid-svg-icons';
@@ -50,7 +50,7 @@ export default function Attachments({ editor } : HasEditor) {
           <>
             <EditorToolbarAction active={editor?.isActive('link')} icon={faLink} onClick={()=>{editorActions.toggleLink()}} text="لینک" />
             <EditorToolbarAction icon={faImage} onClick={()=>editorActions.requestImageUpload()} text="تصویر" />
-            <EditorToolbarAction icon={faFile} onClick={()=>null} text="فایل" />
+            {/* <EditorToolbarAction icon={faFile} onClick={()=>null} text="فایل" /> */}
           </>
         }
         item={<EditorToolbarAction icon={faLink} onClick={()=>null} />}

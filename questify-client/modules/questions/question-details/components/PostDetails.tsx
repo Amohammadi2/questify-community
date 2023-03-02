@@ -1,8 +1,10 @@
+import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Grid, Loading, Text, Textarea } from "@nextui-org/react";
 import { Badge, Filler, FlexColumn, FlexRow, ProfileSummery } from "modules/app-ui";
 import { IUserSummery } from "modules/questions/shared/interfaces/user-summery.interface";
 import { IUserVote } from "modules/questions/shared/interfaces/user-vote.interface";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { IComment } from "../interfaces/comment.interface";
 import Comment from "./Comment";
 import ScoreCounter from "./ScoreCounter";
@@ -18,9 +20,12 @@ interface IDetailsViewProps {
   publishDate: Date;
   tags?: string[];
   comments: IComment[];
+  profileSide?: ReactNode | ReactNode[];
 }
 
-export default function PostDetails({ author, header, content, score, userVote, publishDate, tags, comments, loading }: IDetailsViewProps) {
+export default function PostDetails({ author, header, content, score, userVote, publishDate, tags, comments, loading, profileSide }: IDetailsViewProps) {
+
+  const [comment, setComment] = useState('');
 
   if (loading)
     return (
@@ -41,9 +46,7 @@ export default function PostDetails({ author, header, content, score, userVote, 
             img={author.profileImg}
             id={author.userId}
             text={author.name}
-            sideContent={
-              <></>
-            }
+            sideContent={profileSide || <></>}
             css={{ borderBottom: '1px solid $gray50 ' }}
           />
           <FlexColumn css={{ flexGrow: 1, justifyContent: 'center' }}>
@@ -66,10 +69,28 @@ export default function PostDetails({ author, header, content, score, userVote, 
       </FlexColumn>
       <FlexColumn css={{ my: '$5' }}>
         <Textarea
+          onChange={e=>setComment(e.target.value)}
+          value={comment}
           minRows={3}
           maxRows={10}
           placeholder={'افزودن نظر'}
         />
+        <FlexRow css={{ mt: '$5' }}>
+          <Button size="sm" css={{ mr: '$3' }} disabled={!comment}>
+            <FontAwesomeIcon
+              icon={faCheck}
+              style={{ margin: '0 5px'}}
+            />
+            ارسال نظر
+          </Button>
+          <Button size="sm" css={{ mr: '$3' }} color="error" disabled={!comment}>
+            <FontAwesomeIcon
+              icon={faTimes}
+              style={{ margin: '0 5px'}}
+            />
+            انصراف
+          </Button>
+        </FlexRow>
       </FlexColumn>
     </FlexColumn>
   );
