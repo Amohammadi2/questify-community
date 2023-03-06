@@ -21,9 +21,10 @@ interface IDetailsViewProps {
   tags?: string[];
   comments: IComment[];
   profileSide?: ReactNode | ReactNode[];
+  counterBottom?: ReactNode | ReactNode[];
 }
 
-export default function PostDetails({ author, header, content, score, userVote, publishDate, tags, comments, loading, profileSide }: IDetailsViewProps) {
+export default function PostDetails({ author, header, content, score, userVote, publishDate, tags, comments, loading, profileSide, counterBottom }: IDetailsViewProps) {
 
   const [comment, setComment] = useState('');
 
@@ -38,8 +39,9 @@ export default function PostDetails({ author, header, content, score, userVote, 
   return (
     <FlexColumn css={{ my: '$8' }}>
       <FlexRow>
-        <FlexColumn css={{ borderLeft: '1px solid $gray500', justifyContent: 'center' }}>
+        <FlexColumn css={{ borderLeft: '1px solid $gray500', alignItems: 'center', justifyContent: 'center' }}>
           <ScoreCounter score={score} userVote={userVote} />
+          {counterBottom}
         </FlexColumn>
         <FlexColumn css={{ flexGrow: 1, px: '$3' }}>
           <ProfileSummery
@@ -83,7 +85,7 @@ export default function PostDetails({ author, header, content, score, userVote, 
             />
             ارسال نظر
           </Button>
-          <Button size="sm" css={{ mr: '$3' }} color="error" disabled={!comment}>
+          <Button size="sm" css={{ mr: '$3' }} color="error" disabled={!comment} flat>
             <FontAwesomeIcon
               icon={faTimes}
               style={{ margin: '0 5px'}}

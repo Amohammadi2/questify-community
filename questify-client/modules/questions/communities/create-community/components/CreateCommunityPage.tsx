@@ -8,7 +8,7 @@ import CreateForm from "./CreateForm"
 
 export default function CreateCommunityPage() {
   return (
-    <FlexContainer css={{ alignItems: 'center' }}>
+    <FlexContainer css={{ alignItems: 'center', justifyContent: 'center', h: '100%' }}>
       <CreateForm />
     </FlexContainer>
   )

@@ -8,6 +8,7 @@ import { IQuestionInput } from "modules/questions/shared/interfaces";
 import PublishModal from "./PublishModal";
 import { useRecoilState } from "recoil";
 import { useRichTextEditor } from "../hooks/useRichTextEditor";
+import DraftsListModal from "./DraftsListModal";
 
 interface IQuestionEditorPageOpts {
   useAskQuestionAPI: () => readonly [(input: IQuestionInput)=>void, APIStats<Entity>];
@@ -32,6 +33,7 @@ export default function QuestionEditorPage({ useAskQuestionAPI, onPublishComplet
 
   return (
     <>
+      <DraftsListModal />
       <PublishModal
         open={isPublishModalOpen}
         onClose={()=>setPublishModalOpen(false)}

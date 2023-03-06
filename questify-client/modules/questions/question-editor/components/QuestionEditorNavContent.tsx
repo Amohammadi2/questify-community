@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
 import { useRecoilState, useRecoilValue } from "recoil";
+import { emitter } from "../events";
 import { canBePublishedAtom, isPublishModalOpenAtom } from '../editor-input';
 
 export default function QuestionEditorNavContent() {
@@ -22,12 +23,10 @@ export default function QuestionEditorNavContent() {
       <span style={{margin: '0px 5px'}}>انتشار</span>
       <FontAwesomeIcon style={{margin: '0px 5px'}} icon={faTowerBroadcast} />
     </Button>
-    <Link href="/drafts-list">
-      <Button flat size="sm" css={{ ml: '$7', minWidth: 'unset' }} color="primary">
-        <span style={{margin: '0px 5px'}}>چرک‌نویس ها</span>
-        <FontAwesomeIcon style={{margin: '0px 5px'}} icon={faFileArchive} />
-      </Button>
-    </Link>
+    <Button flat size="sm" css={{ ml: '$7', minWidth: 'unset' }} color="primary" onClick={()=>emitter.publish('open-drafts-modal', {})}>
+      <span style={{margin: '0px 5px'}}>چرک‌نویس ها</span>
+      <FontAwesomeIcon style={{margin: '0px 5px'}} icon={faFileArchive} />
+    </Button>
     </>
   );
 }

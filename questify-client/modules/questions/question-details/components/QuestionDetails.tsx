@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Text } from "@nextui-org/react";
 import { Badge, Filler, FlexColumn, FlexRow, IconButton, ProfileSummery } from "modules/app-ui";
 import { LinkMaker } from "modules/link-maker";
+import BookmarkButton from "modules/questions/shared/components/BookmarkButton";
 import Link from "next/link";
 import { IQuestionDetails } from "../interfaces/question-details.interface";
 import Comment from "./Comment";
@@ -25,6 +26,9 @@ export default function QuestionView({ title, content, author, score, tags, comm
             ارسال پاسخ
           </Button>
         </Link>
+      }
+      counterBottom={
+        <BookmarkButton bookmarked={true} qid={id} /> 
       }
       header={<Text h2>{title}</Text>}
       content={content}

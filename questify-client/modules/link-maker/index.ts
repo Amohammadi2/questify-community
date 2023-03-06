@@ -13,7 +13,7 @@ export class LinkMaker {
   static index() {}
   static myQuestions() {}
   static accountSettings() {}
-  static questionDetails(qid) {}
+  static questionDetails(qid) { return '/question-details?qid='+qid }
   static userProfile() {}
   static answerQuestion(qid: string) { return '/answer-question?qid='+qid }
 }

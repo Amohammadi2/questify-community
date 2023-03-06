@@ -1,4 +1,5 @@
 import { styled } from "@nextui-org/react";
+import { NotificationBox } from "modules/notifications";
 import type { ReactElement, ReactNode } from "react";
 import AppSidebar from "../components/AppSidebar";
 import Navbar from "../components/Navbar";
@@ -35,7 +36,7 @@ const GridContainer = {
 interface IAppLayout {
   navbar: ReactNode;
   sidebar?: ReactNode;
-  children: ReactElement;
+  children: ReactElement | ReactElement[];
 };
 
 // Todo: This part requires a really deep refactoring of component structure
@@ -48,7 +49,7 @@ export function NavLayout(props: IAppLayout) {
 
   const FixedArea = ({ area, children, bg="unset" }) => (
     <div style={{ gridArea: area, position: 'relative' }}>
-      <div style={{ position: 'absolute', top: '0', right: 0, height: '100%', width: '100%', overflowY: 'auto', backgroundColor: bg }}>
+      <div style={{ position: 'absolute', top: '0', right: 0, height: '100%', width: '100%', overflowY: 'auto', backgroundColor: bg, zIndex: 0}}>
         {children}
       </div>
     </div>
@@ -88,11 +89,14 @@ export function getNavLayout({ navbarContent = <></>, activateSidebar = false }:
   navbarContent?: ReactNode | ReactNode[], activateSidebar?: boolean
 } = {}) {
   return (page: ReactElement) => (
+    <>
+    <NotificationBox />
     <NavLayout
       navbar={<Navbar>{navbarContent}</Navbar>}
       sidebar={activateSidebar ? <AppSidebar /> : null}
     >
       {page}
     </NavLayout>
+    </>
   ) as ReactNode;
 }

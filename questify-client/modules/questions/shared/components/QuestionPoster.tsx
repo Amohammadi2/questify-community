@@ -1,10 +1,11 @@
-import { faComment, faFileExcel, faFileText, faHeart, faStar, faVideo } from "@fortawesome/free-solid-svg-icons";
+import { faBookmark, faComment, faFileExcel, faFileText, faHeart, faStar, faVideo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Grid, styled, Text } from "@nextui-org/react";
 import { Avatar } from "@nextui-org/react";
-import { Badge, Filler, FlexRow, Liner, ProfileImage } from "modules/app-ui";
+import { Badge, Filler, FlexRow, IconButton, Liner, ProfileImage } from "modules/app-ui";
 import { IQuestionPoster } from "../interfaces/question-poster.interface";
 import Link from "next/link";
+import BookmarkButton from "./BookmarkButton";
 
 const QuestionBox = styled('div', {
   border: '1px solid $gray500',
@@ -70,6 +71,7 @@ export default function QuestionPoster({ title, tags, scores, author, nAnswers, 
       </Grid.Container>
       <Liner />
       <Grid.Container direction="row" alignItems="center" css={{ my: '$4' }}>
+        <BookmarkButton bookmarked={true} qid={id} />
         <AnswerBadge className="">{nAnswers} پاسخ ارسال شده</AnswerBadge>
         <Filler />
         {recentAnswers.map(

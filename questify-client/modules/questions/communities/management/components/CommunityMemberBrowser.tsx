@@ -3,7 +3,7 @@ import { ContentLoader } from "modules/app-ui";
 import { useCommunityMembers } from "../hooks/useCommunityMembers";
 import { MemberProfileSummery } from "./MemberProfileSummery";
 
-export default function CommunityMemberBrowser(communityId: string) {
+export default function CommunityMemberBrowser({communityId}:{communityId: string}) {
 
   const { data, error, loading } = useCommunityMembers(communityId);
 

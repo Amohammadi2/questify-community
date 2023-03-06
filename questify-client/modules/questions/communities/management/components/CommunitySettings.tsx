@@ -1,4 +1,5 @@
 import { FlexContainer } from "modules/app-ui";
+import CommunityGeneralSettings from "./CommunityGeneralSettings";
 import CommunityMemberBrowser from "./CommunityMemberBrowser";
 import { CommunityProfileSettings } from './CommunityProfileSettings';
 
@@ -14,7 +15,8 @@ export default function CommunitySettings({ communityId } : ICommunitySettingsPr
   return (
     <FlexContainer>
       <CommunityProfileSettings communityId={communityId} />
-      <CommunityMemberBrowser />
+      <CommunityGeneralSettings communityId={communityId} />
+      <CommunityMemberBrowser communityId={communityId}/>
     </FlexContainer>
   );
 }
