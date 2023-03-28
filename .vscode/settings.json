@@ -2,5 +2,6 @@
     "python.analysis.extraPaths": [
         "./questify"
     ],
-    "typescript.tsdk": "node_modules/typescript/lib"
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "python.formatting.provider": "autopep8"
 }
