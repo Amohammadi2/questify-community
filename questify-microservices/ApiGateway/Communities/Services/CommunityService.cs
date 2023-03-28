@@ -3,7 +3,7 @@ using ApiGateway.Communities.Entities;
 using ApiGateway.Communities.Validators;
 using ApiGateway.Database;
 using FluentValidation;
-using System.ComponentModel.DataAnnotations;
+
 
 namespace ApiGateway.Communities.Services
 {
@@ -18,18 +18,20 @@ namespace ApiGateway.Communities.Services
             _communityValidator = communityValidator;
         }
 
-        public void CreateCommunity(int userId, CreateCommunityRequest request)
+        public Community CreateCommunity(int userId, CreateCommunityRequest request)
         {
             var community = new Community
             {
                 Name = request.Name,
-                Description = request.Descriptiion,
+                Description = request.Description,
                 IsPrivate = request.IsPrivate,
                 OwnerId = userId
             };
             _communityValidator.ValidateAndThrow(community);
             _dbContext.Communities.Add(community);
             _dbContext.SaveChanges();
+            _dbContext.Entry(community).Reload();
+            return community;
         }
     }
 }

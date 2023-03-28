@@ -1,5 +1,8 @@
-﻿using ApiGateway.Communities.Dtos;
+﻿using ApiGateway.Auth.Services;
+using ApiGateway.Communities.Dtos;
 using ApiGateway.Communities.Services;
+using ApiGateway.Utils;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -25,7 +28,16 @@ namespace ApiGateway.Communities.Controllers
         [HttpPost]
         public ActionResult CreateCommunity([FromBody] CreateCommunityRequest request)
         {
-            return Ok(new { Username = HttpContext.User.Claims.First(c=>c.Type==JwtRegisteredClaimNames.Sub).Value });
+            var userId = new IdentityResolver().ResolveUserId(HttpContext);
+            try
+            {
+                var community = _communityService.CreateCommunity(userId, request);
+                return Ok(new ApiEntity { Id = community.Id });
+            }
+            catch(ValidationException e)
+            {
+                return BadRequest(e.Errors);
+            }
         }
     }
 }
