@@ -5,9 +5,7 @@ using ApiGateway.Utils;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace ApiGateway.Communities.Controllers
 {
@@ -38,6 +36,14 @@ namespace ApiGateway.Communities.Controllers
             {
                 return BadRequest(e.Errors);
             }
+        }
+
+        [Route("UploadProfileImg")]
+        [HttpPost]
+        public async Task<ActionResult> UploadProfileImg([FromForm] UpdateCommunityProfileImgRequest req)
+        {
+            await _communityService.UpdateCommunityProfileImage(req);
+            return Ok(new ApiOk());
         }
     }
 }

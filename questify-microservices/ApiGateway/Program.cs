@@ -2,10 +2,7 @@ using ApiGateway.Accounts.Services;
 using ApiGateway.Auth.Services;
 using ApiGateway.Database;
 using ApiGateway.Services;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.DataProtection;
-using Microsoft.Identity.Web;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.IdentityModel.Tokens.Jwt;
@@ -83,6 +80,7 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddAccountsFeature();
 builder.Services.AddEmailConfirmationFeature();
 builder.Services.AddCommunitiesFeature();
+builder.Services.AddFileUploadFeature();
 
 var app = builder.Build();
 

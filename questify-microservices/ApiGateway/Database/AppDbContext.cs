@@ -5,6 +5,8 @@ using ApiGateway.EmailConfirmation.Entities;
 using ApiGateway.EmailConfirmation.Database;
 using ApiGateway.Communities.Entities;
 using ApiGateway.Communities.Database;
+using ApiGateway.FileUpload.Entities;
+using ApiGateway.FileUpload.Database;
 
 namespace ApiGateway.Database
 {
@@ -13,6 +15,7 @@ namespace ApiGateway.Database
         public DbSet<User> Users { get; set; }
         public DbSet<EmailConfirmationCode> EmailConfirmationCodes { get; set; }
         public DbSet<Community> Communities { get; set; }
+        public DbSet<FileDetails> FileDetails { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder opt)
         {
@@ -24,6 +27,7 @@ namespace ApiGateway.Database
             modelBuilder.ApplyConfiguration(new UserEntityConfig());
             modelBuilder.ApplyConfiguration(new EmailConfirmationCodeConfig());
             modelBuilder.ApplyConfiguration(new CommunityEntityConfig());
+            modelBuilder.ApplyConfiguration(new FileDetailsDbConfig());
         }
     }
 }
