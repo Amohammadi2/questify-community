@@ -1,9 +1,17 @@
-﻿namespace ApiGateway.FileUpload.Exceptions
+﻿using ApiGateway.Utils;
+
+namespace ApiGateway.FileUpload.Exceptions
 {
 	[Serializable]
-	public class SignatureMismatchException : Exception
+	public class SignatureMismatchException : ServiceException
 	{
-		public SignatureMismatchException() { }
+
+        public override string GetErrorCode()
+        {
+            return "SignatureMismatch";
+        }
+
+        public SignatureMismatchException() { }
 		public SignatureMismatchException(string message) : base(message) { }
 		public SignatureMismatchException(string message, Exception inner) : base(message, inner) { }
 		protected SignatureMismatchException(

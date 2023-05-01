@@ -9,7 +9,8 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             return services
                 .AddScoped<CommunityValidator>()
-                .AddScoped<CommunityService>();
+                .AddScoped<CommunityService>()
+                .AddScoped<CommunityPermissioner>();
         }
     }
 }

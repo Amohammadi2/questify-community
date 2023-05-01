@@ -1,4 +1,5 @@
 ﻿using ApiGateway.Database;
+using ApiGateway.FileUpload.Entities;
 
 namespace ApiGateway.FileUpload.Services
 {

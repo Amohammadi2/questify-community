@@ -7,6 +7,8 @@ using ApiGateway.Communities.Entities;
 using ApiGateway.Communities.Database;
 using ApiGateway.FileUpload.Entities;
 using ApiGateway.FileUpload.Database;
+using ApiGateway.Memberships.Database;
+using ApiGateway.Memberships.Entities;
 
 namespace ApiGateway.Database
 {
@@ -16,6 +18,8 @@ namespace ApiGateway.Database
         public DbSet<EmailConfirmationCode> EmailConfirmationCodes { get; set; }
         public DbSet<Community> Communities { get; set; }
         public DbSet<FileDetails> FileDetails { get; set; }
+        public DbSet<CommunityMembership> CommunityMemberships { get; set; }
+        public DbSet<Invitation> Invitations { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder opt)
         {
@@ -28,6 +32,8 @@ namespace ApiGateway.Database
             modelBuilder.ApplyConfiguration(new EmailConfirmationCodeConfig());
             modelBuilder.ApplyConfiguration(new CommunityEntityConfig());
             modelBuilder.ApplyConfiguration(new FileDetailsDbConfig());
+            modelBuilder.ApplyConfiguration(new CommunityMembershipConfig());
+            modelBuilder.ApplyConfiguration(new InvitationConfig());
         }
     }
 }

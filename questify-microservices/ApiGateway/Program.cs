@@ -12,12 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services
-    .AddAuthentication(options =>
-    {
-        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-    })
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
@@ -81,6 +76,7 @@ builder.Services.AddAccountsFeature();
 builder.Services.AddEmailConfirmationFeature();
 builder.Services.AddCommunitiesFeature();
 builder.Services.AddFileUploadFeature();
+builder.Services.AddMembershipFeature();
 
 var app = builder.Build();
 

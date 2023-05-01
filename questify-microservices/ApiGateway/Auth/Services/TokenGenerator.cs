@@ -25,11 +25,11 @@ namespace ApiGateway.Services
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                new Claim("Id", user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Sub, user.Username),
-                new Claim(JwtRegisteredClaimNames.Email, user.Username),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-             }),
+                    new Claim("Id", user.Id.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Sub, user.Username),
+                    new Claim(JwtRegisteredClaimNames.Email, user.Username),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                }),
                 Expires = DateTime.UtcNow.AddHours(6),
                 Issuer = issuer,
                 Audience = audience,

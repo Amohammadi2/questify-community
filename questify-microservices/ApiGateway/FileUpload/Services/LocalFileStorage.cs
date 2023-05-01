@@ -27,11 +27,11 @@ namespace ApiGateway.FileUpload.Services
         }
 
         /// <summary>
-        /// Stores the file and returns the access url as string
+        /// Stores the file
         /// </summary>
         /// <param name="file">the actual file content</param>
         /// <param name="category">this is the name of subfolder in which the file will be stored</param>
-        /// <returns></returns>
+        /// <returns>the access url as string</returns>
         public async Task<string> StoreFile(IFormFile file, string category)
         {
             var filePath = GenerateRandomFilePath(category, file.FileName);

@@ -1,9 +1,17 @@
-﻿namespace ApiGateway.FileUpload.Exceptions
+﻿using ApiGateway.Utils;
+
+namespace ApiGateway.FileUpload.Exceptions
 {
 	[Serializable]
-	public class FileTooLargeException : Exception
+	public class FileTooLargeException : ServiceException
 	{
-		public FileTooLargeException() { }
+
+        public override string GetErrorCode()
+        {
+			return "FileTooLarge";
+        }
+
+        public FileTooLargeException() { }
 		public FileTooLargeException(string message) : base(message) { }
 		public FileTooLargeException(string message, Exception inner) : base(message, inner) { }
 		protected FileTooLargeException(

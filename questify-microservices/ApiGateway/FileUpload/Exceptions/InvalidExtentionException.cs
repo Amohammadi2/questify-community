@@ -1,9 +1,16 @@
-﻿namespace ApiGateway.FileUpload.Exceptions
+﻿using ApiGateway.Utils;
+
+namespace ApiGateway.FileUpload.Exceptions
 {
 	[Serializable]
-	public class InvalidExtentionException : Exception
+	public class InvalidExtentionException : ServiceException
 	{
-		public InvalidExtentionException() { }
+        public override string GetErrorCode()
+        {
+            return "InvalidExtension";
+        }
+
+        public InvalidExtentionException() { }
 		public InvalidExtentionException(string message) : base(message) { }
 		public InvalidExtentionException(string message, Exception inner) : base(message, inner) { }
 		protected InvalidExtentionException(

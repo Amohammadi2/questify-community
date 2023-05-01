@@ -3,6 +3,7 @@ using System;
 using ApiGateway.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ApiGateway.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AuthDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230406084018_MakeCommunityMemberPairsUnique")]
+    partial class MakeCommunityMemberPairsUnique
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -181,33 +184,6 @@ namespace ApiGateway.Migrations
                     b.ToTable("CommunityMemberships");
                 });
 
-            modelBuilder.Entity("ApiGateway.Memberships.Entities.Invitation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("CommunityId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("Expiration")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValueSql("NOW()");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CommunityId");
-
-                    b.ToTable("Invitations");
-                });
-
             modelBuilder.Entity("ApiGateway.Communities.Entities.Community", b =>
                 {
                     b.HasOne("ApiGateway.Accounts.Entities.User", "Owner")
@@ -236,17 +212,6 @@ namespace ApiGateway.Migrations
                     b.Navigation("Community");
 
                     b.Navigation("Member");
-                });
-
-            modelBuilder.Entity("ApiGateway.Memberships.Entities.Invitation", b =>
-                {
-                    b.HasOne("ApiGateway.Communities.Entities.Community", "Community")
-                        .WithMany()
-                        .HasForeignKey("CommunityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Community");
                 });
 #pragma warning restore 612, 618
         }

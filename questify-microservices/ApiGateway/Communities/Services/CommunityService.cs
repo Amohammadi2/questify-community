@@ -3,8 +3,9 @@ using ApiGateway.Communities.Entities;
 using ApiGateway.Communities.Validators;
 using ApiGateway.Database;
 using ApiGateway.FileUpload.Services;
+using ApiGateway.Utils;
 using FluentValidation;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace ApiGateway.Communities.Services
 {
@@ -44,13 +45,38 @@ namespace ApiGateway.Communities.Services
 
         public async Task<Community> UpdateCommunityProfileImage(UpdateCommunityProfileImgRequest request)
         {
-            var community = _dbContext.Communities.Where(c => c.Id == request.CommunityId).First();
             var fileDetails = await _imgUploader.UploadFile(request.NewProfileImg, "community-profile-imgs");
+            var community = _dbContext.Communities.Where(c => c.Id == request.CommunityId).First();
             community.ProfileImgLink = fileDetails.fileUrl;
             _dbContext.Communities.Update(community);
             await _dbContext.SaveChangesAsync();
             await _dbContext.Entry(community).ReloadAsync();
             return community;
+        }
+
+        public async Task UpdateCommunityInfo(UpdateCommunityInfoRequest request)
+        {
+            var community = await _dbContext.Communities
+                .Where(c => c.Id == request.CommunityId)
+                .FirstAsync();
+            community.Name = request.Name;
+            community.Description = request.Description;
+            _dbContext.Communities.Update(community);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteCommunity(int id)
+        {
+            try
+            {
+                var community = await _dbContext.Communities.Where(c => c.Id == id).FirstAsync();
+                _dbContext.Communities.Remove(community);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch(InvalidOperationException)
+            {
+                throw new RecordNotFoundException($"No community with id of {id} was found");
+            }
         }
     }
 }

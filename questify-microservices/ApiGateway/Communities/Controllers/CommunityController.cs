@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ApiGateway.Communities.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CommunityController : ControllerBase
@@ -39,11 +39,41 @@ namespace ApiGateway.Communities.Controllers
         }
 
         [Route("UploadProfileImg")]
-        [HttpPost]
+        [HttpPatch]
         public async Task<ActionResult> UploadProfileImg([FromForm] UpdateCommunityProfileImgRequest req)
         {
-            await _communityService.UpdateCommunityProfileImage(req);
+            try
+            {
+                await _communityService.UpdateCommunityProfileImage(req);
+            }
+            catch(ServiceException e)
+            {
+                return BadRequest(e.ToApiError());
+            }
             return Ok(new ApiOk());
+        }
+
+        [Route("UpdateInfo")]
+        [HttpPatch]
+        public async Task<ActionResult> UpdateInfo([FromBody] UpdateCommunityInfoRequest request)
+        {
+            await _communityService.UpdateCommunityInfo(request);
+            return Ok(new ApiOk());
+        }
+
+        [Route("DeleteCommunity")]
+        [HttpDelete]
+        public async Task<ActionResult> DeleteCommunity([FromBody] DeleteCommunityRequest request)
+        {
+            try
+            {
+                await _communityService.DeleteCommunity(request.CommunityId);
+                return Ok(new ApiOk());
+            }
+            catch(RecordNotFoundException e)
+            {
+                return BadRequest(e.ToApiError());
+            }
         }
     }
 }
