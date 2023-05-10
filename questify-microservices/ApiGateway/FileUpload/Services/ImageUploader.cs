@@ -1,5 +1,6 @@
 ﻿using ApiGateway.Database;
 using ApiGateway.FileUpload.Entities;
+using ApiGateway.FileUpload.Exceptions;
 
 namespace ApiGateway.FileUpload.Services
 {
@@ -31,6 +32,14 @@ namespace ApiGateway.FileUpload.Services
         {
             base.AssertFileValidity(file);
             AssertFileSignature(file);
+        }
+
+        /// <exception cref="FileTooLargeException" />
+        /// <exception cref="InvalidExtentionException" />
+        /// <exception cref="SignatureMismatchException" />
+        public override Task<FileDetails> UploadFile(IFormFile file, string category)
+        {
+            return base.UploadFile(file, category);
         }
     }
 }

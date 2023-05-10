@@ -3,7 +3,6 @@ using ApiGateway.Memberships.Dtos;
 using ApiGateway.Memberships.Services;
 using ApiGateway.Utils;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiGateway.CommunityMemberships.Controllers

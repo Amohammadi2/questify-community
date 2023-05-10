@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <Folder Include="Memberships\Tests\" />
-    <Folder Include="Questions\Controllers\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

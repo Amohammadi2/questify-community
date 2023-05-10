@@ -34,7 +34,7 @@ namespace ApiGateway.FileUpload.Services
             AssertFileLength(file);
         }
 
-        public async Task<FileDetails> UploadFile(IFormFile file, string category)
+        public virtual async Task<FileDetails> UploadFile(IFormFile file, string category)
         {
             AssertFileValidity(file);
             var fileUrl = await _storage.StoreFile(file, category);

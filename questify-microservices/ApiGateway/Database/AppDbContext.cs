@@ -9,6 +9,9 @@ using ApiGateway.FileUpload.Entities;
 using ApiGateway.FileUpload.Database;
 using ApiGateway.Memberships.Database;
 using ApiGateway.Memberships.Entities;
+using ApiGateway.Questions.Entities;
+using ApiGateway.Questions.Database;
+using ApiGateway.Utils;
 
 namespace ApiGateway.Database
 {
@@ -20,6 +23,8 @@ namespace ApiGateway.Database
         public DbSet<FileDetails> FileDetails { get; set; }
         public DbSet<CommunityMembership> CommunityMemberships { get; set; }
         public DbSet<Invitation> Invitations { get; set; }
+        public DbSet<Draft> Drafts { get; set; }
+        public DbSet<DraftFile> DraftFiles { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder opt)
         {
@@ -34,6 +39,55 @@ namespace ApiGateway.Database
             modelBuilder.ApplyConfiguration(new FileDetailsDbConfig());
             modelBuilder.ApplyConfiguration(new CommunityMembershipConfig());
             modelBuilder.ApplyConfiguration(new InvitationConfig());
+            modelBuilder.ApplyConfiguration(new DraftConfig());
+        }
+
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            OnBeforeSaving();
+            return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
+
+        public override async Task<int> SaveChangesAsync(
+           bool acceptAllChangesOnSuccess,
+           CancellationToken cancellationToken = default(CancellationToken)
+        )
+        {
+            OnBeforeSaving();
+            return (await base.SaveChangesAsync(acceptAllChangesOnSuccess,
+                          cancellationToken));
+        }
+
+        private void OnBeforeSaving()
+        {
+            var entries = ChangeTracker.Entries();
+            var utcNow = DateTime.UtcNow;
+
+            foreach (var entry in entries)
+            {
+                // for entities that inherit from BaseEntity,
+                // set UpdatedOn / CreatedOn appropriately
+                if (entry.Entity is IHasTimestamp trackable)
+                {
+                    switch (entry.State)
+                    {
+                        case EntityState.Modified:
+                            // set the updated date to "now"
+                            trackable.UpdatedAt = utcNow;
+
+                            // mark property as "don't touch"
+                            // we don't want to update on a Modify operation
+                            entry.Property("CreatedOn").IsModified = false;
+                            break;
+
+                        case EntityState.Added:
+                            // set both updated and created date to "now"
+                            trackable.CreatedAt = utcNow;
+                            trackable.UpdatedAt = utcNow;
+                            break;
+                    }
+                }
+            }
         }
     }
 }

@@ -15,5 +15,10 @@ namespace ApiGateway.Auth.Services
             return int.Parse(httpContext.User.Claims
                 .First(c => c.Type == "Id").Value);
         }
+
+        public int ResolveUserIdOrThrow(HttpContext httpContext)
+        {
+            return ResolveUserId(httpContext);
+        }
     }
 }

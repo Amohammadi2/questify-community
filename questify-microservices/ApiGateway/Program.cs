@@ -77,6 +77,7 @@ builder.Services.AddEmailConfirmationFeature();
 builder.Services.AddCommunitiesFeature();
 builder.Services.AddFileUploadFeature();
 builder.Services.AddMembershipFeature();
+builder.Services.AddQuestionsFeature();
 
 var app = builder.Build();
 
