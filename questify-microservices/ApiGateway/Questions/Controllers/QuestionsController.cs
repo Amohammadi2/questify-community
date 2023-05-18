@@ -22,7 +22,8 @@ namespace ApiGateway.Questions.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Draft>>> Get(int page = 1, int pageSize = 10)
         {
-            var query = _DbContext.Drafts.Where(d => d.DraftType == DraftType.Question && d.Published).OrderByDescending(d => d.CreatedAt);
+            var userId = new IdentityResolver().ResolveUserIdOrThrow(HttpContext);
+            var query = _DbContext.Drafts.Where(d => d.DraftType == DraftType.Question && (d.Published || d.AuthorId == userId)).OrderByDescending(d => d.CreatedAt);
             var drafts = await query.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
             return Ok(drafts);
         }
