@@ -1,1 +1,0 @@
-export { AppTransactionManager } from './transaction-control/app-transaction-manager.service';

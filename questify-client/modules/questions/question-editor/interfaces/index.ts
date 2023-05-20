@@ -1,1 +1,0 @@
-export type { HasEditor } from './has-editor.interface';

@@ -1,1 +1,0 @@
-export type IUserVote = 'up' | 'down' | null;
