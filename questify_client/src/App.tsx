@@ -10,13 +10,14 @@ import LoginPage from './routes/LoginPage'
 
 import AuthProvider from './hocs/AuthProvider'
 import { withRouteGuard } from './hocs/withRouteGuard'
+import QuestionsPage from './routes/QuestionsPage'
 
 function App() {
 
   const router = createBrowserRouter([
     {
       path: '/',
-      element: withRouteGuard(withNavLayout(<LandingPage />), { nonAuthOnly: true, redirect: '/questions' })
+      element: withRouteGuard(withNavLayout(<LandingPage />, { authButtons: true }), { nonAuthOnly: true, redirect: '/questions' })
     },
     {
       path: '/login',
@@ -24,7 +25,7 @@ function App() {
     },
     {
       path: '/questions',
-      element: withNavLayout(<Typography variant='h1'>سلام من اشکان محمدی هستم</Typography>)
+      element: withNavLayout(<QuestionsPage />, { backButton: false, authButtons: true })
     }
   ])
 
