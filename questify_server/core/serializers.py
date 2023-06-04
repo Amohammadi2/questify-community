@@ -41,6 +41,10 @@ class AnswerReadSerializer(serializers.ModelSerializer):
         fields = ('id', 'html_content', 'author', 'created', 'updated', 'accepted')
         read_only_fields = ('id', 'created', 'updated', 'author')
 
+
+class GetAnswersForQuestionParamSerializer(serializers.Serializer):
+    qid = serializers.IntegerField()
+
 class QuestionBriefSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -72,3 +76,19 @@ class AcceptAnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Answer
         fields = ('accepted',)
+
+class UserRegistrationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'password', 'email')
+
+    def save(self, **kwargs):
+        # Make the newly created user account inactive
+        # The user should first verify their emails before
+        # they can use their accounts to log in
+        return super().save(**kwargs, is_active=False)
+
+class UserRetrieveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'is_staff')

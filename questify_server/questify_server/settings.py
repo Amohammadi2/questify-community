@@ -26,8 +26,7 @@ SECRET_KEY = 'django-insecure-!avpzov4=pi)bon3ld&&4qri54#!2a+*fvtudl3rn=v=86jbzt
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS=['*']
 
 # Application definition
 
@@ -43,12 +42,14 @@ INSTALLED_APPS = [
     'notifications',
     'file_upload',
     'rest_framework_simplejwt',
-    'drf_spectacular'
+    'drf_spectacular',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -146,7 +147,9 @@ REST_FRAMEWORK = {
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Questify',
     'DESCRIPTION': 'The ultimate question and answer platform',
-    'VERSION': '1.0.0',
+    'VERSION': '1.0.0-alpha',
+    'COMPONENT_SPLIT_REQUEST': True,
+    'SCHEMA_PATH_PREFIX': r'/api/v[0-9]'
 }
 
 SIMPLE_JWT = {
@@ -154,3 +157,5 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     "ROTATE_REFRESH_TOKENS": True
 }
+
+CORS_ORIGIN_ALLOW_ALL = True

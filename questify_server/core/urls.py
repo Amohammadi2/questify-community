@@ -6,16 +6,17 @@ from rest_framework_simplejwt.views import (
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 from rest_framework.routers import DefaultRouter
 
-from .views import AnswersViewset, QuestionsViewset
+from .views import AnswersViewset, QuestionsViewset, UsersViewset
 
 router = DefaultRouter()
 router.register('questions', QuestionsViewset, basename="questions")
 router.register('answers', AnswersViewset, basename="answers")
+router.register('users', UsersViewset, basename="users")
 
 urlpatterns = [
 
     # Auth
-    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/obtain/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
     # API Online Schema
