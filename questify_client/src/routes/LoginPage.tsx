@@ -1,10 +1,11 @@
 import { $tokenApi } from '@/apis'
 import { useApi } from '@/hooks/useApi'
-import { $authToken, $isAuthTokenValidated } from '@/store/auth.store'
+import { $authToken, $isAuthTokenValidated, $isAuthenticated } from '@/store/auth.store'
 import {TextField, Button, Grid, Container, Typography} from '@mui/material'
 import { LoadingButton } from '@mui/lab'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { Navigate, useNavigate } from 'react-router-dom'
 
 export default function LoginPage() {
   
@@ -13,6 +14,8 @@ export default function LoginPage() {
   const tokenApi = useRecoilValue($tokenApi)
   const [,setAuthToken] = useRecoilState($authToken)
   const [,setValidated] = useRecoilState($isAuthTokenValidated)
+  const isAuthenticated = useRecoilValue($isAuthenticated)
+  const navigate = useNavigate()
 
   const apiCallback = useCallback(()=>{
     return tokenApi.tokenObtainCreate({
@@ -26,6 +29,7 @@ export default function LoginPage() {
     then(res) {
       setAuthToken(res)
       setValidated(true)
+      navigate(-1)
     },
   })
 
@@ -33,6 +37,11 @@ export default function LoginPage() {
     e.preventDefault()
     getAuthToken()
   }
+
+  useEffect(() => {
+    if (isAuthenticated)
+      navigate(-1)
+  }, [isAuthenticated])
   
   return (
     <Container maxWidth="sm">

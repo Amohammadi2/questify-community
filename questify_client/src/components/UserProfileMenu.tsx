@@ -11,21 +11,24 @@ export default function UserProfileMenu() {
   const [,setAuthToken] = useRecoilState($authToken)
   const [anchorElForMenu, setAnchorElForMenu] = useState<any>(null)
 
-  const handleMenuOpen = useCallback((event: React.MouseEvent<HTMLElement>) => {
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElForMenu(event.currentTarget);
-  }, [])
+  }
 
-  const handleMenuClose = useCallback(() => {
+  const handleMenuClose = () => {
+    console.log('set it to null')
     setAnchorElForMenu(null)
-  }, [])
+  }
 
   const handleLogout = () => {
-    startTransition(() => {
+    
       setAuthToken(null)
-    })
+      handleMenuClose()
   }
 
   if (!userProfile) return null
+
+  console.log('Anchor: ', anchorElForMenu)
 
   return (
     <>

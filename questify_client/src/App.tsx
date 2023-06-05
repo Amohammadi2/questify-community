@@ -11,6 +11,7 @@ import LoginPage from './routes/LoginPage'
 import AuthProvider from './hocs/AuthProvider'
 import { withRouteGuard } from './hocs/withRouteGuard'
 import QuestionsPage from './routes/QuestionsPage'
+import { Suspense } from 'react'
 
 function App() {
 
@@ -21,7 +22,7 @@ function App() {
     },
     {
       path: '/login',
-      element: withRouteGuard(withNavLayout(<LoginPage />), { nonAuthOnly: true, redirect: '/questions' })
+      element: withNavLayout(<LoginPage />)
     },
     {
       path: '/questions',
@@ -34,7 +35,9 @@ function App() {
       <CacheProvider value={cacheRtl}>
         <CssBaseline />
         <ThemeProvider theme={theme}>
-          <RouterProvider router={router} />
+          <Suspense fallback={<h4>loading</h4>}>
+            <RouterProvider router={router} />
+          </Suspense>
         </ThemeProvider>
       </CacheProvider>
     </AuthProvider>
