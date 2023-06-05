@@ -1,9 +1,9 @@
 import { $userProfile } from "@/store/user-profile.store";
 import { IconButton, Menu, MenuItem, Typography } from "@mui/material";
-import { useState, useCallback } from "react";
+import { useState, useCallback, startTransition } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { FontAwesomeIcon }  from '@fortawesome/react-fontawesome'
-import { faUserCircle, faDoorOpen } from '@fortawesome/free-solid-svg-icons'
+import { faUserCircle, faDoorOpen, faQuestion, faUser } from '@fortawesome/free-solid-svg-icons'
 import { $authToken } from "@/store/auth.store";
 
 export default function UserProfileMenu() {
@@ -20,7 +20,9 @@ export default function UserProfileMenu() {
   }, [])
 
   const handleLogout = () => {
-    setAuthToken(null)
+    startTransition(() => {
+      setAuthToken(null)
+    })
   }
 
   if (!userProfile) return null
@@ -30,6 +32,9 @@ export default function UserProfileMenu() {
       <IconButton onClick={handleMenuOpen}>
         <FontAwesomeIcon icon={faUserCircle} />
       </IconButton>
+      <Typography sx={{ display: 'flex', alignItems: 'center' }}>
+        {userProfile.username}
+      </Typography>
       <Menu
         id="menu-appbar"
         anchorEl={anchorElForMenu}
@@ -45,9 +50,17 @@ export default function UserProfileMenu() {
         open={Boolean(anchorElForMenu)}
         onClose={handleMenuClose}
       >
+        <MenuItem>
+          <FontAwesomeIcon icon={faUser} />
+          <Typography sx={{ mx: 2 }}>پروفایل من</Typography>
+        </MenuItem>
+        <MenuItem>
+          <FontAwesomeIcon icon={faQuestion} />
+          <Typography sx={{ mx: 2 }}>سوالات من</Typography>
+        </MenuItem>
         <MenuItem onClick={handleLogout}>
-          <Typography sx={{ mx: 2 }}>خروج از حساب کاربری</Typography>
           <FontAwesomeIcon icon={faDoorOpen} />
+          <Typography sx={{ mx: 2 }}>خروج از حساب کاربری</Typography>
         </MenuItem>
       </Menu>
     </>

@@ -14,9 +14,9 @@ export default function LandingPage() {
           <Typography variant="h1">
             محیطی برای پرسش و حل مشکلات شما
           </Typography>
-          <Button size={'large'} variant="contained" sx={{ width: '90%' }}>
+          <Button size={'large'} variant="contained" sx={{ width: '90%' }} href="/questions">
             <Typography variant="h6">
-              ثبت نام
+              ورود به قسمت سوالات
             </Typography>
           </Button>
         </Grid>
