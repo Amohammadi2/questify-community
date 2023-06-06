@@ -11,13 +11,19 @@ class Post(models.Model):
     
 
 class Question(Post):
-    title = models.CharField(256, null=False, blank=False)
+    title = models.CharField('title', null=False, blank=False)
     tags = models.JSONField(null=False, blank=False)
+
+    def __str__(self) -> str:
+        return self.title
 
 
 class Answer(Post):
     accepted = models.BooleanField(default=False)
     question = models.ForeignKey(Question, related_name="answers", on_delete=models.SET_NULL, null=True)
+
+    def __str__(self) -> str:
+        return f"{self.question.title[:10]} : {self.html_content[:20]}"
 
 
 class Tag(models.Model):

@@ -5,7 +5,7 @@ import Button from '@mui/material/Button'
 import { IconButton } from '@mui/material'
 import Logo from '../assets/logo.svg'
 import { ElevationScroll } from '../components/ElevationScroll'
-import { ReactElement } from 'react'
+import { ReactElement, Suspense } from 'react'
 import { Link, Typography } from '@mui/material'
 import { useRecoilValue } from 'recoil'
 import { $userProfile } from '@/store/user-profile.store'
@@ -54,7 +54,7 @@ export function NavLayout({ authButtons: showAuthButtons=false, backButton: show
               flexGrow: 1
             }}>
               {showBackButton ? backButton : null}
-              <UserProfileMenu />
+              <Suspense><UserProfileMenu /></Suspense>
               {showAuthButtons && !isAuthenticated && authButtons}
               {content}
             </Grid>

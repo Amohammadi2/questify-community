@@ -35,9 +35,7 @@ function App() {
       <CacheProvider value={cacheRtl}>
         <CssBaseline />
         <ThemeProvider theme={theme}>
-          <Suspense fallback={<h4>loading</h4>}>
-            <RouterProvider router={router} />
-          </Suspense>
+          <RouterProvider router={router} />
         </ThemeProvider>
       </CacheProvider>
     </AuthProvider>
