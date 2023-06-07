@@ -12,12 +12,18 @@
     font-family: "Harmattan";
     max-height: 300px;
     border-bottom: 1px solid rgb(190, 190, 190);
+    font-size: 18px;
+}
+
+.rdw-editor blockquote {
+    border-right: 3px solid gray;
+    border-left: 3px solid gray;
+    padding: 1px 8px;
+    background-color: rgb(245, 245, 245);
 }
 
 .rdw-toolbar {
-    position: sticky;
-    left: 20%;
-    right: 20%;
+    z-index: 9999999;
 }
 
 .rdw-link-modal-input {
