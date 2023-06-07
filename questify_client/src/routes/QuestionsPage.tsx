@@ -42,6 +42,7 @@ export default function QuestionsPage() {
 
   return (
     <Container maxWidth="md">
+      {page === 1 && loading && <Typography>در حال بارگزاری</Typography>}
       <InfiniteScroll
         dataLength={questions.length}
         next={loadMore}
