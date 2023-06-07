@@ -38,7 +38,7 @@ export function NavLayout({ authButtons: showAuthButtons=false, backButton: show
 
   const backButton = 
   <IconButton onClick={()=>navigate(-1)}>
-    <FontAwesomeIcon icon={faArrowRight} />
+    <FontAwesomeIcon icon={faArrowRight} style={{ width: 24, height: 20}} />
   </IconButton>
 
   return (

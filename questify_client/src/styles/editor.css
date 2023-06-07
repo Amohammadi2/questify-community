@@ -1,0 +1,42 @@
+.rdw-dropdown-carettoopen {
+    left: 10%;
+    right: unset;
+}
+
+.rdw-dropdown-carettoclose {
+    left: 10%;
+    right: unset;
+}
+
+.rdw-editor {
+    font-family: "Harmattan";
+    max-height: 300px;
+    border-bottom: 1px solid rgb(190, 190, 190);
+}
+
+.rdw-toolbar {
+    position: sticky;
+    left: 20%;
+    right: 20%;
+}
+
+.rdw-link-modal-input {
+    padding: 4px 5px;
+    border: 1px solid rgb(190, 190, 190);
+    border-radius: 10px;
+    background-color: white !important;
+    color: black;
+}
+
+.rdw-link-modal-btn,.rdw-embedded-modal-btn {
+    background-color: white !important;
+    color: black;
+}
+
+.rdw-embedded-modal, .rdw-link-modal {
+    position: fixed;
+    top: unset;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}

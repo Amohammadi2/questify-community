@@ -29,6 +29,7 @@ export default function LoginPage() {
     then(res) {
       setAuthToken(res)
       setValidated(true)
+      // Todo: add the option to declare the redirect page through a query param like `?next=/another-page`
       navigate(-1)
     },
   })

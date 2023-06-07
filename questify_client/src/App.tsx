@@ -7,18 +7,18 @@ import { ThemeProvider } from '@emotion/react'
 import { CacheProvider } from '@emotion/react';
 import { cacheRtl, theme } from './theme'
 import LoginPage from './routes/LoginPage'
-
 import AuthProvider from './hocs/AuthProvider'
 import { withRouteGuard } from './hocs/withRouteGuard'
 import QuestionsPage from './routes/QuestionsPage'
-import { Suspense } from 'react'
+import AskQuestionPage from './routes/AskQuestionPage'
+import AskButton from './components/AskButton'
 
 function App() {
 
   const router = createBrowserRouter([
     {
       path: '/',
-      element: withRouteGuard(withNavLayout(<LandingPage />, { authButtons: true }), { nonAuthOnly: true, redirect: '/questions' })
+      element: withRouteGuard(withNavLayout(<LandingPage />, { authButtons: true }), { nonAuthOnly: true, authOnly: false, redirect: '/questions' })
     },
     {
       path: '/login',
@@ -26,7 +26,11 @@ function App() {
     },
     {
       path: '/questions',
-      element: withNavLayout(<QuestionsPage />, { backButton: false, authButtons: true })
+      element: withNavLayout(<QuestionsPage />, { backButton: false, authButtons: true, content: <AskButton /> })
+    },
+    {
+      path: '/ask',
+      element: withRouteGuard(withNavLayout(<AskQuestionPage />))
     }
   ])
 

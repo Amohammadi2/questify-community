@@ -9,7 +9,7 @@ interface RouteGuardOpts {
   redirect?: string;
 }
 
-export function withRouteGuard(component: ReactNode, { authOnly=false, nonAuthOnly=false, redirect='/' }: RouteGuardOpts = {}) {
+export function withRouteGuard(component: ReactNode, { authOnly=true, nonAuthOnly=false, redirect='/' }: RouteGuardOpts = {}) {
   
   const isAuth = useRecoilValue($isAuthenticated)
 
