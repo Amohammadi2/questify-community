@@ -12,6 +12,7 @@ import { withRouteGuard } from './hocs/withRouteGuard'
 import QuestionsPage from './routes/QuestionsPage'
 import AskQuestionPage from './routes/AskQuestionPage'
 import AskButton from './components/AskButton'
+import QuestionDetailsPage from './routes/QuestionDetailsPage'
 
 function App() {
 
@@ -31,6 +32,10 @@ function App() {
     {
       path: '/ask',
       element: withRouteGuard(withNavLayout(<AskQuestionPage />))
+    },
+    {
+      path: '/question-details/:qid',
+      element: withNavLayout(<QuestionDetailsPage />)
     }
   ])
 
