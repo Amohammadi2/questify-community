@@ -1,10 +1,10 @@
-import { QuestionRead } from "@/gen";
-import { faCheckSquare } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Avatar, Card, CardActionArea, Chip, Grid, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { QuestionRead } from "@/gen"
+import { faCheckSquare } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { Avatar, Card, CardActionArea, Chip, Grid, Typography } from "@mui/material"
+import { useNavigate } from "react-router-dom"
 
-interface QuestionSummaryProps extends QuestionRead {}
+type QuestionSummaryProps = QuestionRead
 
 export default function QuestionSummary({ author, created, title, numAnswers, tags, id } : QuestionSummaryProps) {
   

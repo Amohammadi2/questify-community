@@ -1,8 +1,8 @@
-import { $isAuthenticated } from "@/store/auth.store";
-import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Typography } from "@mui/material";
-import { useRecoilValue } from "recoil";
+import { $isAuthenticated } from "@/store/auth.store"
+import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { Button, Typography } from "@mui/material"
+import { useRecoilValue } from "recoil"
 
 export default function AskButton() {
   const isAuthenticated = useRecoilValue($isAuthenticated)

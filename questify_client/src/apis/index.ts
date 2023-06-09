@@ -1,6 +1,6 @@
 import { Configuration, TokenApi, QuestionsApi, AnswersApi, UsersApi } from '@/gen'
-import { $authToken } from '@/store/auth.store';
-import { selector } from 'recoil';
+import { $authToken } from '@/store/auth.store'
+import { selector } from 'recoil'
 
 const $apiConfig = selector({
   key: 'api-config',

@@ -1,11 +1,11 @@
-import { $questionsApi } from "@/apis";
-import QuestionSummary from "@/components/QuestionSummary";
-import { PaginatedQuestionReadList, QuestionRead } from "@/gen";
+import { $questionsApi } from "@/apis"
+import QuestionSummary from "@/components/QuestionSummary"
+import { PaginatedQuestionReadList, QuestionRead } from "@/gen"
 import InfiniteScroll from 'react-infinite-scroll-component'
-import { useApi } from "@/hooks/useApi";
-import { Container, Typography } from "@mui/material";
-import { useCallback, useState, useEffect } from "react";
-import { useRecoilValue } from "recoil";
+import { useApi } from "@/hooks/useApi"
+import { Container, Typography } from "@mui/material"
+import { useCallback, useState, useEffect } from "react"
+import { useRecoilValue } from "recoil"
 
 export default function QuestionsPage() {
   

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from "react"
 
 type ApiResponse<CB> = CB extends () => Promise<infer Response> ? Response : any;
 

@@ -1,6 +1,6 @@
-import { TokenObtainPair } from "@/gen";
-import { localStorageEffect } from "@/utils/local-storage.effect";
-import { atom, selector } from "recoil";
+import { TokenObtainPair } from "@/gen"
+import { localStorageEffect } from "@/utils/local-storage.effect"
+import { atom, selector } from "recoil"
 
 
 export const $authToken = atom<TokenObtainPair|null>({

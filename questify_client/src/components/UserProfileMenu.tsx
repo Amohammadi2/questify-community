@@ -1,10 +1,10 @@
-import { $userProfile } from "@/store/user-profile.store";
-import { IconButton, Menu, MenuItem, Typography } from "@mui/material";
-import { useState, useCallback, startTransition } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { $userProfile } from "@/store/user-profile.store"
+import { IconButton, Menu, MenuItem, Typography } from "@mui/material"
+import { useState, useCallback, startTransition } from "react"
+import { useRecoilState, useRecoilValue } from "recoil"
 import { FontAwesomeIcon }  from '@fortawesome/react-fontawesome'
 import { faUserCircle, faDoorOpen, faQuestion, faUser } from '@fortawesome/free-solid-svg-icons'
-import { $authToken } from "@/store/auth.store";
+import { $authToken } from "@/store/auth.store"
 
 export default function UserProfileMenu() {
   const userProfile = useRecoilValue($userProfile)
@@ -12,7 +12,7 @@ export default function UserProfileMenu() {
   const [anchorElForMenu, setAnchorElForMenu] = useState<any>(null)
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElForMenu(event.currentTarget);
+    setAnchorElForMenu(event.currentTarget)
   }
 
   const handleMenuClose = () => {

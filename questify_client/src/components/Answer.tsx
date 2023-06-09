@@ -1,7 +1,7 @@
-import { AnswerRead } from "@/gen";
-import { faCheckSquare, faPen, faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Avatar, Grid, IconButton, Typography } from "@mui/material";
+import { AnswerRead } from "@/gen"
+import { faCheckSquare, faPen, faTrashCan } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { Avatar, Grid, IconButton, Typography } from "@mui/material"
 
 interface AnswerProps extends AnswerRead {
   opMode?: boolean;

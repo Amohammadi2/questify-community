@@ -1,7 +1,7 @@
-import { selector } from "recoil";
-import { $isAuthenticated } from "./auth.store";
-import { $usersApi } from "@/apis";
-import { UserRetrieve } from "@/gen";
+import { selector } from "recoil"
+import { $isAuthenticated } from "./auth.store"
+import { $usersApi } from "@/apis"
+import { UserRetrieve } from "@/gen"
 
 export const $userProfile = selector<UserRetrieve|null>({
   key: 'user-profile',

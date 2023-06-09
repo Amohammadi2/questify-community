@@ -3,7 +3,7 @@ import { LinkProps } from '@mui/material'
 import { createTheme } from '@mui/material/styles'
 import createCache from '@emotion/cache'
 import rtlPlugin from 'stylis-plugin-rtl'
-import { prefixer } from 'stylis';
+import { prefixer } from 'stylis'
 
 export const theme = createTheme({
   direction: 'rtl',
@@ -27,4 +27,4 @@ export const theme = createTheme({
 export const cacheRtl = createCache({
   key: 'muirtl',
   stylisPlugins: [prefixer, rtlPlugin],
-});
+})

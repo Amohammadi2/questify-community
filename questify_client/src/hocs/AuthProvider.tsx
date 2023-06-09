@@ -8,5 +8,5 @@ export default function AuthProvider(props: RcBaseProps) {
   if (loading)
     return null // block the rendering
 
-  return <>{props.children}</>;
+  return <>{props.children}</>
 }

@@ -1,11 +1,11 @@
 import { Suspense } from 'react'
-import {CssBaseline, Typography} from '@mui/material'
+import {CssBaseline} from '@mui/material'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import withNavLayout from './hocs/withNavLayout'
 import LandingPage from './routes/LandingPage'
 import './App.css'
 import { ThemeProvider } from '@emotion/react'
-import { CacheProvider } from '@emotion/react';
+import { CacheProvider } from '@emotion/react'
 import { cacheRtl, theme } from './theme'
 import LoginPage from './routes/LoginPage'
 import AuthProvider from './hocs/AuthProvider'

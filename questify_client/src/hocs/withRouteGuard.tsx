@@ -1,7 +1,7 @@
-import { Navigate } from 'react-router-dom';
-import { $isAuthenticated } from "@/store/auth.store";
-import { ReactNode } from "react";
-import { useRecoilValue } from "recoil";
+import { Navigate } from 'react-router-dom'
+import { $isAuthenticated } from "@/store/auth.store"
+import { ReactNode } from "react"
+import { useRecoilValue } from "recoil"
 
 interface RouteGuardOpts {
   authOnly?: boolean;
