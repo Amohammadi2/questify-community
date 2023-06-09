@@ -8,18 +8,22 @@
     right: unset;
 }
 
-.rdw-editor {
+.rdw-editor, .content-displayer {
     font-family: "Harmattan";
     max-height: 300px;
     border-bottom: 1px solid rgb(190, 190, 190);
     font-size: 18px;
 }
 
-.rdw-editor blockquote {
+.rdw-editor blockquote, blockquote {
     border-right: 3px solid gray;
     border-left: 3px solid gray;
-    padding: 1px 8px;
+    padding: 10px 8px;
     background-color: rgb(245, 245, 245);
+}
+
+.rdw-editor blockquote div.public-DraftStyleDefault-block {
+    margin: 0;
 }
 
 .rdw-toolbar {

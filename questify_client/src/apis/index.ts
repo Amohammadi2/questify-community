@@ -27,7 +27,7 @@ export const $questionsApi = selector({
   }
 })
 
-export const $answersApi = selector({
+export const $answersApi = selector<AnswersApi>({
   key: 'answers-api',
   get: ({get}) => {
     return new AnswersApi(get($apiConfig))
