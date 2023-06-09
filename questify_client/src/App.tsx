@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import {CssBaseline, Typography} from '@mui/material'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import withNavLayout from './hocs/withNavLayout'
@@ -44,7 +45,17 @@ function App() {
       <CacheProvider value={cacheRtl}>
         <CssBaseline />
         <ThemeProvider theme={theme}>
-          <RouterProvider router={router} />
+          {
+           /* Fix: when logging out some random component suspenses causing app to crash
+            * because of this, I wrapped the router with a suspense handler. This is just a
+            * temporary fix, allowing the app to continue running by suppressing the problem.
+            * Finding the root cause of this problem requires digging deep into the code
+            * execution process step by step with the use of advanced debugging tools.
+            */
+          }
+          <Suspense> 
+            <RouterProvider router={router} />
+          </Suspense>
         </ThemeProvider>
       </CacheProvider>
     </AuthProvider>

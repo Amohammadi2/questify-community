@@ -6,10 +6,15 @@ import { useCallback, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { useRecoilValue } from "recoil"
 import "@/styles/editor.css"
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
+import Answer from "@/components/Answer"
+import { $userProfile } from "@/store/user-profile.store"
 
 export default function QuestionDetailsPage() {
   
   const { qid } = useParams()
+
+  const userProfile = useRecoilValue($userProfile)
 
   if (!qid)
     return <Container><Typography>همچین سوالی پیدا نشد</Typography></Container>
@@ -59,20 +64,34 @@ export default function QuestionDetailsPage() {
   }
 
   return (
-    <Container>
+    <Container maxWidth='md'>
       {questionLoading
         ? (
           <Typography>در حال بارگزاری</Typography>
         )
         : (
           <Grid container direction="column" sx={{ mt: 1 }}>
-            <Grid container direction="row" alignItems={'center'}>
+            <Grid container direction="row" alignItems={'center'} sx={{ mb: 2 }}>
               <Avatar alt={questionData?.author.username} />
               <Typography variant="h6" sx={{ ml: 1 }}>{questionData?.author.username}</Typography>
               <Typography variant="h3" sx={{ ml: 2 }}>{questionData?.title}</Typography>
             </Grid>
-            <div dangerouslySetInnerHTML={{ __html: questionData?.htmlContent || '' }} className="content-displayer" />
+            <div dangerouslySetInnerHTML={{ __html: questionData?.htmlContent || '' }} className="content-displayer rdw-editor-main" />
           </Grid>
+        )
+      }
+      {answersLoading
+        ? (
+          <Typography>در حال بارگزاری</Typography>
+        )
+        : (
+          answersData?.results?.map(
+            a => <Answer
+              {...a}
+              opMode={questionData?.author.username === userProfile?.username}
+              authorMode={a.author.username == userProfile?.username}
+            />
+          )
         )
       }
     </Container>
