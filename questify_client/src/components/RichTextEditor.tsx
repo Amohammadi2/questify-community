@@ -11,7 +11,7 @@ import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons"
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
 import "@/styles/editor.css"
 
-type HasHtmlContent = ()=>Promise<{htmlContent: string}>
+type IsPost = ()=>Promise<{htmlContent: string, title?: string, tags?: Array<string>}>
 
 export type ContentAggregate = {
   content: string
@@ -23,7 +23,7 @@ interface RichTextEditorProps <TPublish extends (content: ContentAggregate) => P
   /**
    * @description IMPORTANT NOTICE : always use `useCallback` hook to avoid unnecessary rerenders
    */
-  onInit?: HasHtmlContent | null
+  onInit?: IsPost | null
   onPublish: TPublish
   afterPublish?:(res: TPublish extends ((content: ContentAggregate) => Promise<infer T>) ? T : any) => void
   onCancel?: () => void
@@ -39,19 +39,23 @@ export default function RichTextEditor <TPublish extends (content: ContentAggreg
   
   const [contentLoading, setContentLoading] = useState(true)
   const [editorState, setEditorState] = useState(EditorState.createEmpty())
+  const [title, setTitle] = useState('')
+  const [tags, setTags] = useState<string[]>(['تست', 'سیستم', 'انتزاع'])
 
   // initialize the editor state
   useEffect(() => {
     if (onInit) {
       setContentLoading(true)
       onInit()
-        .then(res => setEditorState(EditorState.createWithContent(stateFromHTML(res.htmlContent))))
+        .then(res => {
+          setEditorState(EditorState.createWithContent(stateFromHTML(res.htmlContent)))
+          setTitle(res.title || '')
+          setTags(res.tags || [])
+        })
         .finally(()=>setContentLoading(false))
     }
   }, [onInit])
 
-  const [title, setTitle] = useState('')
-  const [tags, setTags] = useState<string[]>(['تست', 'سیستم', 'انتزاع'])
 
   const canPublish = Boolean(
     editorState.getCurrentContent().getPlainText() &&

@@ -15,7 +15,7 @@ export default function Answer({ htmlContent, author, id, created, updated, acce
         <Avatar alt={author.username} />
         <Typography sx={{ flexGrow: 1, ml: 1 }}>{author.username}</Typography>
       </Grid>
-      <Grid container direction="row">
+      <Grid container direction="row" alignItems='center'>
         {opMode && <Grid item sx={{ mr: 2 }}>
           <FontAwesomeIcon
             icon={faCheckSquare}
@@ -25,17 +25,17 @@ export default function Answer({ htmlContent, author, id, created, updated, acce
           />
         </Grid>}
         <Grid item>
-          <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+          <div dangerouslySetInnerHTML={{ __html: htmlContent }} style={{ fontFamily: 'Harmattan' }} />
         </Grid>
       </Grid>
       {authorMode && <Grid container direction="row" sx={{ borderTop: '1px solid rgb(230,230,230)', mt: 2, pt: 1.5 }}>
-        <IconButton>
+        <IconButton sx={{ mr: .5 }}>
           <FontAwesomeIcon
             icon={faTrashCan}
             style={{ fontSize: 16 }}
           />
         </IconButton>
-        <IconButton>
+        <IconButton sx={{ mr: .5 }}>
           <FontAwesomeIcon
             icon={faPen}
             style={{ fontSize: 16 }}

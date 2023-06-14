@@ -13,9 +13,6 @@ export default function AskQuestionPage() {
   const handleCancelation = () => {
     navigate(-1)
   }
-
-  // const [title, setTitle] = useState('')
-  // const [editorState, setEditorState] = useState<EditorState>(EditorState.createEmpty())
   
   const questionsApi = useRecoilValue($questionsApi)
 

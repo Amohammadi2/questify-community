@@ -1,5 +1,5 @@
 import { $answersApi, $questionsApi } from "@/apis"
-import { AnswerRead } from "@/gen"
+import { AnswerRead, QuestionRead } from "@/gen"
 import { useApi } from "@/hooks/useApi"
 import { Avatar, Container, Grid, Typography, Button } from "@mui/material"
 import { useCallback, useEffect, useState } from "react"
@@ -11,6 +11,7 @@ import Answer from "@/components/Answer"
 import { $userProfile } from "@/store/user-profile.store"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons"
+import QuestionDetails from "@/components/QuestionDetails"
 
 export default function QuestionDetailsPage() {
   
@@ -21,20 +22,7 @@ export default function QuestionDetailsPage() {
   if (!qid)
     return <Container><Typography>همچین سوالی پیدا نشد</Typography></Container>
 
-  const questionsApi = useRecoilValue($questionsApi)
-
-  const fetchQuestionCB = useCallback(() => {
-    return questionsApi.questionsRetrieve({
-      id: Number.parseInt(qid)
-    })
-  }, [qid])
-
-  const [fetchQuestion, { response: questionData, loading: questionLoading, error: questionError }] = useApi(fetchQuestionCB)
-  
-  useEffect(() => {
-    fetchQuestion()
-  }, [qid])
-
+  const [questionData, setQuestionData] = useState<QuestionRead | null>()
 
   const answersApi = useRecoilValue($answersApi)
 
@@ -66,22 +54,8 @@ export default function QuestionDetailsPage() {
   }
 
   return (
-    <Container maxWidth='md'>
-      {questionLoading
-        ? (
-          <Typography>در حال بارگزاری</Typography>
-        )
-        : (
-          <Grid container direction="column" sx={{ mt: 1 }}>
-            <Grid container direction="row" alignItems={'center'} sx={{ mb: 2 }}>
-              <Avatar alt={questionData?.author.username} />
-              <Typography variant="h6" sx={{ ml: 1 }}>{questionData?.author.username}</Typography>
-              <Typography variant="h3" sx={{ ml: 2 }}>{questionData?.title}</Typography>
-            </Grid>
-            <div dangerouslySetInnerHTML={{ __html: questionData?.htmlContent || '' }} className="content-displayer rdw-editor-main" />
-          </Grid>
-        )
-      }
+    <Container maxWidth='md' sx={{ mb: 5 }}>
+      <QuestionDetails qid={qid || ''} onLoad={setQuestionData} />
       {answersLoading
         ? (
           <Typography>در حال بارگزاری</Typography>
@@ -92,6 +66,7 @@ export default function QuestionDetailsPage() {
               {...a}
               opMode={questionData?.author.username === userProfile?.username}
               authorMode={a.author.username == userProfile?.username}
+              key={a.id}
             />
           )
         )
