@@ -14,6 +14,7 @@ import QuestionsPage from './routes/QuestionsPage'
 import AskQuestionPage from './routes/AskQuestionPage'
 import AskButton from './components/AskButton'
 import QuestionDetailsPage from './routes/QuestionDetailsPage'
+import AnswerQuestionPage from './routes/AnswerQuestionPage'
 
 function App() {
 
@@ -37,6 +38,10 @@ function App() {
     {
       path: '/question-details/:qid',
       element: withNavLayout(<QuestionDetailsPage />)
+    },
+    {
+      path: '/answer/:qid',
+      element: withNavLayout(<AnswerQuestionPage />)
     }
   ])
 

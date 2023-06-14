@@ -31,6 +31,12 @@ export interface AnswerWrite {
      * @memberof AnswerWrite
      */
     question?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof AnswerWrite
+     */
+    readonly id: number;
 }
 
 /**
@@ -39,6 +45,7 @@ export interface AnswerWrite {
 export function instanceOfAnswerWrite(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "htmlContent" in value;
+    isInstance = isInstance && "id" in value;
 
     return isInstance;
 }
@@ -55,6 +62,7 @@ export function AnswerWriteFromJSONTyped(json: any, ignoreDiscriminator: boolean
         
         'htmlContent': json['html_content'],
         'question': !exists(json, 'question') ? undefined : json['question'],
+        'id': json['id'],
     };
 }
 

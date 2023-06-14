@@ -96,7 +96,7 @@ export default function QuestionDetailsPage() {
           )
         )
       }
-      <Button variant="contained" color="primary" size="large" sx={{ position: 'fixed', bottom: 20, left: '50%', transform:'translateX(-50%)', width: '300px' }} href="/answer">
+      <Button variant="contained" color="primary" size="large" sx={{ position: 'fixed', bottom: 20, left: '50%', transform:'translateX(-50%)', width: '300px' }} href={"/answer/"+qid}>
         <Typography sx={{ mr: 1 }}>ارسال پاسخ</Typography>
         <FontAwesomeIcon
           icon={faPaperPlane}

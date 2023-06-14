@@ -68,7 +68,7 @@ class AnswerWriteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Answer
-        fields = ('html_content', 'author', 'question')
+        fields = ('html_content', 'author', 'question', 'id')
 
 
 class AcceptAnswerSerializer(serializers.ModelSerializer):

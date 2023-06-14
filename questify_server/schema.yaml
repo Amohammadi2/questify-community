@@ -706,8 +706,12 @@ components:
         question:
           type: integer
           nullable: true
+        id:
+          type: integer
+          readOnly: true
       required:
       - html_content
+      - id
     AnswerWriteRequest:
       type: object
       properties:
@@ -841,7 +845,6 @@ components:
         title:
           type: string
           minLength: 1
-          title: '256'
         tags:
           type: array
           items:
@@ -852,7 +855,6 @@ components:
       properties:
         title:
           type: string
-          title: '256'
         id:
           type: integer
           readOnly: true
@@ -879,7 +881,6 @@ components:
           readOnly: true
         title:
           type: string
-          title: '256'
         tags:
           type: array
           items:
@@ -902,7 +903,6 @@ components:
           type: string
         title:
           type: string
-          title: '256'
         tags:
           type: array
           items:
@@ -924,7 +924,6 @@ components:
         title:
           type: string
           minLength: 1
-          title: '256'
         tags:
           type: array
           items:

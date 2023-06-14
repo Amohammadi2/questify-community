@@ -29,11 +29,12 @@ interface RichTextEditorProps <TPublish extends (content: ContentAggregate) => P
   onCancel?: () => void
   enableTags?: boolean
   enableTitle?: boolean
+  submitButtonText?: string
 }
 
 
 export default function RichTextEditor <TPublish extends (content: ContentAggregate) => Promise<any>>
-  ({ onPublish, afterPublish, onInit, enableTags=true, enableTitle=true, onCancel} : RichTextEditorProps<TPublish>)
+  ({ onPublish, afterPublish, onInit, enableTags=false, enableTitle=false, onCancel, submitButtonText="انتشار سوال"} : RichTextEditorProps<TPublish>)
 {
   
   const [contentLoading, setContentLoading] = useState(true)
@@ -75,7 +76,7 @@ export default function RichTextEditor <TPublish extends (content: ContentAggreg
 
   return (
     <Container sx={{ height: '500px', mt: 2 }}>
-      <TextField label="عنوان سوال" sx={{ width: '100%' }} inputProps={{ style: { fontSize: 30 }}} InputLabelProps={{ style: { top: '5px' } }} value={title} onChange={e=>setTitle(e.currentTarget.value)}/>
+      {enableTitle && <TextField label="عنوان سوال" sx={{ width: '100%' }} inputProps={{ style: { fontSize: 30 }}} InputLabelProps={{ style: { top: '5px' } }} value={title} onChange={e=>setTitle(e.currentTarget.value)}/>}
       <Editor
         editorState={editorState}
         toolbarClassName="rdw-toolbar"
@@ -85,7 +86,7 @@ export default function RichTextEditor <TPublish extends (content: ContentAggreg
       />
       <Grid container sx={{ mt: 2 }}>
         <LoadingButton variant="outlined" color="primary" sx={{ mr: 1}} onClick={publish} loading={publishLoading} disabled={!canPublish}>
-          <Typography sx={{ mr: 1 }}>انتشار سوال</Typography>
+          <Typography sx={{ mr: 1 }}>{submitButtonText}</Typography>
           <FontAwesomeIcon
             icon={faCheck}
           />
