@@ -1,6 +1,5 @@
 import { useState } from "react"
-
-type ApiResponse<CB> = CB extends () => Promise<infer Response> ? Response : any;
+import { ApiResponse } from "../utils/ApiResponse";
 
 interface ApiCallSettings <Response> {
   before?: () => void

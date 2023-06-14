@@ -1961,6 +1961,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"draft-js-import-element@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "draft-js-import-element@npm:1.4.0"
+  dependencies:
+    draft-js-utils: ^1.4.0
+    synthetic-dom: ^1.4.0
+  peerDependencies:
+    draft-js: ">=0.10.0"
+    immutable: 3.x.x
+  checksum: 4ae41b4788775c11e191824475ada363a1634dab6bc5264e92fe27483a27cbe0ea460b4f8cff6c72507108edd3878c2edb67b5cd19e243ef71e401b0c412df0e
+  languageName: node
+  linkType: hard
+
+"draft-js-import-html@npm:^1.4.1":
+  version: 1.4.1
+  resolution: "draft-js-import-html@npm:1.4.1"
+  dependencies:
+    draft-js-import-element: ^1.4.0
+  peerDependencies:
+    draft-js: ">=0.10.0"
+    immutable: 3.x.x
+  checksum: 35d4ddbdf1ef86184f78ffc95ec493ea172df1ace0f0ba030f4faaf2d1da5f499ed8f28f7e738282fa4d6b806468ec2656ec47512327b106afc187a653729b5e
+  languageName: node
+  linkType: hard
+
 "draft-js-utils@npm:^1.4.0":
   version: 1.4.1
   resolution: "draft-js-utils@npm:1.4.1"
@@ -3414,6 +3439,7 @@ __metadata:
     "@vitejs/plugin-react-swc": ^3.0.0
     draft-js: ^0.11.7
     draft-js-export-html: ^1.4.1
+    draft-js-import-html: ^1.4.1
     eslint: ^8.38.0
     eslint-plugin-react-hooks: ^4.6.0
     eslint-plugin-react-refresh: ^0.3.4
@@ -3877,6 +3903,13 @@ __metadata:
   version: 2.0.4
   resolution: "svg-parser@npm:2.0.4"
   checksum: b3de6653048212f2ae7afe4a423e04a76ec6d2d06e1bf7eacc618a7c5f7df7faa5105561c57b94579ec831fbbdbf5f190ba56a9205ff39ed13eabdf8ab086ddf
+  languageName: node
+  linkType: hard
+
+"synthetic-dom@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "synthetic-dom@npm:1.4.0"
+  checksum: 5f8a377e74729849cfb3eacc489a7c6018f5ebb10fbf2621178a858c26e343aed900fd3be407ce7c3ea8150db8ebc2e8dc1326423e6f26b2e61eca7a3066c80c
   languageName: node
   linkType: hard
 

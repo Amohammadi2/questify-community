@@ -1,7 +1,7 @@
 import { $answersApi, $questionsApi } from "@/apis"
 import { AnswerRead } from "@/gen"
 import { useApi } from "@/hooks/useApi"
-import { Avatar, Container, Grid, Typography } from "@mui/material"
+import { Avatar, Container, Grid, Typography, Button } from "@mui/material"
 import { useCallback, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { useRecoilValue } from "recoil"
@@ -9,6 +9,8 @@ import "@/styles/editor.css"
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
 import Answer from "@/components/Answer"
 import { $userProfile } from "@/store/user-profile.store"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons"
 
 export default function QuestionDetailsPage() {
   
@@ -94,6 +96,12 @@ export default function QuestionDetailsPage() {
           )
         )
       }
+      <Button variant="contained" color="primary" size="large" sx={{ position: 'fixed', bottom: 20, left: '50%', transform:'translateX(-50%)', width: '300px' }} href="/answer">
+        <Typography sx={{ mr: 1 }}>ارسال پاسخ</Typography>
+        <FontAwesomeIcon
+          icon={faPaperPlane}
+        />
+      </Button>
     </Container>
   )
 }
