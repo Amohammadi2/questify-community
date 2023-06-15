@@ -19,12 +19,13 @@ export default function EditQuestionPage() {
 
   const fetchQuestionCB = useCallback(() => {
     return questionsApi.questionsRetrieve({
-      id: Number.parseInt(qid || '0')
+      id: Number.parseInt(qid || '-1')
     })
   }, [qid])
 
   const updateQuestionCB = useCallback(({ content, tags, title }: ContentAggregate) => {
-    return questionsApi.questionsCreate({
+    return questionsApi.questionsUpdate({
+      id: Number.parseInt(qid || '-1'),
       questionWriteRequest: {
         title,
         htmlContent: content,

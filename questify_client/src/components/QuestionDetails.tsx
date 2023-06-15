@@ -1,12 +1,14 @@
 import { $questionsApi } from "@/apis";
 import { QuestionRead } from "@/gen";
 import { useApi } from "@/hooks/useApi";
+import { useModal } from "@/hooks/useModal";
 import { faPen, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Avatar, Grid, IconButton, Typography } from "@mui/material";
 import { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
+import ConfirmationModal from "./ConfirmationModal";
 
 
 export interface QuestionDetailsProps {
@@ -35,9 +37,39 @@ export default function QuestionDetails({ qid, onLoad } : QuestionDetailsProps) 
   useEffect(() => {
     onLoad && onLoad(questionData)
   }, [questionData])
+
+
+  const [openDeleteModal, deleteModalState] = useModal()
+
+  const deleteQuestionCB = useCallback(() => {
+    return questionsApi.questionsDestroy({
+      id: questionData?.id || -1
+    })
+  }, [questionsApi, questionData])
+
+  const [deleteQuestion, deleteQuestionState] = useApi(deleteQuestionCB)
   
+  useEffect(() => {
+    if (deleteQuestionState.response != null) {
+      navigate(-1)
+      // Todo: add a toast notification indicating action success
+    }
+    else {
+      // Todo: handle operation error
+    }
+  }, [deleteQuestionState.response])
+
   return (
-    questionLoading
+    <>
+      <ConfirmationModal
+        {...deleteModalState}
+        actionText="حذف سوال"
+        onConfirm={deleteQuestion}
+        content="آیا مطمئنید که می خواهید این سوال را حذف کنید؟ این عمل غیر قابل بازگشت می باشد"
+        title="سوال حذف شود؟"
+        negativeAction
+      />
+      {questionLoading
       ? (
         <Typography>در حال بارگزاری</Typography>
       )
@@ -50,7 +82,7 @@ export default function QuestionDetails({ qid, onLoad } : QuestionDetailsProps) 
           </Grid>
           <div dangerouslySetInnerHTML={{ __html: questionData?.htmlContent || '' }} className="content-displayer rdw-editor-main" />
           <Grid container sx={{ mt: 1, mb: 3 }}>
-            <IconButton sx={{ mr: .5 }}>
+            <IconButton sx={{ mr: .5 }} onClick={openDeleteModal}>
               <FontAwesomeIcon
                 icon={faTrashCan}
                 style={{ fontSize: 16 }}
@@ -64,6 +96,7 @@ export default function QuestionDetails({ qid, onLoad } : QuestionDetailsProps) 
             </IconButton>
           </Grid>
         </Grid>
-      )
+      )}
+    </>
   )
 }
