@@ -8,7 +8,7 @@ import { prefixer } from 'stylis'
 export const theme = createTheme({
   direction: 'rtl',
   typography: {
-    fontFamily: '"Harmattan"'
+    fontFamily: '"Vazirmatn"'
   },
   components: {
     MuiLink: {

@@ -21,6 +21,7 @@ export function useApi
       settings.before && settings.before()
       apiCallback()
         .then(res => { settings.then && settings.then(res); setResponse(res) })
+        // Todo: Toast an error after handling it
         .catch(err => { settings.catch && settings.catch(err); setError(err) })
         .finally(() => { settings.finally && settings.finally(); setLoading(false) })
     },

@@ -14,10 +14,11 @@ import ConfirmationModal from "./ConfirmationModal";
 export interface QuestionDetailsProps {
   qid: string
   onLoad?: (question: QuestionRead | null) => void
+  opMode?: boolean
 }
 
-export default function QuestionDetails({ qid, onLoad } : QuestionDetailsProps) {
-  
+export default function QuestionDetails({ qid, onLoad, opMode=false } : QuestionDetailsProps) {
+
   const navigate = useNavigate()
 
   const questionsApi = useRecoilValue($questionsApi)
@@ -47,17 +48,12 @@ export default function QuestionDetails({ qid, onLoad } : QuestionDetailsProps) 
     })
   }, [questionsApi, questionData])
 
-  const [deleteQuestion, deleteQuestionState] = useApi(deleteQuestionCB)
-  
-  useEffect(() => {
-    if (deleteQuestionState.response != null) {
+  const [deleteQuestion,] = useApi(deleteQuestionCB, {
+    then() {
       navigate(-1)
-      // Todo: add a toast notification indicating action success
-    }
-    else {
-      // Todo: handle operation error
-    }
-  }, [deleteQuestionState.response])
+      // Todo: Toast a success notif
+    },
+  })
 
   return (
     <>
@@ -81,7 +77,7 @@ export default function QuestionDetails({ qid, onLoad } : QuestionDetailsProps) 
             <Typography variant="h3" sx={{ ml: 2 }}>{questionData?.title}</Typography>
           </Grid>
           <div dangerouslySetInnerHTML={{ __html: questionData?.htmlContent || '' }} className="content-displayer rdw-editor-main" />
-          <Grid container sx={{ mt: 1, mb: 3 }}>
+          {opMode && <Grid container sx={{ mt: 1, mb: 3 }}>
             <IconButton sx={{ mr: .5 }} onClick={openDeleteModal}>
               <FontAwesomeIcon
                 icon={faTrashCan}
@@ -94,7 +90,7 @@ export default function QuestionDetails({ qid, onLoad } : QuestionDetailsProps) 
                 style={{ fontSize: 16 }}
               />
             </IconButton>
-          </Grid>
+          </Grid>}
         </Grid>
       )}
     </>

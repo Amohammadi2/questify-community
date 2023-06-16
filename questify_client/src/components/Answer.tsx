@@ -25,7 +25,7 @@ export default function Answer({ htmlContent, author, id, created, updated, acce
           />
         </Grid>}
         <Grid item>
-          <div dangerouslySetInnerHTML={{ __html: htmlContent }} style={{ fontFamily: 'Harmattan' }} />
+          <div dangerouslySetInnerHTML={{ __html: htmlContent }} style={{ fontFamily: 'Vazirmatn' }} />
         </Grid>
       </Grid>
       {authorMode && <Grid container direction="row" sx={{ borderTop: '1px solid rgb(230,230,230)', mt: 2, pt: 1.5 }}>

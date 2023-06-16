@@ -55,7 +55,7 @@ export default function QuestionDetailsPage() {
 
   return (
     <Container maxWidth='md' sx={{ mb: 5 }}>
-      <QuestionDetails qid={qid || ''} onLoad={setQuestionData} />
+      <QuestionDetails qid={qid || ''} onLoad={setQuestionData} opMode={questionData?.author.username === userProfile?.username}/>
       {answersLoading
         ? (
           <Typography>در حال بارگزاری</Typography>
