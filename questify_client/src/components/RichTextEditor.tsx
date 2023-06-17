@@ -24,6 +24,7 @@ interface RichTextEditorProps <TPublish extends (content: ContentAggregate) => P
    * @description IMPORTANT NOTICE : always use `useCallback` hook to avoid unnecessary rerenders
    */
   onInit?: IsPost | null
+  onInitError?: (err: any) => void
   onPublish: TPublish
   afterPublish?:(res: TPublish extends ((content: ContentAggregate) => Promise<infer T>) ? T : any) => void
   onCancel?: () => void
@@ -34,7 +35,7 @@ interface RichTextEditorProps <TPublish extends (content: ContentAggregate) => P
 
 
 export default function RichTextEditor <TPublish extends (content: ContentAggregate) => Promise<any>>
-  ({ onPublish, afterPublish, onInit, enableTags=false, enableTitle=false, onCancel, submitButtonText="انتشار سوال"} : RichTextEditorProps<TPublish>)
+  ({ onPublish, afterPublish, onInit, enableTags=false, enableTitle=false, onCancel, submitButtonText="انتشار سوال", onInitError} : RichTextEditorProps<TPublish>)
 {
   
   const [contentLoading, setContentLoading] = useState(true)
@@ -52,6 +53,7 @@ export default function RichTextEditor <TPublish extends (content: ContentAggreg
           setTitle(res.title || '')
           setTags(res.tags || [])
         })
+        .catch(onInitError)
         .finally(()=>setContentLoading(false))
     }
   }, [onInit])

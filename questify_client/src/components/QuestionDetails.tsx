@@ -14,10 +14,11 @@ import ConfirmationModal from "./ConfirmationModal";
 export interface QuestionDetailsProps {
   qid: string
   onLoad?: (question: QuestionRead | null) => void
+  onError?: (err: any) => void
   opMode?: boolean
 }
 
-export default function QuestionDetails({ qid, onLoad, opMode=false } : QuestionDetailsProps) {
+export default function QuestionDetails({ qid, onLoad, onError, opMode=false } : QuestionDetailsProps) {
 
   const navigate = useNavigate()
 
@@ -39,6 +40,10 @@ export default function QuestionDetails({ qid, onLoad, opMode=false } : Question
     onLoad && onLoad(questionData)
   }, [questionData])
 
+  useEffect(() => {
+    if (questionError)
+      onError && onError(questionError)
+  }, [questionError])
 
   const [openDeleteModal, deleteModalState] = useModal()
 

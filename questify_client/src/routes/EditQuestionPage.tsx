@@ -12,6 +12,10 @@ export default function EditQuestionPage() {
   const handleCancelation = () => {
     navigate(-1)
   }
+
+  const handleLoadingError = () => {
+    handleCancelation()
+  }
   
   const { qid } = useParams()
 
@@ -38,6 +42,7 @@ export default function EditQuestionPage() {
   return (
     <RichTextEditor
       onInit={fetchQuestionCB}
+      onInitError={handleLoadingError}
       onPublish={updateQuestionCB}
       afterPublish={res => navigate('/question-details/'+res.id)}
       enableTags

@@ -3,7 +3,7 @@ import { AnswerRead, QuestionRead } from "@/gen"
 import { useApi } from "@/hooks/useApi"
 import { Avatar, Container, Grid, Typography, Button } from "@mui/material"
 import { useCallback, useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useRecoilValue } from "recoil"
 import "@/styles/editor.css"
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
@@ -12,12 +12,15 @@ import { $userProfile } from "@/store/user-profile.store"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons"
 import QuestionDetails from "@/components/QuestionDetails"
+import { $isAuthenticated } from "@/store/auth.store"
 
 export default function QuestionDetailsPage() {
   
   const { qid } = useParams()
 
+  const isAuthenticated = useRecoilValue($isAuthenticated)
   const userProfile = useRecoilValue($userProfile)
+  const navigate = useNavigate()
 
   if (!qid)
     return <Container><Typography>همچین سوالی پیدا نشد</Typography></Container>
@@ -55,7 +58,7 @@ export default function QuestionDetailsPage() {
 
   return (
     <Container maxWidth='md' sx={{ mb: 5 }}>
-      <QuestionDetails qid={qid || ''} onLoad={setQuestionData} opMode={questionData?.author.username === userProfile?.username}/>
+      <QuestionDetails qid={qid || ''} onLoad={setQuestionData} opMode={questionData?.author.username === userProfile?.username} onError={()=>navigate(-1)}/>
       {answersLoading
         ? (
           <Typography>در حال بارگزاری</Typography>
@@ -71,12 +74,12 @@ export default function QuestionDetailsPage() {
           )
         )
       }
-      <Button variant="contained" color="primary" size="large" sx={{ position: 'fixed', bottom: 20, left: '50%', transform:'translateX(-50%)', width: '300px' }} href={"/answer/"+qid}>
+      {isAuthenticated && <Button variant="contained" color="primary" size="large" sx={{ position: 'fixed', bottom: 20, left: '50%', transform:'translateX(-50%)', width: '300px' }} href={"/answer/"+qid}>
         <Typography sx={{ mr: 1 }}>ارسال پاسخ</Typography>
         <FontAwesomeIcon
           icon={faPaperPlane}
         />
-      </Button>
+      </Button>}
     </Container>
   )
 }
