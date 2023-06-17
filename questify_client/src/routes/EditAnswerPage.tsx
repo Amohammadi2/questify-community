@@ -13,7 +13,7 @@ export default function EditAnswerPage() {
   }
 
   const handleLoadingError = () => {
-    handleCancelation()
+    navigate('/questions')
   }
   
   const { qid } = useParams()

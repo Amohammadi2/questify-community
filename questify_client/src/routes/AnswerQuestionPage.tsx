@@ -24,7 +24,7 @@ export default function AnswerQuestionPage() {
   useEffect(() => {
     questionsApi
       .questionsRetrieve({ id: Number.parseInt(qid || '-1') })
-      .catch(() => navigate(-1)) // the only error that can happen is 404
+      .catch(() => navigate('/questions')) // the only error that can happen is 404
   }, [qid])
 
   return (

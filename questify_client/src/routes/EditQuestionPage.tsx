@@ -14,7 +14,7 @@ export default function EditQuestionPage() {
   }
 
   const handleLoadingError = () => {
-    handleCancelation()
+    navigate('/questions')
   }
   
   const { qid } = useParams()

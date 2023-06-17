@@ -55,7 +55,7 @@ export default function QuestionDetails({ qid, onLoad, onError, opMode=false } :
 
   const [deleteQuestion,] = useApi(deleteQuestionCB, {
     then() {
-      navigate(-1)
+      navigate('/questions')
       // Todo: Toast a success notif
     },
   })
