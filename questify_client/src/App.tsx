@@ -16,6 +16,7 @@ import AskButton from './components/AskButton'
 import QuestionDetailsPage from './routes/QuestionDetailsPage'
 import AnswerQuestionPage from './routes/AnswerQuestionPage'
 import EditQuestionPage from './routes/EditQuestionPage'
+import EditAnswerPage from './routes/EditAnswerPage'
 
 function App() {
 
@@ -47,6 +48,10 @@ function App() {
     {
       path: '/answer/:qid',
       element: withRouteGuard(withNavLayout(<AnswerQuestionPage />))
+    },
+    {
+      path: '/edit-answer/:qid',
+      element: withRouteGuard(withNavLayout(<EditAnswerPage />))
     }
   ])
 

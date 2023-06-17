@@ -44,7 +44,7 @@ class QuestionsViewset(viewsets.ModelViewSet):
 
 
 
-class AnswersViewset(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin):
+class AnswersViewset(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin):
 
     queryset = Answer.objects.all().order_by('-created', '-accepted')
 
@@ -57,7 +57,7 @@ class AnswersViewset(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.Up
         
 
     def get_permissions(self):
-        if self.action in ('update', 'partial_update'):
+        if self.action in ('update', 'partial_update', 'destroy'):
             return [IsAuthenticated(), IsAuthorOf()]
         elif self.action == 'my_answers':
             return [IsAuthenticated()]

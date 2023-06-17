@@ -49,6 +49,10 @@ export interface AnswersCreateRequest {
     answerWriteRequest: AnswerWriteRequest;
 }
 
+export interface AnswersDestroyRequest {
+    id: number;
+}
+
 export interface AnswersForQuestionListRequest {
     qid: number;
     limit?: number;
@@ -155,6 +159,41 @@ export class AnswersApi extends runtime.BaseAPI {
     async answersCreate(requestParameters: AnswersCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AnswerWrite> {
         const response = await this.answersCreateRaw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     */
+    async answersDestroyRaw(requestParameters: AnswersDestroyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling answersDestroy.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("jwtAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/v1/answers/{id}/`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     */
+    async answersDestroy(requestParameters: AnswersDestroyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.answersDestroyRaw(requestParameters, initOverrides);
     }
 
     /**

@@ -56,6 +56,12 @@ export default function QuestionDetailsPage() {
     setAnswersPage(p => p+1)
   }
 
+  const deleteAnswer = (id: number): Promise<void> => {
+    return answersApi.answersDestroy({ id })
+      .then(() => setAnswers(a => a.filter(b => b.id != id))) // Todo: toast success
+      .catch() // Todo: Toast error
+  }
+
   return (
     <Container maxWidth='md' sx={{ mb: 5 }}>
       <QuestionDetails qid={qid || ''} onLoad={setQuestionData} opMode={questionData?.author.username === userProfile?.username} onError={()=>navigate(-1)}/>
@@ -64,12 +70,13 @@ export default function QuestionDetailsPage() {
           <Typography>در حال بارگزاری</Typography>
         )
         : (
-          answersData?.results?.map(
+          answers?.map(
             a => <Answer
               {...a}
               opMode={questionData?.author.username === userProfile?.username}
               authorMode={a.author.username == userProfile?.username}
               key={a.id}
+              onDelete={deleteAnswer}
             />
           )
         )
