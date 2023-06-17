@@ -46,7 +46,7 @@ function App() {
     },
     {
       path: '/answer/:qid',
-      element: withNavLayout(<AnswerQuestionPage />)
+      element: withRouteGuard(withNavLayout(<AnswerQuestionPage />))
     }
   ])
 
