@@ -6,9 +6,8 @@ import { IconButton } from '@mui/material'
 import Logo from '../assets/logo.svg'
 import { ElevationScroll } from '../components/ElevationScroll'
 import { ReactElement, Suspense } from 'react'
-import { Link, Typography } from '@mui/material'
+import { Link } from '@mui/material'
 import { useRecoilValue } from 'recoil'
-import { $userProfile } from '@/store/user-profile.store'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import UserProfileMenu from '@/components/UserProfileMenu'
@@ -45,7 +44,7 @@ export function NavLayout({ authButtons: showAuthButtons=false, backButton: show
     <>
       <ElevationScroll>
         <AppBar sx={theme => ({
-          bgcolor: theme.palette.background.default,
+          bgcolor: theme.palette.grey[100],
           py: .3,
           color: theme.palette.text.primary
         })}>
@@ -60,13 +59,13 @@ export function NavLayout({ authButtons: showAuthButtons=false, backButton: show
             </Grid>
             <Grid item>
               <Link href="/">
-                <Logo width={130} />
+                <Logo width={100} />
               </Link>
             </Grid>
           </Toolbar>
         </AppBar>
       </ElevationScroll>
-      <Toolbar />
+      <Toolbar sx={{ mb: 1 }}/>
     </>
   )
 }

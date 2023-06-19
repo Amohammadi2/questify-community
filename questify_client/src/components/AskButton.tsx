@@ -9,8 +9,8 @@ export default function AskButton() {
 
   if (isAuthenticated) {
     return (
-      <Button href="/ask" variant="contained" color="primary" sx={{ ml: 2 }}>
-        <Typography sx={{ mr: 1 }}>پرسش سوال</Typography>
+      <Button href="/ask" variant="contained" color="primary" sx={{ ml: 2, fontSize: 14}} size="small">
+        <Typography sx={{ mr: 1, fontSize: 13 }}>پرسش سوال</Typography>
         <FontAwesomeIcon icon={faQuestionCircle} />
       </Button>
     )

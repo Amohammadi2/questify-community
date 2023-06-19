@@ -44,7 +44,7 @@ export default function EditQuestionPage() {
       onInit={fetchQuestionCB}
       onInitError={handleLoadingError}
       onPublish={updateQuestionCB}
-      afterPublish={res => navigate('/question-details/'+res.id)}
+      afterPublish={res => navigate('/question-details/'+res.id, { replace: true })}
       enableTags
       enableTitle
       onCancel={handleCancelation}

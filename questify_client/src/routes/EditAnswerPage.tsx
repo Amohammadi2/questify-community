@@ -41,7 +41,7 @@ export default function EditAnswerPage() {
       onInit={fetchAnswerCB}
       onInitError={handleLoadingError}
       onPublish={updateAnswerCB}
-      afterPublish={res => navigate('/question-details/'+res.question)}
+      afterPublish={res => navigate('/question-details/'+res.question, { replace: true })}
       onCancel={handleCancelation}
       submitButtonText="انتشار پاسخ"
     />

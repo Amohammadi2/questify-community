@@ -77,12 +77,14 @@ export default function QuestionDetails({ qid, onLoad, onError, opMode=false } :
       : (
         <Grid container direction="column" sx={{ mt: 1 }}>
           <Grid container direction="row" alignItems={'center'} sx={{ mb: 2 }}>
-            <Avatar alt={questionData?.author.username} />
-            <Typography variant="h6" sx={{ ml: 1 }}>{questionData?.author.username}</Typography>
-            <Typography variant="h3" sx={{ ml: 2 }}>{questionData?.title}</Typography>
+            <Avatar alt={questionData?.author.username} sx={{ width: 30, height: 30}} />
+            <Typography sx={{ ml: 1 }}>{questionData?.author.username}</Typography>
+          </Grid>
+          <Grid container>
+            <Typography variant="h5" sx={{ ml: 2 }}>{questionData?.title}</Typography>
           </Grid>
           <div dangerouslySetInnerHTML={{ __html: questionData?.htmlContent || '' }} className="content-displayer rdw-editor-main" />
-          {opMode && <Grid container sx={{ mt: 1, mb: 3 }}>
+          {/* {opMode && <Grid container sx={{ mt: 1, mb: 3 }}>
             <IconButton sx={{ mr: .5 }} onClick={openDeleteModal}>
               <FontAwesomeIcon
                 icon={faTrashCan}
@@ -95,7 +97,7 @@ export default function QuestionDetails({ qid, onLoad, onError, opMode=false } :
                 style={{ fontSize: 16 }}
               />
             </IconButton>
-          </Grid>}
+          </Grid>} */}
         </Grid>
       )}
     </>

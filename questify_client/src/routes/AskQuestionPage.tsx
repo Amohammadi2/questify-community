@@ -29,7 +29,7 @@ export default function AskQuestionPage() {
   return (
     <RichTextEditor
       onPublish={publishQuestionCB}
-      afterPublish={res => navigate('/question-details/'+res.id)}
+      afterPublish={res => navigate('/question-details/'+res.id, { replace: true })}
       enableTags
       enableTitle
       onCancel={handleCancelation}

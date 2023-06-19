@@ -63,7 +63,7 @@ export default function QuestionDetailsPage() {
   }
 
   return (
-    <Container maxWidth='md' sx={{ mb: 5 }}>
+    <Container maxWidth='md' sx={{ mb: 10 }}>
       <QuestionDetails qid={qid || ''} onLoad={setQuestionData} opMode={questionData?.author.username === userProfile?.username} onError={()=>navigate(-1)}/>
       {answersLoading
         ? (

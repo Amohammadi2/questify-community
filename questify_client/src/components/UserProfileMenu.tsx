@@ -1,5 +1,5 @@
 import { $userProfile } from "@/store/user-profile.store"
-import { IconButton, Menu, MenuItem, Typography } from "@mui/material"
+import { Divider, IconButton, Menu, MenuItem, Typography } from "@mui/material"
 import { useState, useCallback, startTransition } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
 import { FontAwesomeIcon }  from '@fortawesome/react-fontawesome'
@@ -35,9 +35,6 @@ export default function UserProfileMenu() {
       <IconButton onClick={handleMenuOpen}>
         <FontAwesomeIcon icon={faUserCircle} />
       </IconButton>
-      <Typography sx={{ display: 'flex', alignItems: 'center' }}>
-        {userProfile.username}
-      </Typography>
       <Menu
         id="menu-appbar"
         anchorEl={anchorElForMenu}
@@ -53,6 +50,8 @@ export default function UserProfileMenu() {
         open={Boolean(anchorElForMenu)}
         onClose={handleMenuClose}
       >
+        <Typography sx={{ px: 2, py: 1}}>{userProfile.username}</Typography>
+        <Divider />
         <MenuItem>
           <FontAwesomeIcon icon={faUser} />
           <Typography sx={{ mx: 2 }}>پروفایل من</Typography>

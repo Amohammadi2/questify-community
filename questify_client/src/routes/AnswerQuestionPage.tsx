@@ -30,7 +30,7 @@ export default function AnswerQuestionPage() {
   return (
     <RichTextEditor
       onPublish={postAnswerCB}
-      afterPublish={res => navigate('/question-details/'+qid)}
+      afterPublish={res => navigate('/question-details/'+qid, { replace: true })}
       onCancel={() => navigate(-1)}
       submitButtonText="انتشار پاسخ"
     />
