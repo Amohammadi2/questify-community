@@ -1,0 +1,19 @@
+.ProseMirror {
+  outline: none;
+  font-family: 'Vazirmatn';
+}
+
+.ProseMirror .is-empty.is-editor-empty::before {
+  content: attr(data-placeholder);
+  color: gray;
+  position: absolute;
+}
+
+.ProseMirror a {
+  color: rgb(5, 102, 212);
+}
+
+.ProseMirror > p:has(img) {
+  display: flex;
+  justify-content: center;
+}

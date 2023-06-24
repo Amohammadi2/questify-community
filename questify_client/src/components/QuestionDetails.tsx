@@ -9,6 +9,7 @@ import { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import ConfirmationModal from "./ConfirmationModal";
+import "@/styles/ProseMirror.css"
 
 
 export interface QuestionDetailsProps {
@@ -75,16 +76,17 @@ export default function QuestionDetails({ qid, onLoad, onError, opMode=false } :
         <Typography>در حال بارگزاری</Typography>
       )
       : (
-        <Grid container direction="column" sx={{ mt: 1 }}>
+        <Grid container direction="column" sx={{ mt: 4 }}>
           <Grid container direction="row" alignItems={'center'} sx={{ mb: 2 }}>
             <Avatar alt={questionData?.author.username} sx={{ width: 30, height: 30}} />
             <Typography sx={{ ml: 1 }}>{questionData?.author.username}</Typography>
           </Grid>
           <Grid container>
-            <Typography variant="h5" sx={{ ml: 2 }}>{questionData?.title}</Typography>
+            <Typography variant="h5" sx={{ ml: 2, fontWeight: 800 }}>{questionData?.title}</Typography>
           </Grid>
-          <div dangerouslySetInnerHTML={{ __html: questionData?.htmlContent || '' }} className="content-displayer rdw-editor-main" />
-          {/* {opMode && <Grid container sx={{ mt: 1, mb: 3 }}>
+          <div dangerouslySetInnerHTML={{ __html: questionData?.htmlContent || '' }} className="ProseMirror" />
+          {/* Todo: replace these buttons with a menu */}
+          {opMode && <Grid container sx={{ mt: 1, mb: 3 }}>
             <IconButton sx={{ mr: .5 }} onClick={openDeleteModal}>
               <FontAwesomeIcon
                 icon={faTrashCan}
@@ -97,7 +99,7 @@ export default function QuestionDetails({ qid, onLoad, onError, opMode=false } :
                 style={{ fontSize: 16 }}
               />
             </IconButton>
-          </Grid>} */}
+          </Grid>}
         </Grid>
       )}
     </>

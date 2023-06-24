@@ -1,15 +1,12 @@
-import { ApiResponse } from "@/utils/ApiResponse"
-import { EditorState } from "draft-js"
-import { Editor } from 'react-draft-wysiwyg'
 import { useCallback, useEffect, useState } from "react"
-import { stateFromHTML } from 'draft-js-import-html'
-import { stateToHTML } from 'draft-js-export-html'
 import { Button, Container, Grid, TextField, Typography } from "@mui/material"
 import { LoadingButton } from "@mui/lab"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons"
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
-import "@/styles/editor.css"
+import { EditorContent } from "@tiptap/react"
+import PageLoader from "./PageLoader"
+import { useRichTextEditor } from "../hooks/useRichTextEditor"
+import "@/styles/ProseMirror.css"
 
 type IsPost = ()=>Promise<{htmlContent: string, title?: string, tags?: Array<string>}>
 
@@ -38,8 +35,8 @@ export default function RichTextEditor <TPublish extends (content: ContentAggreg
   ({ onPublish, afterPublish, onInit, enableTags=false, enableTitle=false, onCancel, submitButtonText="انتشار سوال", onInitError} : RichTextEditorProps<TPublish>)
 {
   
-  const [contentLoading, setContentLoading] = useState(true)
-  const [editorState, setEditorState] = useState(EditorState.createEmpty())
+  const [contentLoading, setContentLoading] = useState(false)
+  const editor = useRichTextEditor()
   const [title, setTitle] = useState('')
   const [tags, setTags] = useState<string[]>(['تست', 'سیستم', 'انتزاع'])
 
@@ -49,18 +46,18 @@ export default function RichTextEditor <TPublish extends (content: ContentAggreg
       setContentLoading(true)
       onInit()
         .then(res => {
-          setEditorState(EditorState.createWithContent(stateFromHTML(res.htmlContent)))
+          editor?.commands.setContent(res.htmlContent)
           setTitle(res.title || '')
           setTags(res.tags || [])
         })
         .catch(onInitError)
         .finally(()=>setContentLoading(false))
     }
-  }, [onInit])
+  }, [onInit, editor])
 
 
   const canPublish = Boolean(
-    editorState.getCurrentContent().getPlainText() &&
+    !editor?.isEmpty &&
     (enableTitle ? Boolean(title) : true) &&
     (enableTags ? Boolean(tags.length) : true)
   )
@@ -72,24 +69,19 @@ export default function RichTextEditor <TPublish extends (content: ContentAggreg
     setPublishLoading(true)
     onPublish({
       title,
-      content: stateToHTML(editorState.getCurrentContent()),
+      content: editor?.getHTML() || '',
       tags
     })
       .then(res => afterPublish && afterPublish(res))
       .catch(e => setPublishError(e))
       .finally(()=>setPublishLoading(false))
-  }, [onPublish, title, tags, editorState])
+  }, [onPublish, title, tags, editor])
 
   return (
     <Container sx={{ height: '500px', mt: 2 }}>
+      {contentLoading && <PageLoader fixed />}
       {enableTitle && <TextField label="عنوان سوال" sx={{ width: '100%' }} inputProps={{ style: { fontSize: 30 }}} InputLabelProps={{ style: { top: '5px' } }} value={title} onChange={e=>setTitle(e.currentTarget.value)}/>}
-      <Editor
-        editorState={editorState}
-        toolbarClassName="rdw-toolbar"
-        wrapperClassName="wrapperClassName"
-        editorClassName="rdw-editor"
-        onEditorStateChange={setEditorState}
-      />
+      <EditorContent editor={editor} />
       <Grid container sx={{ mt: 2 }}>
         <LoadingButton variant="outlined" color="primary" sx={{ mr: 1}} onClick={publish} loading={publishLoading} disabled={!canPublish}>
           <Typography sx={{ mr: 1 }}>{submitButtonText}</Typography>
@@ -113,3 +105,5 @@ export default function RichTextEditor <TPublish extends (content: ContentAggreg
     </Container>
   )
 }
+
+
