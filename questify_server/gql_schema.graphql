@@ -1,0 +1,132 @@
+type Query {
+  hello: String
+  questions(offset: Int, before: String, after: String, first: Int, last: Int, title: String, title_Icontains: String, title_Istartswith: String, htmlContent: String, htmlContent_Icontains: String): QuestionTypeConnection
+  question(
+    """The ID of the object"""
+    id: ID!
+  ): QuestionType
+}
+
+type QuestionTypeConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [QuestionTypeEdge]!
+}
+
+"""
+The Relay compliant `PageInfo` type, containing data necessary to paginate this connection.
+"""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+"""A Relay edge containing a `QuestionType` and its cursor."""
+type QuestionTypeEdge {
+  """The item at the end of the edge"""
+  node: QuestionType
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type QuestionType implements RelayNode {
+  """The ID of the object"""
+  id: ID!
+  htmlContent: String!
+  author: UserType
+  created: DateTime!
+  updated: DateTime!
+  title: String!
+  tags: JSONString!
+  answers(offset: Int, before: String, after: String, first: Int, last: Int): AnswerTypeConnection
+  numAnswers: Int
+  hasAcceptedAnswer: Boolean
+}
+
+interface RelayNode {
+  """The ID of the object"""
+  id: ID!
+}
+
+type UserType implements RelayNode {
+  """The ID of the object"""
+  id: ID!
+  lastLogin: DateTime
+
+  """
+  Designates that this user has all permissions without explicitly assigning them.
+  """
+  isSuperuser: Boolean!
+
+  """Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."""
+  username: String!
+  firstName: String!
+  lastName: String!
+  email: String!
+
+  """Designates whether the user can log into this admin site."""
+  isStaff: Boolean!
+
+  """
+  Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
+  """
+  isActive: Boolean!
+  dateJoined: DateTime!
+  question(offset: Int, before: String, after: String, first: Int, last: Int, title: String, title_Icontains: String, title_Istartswith: String, htmlContent: String, htmlContent_Icontains: String): QuestionTypeConnection!
+  answer(offset: Int, before: String, after: String, first: Int, last: Int): AnswerTypeConnection!
+}
+
+"""
+The `DateTime` scalar type represents a DateTime
+value as specified by
+[iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+"""
+scalar DateTime
+
+type AnswerTypeConnection {
+  """Pagination data for this connection."""
+  pageInfo: PageInfo!
+
+  """Contains the nodes in this connection."""
+  edges: [AnswerTypeEdge]!
+}
+
+"""A Relay edge containing a `AnswerType` and its cursor."""
+type AnswerTypeEdge {
+  """The item at the end of the edge"""
+  node: AnswerType
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type AnswerType implements RelayNode {
+  """The ID of the object"""
+  id: ID!
+  htmlContent: String!
+  author: UserType
+  created: DateTime!
+  updated: DateTime!
+  accepted: Boolean!
+  question: QuestionType
+}
+
+"""
+Allows use of a JSON String for input / output from the GraphQL schema.
+
+Use of this type is *not recommended* as you lose the benefits of having a defined, static
+schema (one of the key benefits of GraphQL).
+"""
+scalar JSONString

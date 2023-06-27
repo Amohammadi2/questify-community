@@ -6,31 +6,31 @@ import { useNavigate } from "react-router-dom"
 
 type QuestionSummaryProps = QuestionRead
 
-export default function QuestionSummary({ author, created, title, numAnswers, tags, id } : QuestionSummaryProps) {
+export default function QuestionSummary({ author, created, title, numAnswers, tags, id, hasAcceptedAnswer } : any) {
   
   const navigate = useNavigate()
 
   const goToDetailsPage = () => navigate('/question-details/'+id)
   
   return (
-    <Card sx={{ width: '100%', px: 1.5, py: 2, my: 1.5 }}>
+    <Card sx={{ width: '100%', px: 1.5, py: 2, my: 1.5 }} elevation={2}>
       <Stack direction="row" alignItems="center">
         <Avatar sx={{ mr: 1 }} />
         <Stack>
           <div>{author.username}</div>
-          <Typography>{created.toLocaleDateString('fa-IR')}</Typography>
+          <Typography>{new Date(created).toLocaleDateString('fa-IR')}</Typography>
         </Stack>
       </Stack>
       <CardActionArea sx={{ py: .8, my: 1}} onClick={goToDetailsPage}>
-        <Typography variant="h6">{title}</Typography>
+        <Typography variant="h6" color="blue">{title}</Typography>
       </CardActionArea>
       <Grid item sx={{ flexGrow: 1, }}>
-        {tags.map(t => (
+        {JSON.parse(tags).map((t:any) => (
           <Chip key={t} label={'#'+t} sx={{ mx: .3 }} variant="outlined"/>
         ))}
       </Grid>
       <Stack direction="row" alignItems="center" sx={{ mt: 1}}>
-        <FontAwesomeIcon icon={faCheckSquare} style={{ color: 'rgb(200,200,200)' }}/>
+        <FontAwesomeIcon icon={faCheckSquare} style={{ color: hasAcceptedAnswer ? 'green' : 'rgb(200,200,200)' }}/>
         <Typography sx={{ mx: .7 }}>{numAnswers} پاسخ</Typography>
         <div style={{flexGrow:1}}></div>
         <Button>پیگیری</Button>

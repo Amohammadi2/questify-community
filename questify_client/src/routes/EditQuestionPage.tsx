@@ -1,5 +1,7 @@
 import { $questionsApi } from "@/apis";
+import { client } from "@/apollo/client";
 import RichTextEditor, { ContentAggregate } from "@/components/RichTextEditor";
+import { QuestionWrite } from "@/gen";
 import { useApi } from "@/hooks/useApi";
 import { useCallback, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -39,12 +41,30 @@ export default function EditQuestionPage() {
   }, [questionsApi])
 
 
+  const afterPublish = (res: QuestionWrite): void => {
+    client.cache.modify({
+      id: client.cache.identify({ __typename: 'QuestionType', id: qid || '' }),
+      fields: {
+        title() {
+          return res.title
+        },
+        htmlContent() {
+          return res.htmlContent
+        },
+        tags() {
+          return JSON.stringify(res.tags)
+        }
+      }
+    })
+    return navigate('/question-details/' + res.id, { replace: true })
+  }
+
   return (
     <RichTextEditor
       onInit={fetchQuestionCB}
       onInitError={handleLoadingError}
       onPublish={updateQuestionCB}
-      afterPublish={res => navigate('/question-details/'+res.id, { replace: true })}
+      afterPublish={afterPublish}
       enableTags
       enableTitle
       onCancel={handleCancelation}

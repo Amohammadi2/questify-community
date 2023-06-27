@@ -10,3 +10,8 @@ export const $questionsPage = atom<number>({
   key: 'questions-page',
   default: 1,
 })
+
+export const $questionsHasNext = atom<boolean>({
+  key: 'questions-has-next',
+  default: true
+})

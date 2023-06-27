@@ -74,6 +74,12 @@ export interface QuestionRead {
      * @memberof QuestionRead
      */
     numAnswers: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof QuestionRead
+     */
+    hasAcceptedAnswer: boolean;
 }
 
 /**
@@ -89,6 +95,7 @@ export function instanceOfQuestionRead(value: object): boolean {
     isInstance = isInstance && "title" in value;
     isInstance = isInstance && "tags" in value;
     isInstance = isInstance && "numAnswers" in value;
+    isInstance = isInstance && "hasAcceptedAnswer" in value;
 
     return isInstance;
 }
@@ -111,6 +118,7 @@ export function QuestionReadFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'title': json['title'],
         'tags': json['tags'],
         'numAnswers': json['num_answers'],
+        'hasAcceptedAnswer': json['has_accepted_answer'],
     };
 }
 
@@ -128,6 +136,7 @@ export function QuestionReadToJSON(value?: QuestionRead | null): any {
         'title': value.title,
         'tags': value.tags,
         'num_answers': value.numAnswers,
+        'has_accepted_answer': value.hasAcceptedAnswer,
     };
 }
 

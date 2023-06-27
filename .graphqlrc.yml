@@ -1,0 +1,2 @@
+schema: './questify_server/gql_schema.graphql'
+documents: './questify_client/src/**/*.{graphql,js,ts,jsx,tsx}'

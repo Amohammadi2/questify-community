@@ -903,9 +903,12 @@ components:
             type: string
         num_answers:
           type: integer
+        has_accepted_answer:
+          type: boolean
       required:
       - author
       - created
+      - has_accepted_answer
       - html_content
       - id
       - num_answers

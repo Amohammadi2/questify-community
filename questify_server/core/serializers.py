@@ -13,11 +13,12 @@ class QuestionReadSerializer(serializers.ModelSerializer):
     tags = serializers.ListSerializer(child=serializers.CharField())
     author = AuthorSerializer()
     num_answers = serializers.IntegerField()
+    has_accepted_answer = serializers.BooleanField()
 
     class Meta:
         model = Question
-        fields = ('id','html_content', 'author', 'created', 'updated', 'title', 'tags', 'num_answers')
-        read_only_fields = ('id', 'created', 'updated', 'author', 'num_answers')
+        fields = ('id','html_content', 'author', 'created', 'updated', 'title', 'tags', 'num_answers', 'has_accepted_answer')
+        read_only_fields = ('id', 'created', 'updated', 'author', 'num_answers', 'has_accepted_answer')
     
     def create(self, validated_data):
         return super().create(validated_data)

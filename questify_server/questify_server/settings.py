@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'drf_spectacular',
     'corsheaders',
+    'graphene_django'
 ]
 
 MIDDLEWARE = [
@@ -159,3 +160,7 @@ SIMPLE_JWT = {
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+GRAPHENE = {
+    "SCHEMA": 'core.graphql.schema'
+}

@@ -7,43 +7,66 @@ import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "./ConfirmationModal";
 import { useRecoilValue } from "recoil";
 import { $answersApi } from "@/apis";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { AnswerType } from "@/gen/gql/graphql";
+import { AnswerDetails } from "@/utils/mappers/answer-edge-to-answer-details";
 
-interface AnswerProps extends AnswerRead {
+interface AnswerProps extends AnswerDetails {
   opMode?: boolean
   authorMode?: boolean
   onDelete: (id: number) => Promise<any>
 }
 
-export default function Answer({ htmlContent, author, id, created, updated, accepted, opMode=false, authorMode=false, onDelete } : AnswerProps) {
+export default function Answer({ htmlContent, author, id, accepted : _accepted, opMode=false, authorMode=false, onDelete } : AnswerProps) {
   
   const navigate = useNavigate()
   const [openDeleteModal, deleteModalState] = useModal()
   const answersApi = useRecoilValue($answersApi)
+
+  const [accepted, setAccepted] = useState(false)
+
+  useEffect(() => {
+    setAccepted(_accepted || false)
+  }, [_accepted])
+
+  const toggleAcceptAnswer = () => {
+    answersApi.answersAcceptCreate({
+      id: Number.parseInt(id || '-1'),
+      acceptAnswerRequest: {
+        accepted: !accepted
+      }
+    })
+    // Todo: toast success or failure state
+    setAccepted(!accepted)
+  }
+
+  console.log('id', id)
   
   return (
     <>
       <ConfirmationModal
         {...deleteModalState}
         actionText="حذف پاسخ"
-        onConfirm={()=>onDelete(id)}
+        onConfirm={()=>onDelete(Number.parseInt(id || '-1'))}
         content="آیا مطمئنید که می خواهید پاسخ خود را حذف کنید؟ این عمل غیر قابل بازگشت می باشد"
         title="پاسخ حذف شود؟"
         negativeAction
       />
       <Grid container direction="column" sx={{ boxShadow: 1, borderRadius: 3, py: 2, px: 2.5, mt: 2 }}>
         <Grid container direction="row" alignItems={'center'} sx={{ mb: 2 }}>
-          <Avatar alt={author.username} />
-          <Typography sx={{ flexGrow: 1, ml: 1 }}>{author.username}</Typography>
+          <Avatar alt={author?.username} />
+          <Typography sx={{ flexGrow: 1, ml: 1 }}>{author?.username}</Typography>
         </Grid>
         <Grid container direction="row" alignItems='center'>
           {opMode && <Grid item sx={{ mr: 2 }}>
-            <FontAwesomeIcon
-              icon={faCheckSquare}
-              style={{
-                color: accepted ? 'green' : 'rgb(220,220,220)'
-              }}
-            />
+            <IconButton onClick={toggleAcceptAnswer}>
+              <FontAwesomeIcon
+                icon={faCheckSquare}
+                style={{
+                  color: accepted ? 'green' : 'rgb(220,220,220)'
+                }}
+              />
+            </IconButton>
           </Grid>}
           <Grid item>
             <div dangerouslySetInnerHTML={{ __html: htmlContent }} style={{ fontFamily: 'Vazirmatn' }} />

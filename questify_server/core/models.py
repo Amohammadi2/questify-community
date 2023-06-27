@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+from .managers import QuestionManager
+
 class Post(models.Model):
     class Meta:
         abstract = True
@@ -13,6 +15,8 @@ class Post(models.Model):
 class Question(Post):
     title = models.CharField('title', null=False, blank=False)
     tags = models.JSONField(null=False, blank=False)
+
+    objects = QuestionManager()
 
     def __str__(self) -> str:
         return self.title

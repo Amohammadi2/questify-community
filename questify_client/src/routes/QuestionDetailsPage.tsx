@@ -11,72 +11,49 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons"
 import QuestionDetails from "@/components/QuestionDetails"
 import { $isAuthenticated } from "@/store/auth.store"
+import { useQuery } from "@apollo/client"
+import { GET_QUESTION_DETAILS } from "@/graphql/get-question-details"
+import { toQuestionDetails } from "@/utils/mappers/to-question-details"
+import { answerEdgeToAnswerDetailsArray } from "@/utils/mappers/answer-edge-to-answer-details"
 
 export default function QuestionDetailsPage() {
   
   const { qid } = useParams()
-
   const isAuthenticated = useRecoilValue($isAuthenticated)
   const userProfile = useRecoilValue($userProfile)
   const navigate = useNavigate()
-
+  const answersApi = useRecoilValue($answersApi)
+  const { loading, data, client, fetchMore } = useQuery(GET_QUESTION_DETAILS, { variables: { id: qid || '-1' }})
+  
+  const deleteAnswer = (id: number): Promise<void> => {
+    return answersApi.answersDestroy({ id })
+    .then() // Todo: toast success, rewrite cache
+    .catch() // Todo: Toast error
+  }
+  
   if (!qid)
     return <Container><Typography>همچین سوالی پیدا نشد</Typography></Container>
 
-  const [questionData, setQuestionData] = useState<QuestionRead | null>()
-
-  const answersApi = useRecoilValue($answersApi)
-
-  const [answersPage, setAnswersPage] = useState(1)
-
-  const fetchAnswersCB = useCallback(() => {
-    return answersApi.answersForQuestionList({
-      qid: Number.parseInt(qid),
-      limit: 5,
-      offset: (answersPage - 1) * 5
-    })
-  }, [qid, answersPage])
-
-  const [answers, setAnswers] = useState<AnswerRead[]>([])
-
-  const [fetchAnswers, { response: answersData, loading: answersLoading, error: answersError}] = useApi(fetchAnswersCB)
-
-  useEffect(() => {
-    fetchAnswers()
-  }, [answersPage])
-
-  useEffect(() => {
-      const results = answersData?.results || []
-      setAnswers(q => [...q, ...results])
-  }, [answersData])
-
-  const nextAnswersPage = () => {
-    setAnswersPage(p => p+1)
-  }
-
-  const deleteAnswer = (id: number): Promise<void> => {
-    return answersApi.answersDestroy({ id })
-      .then(() => setAnswers(a => a.filter(b => b.id != id))) // Todo: toast success
-      .catch() // Todo: Toast error
-  }
-
   return (
     <Container maxWidth='md' sx={{ mb: 10 }}>
-      <QuestionDetails qid={qid || ''} onLoad={setQuestionData} opMode={questionData?.author.username === userProfile?.username} onError={()=>navigate(-1)}/>
-      {answersLoading
+      
+      {loading || !data?.question
         ? (
           <Typography>در حال بارگزاری</Typography>
         )
         : (
-          answers?.map(
-            a => <Answer
-              {...a}
-              opMode={questionData?.author.username === userProfile?.username}
-              authorMode={a.author.username == userProfile?.username}
-              key={a.id}
-              onDelete={deleteAnswer}
-            />
-          )
+          <>
+            <QuestionDetails {...toQuestionDetails(data)} opMode={data.question.author?.username === userProfile?.username}/>
+            {answerEdgeToAnswerDetailsArray(data).map(
+              a => <Answer
+                {...a}
+                opMode={data?.question?.author?.username === userProfile?.username}
+                authorMode={a.author?.username == userProfile?.username}
+                key={a?.id}
+                onDelete={deleteAnswer}
+              />
+            )}
+          </>
         )
       }
       {isAuthenticated && <Button variant="contained" color="primary" size="large" sx={{ position: 'fixed', bottom: 20, left: '50%', transform:'translateX(-50%)', width: '300px' }} href={"/answer/"+qid}>

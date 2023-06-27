@@ -17,6 +17,8 @@ import QuestionDetailsPage from './routes/QuestionDetailsPage'
 import AnswerQuestionPage from './routes/AnswerQuestionPage'
 import EditQuestionPage from './routes/EditQuestionPage'
 import EditAnswerPage from './routes/EditAnswerPage'
+import { ApolloProvider } from '@apollo/client'
+import { client } from './apollo/client'
 
 function App() {
 
@@ -50,30 +52,32 @@ function App() {
       element: withRouteGuard(withNavLayout(<AnswerQuestionPage />))
     },
     {
-      path: '/edit-answer/:qid',
+      path: '/edit-answer/:aid',
       element: withRouteGuard(withNavLayout(<EditAnswerPage />))
     }
   ])
 
   return (
-    <AuthProvider>
-      <CacheProvider value={cacheRtl}>
-        <CssBaseline />
-        <ThemeProvider theme={theme}>
-          {
-           /* Fix: when logging out some random component suspenses causing app to crash
-            * because of this, I wrapped the router with a suspense handler. This is just a
-            * temporary fix, allowing the app to continue running by suppressing the problem.
-            * Finding the root cause of this problem requires digging deep into the code
-            * execution process step by step with the use of advanced debugging tools.
-            */
-          }
-          <Suspense> 
-            <RouterProvider router={router} />
-          </Suspense>
-        </ThemeProvider>
-      </CacheProvider>
-    </AuthProvider>
+    <ApolloProvider client={client}>
+      <AuthProvider>
+        <CacheProvider value={cacheRtl}>
+          <CssBaseline />
+          <ThemeProvider theme={theme}>
+            {
+            /* Fix: when logging out some random component suspenses causing app to crash
+              * because of this, I wrapped the router with a suspense handler. This is just a
+              * temporary fix, allowing the app to continue running by suppressing the problem.
+              * Finding the root cause of this problem requires digging deep into the code
+              * execution process step by step with the use of advanced debugging tools.
+              */
+            }
+            <Suspense> 
+              <RouterProvider router={router} />
+            </Suspense>
+          </ThemeProvider>
+        </CacheProvider>
+      </AuthProvider>
+    </ApolloProvider>
   )
 }
 

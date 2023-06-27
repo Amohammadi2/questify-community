@@ -10,53 +10,33 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import ConfirmationModal from "./ConfirmationModal";
 import "@/styles/ProseMirror.css"
+import { GET_QUESTION_DETAILS } from "@/graphql/get-question-details";
+import { GET_QUESTION_FEED } from "@/graphql/get-questions";
+import { GetQuestionDetailsQuery, Maybe, QuestionType } from "@/gen/gql/graphql";
+import { QuestionDetails } from "@/utils/mappers/to-question-details";
 
-
-export interface QuestionDetailsProps {
-  qid: string
-  onLoad?: (question: QuestionRead | null) => void
-  onError?: (err: any) => void
+export interface QuestionDetailsProps extends QuestionDetails {
   opMode?: boolean
 }
 
-export default function QuestionDetails({ qid, onLoad, onError, opMode=false } : QuestionDetailsProps) {
+
+export default function QuestionDetails({ id, opMode=false, author, title, htmlContent, created } : QuestionDetailsProps) {
 
   const navigate = useNavigate()
 
   const questionsApi = useRecoilValue($questionsApi)
 
-  const fetchQuestionCB = useCallback(() => {
-    return questionsApi.questionsRetrieve({
-      id: Number.parseInt(qid)
-    })
-  }, [qid])
-
-  const [fetchQuestion, { response: questionData, loading: questionLoading, error: questionError }] = useApi(fetchQuestionCB)
-  
-  useEffect(() => {
-    fetchQuestion()
-  }, [qid])
-
-  useEffect(() => {
-    onLoad && onLoad(questionData)
-  }, [questionData])
-
-  useEffect(() => {
-    if (questionError)
-      onError && onError(questionError)
-  }, [questionError])
-
   const [openDeleteModal, deleteModalState] = useModal()
 
   const deleteQuestionCB = useCallback(() => {
     return questionsApi.questionsDestroy({
-      id: questionData?.id || -1
+      id: Number.parseInt(id)
     })
-  }, [questionsApi, questionData])
+  }, [questionsApi, id])
 
   const [deleteQuestion,] = useApi(deleteQuestionCB, {
     then() {
-      navigate('/questions')
+      navigate('/questions', { replace: true })
       // Todo: Toast a success notif
     },
   })
@@ -71,37 +51,31 @@ export default function QuestionDetails({ qid, onLoad, onError, opMode=false } :
         title="سوال حذف شود؟"
         negativeAction
       />
-      {questionLoading
-      ? (
-        <Typography>در حال بارگزاری</Typography>
-      )
-      : (
-        <Grid container direction="column" sx={{ mt: 4 }}>
-          <Grid container direction="row" alignItems={'center'} sx={{ mb: 2 }}>
-            <Avatar alt={questionData?.author.username} sx={{ width: 30, height: 30}} />
-            <Typography sx={{ ml: 1 }}>{questionData?.author.username}</Typography>
-          </Grid>
-          <Grid container>
-            <Typography variant="h5" sx={{ ml: 2, fontWeight: 800 }}>{questionData?.title}</Typography>
-          </Grid>
-          <div dangerouslySetInnerHTML={{ __html: questionData?.htmlContent || '' }} className="ProseMirror" />
-          {/* Todo: replace these buttons with a menu */}
-          {opMode && <Grid container sx={{ mt: 1, mb: 3 }}>
-            <IconButton sx={{ mr: .5 }} onClick={openDeleteModal}>
-              <FontAwesomeIcon
-                icon={faTrashCan}
-                style={{ fontSize: 16 }}
-              />
-            </IconButton>
-            <IconButton sx={{ mr: .5 }} onClick={() => navigate('/edit-question/'+qid)}>
-              <FontAwesomeIcon
-                icon={faPen}
-                style={{ fontSize: 16 }}
-              />
-            </IconButton>
-          </Grid>}
+      <Grid container direction="column" sx={{ mt: 4 }}>
+        <Grid container direction="row" alignItems={'center'} sx={{ mb: 2 }}>
+          <Avatar alt={author.username} sx={{ width: 30, height: 30}} />
+          <Typography sx={{ ml: 1 }}>{author.username}</Typography>
         </Grid>
-      )}
+        <Grid container>
+          <Typography variant="h5" sx={{ ml: 2, fontWeight: 800 }}>{title}</Typography>
+        </Grid>
+        <div dangerouslySetInnerHTML={{ __html: htmlContent || '' }} className="ProseMirror" />
+        {/* Todo: replace these buttons with a menu */}
+        {opMode && <Grid container sx={{ mt: 1, mb: 3 }}>
+          <IconButton sx={{ mr: .5 }} onClick={openDeleteModal}>
+            <FontAwesomeIcon
+              icon={faTrashCan}
+              style={{ fontSize: 16 }}
+            />
+          </IconButton>
+          <IconButton sx={{ mr: .5 }} onClick={() => navigate('/edit-question/'+id)}>
+            <FontAwesomeIcon
+              icon={faPen}
+              style={{ fontSize: 16 }}
+            />
+          </IconButton>
+        </Grid>}
+      </Grid>
     </>
   )
 }

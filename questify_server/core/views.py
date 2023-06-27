@@ -15,7 +15,11 @@ from .serializers import AcceptAnswerSerializer, AnswerReadSerializer, AnswerWri
 
 class QuestionsViewset(viewsets.ModelViewSet):
 
-    queryset = Question.objects.all().order_by('-created').annotate(num_answers=Count('answers'))
+    queryset = (Question.objects.get_queryset()
+                .all()
+                .with_acceptance_status()
+                .with_answer_count()
+                .order_by('-created'))
 
 
     def get_serializer_class(self):
@@ -46,7 +50,7 @@ class QuestionsViewset(viewsets.ModelViewSet):
 
 class AnswersViewset(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin):
 
-    queryset = Answer.objects.all().order_by('-created', '-accepted')
+    queryset = Answer.objects.all().order_by('-accepted', '-created')
 
 
     def get_serializer_class(self):
@@ -65,13 +69,15 @@ class AnswersViewset(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.Up
             return [IsAuthenticatedOrReadOnly()]
 
 
-    @extend_schema(request=AcceptAnswerSerializer)
+    @extend_schema(request=AcceptAnswerSerializer, responses=AnswerReadSerializer)
     @action(detail=True, methods=['post'])
     def accept(self, request, pk=None):
+        answer = self.get_object()
         serializer = AcceptAnswerSerializer(
-            self.get_object(), request.POST, context=self.get_serializer_context())
+            answer, request.data, context=self.get_serializer_context())
         serializer.is_valid(raise_exception=True)
         serializer.save()
+        return Response(AnswerReadSerializer(answer).data)
 
 
     @extend_schema(responses=MyAnswersSerializer(many=True))
@@ -88,7 +94,7 @@ class AnswersViewset(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.Up
     def for_question(self, request):
         serialized_data = GetAnswersForQuestionParamSerializer(data=request.GET)
         serialized_data.is_valid(raise_exception=True)
-        answers = self.queryset.filter(question=serialized_data.data['qid']).order_by('-created')
+        answers = self.queryset.filter(question=serialized_data.data['qid'])
         paginated_answers = self.paginate_queryset(answers)
         return self.get_paginated_response(
             AnswerReadSerializer(paginated_answers, many=True).data
