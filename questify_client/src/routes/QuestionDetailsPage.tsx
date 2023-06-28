@@ -17,6 +17,7 @@ import { toQuestionDetails } from "@/utils/mappers/to-question-details"
 import { answerEdgeToAnswerDetailsArray } from "@/utils/mappers/answer-edge-to-answer-details"
 import { graphql } from "@/gen/gql"
 import { AnswerType, AnswerTypeConnection, AnswerTypeEdge } from "@/gen/gql/graphql"
+import InfiniteScroll from "react-infinite-scroll-component"
 
 export default function QuestionDetailsPage() {
   
@@ -63,16 +64,25 @@ export default function QuestionDetailsPage() {
         : (
           <>
             <QuestionDetails {...toQuestionDetails(data)} opMode={data.question.author?.username === userProfile?.username}/>
-            {answerEdgeToAnswerDetailsArray(data).map(
-              a => <Answer
-                {...a}
-                questionId={qid || ''}
-                opMode={data?.question?.author?.username === userProfile?.username}
-                authorMode={a.author?.username == userProfile?.username}
-                key={a?.id}
-                onDelete={deleteAnswer}
-              />
-            )}
+            <InfiniteScroll
+              dataLength={data?.question?.answers?.edges.length || 0}
+              next={()=>fetchMore({ variables: { answerAfter: data.question?.answers?.pageInfo.endCursor }})}
+              hasMore={data.question.answers?.pageInfo.hasNextPage || false}
+              endMessage={<></>}
+              loader={<h3 style={{textAlign: 'center', fontFamily:'Vazirmatn'}}>در حال بارگزاری ...</h3>}
+              style={{ padding: '5px 10px' }}
+            >
+              {answerEdgeToAnswerDetailsArray(data).map(
+                a => <Answer
+                  {...a}
+                  questionId={qid || ''}
+                  opMode={data?.question?.author?.username === userProfile?.username}
+                  authorMode={a.author?.username == userProfile?.username}
+                  key={a?.id}
+                  onDelete={deleteAnswer}
+                />
+              )}
+            </InfiniteScroll>
           </>
         )
       }
