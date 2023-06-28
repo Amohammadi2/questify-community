@@ -8,16 +8,18 @@ import ConfirmationModal from "./ConfirmationModal";
 import { useRecoilValue } from "recoil";
 import { $answersApi } from "@/apis";
 import { useCallback, useEffect, useState } from "react";
-import { AnswerType } from "@/gen/gql/graphql";
+import { AnswerType, AnswerTypeConnection } from "@/gen/gql/graphql";
 import { AnswerDetails } from "@/utils/mappers/answer-edge-to-answer-details";
+import { client } from "@/apollo/client";
 
 interface AnswerProps extends AnswerDetails {
   opMode?: boolean
   authorMode?: boolean
   onDelete: (id: number) => Promise<any>
+  questionId: string
 }
 
-export default function Answer({ htmlContent, author, id, accepted : _accepted, opMode=false, authorMode=false, onDelete } : AnswerProps) {
+export default function Answer({ htmlContent, author, id, accepted : _accepted, opMode=false, authorMode=false, onDelete, questionId } : AnswerProps) {
   
   const navigate = useNavigate()
   const [openDeleteModal, deleteModalState] = useModal()
@@ -36,11 +38,40 @@ export default function Answer({ htmlContent, author, id, accepted : _accepted, 
         accepted: !accepted
       }
     })
+    .then(() => {
+      client.cache.modify({
+        id: client.cache.identify({__typename: 'AnswerType', id }),
+        fields: {
+          accepted() { return !accepted }
+        }
+      })
+      client.cache.modify({
+        id: client.cache.identify({__typename: 'QuestionType', id: questionId }),
+        fields: {
+          hasAcceptedAnswer() {
+            return !accepted
+          },
+          answers(answers, { readField }) {
+            if (!accepted) {
+              answers.edges.forEach((edge: any) => {
+                client.cache.modify({
+                  id: edge.node.__ref,
+                  fields: {
+                    accepted() {
+                      return readField('id', edge.node) === id ? true : false
+                    }
+                  }
+                })
+              })
+            }
+            return answers
+          }
+        }
+      })
+    })
     // Todo: toast success or failure state
     setAccepted(!accepted)
   }
-
-  console.log('id', id)
   
   return (
     <>

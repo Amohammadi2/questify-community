@@ -14,6 +14,7 @@ import { GET_QUESTION_DETAILS } from "@/graphql/get-question-details";
 import { GET_QUESTION_FEED } from "@/graphql/get-questions";
 import { GetQuestionDetailsQuery, Maybe, QuestionType } from "@/gen/gql/graphql";
 import { QuestionDetails } from "@/utils/mappers/to-question-details";
+import { client } from "@/apollo/client";
 
 export interface QuestionDetailsProps extends QuestionDetails {
   opMode?: boolean
@@ -36,6 +37,8 @@ export default function QuestionDetails({ id, opMode=false, author, title, htmlC
 
   const [deleteQuestion,] = useApi(deleteQuestionCB, {
     then() {
+      client.cache.evict({ id: client.cache.identify({__typename: 'QuestionType', id}) })
+      client.cache.gc()
       navigate('/questions', { replace: true })
       // Todo: Toast a success notif
     },

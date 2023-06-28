@@ -72,11 +72,13 @@ class AnswersViewset(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.Up
     @extend_schema(request=AcceptAnswerSerializer, responses=AnswerReadSerializer)
     @action(detail=True, methods=['post'])
     def accept(self, request, pk=None):
-        answer = self.get_object()
+        answer: Answer = self.get_object()
         serializer = AcceptAnswerSerializer(
             answer, request.data, context=self.get_serializer_context())
         serializer.is_valid(raise_exception=True)
         serializer.save()
+        # Make sure no other answer is accepted for the same question
+        answer.question.answers.filter(accepted=True).exclude(pk=pk).update(accepted=False)
         return Response(AnswerReadSerializer(answer).data)
 
 

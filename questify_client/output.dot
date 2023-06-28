@@ -1,0 +1,265 @@
+strict digraph "dependency-cruiser output"{
+    rankdir="LR" splines="ortho" overlap="false" nodesep="0.5" ranksep="1.5" fontname="Helvetica-bold" fontsize="9" style="rounded,bold,filled" fillcolor="#ffffff" compound="true"
+    node [shape="box" style="rounded, filled" height="0.2" color="black" fillcolor="#ffffcc" fontcolor="black" fontname="Helvetica" fontsize="9"]
+    edge [arrowhead="normal" arrowsize="0.6" penwidth="2.0" color="#00000033" fontname="Helvetica" fontsize="9"]
+
+    subgraph "cluster_@graphql-typed-document-node" {label="@graphql-typed-document-node" "@graphql-typed-document-node/core" [label=<core> tooltip="core" color="red" fontcolor="red"] }
+    subgraph "cluster_src" {label="src" "src/App.css" [label=<App.css> tooltip="App.css" URL="src/App.css" ] }
+    subgraph "cluster_src" {label="src" "src/App.tsx" [label=<App.tsx> tooltip="App.tsx" URL="src/App.tsx" fillcolor="#bbfeff"] }
+    "src/App.tsx" -> "src/apollo/client.ts"
+    "src/App.tsx" -> "src/App.css"
+    "src/App.tsx" -> "src/components/AskButton.tsx"
+    "src/App.tsx" -> "src/hocs/AuthProvider.tsx"
+    "src/App.tsx" -> "src/hocs/withNavLayout.tsx"
+    "src/App.tsx" -> "src/hocs/withRouteGuard.tsx"
+    "src/App.tsx" -> "src/routes/AnswerQuestionPage.tsx"
+    "src/App.tsx" -> "src/routes/AskQuestionPage.tsx"
+    "src/App.tsx" -> "src/routes/EditAnswerPage.tsx"
+    "src/App.tsx" -> "src/routes/EditQuestionPage.tsx"
+    "src/App.tsx" -> "src/routes/LandingPage.tsx"
+    "src/App.tsx" -> "src/routes/LoginPage.tsx"
+    "src/App.tsx" -> "src/routes/QuestionDetailsPage.tsx"
+    "src/App.tsx" -> "src/routes/QuestionsPage.tsx"
+    "src/App.tsx" -> "src/theme/index.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/apis" {label="apis" "src/apis/index.ts" [label=<index.ts> tooltip="index.ts" URL="src/apis/index.ts" fillcolor="#ddfeff"] } }
+    "src/apis/index.ts" -> "src/gen/index.ts"
+    "src/apis/index.ts" -> "src/store/auth.store.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/apollo" {label="apollo" "src/apollo/client.ts" [label=<client.ts> tooltip="client.ts" URL="src/apollo/client.ts" fillcolor="#ddfeff"] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/assets" {label="assets" "src/assets/illustration.svg" [label=<illustration.svg> tooltip="illustration.svg" URL="src/assets/illustration.svg" ] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/assets" {label="assets" "src/assets/logo.svg" [label=<logo.svg> tooltip="logo.svg" URL="src/assets/logo.svg" ] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" "src/components/Answer.tsx" [label=<Answer.tsx> tooltip="Answer.tsx" URL="src/components/Answer.tsx" fillcolor="#bbfeff"] } }
+    "src/components/Answer.tsx" -> "src/components/ConfirmationModal.tsx"
+    "src/components/Answer.tsx" -> "src/apis/index.ts"
+    "src/components/Answer.tsx" -> "src/gen/index.ts"
+    "src/components/Answer.tsx" -> "src/gen/gql/graphql.ts"
+    "src/components/Answer.tsx" -> "src/hooks/useModal.ts"
+    "src/components/Answer.tsx" -> "src/utils/mappers/answer-edge-to-answer-details.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" "src/components/AskButton.tsx" [label=<AskButton.tsx> tooltip="AskButton.tsx" URL="src/components/AskButton.tsx" fillcolor="#bbfeff"] } }
+    "src/components/AskButton.tsx" -> "src/store/auth.store.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" "src/components/ConfirmationModal.tsx" [label=<ConfirmationModal.tsx> tooltip="ConfirmationModal.tsx" URL="src/components/ConfirmationModal.tsx" fillcolor="#bbfeff"] } }
+    "src/components/ConfirmationModal.tsx" -> "src/interfaces/ModalProps.interface.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" "src/components/ElevationScroll.tsx" [label=<ElevationScroll.tsx> tooltip="ElevationScroll.tsx" URL="src/components/ElevationScroll.tsx" fillcolor="#bbfeff"] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" "src/components/PageLoader.tsx" [label=<PageLoader.tsx> tooltip="PageLoader.tsx" URL="src/components/PageLoader.tsx" fillcolor="#bbfeff"] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" "src/components/QuestionDetails.tsx" [label=<QuestionDetails.tsx> tooltip="QuestionDetails.tsx" URL="src/components/QuestionDetails.tsx" fillcolor="#bbfeff"] } }
+    "src/components/QuestionDetails.tsx" -> "src/components/ConfirmationModal.tsx"
+    "src/components/QuestionDetails.tsx" -> "src/apis/index.ts"
+    "src/components/QuestionDetails.tsx" -> "src/gen/index.ts"
+    "src/components/QuestionDetails.tsx" -> "src/gen/gql/graphql.ts"
+    "src/components/QuestionDetails.tsx" -> "src/graphql/get-question-details.ts"
+    "src/components/QuestionDetails.tsx" -> "src/graphql/get-questions.ts"
+    "src/components/QuestionDetails.tsx" -> "src/hooks/useApi.ts"
+    "src/components/QuestionDetails.tsx" -> "src/hooks/useModal.ts"
+    "src/components/QuestionDetails.tsx" -> "src/styles/ProseMirror.css"
+    "src/components/QuestionDetails.tsx" -> "src/utils/mappers/to-question-details.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" "src/components/QuestionSummary.tsx" [label=<QuestionSummary.tsx> tooltip="QuestionSummary.tsx" URL="src/components/QuestionSummary.tsx" fillcolor="#bbfeff"] } }
+    "src/components/QuestionSummary.tsx" -> "src/gen/index.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" "src/components/RichTextEditor.tsx" [label=<RichTextEditor.tsx> tooltip="RichTextEditor.tsx" URL="src/components/RichTextEditor.tsx" fillcolor="#bbfeff"] } }
+    "src/components/RichTextEditor.tsx" -> "src/hooks/useRichTextEditor.ts"
+    "src/components/RichTextEditor.tsx" -> "src/components/PageLoader.tsx"
+    "src/components/RichTextEditor.tsx" -> "src/styles/ProseMirror.css"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/components" {label="components" "src/components/UserProfileMenu.tsx" [label=<UserProfileMenu.tsx> tooltip="UserProfileMenu.tsx" URL="src/components/UserProfileMenu.tsx" fillcolor="#bbfeff"] } }
+    "src/components/UserProfileMenu.tsx" -> "src/store/auth.store.ts"
+    "src/components/UserProfileMenu.tsx" -> "src/store/user-profile.store.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/apis" {label="apis" "src/gen/apis/AnswersApi.ts" [label=<AnswersApi.ts> tooltip="AnswersApi.ts" URL="src/gen/apis/AnswersApi.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/apis/AnswersApi.ts" -> "src/gen/models/index.ts"
+    "src/gen/apis/AnswersApi.ts" -> "src/gen/runtime.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/apis" {label="apis" "src/gen/apis/QuestionsApi.ts" [label=<QuestionsApi.ts> tooltip="QuestionsApi.ts" URL="src/gen/apis/QuestionsApi.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/apis/QuestionsApi.ts" -> "src/gen/models/index.ts"
+    "src/gen/apis/QuestionsApi.ts" -> "src/gen/runtime.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/apis" {label="apis" "src/gen/apis/SchemaApi.ts" [label=<SchemaApi.ts> tooltip="SchemaApi.ts" URL="src/gen/apis/SchemaApi.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/apis/SchemaApi.ts" -> "src/gen/runtime.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/apis" {label="apis" "src/gen/apis/TokenApi.ts" [label=<TokenApi.ts> tooltip="TokenApi.ts" URL="src/gen/apis/TokenApi.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/apis/TokenApi.ts" -> "src/gen/models/index.ts"
+    "src/gen/apis/TokenApi.ts" -> "src/gen/runtime.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/apis" {label="apis" "src/gen/apis/UsersApi.ts" [label=<UsersApi.ts> tooltip="UsersApi.ts" URL="src/gen/apis/UsersApi.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/apis/UsersApi.ts" -> "src/gen/models/index.ts"
+    "src/gen/apis/UsersApi.ts" -> "src/gen/runtime.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/apis" {label="apis" "src/gen/apis/index.ts" [label=<index.ts> tooltip="index.ts" URL="src/gen/apis/index.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/apis/index.ts" -> "src/gen/apis/AnswersApi.ts"
+    "src/gen/apis/index.ts" -> "src/gen/apis/QuestionsApi.ts"
+    "src/gen/apis/index.ts" -> "src/gen/apis/SchemaApi.ts"
+    "src/gen/apis/index.ts" -> "src/gen/apis/TokenApi.ts"
+    "src/gen/apis/index.ts" -> "src/gen/apis/UsersApi.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/gql" {label="gql" "src/gen/gql/fragment-masking.ts" [label=<fragment-masking.ts> tooltip="fragment-masking.ts" URL="src/gen/gql/fragment-masking.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/gql/fragment-masking.ts" -> "src/gen/gql/graphql.ts"
+    "src/gen/gql/fragment-masking.ts" -> "@graphql-typed-document-node/core" [xlabel="not-to-unresolvable" tooltip="not-to-unresolvable" fontcolor="red" color="red"]
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/gql" {label="gql" "src/gen/gql/gql.ts" [label=<gql.ts> tooltip="gql.ts" URL="src/gen/gql/gql.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/gql/gql.ts" -> "src/gen/gql/graphql.ts"
+    "src/gen/gql/gql.ts" -> "@graphql-typed-document-node/core" [xlabel="not-to-unresolvable" tooltip="not-to-unresolvable" fontcolor="red" color="red"]
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/gql" {label="gql" "src/gen/gql/graphql.ts" [label=<graphql.ts> tooltip="graphql.ts" URL="src/gen/gql/graphql.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/gql/graphql.ts" -> "@graphql-typed-document-node/core" [xlabel="not-to-unresolvable" tooltip="not-to-unresolvable" fontcolor="red" color="red"]
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/gql" {label="gql" "src/gen/gql/index.ts" [label=<index.ts> tooltip="index.ts" URL="src/gen/gql/index.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/gql/index.ts" -> "src/gen/gql/fragment-masking.ts"
+    "src/gen/gql/index.ts" -> "src/gen/gql/gql.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" "src/gen/index.ts" [label=<index.ts> tooltip="index.ts" URL="src/gen/index.ts" fillcolor="#ddfeff"] } }
+    "src/gen/index.ts" -> "src/gen/apis/index.ts"
+    "src/gen/index.ts" -> "src/gen/models/index.ts"
+    "src/gen/index.ts" -> "src/gen/runtime.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/models" {label="models" "src/gen/models/AcceptAnswerRequest.ts" [label=<AcceptAnswerRequest.ts> tooltip="AcceptAnswerRequest.ts" URL="src/gen/models/AcceptAnswerRequest.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/models/AcceptAnswerRequest.ts" -> "src/gen/runtime.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/models" {label="models" "src/gen/models/AnswerRead.ts" [label=<AnswerRead.ts> tooltip="AnswerRead.ts" URL="src/gen/models/AnswerRead.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/models/AnswerRead.ts" -> "src/gen/runtime.ts"
+    "src/gen/models/AnswerRead.ts" -> "src/gen/models/Author.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/models" {label="models" "src/gen/models/AnswerWrite.ts" [label=<AnswerWrite.ts> tooltip="AnswerWrite.ts" URL="src/gen/models/AnswerWrite.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/models/AnswerWrite.ts" -> "src/gen/runtime.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/models" {label="models" "src/gen/models/AnswerWriteRequest.ts" [label=<AnswerWriteRequest.ts> tooltip="AnswerWriteRequest.ts" URL="src/gen/models/AnswerWriteRequest.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/models/AnswerWriteRequest.ts" -> "src/gen/runtime.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/models" {label="models" "src/gen/models/Author.ts" [label=<Author.ts> tooltip="Author.ts" URL="src/gen/models/Author.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/models/Author.ts" -> "src/gen/runtime.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/models" {label="models" "src/gen/models/MyAnswers.ts" [label=<MyAnswers.ts> tooltip="MyAnswers.ts" URL="src/gen/models/MyAnswers.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/models/MyAnswers.ts" -> "src/gen/runtime.ts"
+    "src/gen/models/MyAnswers.ts" -> "src/gen/models/Author.ts"
+    "src/gen/models/MyAnswers.ts" -> "src/gen/models/QuestionBrief.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/models" {label="models" "src/gen/models/PaginatedAnswerReadList.ts" [label=<PaginatedAnswerReadList.ts> tooltip="PaginatedAnswerReadList.ts" URL="src/gen/models/PaginatedAnswerReadList.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/models/PaginatedAnswerReadList.ts" -> "src/gen/runtime.ts"
+    "src/gen/models/PaginatedAnswerReadList.ts" -> "src/gen/models/AnswerRead.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/models" {label="models" "src/gen/models/PaginatedMyAnswersList.ts" [label=<PaginatedMyAnswersList.ts> tooltip="PaginatedMyAnswersList.ts" URL="src/gen/models/PaginatedMyAnswersList.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/models/PaginatedMyAnswersList.ts" -> "src/gen/runtime.ts"
+    "src/gen/models/PaginatedMyAnswersList.ts" -> "src/gen/models/MyAnswers.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/models" {label="models" "src/gen/models/PaginatedQuestionReadList.ts" [label=<PaginatedQuestionReadList.ts> tooltip="PaginatedQuestionReadList.ts" URL="src/gen/models/PaginatedQuestionReadList.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/models/PaginatedQuestionReadList.ts" -> "src/gen/runtime.ts"
+    "src/gen/models/PaginatedQuestionReadList.ts" -> "src/gen/models/QuestionRead.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/models" {label="models" "src/gen/models/PatchedAnswerWriteRequest.ts" [label=<PatchedAnswerWriteRequest.ts> tooltip="PatchedAnswerWriteRequest.ts" URL="src/gen/models/PatchedAnswerWriteRequest.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/models/PatchedAnswerWriteRequest.ts" -> "src/gen/runtime.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/models" {label="models" "src/gen/models/PatchedQuestionWriteRequest.ts" [label=<PatchedQuestionWriteRequest.ts> tooltip="PatchedQuestionWriteRequest.ts" URL="src/gen/models/PatchedQuestionWriteRequest.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/models/PatchedQuestionWriteRequest.ts" -> "src/gen/runtime.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/models" {label="models" "src/gen/models/QuestionBrief.ts" [label=<QuestionBrief.ts> tooltip="QuestionBrief.ts" URL="src/gen/models/QuestionBrief.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/models/QuestionBrief.ts" -> "src/gen/runtime.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/models" {label="models" "src/gen/models/QuestionRead.ts" [label=<QuestionRead.ts> tooltip="QuestionRead.ts" URL="src/gen/models/QuestionRead.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/models/QuestionRead.ts" -> "src/gen/runtime.ts"
+    "src/gen/models/QuestionRead.ts" -> "src/gen/models/Author.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/models" {label="models" "src/gen/models/QuestionWrite.ts" [label=<QuestionWrite.ts> tooltip="QuestionWrite.ts" URL="src/gen/models/QuestionWrite.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/models/QuestionWrite.ts" -> "src/gen/runtime.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/models" {label="models" "src/gen/models/QuestionWriteRequest.ts" [label=<QuestionWriteRequest.ts> tooltip="QuestionWriteRequest.ts" URL="src/gen/models/QuestionWriteRequest.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/models/QuestionWriteRequest.ts" -> "src/gen/runtime.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/models" {label="models" "src/gen/models/TokenObtainPair.ts" [label=<TokenObtainPair.ts> tooltip="TokenObtainPair.ts" URL="src/gen/models/TokenObtainPair.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/models/TokenObtainPair.ts" -> "src/gen/runtime.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/models" {label="models" "src/gen/models/TokenObtainPairRequest.ts" [label=<TokenObtainPairRequest.ts> tooltip="TokenObtainPairRequest.ts" URL="src/gen/models/TokenObtainPairRequest.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/models/TokenObtainPairRequest.ts" -> "src/gen/runtime.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/models" {label="models" "src/gen/models/TokenRefresh.ts" [label=<TokenRefresh.ts> tooltip="TokenRefresh.ts" URL="src/gen/models/TokenRefresh.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/models/TokenRefresh.ts" -> "src/gen/runtime.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/models" {label="models" "src/gen/models/TokenRefreshRequest.ts" [label=<TokenRefreshRequest.ts> tooltip="TokenRefreshRequest.ts" URL="src/gen/models/TokenRefreshRequest.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/models/TokenRefreshRequest.ts" -> "src/gen/runtime.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/models" {label="models" "src/gen/models/UserRegistration.ts" [label=<UserRegistration.ts> tooltip="UserRegistration.ts" URL="src/gen/models/UserRegistration.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/models/UserRegistration.ts" -> "src/gen/runtime.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/models" {label="models" "src/gen/models/UserRegistrationRequest.ts" [label=<UserRegistrationRequest.ts> tooltip="UserRegistrationRequest.ts" URL="src/gen/models/UserRegistrationRequest.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/models/UserRegistrationRequest.ts" -> "src/gen/runtime.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/models" {label="models" "src/gen/models/UserRetrieve.ts" [label=<UserRetrieve.ts> tooltip="UserRetrieve.ts" URL="src/gen/models/UserRetrieve.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/models/UserRetrieve.ts" -> "src/gen/runtime.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" subgraph "cluster_src/gen/models" {label="models" "src/gen/models/index.ts" [label=<index.ts> tooltip="index.ts" URL="src/gen/models/index.ts" fillcolor="#ddfeff"] } } }
+    "src/gen/models/index.ts" -> "src/gen/models/AcceptAnswerRequest.ts"
+    "src/gen/models/index.ts" -> "src/gen/models/AnswerRead.ts"
+    "src/gen/models/index.ts" -> "src/gen/models/AnswerWrite.ts"
+    "src/gen/models/index.ts" -> "src/gen/models/AnswerWriteRequest.ts"
+    "src/gen/models/index.ts" -> "src/gen/models/Author.ts"
+    "src/gen/models/index.ts" -> "src/gen/models/MyAnswers.ts"
+    "src/gen/models/index.ts" -> "src/gen/models/PaginatedAnswerReadList.ts"
+    "src/gen/models/index.ts" -> "src/gen/models/PaginatedMyAnswersList.ts"
+    "src/gen/models/index.ts" -> "src/gen/models/PaginatedQuestionReadList.ts"
+    "src/gen/models/index.ts" -> "src/gen/models/PatchedAnswerWriteRequest.ts"
+    "src/gen/models/index.ts" -> "src/gen/models/PatchedQuestionWriteRequest.ts"
+    "src/gen/models/index.ts" -> "src/gen/models/QuestionBrief.ts"
+    "src/gen/models/index.ts" -> "src/gen/models/QuestionRead.ts"
+    "src/gen/models/index.ts" -> "src/gen/models/QuestionWrite.ts"
+    "src/gen/models/index.ts" -> "src/gen/models/QuestionWriteRequest.ts"
+    "src/gen/models/index.ts" -> "src/gen/models/TokenObtainPair.ts"
+    "src/gen/models/index.ts" -> "src/gen/models/TokenObtainPairRequest.ts"
+    "src/gen/models/index.ts" -> "src/gen/models/TokenRefresh.ts"
+    "src/gen/models/index.ts" -> "src/gen/models/TokenRefreshRequest.ts"
+    "src/gen/models/index.ts" -> "src/gen/models/UserRegistration.ts"
+    "src/gen/models/index.ts" -> "src/gen/models/UserRegistrationRequest.ts"
+    "src/gen/models/index.ts" -> "src/gen/models/UserRetrieve.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/gen" {label="gen" "src/gen/runtime.ts" [label=<runtime.ts> tooltip="runtime.ts" URL="src/gen/runtime.ts" fillcolor="#ddfeff"] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/graphql" {label="graphql" "src/graphql/get-question-details.ts" [label=<get-question-details.ts> tooltip="get-question-details.ts" URL="src/graphql/get-question-details.ts" fillcolor="#ddfeff"] } }
+    "src/graphql/get-question-details.ts" -> "src/gen/gql/index.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/graphql" {label="graphql" "src/graphql/get-questions.ts" [label=<get-questions.ts> tooltip="get-questions.ts" URL="src/graphql/get-questions.ts" fillcolor="#ddfeff"] } }
+    "src/graphql/get-questions.ts" -> "src/gen/gql/index.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/hocs" {label="hocs" "src/hocs/AuthProvider.tsx" [label=<AuthProvider.tsx> tooltip="AuthProvider.tsx" URL="src/hocs/AuthProvider.tsx" fillcolor="#bbfeff"] } }
+    "src/hocs/AuthProvider.tsx" -> "src/hooks/useAuthenticate.ts"
+    "src/hocs/AuthProvider.tsx" -> "src/interfaces/RCBaseProps.interface.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/hocs" {label="hocs" "src/hocs/withNavLayout.tsx" [label=<withNavLayout.tsx> tooltip="withNavLayout.tsx" URL="src/hocs/withNavLayout.tsx" fillcolor="#bbfeff"] } }
+    "src/hocs/withNavLayout.tsx" -> "src/layouts/NavLayout.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/hocs" {label="hocs" "src/hocs/withRouteGuard.tsx" [label=<withRouteGuard.tsx> tooltip="withRouteGuard.tsx" URL="src/hocs/withRouteGuard.tsx" fillcolor="#bbfeff"] } }
+    "src/hocs/withRouteGuard.tsx" -> "src/store/auth.store.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/hooks" {label="hooks" "src/hooks/useApi.ts" [label=<useApi.ts> tooltip="useApi.ts" URL="src/hooks/useApi.ts" fillcolor="#ddfeff"] } }
+    "src/hooks/useApi.ts" -> "src/utils/ApiResponse.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/hooks" {label="hooks" "src/hooks/useAuthenticate.ts" [label=<useAuthenticate.ts> tooltip="useAuthenticate.ts" URL="src/hooks/useAuthenticate.ts" fillcolor="#ddfeff"] } }
+    "src/hooks/useAuthenticate.ts" -> "src/apis/index.ts"
+    "src/hooks/useAuthenticate.ts" -> "src/gen/index.ts"
+    "src/hooks/useAuthenticate.ts" -> "src/store/auth.store.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/hooks" {label="hooks" "src/hooks/useModal.ts" [label=<useModal.ts> tooltip="useModal.ts" URL="src/hooks/useModal.ts" fillcolor="#ddfeff"] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/hooks" {label="hooks" "src/hooks/useRichTextEditor.ts" [label=<useRichTextEditor.ts> tooltip="useRichTextEditor.ts" URL="src/hooks/useRichTextEditor.ts" fillcolor="#ddfeff"] } }
+    "src/hooks/useRichTextEditor.ts" -> "src/plugins/tiptap-text-direction.ts"
+    subgraph "cluster_src" {label="src" "src/index.css" [label=<index.css> tooltip="index.css" URL="src/index.css" ] }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/interfaces" {label="interfaces" "src/interfaces/ModalProps.interface.ts" [label=<ModalProps.interface.ts> tooltip="ModalProps.interface.ts" URL="src/interfaces/ModalProps.interface.ts" fillcolor="#ddfeff"] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/interfaces" {label="interfaces" "src/interfaces/RCBaseProps.interface.ts" [label=<RCBaseProps.interface.ts> tooltip="RCBaseProps.interface.ts" URL="src/interfaces/RCBaseProps.interface.ts" fillcolor="#ddfeff"] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/layouts" {label="layouts" "src/layouts/NavLayout.tsx" [label=<NavLayout.tsx> tooltip="NavLayout.tsx" URL="src/layouts/NavLayout.tsx" fillcolor="#bbfeff"] } }
+    "src/layouts/NavLayout.tsx" -> "src/assets/logo.svg"
+    "src/layouts/NavLayout.tsx" -> "src/components/ElevationScroll.tsx"
+    "src/layouts/NavLayout.tsx" -> "src/components/UserProfileMenu.tsx"
+    "src/layouts/NavLayout.tsx" -> "src/store/auth.store.ts"
+    subgraph "cluster_src" {label="src" "src/main.tsx" [label=<main.tsx> tooltip="main.tsx" URL="src/main.tsx" fillcolor="#bbfeff"] }
+    "src/main.tsx" -> "src/App.tsx"
+    "src/main.tsx" -> "src/index.css"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/plugins" {label="plugins" "src/plugins/tiptap-text-direction.ts" [label=<tiptap-text-direction.ts> tooltip="tiptap-text-direction.ts" URL="src/plugins/tiptap-text-direction.ts" fillcolor="#ddfeff"] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/routes" {label="routes" "src/routes/AnswerQuestionPage.tsx" [label=<AnswerQuestionPage.tsx> tooltip="AnswerQuestionPage.tsx" URL="src/routes/AnswerQuestionPage.tsx" fillcolor="#bbfeff"] } }
+    "src/routes/AnswerQuestionPage.tsx" -> "src/apis/index.ts"
+    "src/routes/AnswerQuestionPage.tsx" -> "src/apollo/client.ts"
+    "src/routes/AnswerQuestionPage.tsx" -> "src/components/RichTextEditor.tsx"
+    "src/routes/AnswerQuestionPage.tsx" -> "src/gen/index.ts"
+    "src/routes/AnswerQuestionPage.tsx" -> "src/gen/gql/index.ts"
+    "src/routes/AnswerQuestionPage.tsx" -> "src/store/user-profile.store.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/routes" {label="routes" "src/routes/AskQuestionPage.tsx" [label=<AskQuestionPage.tsx> tooltip="AskQuestionPage.tsx" URL="src/routes/AskQuestionPage.tsx" fillcolor="#bbfeff"] } }
+    "src/routes/AskQuestionPage.tsx" -> "src/apis/index.ts"
+    "src/routes/AskQuestionPage.tsx" -> "src/components/RichTextEditor.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/routes" {label="routes" "src/routes/EditAnswerPage.tsx" [label=<EditAnswerPage.tsx> tooltip="EditAnswerPage.tsx" URL="src/routes/EditAnswerPage.tsx" fillcolor="#bbfeff"] } }
+    "src/routes/EditAnswerPage.tsx" -> "src/apis/index.ts"
+    "src/routes/EditAnswerPage.tsx" -> "src/apollo/client.ts"
+    "src/routes/EditAnswerPage.tsx" -> "src/components/RichTextEditor.tsx"
+    "src/routes/EditAnswerPage.tsx" -> "src/gen/index.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/routes" {label="routes" "src/routes/EditQuestionPage.tsx" [label=<EditQuestionPage.tsx> tooltip="EditQuestionPage.tsx" URL="src/routes/EditQuestionPage.tsx" fillcolor="#bbfeff"] } }
+    "src/routes/EditQuestionPage.tsx" -> "src/apis/index.ts"
+    "src/routes/EditQuestionPage.tsx" -> "src/apollo/client.ts"
+    "src/routes/EditQuestionPage.tsx" -> "src/components/RichTextEditor.tsx"
+    "src/routes/EditQuestionPage.tsx" -> "src/gen/index.ts"
+    "src/routes/EditQuestionPage.tsx" -> "src/hooks/useApi.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/routes" {label="routes" "src/routes/LandingPage.tsx" [label=<LandingPage.tsx> tooltip="LandingPage.tsx" URL="src/routes/LandingPage.tsx" fillcolor="#bbfeff"] } }
+    "src/routes/LandingPage.tsx" -> "src/assets/illustration.svg"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/routes" {label="routes" "src/routes/LoginPage.tsx" [label=<LoginPage.tsx> tooltip="LoginPage.tsx" URL="src/routes/LoginPage.tsx" fillcolor="#bbfeff"] } }
+    "src/routes/LoginPage.tsx" -> "src/apis/index.ts"
+    "src/routes/LoginPage.tsx" -> "src/hooks/useApi.ts"
+    "src/routes/LoginPage.tsx" -> "src/store/auth.store.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/routes" {label="routes" "src/routes/QuestionDetailsPage.tsx" [label=<QuestionDetailsPage.tsx> tooltip="QuestionDetailsPage.tsx" URL="src/routes/QuestionDetailsPage.tsx" fillcolor="#bbfeff"] } }
+    "src/routes/QuestionDetailsPage.tsx" -> "src/apis/index.ts"
+    "src/routes/QuestionDetailsPage.tsx" -> "src/components/Answer.tsx"
+    "src/routes/QuestionDetailsPage.tsx" -> "src/components/QuestionDetails.tsx"
+    "src/routes/QuestionDetailsPage.tsx" -> "src/gen/index.ts"
+    "src/routes/QuestionDetailsPage.tsx" -> "src/gen/gql/index.ts"
+    "src/routes/QuestionDetailsPage.tsx" -> "src/graphql/get-question-details.ts"
+    "src/routes/QuestionDetailsPage.tsx" -> "src/hooks/useApi.ts"
+    "src/routes/QuestionDetailsPage.tsx" -> "src/store/auth.store.ts"
+    "src/routes/QuestionDetailsPage.tsx" -> "src/store/user-profile.store.ts"
+    "src/routes/QuestionDetailsPage.tsx" -> "src/utils/mappers/answer-edge-to-answer-details.ts"
+    "src/routes/QuestionDetailsPage.tsx" -> "src/utils/mappers/to-question-details.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/routes" {label="routes" "src/routes/QuestionsPage.tsx" [label=<QuestionsPage.tsx> tooltip="QuestionsPage.tsx" URL="src/routes/QuestionsPage.tsx" fillcolor="#bbfeff"] } }
+    "src/routes/QuestionsPage.tsx" -> "src/components/QuestionSummary.tsx"
+    "src/routes/QuestionsPage.tsx" -> "src/gen/index.ts"
+    "src/routes/QuestionsPage.tsx" -> "src/graphql/get-questions.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/store" {label="store" "src/store/auth.store.ts" [label=<auth.store.ts> tooltip="auth.store.ts" URL="src/store/auth.store.ts" fillcolor="#ddfeff"] } }
+    "src/store/auth.store.ts" -> "src/gen/index.ts"
+    "src/store/auth.store.ts" -> "src/utils/local-storage.effect.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/store" {label="store" "src/store/user-profile.store.ts" [label=<user-profile.store.ts> tooltip="user-profile.store.ts" URL="src/store/user-profile.store.ts" fillcolor="#ddfeff"] } }
+    "src/store/user-profile.store.ts" -> "src/store/auth.store.ts"
+    "src/store/user-profile.store.ts" -> "src/apis/index.ts"
+    "src/store/user-profile.store.ts" -> "src/gen/index.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/styles" {label="styles" "src/styles/ProseMirror.css" [label=<ProseMirror.css> tooltip="ProseMirror.css" URL="src/styles/ProseMirror.css" ] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/theme" {label="theme" "src/theme/index.ts" [label=<index.ts> tooltip="index.ts" URL="src/theme/index.ts" fillcolor="#ddfeff"] } }
+    "src/theme/index.ts" -> "src/utils/LinkBehaviour.tsx"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/utils" {label="utils" "src/utils/ApiResponse.ts" [label=<ApiResponse.ts> tooltip="ApiResponse.ts" URL="src/utils/ApiResponse.ts" fillcolor="#ddfeff"] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/utils" {label="utils" "src/utils/LinkBehaviour.tsx" [label=<LinkBehaviour.tsx> tooltip="LinkBehaviour.tsx" URL="src/utils/LinkBehaviour.tsx" fillcolor="#bbfeff"] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/utils" {label="utils" "src/utils/local-storage.effect.ts" [label=<local-storage.effect.ts> tooltip="local-storage.effect.ts" URL="src/utils/local-storage.effect.ts" fillcolor="#ddfeff"] } }
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/utils" {label="utils" subgraph "cluster_src/utils/mappers" {label="mappers" "src/utils/mappers/answer-edge-to-answer-details.ts" [label=<answer-edge-to-answer-details.ts> tooltip="answer-edge-to-answer-details.ts" URL="src/utils/mappers/answer-edge-to-answer-details.ts" fillcolor="#ddfeff"] } } }
+    "src/utils/mappers/answer-edge-to-answer-details.ts" -> "src/gen/gql/graphql.ts"
+    subgraph "cluster_src" {label="src" subgraph "cluster_src/utils" {label="utils" subgraph "cluster_src/utils/mappers" {label="mappers" "src/utils/mappers/to-question-details.ts" [label=<to-question-details.ts> tooltip="to-question-details.ts" URL="src/utils/mappers/to-question-details.ts" fillcolor="#ddfeff"] } } }
+    "src/utils/mappers/to-question-details.ts" -> "src/gen/gql/graphql.ts"
+}

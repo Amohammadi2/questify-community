@@ -3,6 +3,7 @@ import { client } from "@/apollo/client"
 import RichTextEditor, { ContentAggregate } from "@/components/RichTextEditor"
 import { AnswerWrite } from "@/gen"
 import { graphql } from "@/gen/gql"
+import { AnswerTypeConnection, AnswerTypeEdge } from "@/gen/gql/graphql"
 import { $userProfile } from "@/store/user-profile.store"
 import { useCallback, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
@@ -33,54 +34,30 @@ export default function AnswerQuestionPage() {
   }, [qid])
 
   const afterPublish = (res: AnswerWrite): void => {
-    client.cache.updateQuery({
-      query: graphql(`
-        query AddAnswerToQuestion($qid: ID!) {
-          question(id: $qid) {
-            answers {
-              edges {
-                node {
-                  id
-                  htmlContent
-                  created
-                  updated
-                  accepted
-                  author {
-                    id
-                    username
-                  }
+    client.cache.modify({
+      id: client.cache.identify({__typename: 'QuestionType', id: qid }),
+      fields: {
+        numAnswers(n) { return n+1 },
+        answers(answers: AnswerTypeConnection) {
+          return {
+            ...answers,
+            edges: [{
+              node: {
+                __typename: 'AnswerType',
+                created: new Date().toLocaleDateString('fa-IR'),
+                updated: new Date().toLocaleDateString('fa-IR'),
+                accepted: false,
+                htmlContent: res.htmlContent,
+                id: res.id,
+                author: {
+                  username: userProfile?.username,
+                  id: '', // Todo: make this work
                 }
               }
-            }
-          }
+            }, ...answers.edges] as AnswerTypeEdge[]
+          } as AnswerTypeConnection
         }
-      `),
-      variables: {
-        qid: qid || ''
       }
-    }, (data) => {
-        if (data) {
-          const prevAnswers = data.question?.answers?.edges || []
-          return {
-            question: {
-              answers: {
-                edges: [{
-                  node: {
-                    id: `${res.id}`,
-                    htmlContent: res.htmlContent,
-                    created: new Date().toLocaleDateString('fa-IR'),
-                    updated: new Date().toLocaleDateString('fa-IR'),
-                    accepted: false,
-                    author: {
-                      username: userProfile?.username || '',
-                      id: '' // Todo: make the api return the id
-                    }
-                  }
-                }, ...prevAnswers]
-              }
-            }
-          }
-        }
     })
     return navigate('/question-details/' + qid, { replace: true })
   }

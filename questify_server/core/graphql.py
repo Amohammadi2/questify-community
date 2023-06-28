@@ -30,6 +30,11 @@ class UserType(DjangoObjectType):
 
 
 class AnswerType(DjangoObjectType):
+
+    @classmethod
+    def get_queryset(cls, queryset, info):
+        return queryset.order_by('-created')
+
     class Meta:
         model = Answer
         fields = '__all__'

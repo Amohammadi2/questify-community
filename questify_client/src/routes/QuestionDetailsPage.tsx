@@ -15,6 +15,8 @@ import { useQuery } from "@apollo/client"
 import { GET_QUESTION_DETAILS } from "@/graphql/get-question-details"
 import { toQuestionDetails } from "@/utils/mappers/to-question-details"
 import { answerEdgeToAnswerDetailsArray } from "@/utils/mappers/answer-edge-to-answer-details"
+import { graphql } from "@/gen/gql"
+import { AnswerType, AnswerTypeConnection, AnswerTypeEdge } from "@/gen/gql/graphql"
 
 export default function QuestionDetailsPage() {
   
@@ -26,9 +28,26 @@ export default function QuestionDetailsPage() {
   const { loading, data, client, fetchMore } = useQuery(GET_QUESTION_DETAILS, { variables: { id: qid || '-1' }})
   
   const deleteAnswer = (id: number): Promise<void> => {
-    return answersApi.answersDestroy({ id })
-    .then() // Todo: toast success, rewrite cache
+    answersApi.answersDestroy({ id })
+    .then(() => {}) // Todo: Toast success
     .catch() // Todo: Toast error
+    const answerData = data?.question?.answers?.edges.find(e => e?.node?.id === `${id}`) as AnswerTypeEdge
+    console.log('answerData', answerData)
+    client.cache.modify({
+      id: client.cache.identify({__typename: 'QuestionType', id: qid }),
+      fields: {
+        hasAcceptedAnswer() { return answerData.node?.accepted ? false : true },
+        numAnswers(n) { return n-1 },
+        answers(answers: AnswerTypeConnection, { readField }) {
+          return {
+            ...answers,
+            edges: answers.edges.filter(e => readField('id', e?.node || undefined) !== `${id}`)
+          } as AnswerTypeConnection
+        }
+      }
+    })
+
+    return new Promise((res)=>res())
   }
   
   if (!qid)
@@ -47,6 +66,7 @@ export default function QuestionDetailsPage() {
             {answerEdgeToAnswerDetailsArray(data).map(
               a => <Answer
                 {...a}
+                questionId={qid || ''}
                 opMode={data?.question?.author?.username === userProfile?.username}
                 authorMode={a.author?.username == userProfile?.username}
                 key={a?.id}
