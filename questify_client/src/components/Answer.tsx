@@ -11,6 +11,7 @@ import { useCallback, useEffect, useState } from "react";
 import { AnswerType, AnswerTypeConnection } from "@/gen/gql/graphql";
 import { AnswerDetails } from "@/utils/mappers/answer-edge-to-answer-details";
 import { client } from "@/apollo/client";
+import { gql } from "@apollo/client";
 
 interface AnswerProps extends AnswerDetails {
   opMode?: boolean
@@ -39,12 +40,12 @@ export default function Answer({ htmlContent, author, id, accepted : _accepted, 
       }
     })
     .then(() => {
-      client.cache.modify({
-        id: client.cache.identify({__typename: 'AnswerType', id }),
-        fields: {
-          accepted() { return !accepted }
-        }
-      })
+      // client.cache.modify({
+      //   id: client.cache.identify({__typename: 'AnswerType', id }),
+      //   fields: {
+      //     accepted() { return !accepted }
+      //   }
+      // })
       client.cache.modify({
         id: client.cache.identify({__typename: 'QuestionType', id: questionId }),
         fields: {
@@ -52,12 +53,16 @@ export default function Answer({ htmlContent, author, id, accepted : _accepted, 
             return !accepted
           },
           answers(answers, { readField }) {
+            console.log('cache modification started')
             if (!accepted) {
               answers.edges.forEach((edge: any) => {
+                console.log(client.cache.identify({__typename: 'AnswerType', id: edge.node.id }))
+                // Problem: it doesn't execute the code below to change the `accpeted` status of other answers
                 client.cache.modify({
-                  id: edge.node.__ref,
+                  id: client.cache.identify({__typename: 'AnswerType', id: edge.node.id.toString() }),
                   fields: {
                     accepted() {
+                      console.log(readField('id', edge.node), id, readField('id', edge.node) === id )
                       return readField('id', edge.node) === id ? true : false
                     }
                   }

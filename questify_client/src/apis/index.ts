@@ -7,7 +7,7 @@ const $apiConfig = selector({
   get: ({ get }) => {
     const token = get($authToken)
     return new Configuration({
-      basePath: 'http://192.168.1.100:8000/',
+      basePath: 'http://192.168.1.101:8000/',
       accessToken: token?.access || undefined
     })
   }
