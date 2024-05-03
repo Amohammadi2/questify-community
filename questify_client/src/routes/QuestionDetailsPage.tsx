@@ -19,6 +19,12 @@ import { graphql } from "@/gen/gql"
 import { AnswerType, AnswerTypeConnection, AnswerTypeEdge } from "@/gen/gql/graphql"
 import InfiniteScroll from "react-infinite-scroll-component"
 
+interface ToggleAnswerData {
+  questionId: string
+  id: string
+  accepted: boolean
+}
+
 export default function QuestionDetailsPage() {
   
   const { qid } = useParams()
@@ -50,6 +56,41 @@ export default function QuestionDetailsPage() {
 
     return new Promise((res)=>res())
   }
+
+  const toggleAcceptAnswer = ({ id, questionId, accepted } : ToggleAnswerData) => {
+    answersApi.answersAcceptCreate({
+      id: Number.parseInt(id || '-1'),
+      acceptAnswerRequest: {
+        accepted: !accepted
+      }
+    })
+    .then(() => {
+      client.cache.modify({
+        id: client.cache.identify({__typename: 'AnswerType', id }),
+        fields: {
+          accepted() { return !accepted }
+        }
+      })
+      data?.question?.answers?.edges?.forEach((ans) => {
+        if (ans?.node?.id == id) return // don't deactivate the accepted answer
+        client.cache.modify({
+          id: client.cache.identify({__typename: 'AnswerType', id: ans?.node?.id }),
+          fields: {
+            accepted() { return false }
+          }
+        })
+      })
+      client.cache.modify({
+        id: client.cache.identify({__typename: 'QuestionType', id: questionId }),
+        fields: {
+          hasAcceptedAnswer() {
+            return !accepted
+          },
+        }
+      })
+    })
+    // Todo: toast success or failure state
+  }
   
   if (!qid)
     return <Container><Typography>همچین سوالی پیدا نشد</Typography></Container>
@@ -80,6 +121,7 @@ export default function QuestionDetailsPage() {
                   authorMode={a.author?.username == userProfile?.username}
                   key={a?.id}
                   onDelete={deleteAnswer}
+                  toggleAcceptAnswer={(accepted: boolean) => toggleAcceptAnswer({ questionId: qid || '', id: a?.id, accepted })}
                 />
               )}
             </InfiniteScroll>

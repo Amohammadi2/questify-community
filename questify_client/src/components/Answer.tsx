@@ -18,66 +18,28 @@ interface AnswerProps extends AnswerDetails {
   authorMode?: boolean
   onDelete: (id: number) => Promise<any>
   questionId: string
+  toggleAcceptAnswer: (accepted: boolean) => any
 }
 
-export default function Answer({ htmlContent, author, id, accepted : _accepted, opMode=false, authorMode=false, onDelete, questionId } : AnswerProps) {
+export default function Answer({ htmlContent, author, id, accepted : _accepted, opMode=false, authorMode=false, onDelete, questionId, toggleAcceptAnswer} : AnswerProps) {
   
   const navigate = useNavigate()
   const [openDeleteModal, deleteModalState] = useModal()
   const answersApi = useRecoilValue($answersApi)
 
-  const [accepted, setAccepted] = useState(false)
+  const [accepted, setAccepted] = useState(_accepted)
 
   useEffect(() => {
     setAccepted(_accepted || false)
   }, [_accepted])
 
-  const toggleAcceptAnswer = () => {
-    answersApi.answersAcceptCreate({
-      id: Number.parseInt(id || '-1'),
-      acceptAnswerRequest: {
-        accepted: !accepted
-      }
-    })
-    .then(() => {
-      // client.cache.modify({
-      //   id: client.cache.identify({__typename: 'AnswerType', id }),
-      //   fields: {
-      //     accepted() { return !accepted }
-      //   }
-      // })
-      client.cache.modify({
-        id: client.cache.identify({__typename: 'QuestionType', id: questionId }),
-        fields: {
-          hasAcceptedAnswer() {
-            return !accepted
-          },
-          answers(answers, { readField }) {
-            console.log('cache modification started')
-            if (!accepted) {
-              answers.edges.forEach((edge: any) => {
-                console.log(client.cache.identify({__typename: 'AnswerType', id: edge.node.id }))
-                // Problem: it doesn't execute the code below to change the `accpeted` status of other answers
-                client.cache.modify({
-                  id: client.cache.identify({__typename: 'AnswerType', id: edge.node.id.toString() }),
-                  fields: {
-                    accepted() {
-                      console.log(readField('id', edge.node), id, readField('id', edge.node) === id )
-                      return readField('id', edge.node) === id ? true : false
-                    }
-                  }
-                })
-              })
-            }
-            return answers
-          }
-        }
-      })
-    })
-    // Todo: toast success or failure state
+
+  
+  const toggleAcceptedStatus = () => {
+    toggleAcceptAnswer(accepted)
     setAccepted(!accepted)
   }
-  
+
   return (
     <>
       <ConfirmationModal
@@ -95,7 +57,7 @@ export default function Answer({ htmlContent, author, id, accepted : _accepted, 
         </Grid>
         <Grid container direction="row" alignItems='center'>
           {opMode && <Grid item sx={{ mr: 2 }}>
-            <IconButton onClick={toggleAcceptAnswer}>
+            <IconButton onClick={toggleAcceptedStatus}>
               <FontAwesomeIcon
                 icon={faCheckSquare}
                 style={{
