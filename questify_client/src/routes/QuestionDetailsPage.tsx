@@ -11,13 +11,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons"
 import QuestionDetails from "@/components/QuestionDetails"
 import { $isAuthenticated } from "@/store/auth.store"
-import { useQuery } from "@apollo/client"
+import { Reference, useQuery } from "@apollo/client"
 import { GET_QUESTION_DETAILS } from "@/graphql/get-question-details"
 import { toQuestionDetails } from "@/utils/mappers/to-question-details"
 import { answerEdgeToAnswerDetailsArray } from "@/utils/mappers/answer-edge-to-answer-details"
 import { graphql } from "@/gen/gql"
 import { AnswerType, AnswerTypeConnection, AnswerTypeEdge } from "@/gen/gql/graphql"
 import InfiniteScroll from "react-infinite-scroll-component"
+import AnswerQuestionBox from "@/components/AnswerQuestionBox"
 
 interface ToggleAnswerData {
   questionId: string
@@ -38,17 +39,22 @@ export default function QuestionDetailsPage() {
     answersApi.answersDestroy({ id })
     .then(() => {}) // Todo: Toast success
     .catch() // Todo: Toast error
-    const answerData = data?.question?.answers?.edges.find(e => e?.node?.id === `${id}`) as AnswerTypeEdge
-    console.log('answerData', answerData)
+
+    console.log(data)
+
+    const answerData = data?.question?.answers?.edges.find(e => Number.parseInt(`${e?.node?.id}`) === id)?.node as AnswerType
+
     client.cache.modify({
       id: client.cache.identify({__typename: 'QuestionType', id: qid }),
       fields: {
-        hasAcceptedAnswer() { return answerData.node?.accepted ? false : true },
+        hasAcceptedAnswer(val) { return answerData?.accepted ? false : val },
         numAnswers(n) { return n-1 },
         answers(answers: AnswerTypeConnection, { readField }) {
           return {
             ...answers,
-            edges: answers.edges.filter(e => readField('id', e?.node || undefined) !== `${id}`)
+            edges: answers.edges.filter(e => {
+              return readField('id', (e?.node as unknown as Reference)) !== `${id}`
+            })
           } as AnswerTypeConnection
         }
       }
@@ -68,7 +74,9 @@ export default function QuestionDetailsPage() {
       client.cache.modify({
         id: client.cache.identify({__typename: 'AnswerType', id }),
         fields: {
-          accepted() { return !accepted }
+          accepted() {
+            return !accepted 
+          }
         }
       })
       data?.question?.answers?.edges?.forEach((ans) => {
@@ -105,6 +113,7 @@ export default function QuestionDetailsPage() {
         : (
           <>
             <QuestionDetails {...toQuestionDetails(data)} opMode={data.question.author?.username === userProfile?.username}/>
+            {isAuthenticated && <AnswerQuestionBox />}
             <InfiniteScroll
               dataLength={data?.question?.answers?.edges.length || 0}
               next={()=>fetchMore({ variables: { answerAfter: data.question?.answers?.pageInfo.endCursor }})}
@@ -128,12 +137,6 @@ export default function QuestionDetailsPage() {
           </>
         )
       }
-      {isAuthenticated && <Button variant="contained" color="primary" size="large" sx={{ position: 'fixed', bottom: 20, left: '50%', transform:'translateX(-50%)', width: '300px' }} href={"/answer/"+qid}>
-        <Typography sx={{ mr: 1 }}>ارسال پاسخ</Typography>
-        <FontAwesomeIcon
-          icon={faPaperPlane}
-        />
-      </Button>}
     </Container>
   )
 }

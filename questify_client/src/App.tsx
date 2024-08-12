@@ -14,7 +14,6 @@ import QuestionsPage from './routes/QuestionsPage'
 import AskQuestionPage from './routes/AskQuestionPage'
 import AskButton from './components/AskButton'
 import QuestionDetailsPage from './routes/QuestionDetailsPage'
-import AnswerQuestionPage from './routes/AnswerQuestionPage'
 import EditQuestionPage from './routes/EditQuestionPage'
 import EditAnswerPage from './routes/EditAnswerPage'
 import { ApolloProvider } from '@apollo/client'
@@ -46,10 +45,6 @@ function App() {
     {
       path: '/question-details/:qid',
       element: withNavLayout(<QuestionDetailsPage />)
-    },
-    {
-      path: '/answer/:qid',
-      element: withRouteGuard(withNavLayout(<AnswerQuestionPage />))
     },
     {
       path: '/edit-answer/:aid',

@@ -2,6 +2,7 @@ import { $answersApi } from "@/apis";
 import { client } from "@/apollo/client";
 import RichTextEditor, { ContentAggregate } from "@/components/RichTextEditor";
 import { AnswerWrite } from "@/gen";
+import { Container } from "@mui/material";
 import { useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
@@ -51,13 +52,15 @@ export default function EditAnswerPage() {
   }
 
   return (
-    <RichTextEditor
-      onInit={fetchAnswerCB}
-      onInitError={handleLoadingError}
-      onPublish={updateAnswerCB}
-      afterPublish={afterPublish}
-      onCancel={handleCancelation}
-      submitButtonText="انتشار پاسخ"
-    />
+    <Container>
+      <RichTextEditor
+        onInit={fetchAnswerCB}
+        onInitError={handleLoadingError}
+        onPublish={updateAnswerCB}
+        afterPublish={afterPublish}
+        onCancel={handleCancelation}
+        submitButtonText="انتشار پاسخ"
+      />
+    </Container>
   )
 }

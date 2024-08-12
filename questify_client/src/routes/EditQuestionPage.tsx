@@ -3,6 +3,7 @@ import { client } from "@/apollo/client";
 import RichTextEditor, { ContentAggregate } from "@/components/RichTextEditor";
 import { QuestionWrite } from "@/gen";
 import { useApi } from "@/hooks/useApi";
+import { Container } from "@mui/material";
 import { useCallback, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
@@ -60,14 +61,16 @@ export default function EditQuestionPage() {
   }
 
   return (
-    <RichTextEditor
-      onInit={fetchQuestionCB}
-      onInitError={handleLoadingError}
-      onPublish={updateQuestionCB}
-      afterPublish={afterPublish}
-      enableTags
-      enableTitle
-      onCancel={handleCancelation}
-    />
+    <Container>
+      <RichTextEditor
+        onInit={fetchQuestionCB}
+        onInitError={handleLoadingError}
+        onPublish={updateQuestionCB}
+        afterPublish={afterPublish}
+        enableTags
+        enableTitle
+        onCancel={handleCancelation}
+      />
+    </Container>
   )
 }

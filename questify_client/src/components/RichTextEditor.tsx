@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react"
-import { Button, Container, Grid, TextField, Typography } from "@mui/material"
+import { Button, Container, Grid, TextField, InputBase, Typography, Card, Badge, Chip, Divider } from "@mui/material"
 import { LoadingButton } from "@mui/lab"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons"
@@ -8,7 +8,7 @@ import PageLoader from "./PageLoader"
 import { useRichTextEditor } from "../hooks/useRichTextEditor"
 import "@/styles/ProseMirror.css"
 
-type IsPost = ()=>Promise<{htmlContent: string, title?: string, tags?: Array<string>}>
+type ReturnsPost = ()=>Promise<{htmlContent: string, title?: string, tags?: Array<string>}>
 
 export type ContentAggregate = {
   content: string
@@ -20,7 +20,7 @@ interface RichTextEditorProps <TPublish extends (content: ContentAggregate) => P
   /**
    * @description IMPORTANT NOTICE : always use `useCallback` hook to avoid unnecessary rerenders
    */
-  onInit?: IsPost | null
+  onInit?: ReturnsPost | null
   onInitError?: (err: any) => void
   onPublish: TPublish
   afterPublish?:(res: TPublish extends ((content: ContentAggregate) => Promise<infer T>) ? T : any) => void
@@ -28,17 +28,18 @@ interface RichTextEditorProps <TPublish extends (content: ContentAggregate) => P
   enableTags?: boolean
   enableTitle?: boolean
   submitButtonText?: string
+  contentPlaceholder?: string
 }
 
 
 export default function RichTextEditor <TPublish extends (content: ContentAggregate) => Promise<any>>
-  ({ onPublish, afterPublish, onInit, enableTags=false, enableTitle=false, onCancel, submitButtonText="انتشار سوال", onInitError} : RichTextEditorProps<TPublish>)
+  ({ onPublish, afterPublish, onInit, enableTags=false, enableTitle=false, onCancel, submitButtonText="انتشار سوال", onInitError, contentPlaceholder="محتوا را وارد کنید"} : RichTextEditorProps<TPublish>)
 {
   
   const [contentLoading, setContentLoading] = useState(false)
-  const editor = useRichTextEditor()
+  const editor = useRichTextEditor({ placholder: contentPlaceholder })
   const [title, setTitle] = useState('')
-  const [tags, setTags] = useState<string[]>(['تست', 'سیستم', 'انتزاع'])
+  const [tags, setTags] = useState<string[]>([])
 
   // initialize the editor state
   useEffect(() => {
@@ -56,6 +57,18 @@ export default function RichTextEditor <TPublish extends (content: ContentAggreg
   }, [onInit, editor])
 
 
+  const addTag = useCallback((e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const tag = e.currentTarget.value
+    if (e.code == "Enter" && tag != "" && !tags.includes(tag)) {
+      setTags([...tags, e.currentTarget.value])
+      e.currentTarget.value = ""
+    }
+  }, [tags])
+
+  const removeTag = useCallback((tag: string) => {
+    setTags(tags.filter(t => t!==tag))
+  }, [tags])
+
   const canPublish = Boolean(
     !editor?.isEmpty &&
     (enableTitle ? Boolean(title) : true) &&
@@ -72,37 +85,54 @@ export default function RichTextEditor <TPublish extends (content: ContentAggreg
       content: editor?.getHTML() || '',
       tags
     })
-      .then(res => afterPublish && afterPublish(res))
+      .then(res => {
+        afterPublish && afterPublish(res)
+        editor?.chain().clearContent().run()
+      })
       .catch(e => setPublishError(e))
       .finally(()=>setPublishLoading(false))
   }, [onPublish, title, tags, editor])
 
   return (
-    <Container sx={{ height: '500px', mt: 2 }}>
-      {contentLoading && <PageLoader fixed />}
-      {enableTitle && <TextField label="عنوان سوال" sx={{ width: '100%' }} inputProps={{ style: { fontSize: 30 }}} InputLabelProps={{ style: { top: '5px' } }} value={title} onChange={e=>setTitle(e.currentTarget.value)}/>}
-      <EditorContent editor={editor} />
-      <Grid container sx={{ mt: 2 }}>
-        <LoadingButton variant="outlined" color="primary" sx={{ mr: 1}} onClick={publish} loading={publishLoading} disabled={!canPublish}>
-          <Typography sx={{ mr: 1 }}>{submitButtonText}</Typography>
-          <FontAwesomeIcon
-            icon={faCheck}
+    <Grid sx={{ mt: 2, px: '10px'}}>
+      <Card sx={{ py: 2, px: 3, borderRadius: 2}}>
+        {contentLoading && <PageLoader fixed />}
+        {enableTitle && <Grid container direction="row">
+          <InputBase
+            placeholder="عنوان سوال را وارد کنید..."
+            sx={{ fontSize: 35, mb:2, flexGrow:1}}
+            value={title}
+            onChange={e=>setTitle(e.currentTarget.value)}
           />
-        </LoadingButton>
-        {onCancel &&
-          <Button variant="outlined" color="error" sx={{ mr: 1}} onClick={() => onCancel()}>
+        </Grid>}
+        {enableTags && <Grid container direction="row">
+            {tags.map(t => <Chip label={t} key={t} onDelete={()=>{removeTag(t)}} sx={{ mx: .5, my: .7 }}/>)}
+            <InputBase placeholder="تگ های مورد نظر را وارد کنید" sx={{ flexGrow: 1, ml: 2 }} onKeyDown={addTag}/>
+        </Grid>}
+        {(enableTitle || enableTags) && <Divider sx={{ mt: 1, mb: 3 }}/>}
+        <EditorContent editor={editor} />
+        <Grid container sx={{ mt: 2 }}>
+          <LoadingButton variant="outlined" color="primary" sx={{ mr: 1}} onClick={publish} loading={publishLoading} disabled={!canPublish}>
+            <Typography sx={{ mr: 1 }}>{submitButtonText}</Typography>
+            <FontAwesomeIcon
+              icon={faCheck}
+            />
+          </LoadingButton>
+          
+          <Button variant="outlined" color="error" sx={{ mr: 1}} onClick={() => { editor?.chain().clearContent().run(); onCancel && onCancel() }} disabled={onCancel? false : editor?.isEmpty}>
             <Typography sx={{ mr: 1 }}>انصراف</Typography>
             <FontAwesomeIcon
                 icon={faTimes}
             />
           </Button>
-        }
-      </Grid>
-      {/* Todo: add a tag editor here */}
-      <Grid>
-        <Typography color="error">{publishError?.message}</Typography>
-      </Grid>
-    </Container>
+          
+        </Grid>
+        {/* Todo: add a tag editor here */}
+        <Grid>
+          <Typography color="error">{publishError?.message}</Typography>
+        </Grid>
+      </Card>
+    </Grid>
   )
 }
 

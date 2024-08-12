@@ -7,6 +7,7 @@ import { client } from "@/apollo/client"
 import { graphql } from "@/gen/gql"
 import { $userProfile } from "@/store/user-profile.store"
 import { faWindows } from "@fortawesome/free-brands-svg-icons"
+import { Container } from "@mui/material"
 
 
 
@@ -89,12 +90,14 @@ export default function AskQuestionPage() {
   }, [questionsApi])
 
   return (
-    <RichTextEditor
-      onPublish={publishQuestionCB}
-      afterPublish={res => {}}
-      enableTags
-      enableTitle
-      onCancel={handleCancelation}
-    />
+    <Container>
+      <RichTextEditor
+        onPublish={publishQuestionCB}
+        afterPublish={res => {}}
+        enableTags
+        enableTitle
+        onCancel={handleCancelation}
+      />
+    </Container>
   )
 }

@@ -1,19 +1,15 @@
 import { $questionsApi } from "@/apis";
-import { QuestionRead } from "@/gen";
 import { useApi } from "@/hooks/useApi";
 import { useModal } from "@/hooks/useModal";
 import { faPen, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Avatar, Grid, IconButton, Typography } from "@mui/material";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import ConfirmationModal from "./ConfirmationModal";
 import "@/styles/ProseMirror.css"
-import { GET_QUESTION_DETAILS } from "@/graphql/get-question-details";
-import { GET_QUESTION_FEED } from "@/graphql/get-questions";
-import { GetQuestionDetailsQuery, Maybe, QuestionType } from "@/gen/gql/graphql";
-import { QuestionDetails } from "@/utils/mappers/to-question-details";
+import type { QuestionDetails } from "@/utils/mappers/to-question-details";
 import { client } from "@/apollo/client";
 
 export interface QuestionDetailsProps extends QuestionDetails {
@@ -58,9 +54,11 @@ export default function QuestionDetails({ id, opMode=false, author, title, htmlC
         <Grid container direction="row" alignItems={'center'} sx={{ mb: 2 }}>
           <Avatar alt={author.username} sx={{ width: 30, height: 30}} />
           <Typography sx={{ ml: 1 }}>{author.username}</Typography>
+          <div style={{flexGrow: '1'}} />
+          <Typography></Typography>
         </Grid>
         <Grid container>
-          <Typography variant="h5" sx={{ ml: 2, fontWeight: 800 }}>{title}</Typography>
+          <Typography variant="h5" sx={{ ml: 2, mb:2, fontWeight: 800 }}>{title}</Typography>
         </Grid>
         <div dangerouslySetInnerHTML={{ __html: htmlContent || '' }} className="ProseMirror" />
         {/* Todo: replace these buttons with a menu */}
