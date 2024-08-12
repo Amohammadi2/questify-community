@@ -161,7 +161,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AnswerWrite'
+                $ref: '#/components/schemas/AnswerRead'
           description: ''
   /api/v1/answers/for_question/:
     get:
@@ -1042,6 +1042,9 @@ components:
     UserRetrieve:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         username:
           type: string
           description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
@@ -1058,6 +1061,7 @@ components:
           title: Staff status
           description: Designates whether the user can log into this admin site.
       required:
+      - id
       - username
   securitySchemes:
     jwtAuth:

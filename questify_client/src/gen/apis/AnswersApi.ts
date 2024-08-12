@@ -85,7 +85,7 @@ export class AnswersApi extends runtime.BaseAPI {
 
     /**
      */
-    async answersAcceptCreateRaw(requestParameters: AnswersAcceptCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AnswerWrite>> {
+    async answersAcceptCreateRaw(requestParameters: AnswersAcceptCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AnswerRead>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling answersAcceptCreate.');
         }
@@ -112,12 +112,12 @@ export class AnswersApi extends runtime.BaseAPI {
             body: AcceptAnswerRequestToJSON(requestParameters.acceptAnswerRequest),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => AnswerWriteFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => AnswerReadFromJSON(jsonValue));
     }
 
     /**
      */
-    async answersAcceptCreate(requestParameters: AnswersAcceptCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AnswerWrite> {
+    async answersAcceptCreate(requestParameters: AnswersAcceptCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AnswerRead> {
         const response = await this.answersAcceptCreateRaw(requestParameters, initOverrides);
         return await response.value();
     }

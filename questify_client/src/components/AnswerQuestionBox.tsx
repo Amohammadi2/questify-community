@@ -59,6 +59,21 @@ export default function AnswerQuestionBox() {
     //     }
     //   }
     // })
+    const authorRef = client.cache.writeFragment({
+      id: `UserType:${userProfile?.id}`,
+      fragment: gql`
+        fragment CreateAuthor on UserType {
+          id
+          __typename
+          username
+        }
+      `,
+      data: {
+        id: `${userProfile?.id}`,
+        __typename: "UserType",
+        username: userProfile?.username
+      }
+    })
     const newAnswerRef = client.cache.writeFragment({
       fragment: gql`
         fragment NewAnswer on AnswerType {
@@ -69,6 +84,7 @@ export default function AnswerQuestionBox() {
           updated
           accepted
           author {
+            __typename
             id
             username
           }
@@ -81,10 +97,7 @@ export default function AnswerQuestionBox() {
         created: new Date().toLocaleDateString('fa-IR'),
         updated: new Date().toLocaleDateString('fa-IR'),
         accepted: false,
-        author: {
-          id: '', // Todo: make this work
-          username: userProfile?.username,
-        }
+        author: authorRef
       }
     },)
     client.cache.modify({

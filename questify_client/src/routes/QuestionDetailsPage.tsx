@@ -1,22 +1,16 @@
-import { $answersApi, $questionsApi } from "@/apis"
-import { AnswerRead, QuestionRead } from "@/gen"
-import { useApi } from "@/hooks/useApi"
-import { Avatar, Container, Grid, Typography, Button } from "@mui/material"
-import { useCallback, useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { $answersApi } from "@/apis"
+import { Container, Typography } from "@mui/material"
+import { useParams } from "react-router-dom"
 import { useRecoilValue } from "recoil"
 import Answer from "@/components/Answer"
 import { $userProfile } from "@/store/user-profile.store"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons"
 import QuestionDetails from "@/components/QuestionDetails"
 import { $isAuthenticated } from "@/store/auth.store"
 import { Reference, useQuery } from "@apollo/client"
 import { GET_QUESTION_DETAILS } from "@/graphql/get-question-details"
 import { toQuestionDetails } from "@/utils/mappers/to-question-details"
 import { answerEdgeToAnswerDetailsArray } from "@/utils/mappers/answer-edge-to-answer-details"
-import { graphql } from "@/gen/gql"
-import { AnswerType, AnswerTypeConnection, AnswerTypeEdge } from "@/gen/gql/graphql"
+import { AnswerType, AnswerTypeConnection } from "@/gen/gql/graphql"
 import InfiniteScroll from "react-infinite-scroll-component"
 import AnswerQuestionBox from "@/components/AnswerQuestionBox"
 
@@ -31,7 +25,6 @@ export default function QuestionDetailsPage() {
   const { qid } = useParams()
   const isAuthenticated = useRecoilValue($isAuthenticated)
   const userProfile = useRecoilValue($userProfile)
-  const navigate = useNavigate()
   const answersApi = useRecoilValue($answersApi)
   const { loading, data, client, fetchMore } = useQuery(GET_QUESTION_DETAILS, { variables: { id: qid || '-1' }})
   

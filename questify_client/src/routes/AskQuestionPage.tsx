@@ -6,8 +6,8 @@ import RichTextEditor, { ContentAggregate } from "@/components/RichTextEditor"
 import { client } from "@/apollo/client"
 import { graphql } from "@/gen/gql"
 import { $userProfile } from "@/store/user-profile.store"
-import { faWindows } from "@fortawesome/free-brands-svg-icons"
 import { Container } from "@mui/material"
+import { DocumentNode, gql, TypedDocumentNode } from "@apollo/client"
 
 
 
@@ -31,9 +31,24 @@ export default function AskQuestionPage() {
       }
     })
     prom.then((res) => {
-      const ref = client.writeFragment({
+      const authorRef = client.writeFragment({
+        id: `UserType:${userProfile?.id}`,
+        fragment: gql`
+          fragment CreateAuthor on UserType {
+            id
+            username
+            __typename
+          }
+        `,
+        data: {
+          id: `${userProfile?.id}`,
+          username: userProfile?.username,
+          __typename: 'UserType'
+        }
+      })
+      const questionRef = client.writeFragment({
         id: `QuestionType:${res.id}`,
-        fragment: graphql(`
+        fragment: gql`
           fragment AddQuestion on QuestionType {
             id
             title
@@ -44,11 +59,12 @@ export default function AskQuestionPage() {
             numAnswers
             hasAcceptedAnswer
             author {
-              id
+              __typename
               username
+              id
             }
           }
-        `),
+        `,
         data: {
           __typename: 'QuestionType',
           htmlContent: content,
@@ -57,10 +73,7 @@ export default function AskQuestionPage() {
           id: `${res.id}`,
           created: new Date().toLocaleDateString('fa-IR'),
           updated: new Date().toLocaleDateString('fa-IR'),
-          author: {
-            username: userProfile?.username || '',
-            id: '' // Todo: make this work
-          },
+          author: authorRef,
           numAnswers: 0,
           hasAcceptedAnswer: false
         }
@@ -80,7 +93,7 @@ export default function AskQuestionPage() {
       }, (data) => {
         return {
           questions: {
-            edges: [{ node: { __ref: ref, id: `${res.id}` } }, ...(data?.questions?.edges || [])]
+            edges: [{ node: { __ref: questionRef, id: `${res.id}` } }, ...(data?.questions?.edges || [])]
           }
         }
       })
