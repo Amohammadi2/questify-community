@@ -3,6 +3,7 @@ import graphene
 from graphene_django import DjangoConnectionField, DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
 from .models import Answer, Question
+from .filters import QuestionFilter, QuestionFilterConnectionField
 
 class RelayNode(graphene.relay.Node):
     
@@ -50,10 +51,7 @@ class QuestionType(DjangoObjectType):
         model = Question
         fields = ('title', 'tags', 'html_content', 'author', 'created', 'updated', 'id', 'answers')
         interfaces = (QuestionRelayNode,)
-        filter_fields = {
-            'title': ['exact', 'icontains', 'istartswith'],
-            'html_content': ['exact', 'icontains'],
-        }
+        filterset_class = QuestionFilter
 
     num_answers = graphene.Int()
     has_accepted_answer = graphene.Boolean()
@@ -67,7 +65,7 @@ class QuestionType(DjangoObjectType):
 
 class Query(graphene.ObjectType):
     hello = graphene.String(default_value='hello world')
-    questions = DjangoFilterConnectionField(QuestionType)
+    questions = QuestionFilterConnectionField(QuestionType)
     question =  QuestionRelayNode.Field(QuestionType)
 
 schema = graphene.Schema(query=Query)
