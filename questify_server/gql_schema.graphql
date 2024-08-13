@@ -1,6 +1,6 @@
 type Query {
   hello: String
-  questions(offset: Int, before: String, after: String, first: Int, last: Int, title: String, title_Icontains: String, title_Istartswith: String, htmlContent: String, htmlContent_Icontains: String): QuestionTypeConnection
+  questions(offset: Int, before: String, after: String, first: Int, last: Int, title: String, title_Icontains: String, title_Istartswith: String, htmlContent: String, htmlContent_Icontains: String, tags: [String]): QuestionTypeConnection
   question(
     """The ID of the object"""
     id: ID!
@@ -41,7 +41,7 @@ type QuestionTypeEdge {
   cursor: String!
 }
 
-type QuestionType implements RelayNode {
+type QuestionType implements QuestionRelayNode {
   """The ID of the object"""
   id: ID!
   htmlContent: String!
@@ -55,12 +55,12 @@ type QuestionType implements RelayNode {
   hasAcceptedAnswer: Boolean
 }
 
-interface RelayNode {
+interface QuestionRelayNode {
   """The ID of the object"""
   id: ID!
 }
 
-type UserType implements RelayNode {
+type UserType implements UserRelayNode {
   """The ID of the object"""
   id: ID!
   lastLogin: DateTime
@@ -84,8 +84,13 @@ type UserType implements RelayNode {
   """
   isActive: Boolean!
   dateJoined: DateTime!
-  question(offset: Int, before: String, after: String, first: Int, last: Int, title: String, title_Icontains: String, title_Istartswith: String, htmlContent: String, htmlContent_Icontains: String): QuestionTypeConnection!
+  question(offset: Int, before: String, after: String, first: Int, last: Int, title: String, title_Icontains: String, title_Istartswith: String, htmlContent: String, htmlContent_Icontains: String, tags: String): QuestionTypeConnection!
   answer(offset: Int, before: String, after: String, first: Int, last: Int): AnswerTypeConnection!
+}
+
+interface UserRelayNode {
+  """The ID of the object"""
+  id: ID!
 }
 
 """
@@ -112,7 +117,7 @@ type AnswerTypeEdge {
   cursor: String!
 }
 
-type AnswerType implements RelayNode {
+type AnswerType implements AnswerRelayNode {
   """The ID of the object"""
   id: ID!
   htmlContent: String!
@@ -121,6 +126,11 @@ type AnswerType implements RelayNode {
   updated: DateTime!
   accepted: Boolean!
   question: QuestionType
+}
+
+interface AnswerRelayNode {
+  """The ID of the object"""
+  id: ID!
 }
 
 """

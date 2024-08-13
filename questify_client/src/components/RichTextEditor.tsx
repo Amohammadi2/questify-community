@@ -7,6 +7,7 @@ import { EditorContent } from "@tiptap/react"
 import PageLoader from "./PageLoader"
 import { useRichTextEditor } from "../hooks/useRichTextEditor"
 import "@/styles/ProseMirror.css"
+import { TagInput } from "./TagInput"
 
 type ReturnsPost = ()=>Promise<{htmlContent: string, title?: string, tags?: Array<string>}>
 
@@ -56,19 +57,6 @@ export default function RichTextEditor <TPublish extends (content: ContentAggreg
     }
   }, [onInit, editor])
 
-
-  const addTag = useCallback((e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const tag = e.currentTarget.value
-    if (e.code == "Enter" && tag != "" && !tags.includes(tag)) {
-      setTags([...tags, e.currentTarget.value])
-      e.currentTarget.value = ""
-    }
-  }, [tags])
-
-  const removeTag = useCallback((tag: string) => {
-    setTags(tags.filter(t => t!==tag))
-  }, [tags])
-
   const canPublish = Boolean(
     !editor?.isEmpty &&
     (enableTitle ? Boolean(title) : true) &&
@@ -105,10 +93,7 @@ export default function RichTextEditor <TPublish extends (content: ContentAggreg
             onChange={e=>setTitle(e.currentTarget.value)}
           />
         </Grid>}
-        {enableTags && <Grid container direction="row">
-            {tags.map(t => <Chip label={t} key={t} onDelete={()=>{removeTag(t)}} sx={{ mx: .5, my: .7 }}/>)}
-            <InputBase placeholder="تگ های مورد نظر را وارد کنید" sx={{ flexGrow: 1, ml: 2 }} onKeyDown={addTag}/>
-        </Grid>}
+        {enableTags && <TagInput {...{tags, setTags}} />}
         {(enableTitle || enableTags) && <Divider sx={{ mt: 1, mb: 3 }}/>}
         <EditorContent editor={editor} />
         <Grid container sx={{ mt: 2 }}>

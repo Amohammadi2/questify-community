@@ -1,8 +1,8 @@
-import { graphql } from "@/gen/gql"
+import { gql } from "@apollo/client"
 
-export const GET_QUESTION_FEED = graphql(`
-  query GetQuestionFeed ($after: String, $first: Int = 15) {
-    questions (after: $after, first: $first) {
+export const GET_QUESTION_FEED = gql`
+  query GetQuestionFeed ($after: String, $first: Int = 15, $searchTerm: String, $tags: [String!]) {
+    questions (after: $after, first: $first, title_Icontains: $searchTerm, tags: $tags) {
       pageInfo {
         hasNextPage
         endCursor
@@ -23,4 +23,4 @@ export const GET_QUESTION_FEED = graphql(`
       }
     }
   }
-`)
+`

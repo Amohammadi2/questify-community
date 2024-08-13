@@ -55,7 +55,7 @@ export default function QuestionDetails({ id, opMode=false, author, title, htmlC
           <Avatar alt={author.username} sx={{ width: 30, height: 30}} />
           <Typography sx={{ ml: 1 }}>{author.username}</Typography>
           <div style={{flexGrow: '1'}} />
-          <Typography></Typography>
+          <Typography>تاریخ پرسش: {created.toLocaleDateString("fa-IR")}</Typography>
         </Grid>
         <Grid container>
           <Typography variant="h5" sx={{ ml: 2, mb:2, fontWeight: 800 }}>{title}</Typography>

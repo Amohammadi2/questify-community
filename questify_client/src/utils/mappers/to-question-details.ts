@@ -1,6 +1,7 @@
 import { GetQuestionDetailsQuery, QuestionType, UserType } from "@/gen/gql/graphql";
 
-export interface QuestionDetails extends Pick<QuestionType, 'id' | 'title' | 'htmlContent' | 'created'> {
+export interface QuestionDetails extends Pick<QuestionType, 'id' | 'title' | 'htmlContent'> {
+  created: Date
   author: Pick<UserType, 'username' | 'id'>
 }
 
