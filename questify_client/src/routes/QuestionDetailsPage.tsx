@@ -12,7 +12,7 @@ import { toQuestionDetails } from "@/utils/mappers/to-question-details"
 import { answerEdgeToAnswerDetailsArray } from "@/utils/mappers/answer-edge-to-answer-details"
 import { AnswerType, AnswerTypeConnection } from "@/gen/gql/graphql"
 import InfiniteScroll from "react-infinite-scroll-component"
-import AnswerQuestionBox from "@/components/AnswerQuestionBox"
+import { AnswerForm } from "@/components/forms/components/AnswerForm"
 
 interface ToggleAnswerData {
   questionId: string
@@ -106,7 +106,7 @@ export default function QuestionDetailsPage() {
         : (
           <>
             <QuestionDetails {...toQuestionDetails(data)} opMode={data.question.author?.username === userProfile?.username}/>
-            {isAuthenticated && <AnswerQuestionBox />}
+            {isAuthenticated && <AnswerForm qid={qid||null} aid={null} />}
             <InfiniteScroll
               dataLength={data?.question?.answers?.edges.length || 0}
               next={()=>fetchMore({ variables: { answerAfter: data.question?.answers?.pageInfo.endCursor }})}

@@ -34,31 +34,6 @@ export default function AnswerQuestionBox() {
   }, [qid])
 
   const afterPublish = (res: AnswerWrite): void => {
-    // client.cache.modify({
-    //   id: client.cache.identify({__typename: 'QuestionType', id: qid }),
-    //   fields: {
-    //     numAnswers(n) { return n+1 },
-    //     answers(answers: AnswerTypeConnection) {
-    //       return {
-    //         ...answers,
-    //         edges: [{
-    //           node: {
-    //             __typename: 'AnswerType',
-    //             created: new Date().toLocaleDateString('fa-IR'),
-    //             updated: new Date().toLocaleDateString('fa-IR'),
-    //             accepted: false,
-    //             htmlContent: res.htmlContent,
-    //             id: res.id,
-    //             author: {
-    //               username: userProfile?.username,
-    //               id: '', // Todo: make this work
-    //             }
-    //           }
-    //         }, ...answers.edges] as AnswerTypeEdge[]
-    //       } as AnswerTypeConnection
-    //     }
-    //   }
-    // })
     const authorRef = client.cache.writeFragment({
       id: `UserType:${userProfile?.id}`,
       fragment: gql`

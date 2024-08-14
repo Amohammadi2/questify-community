@@ -1,73 +1,35 @@
 import QuestionSummary from "@/components/QuestionSummary"
 import InfiniteScroll from 'react-infinite-scroll-component'
-import { Container, Divider, Grid, IconButton, InputAdornment, TextField, Typography } from "@mui/material"
+import { Container, Divider, Grid, IconButton, InputAdornment, InputBase, Paper, TextField, Typography } from "@mui/material"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faRefresh, faSearch } from "@fortawesome/free-solid-svg-icons"
 import { useQuery } from "@apollo/client"
 import { GET_QUESTION_FEED } from "@/graphql/get-questions"
 import { QuestionRead } from "@/gen"
 import { useEffect, useState } from "react"
-import { TagInput } from "@/components/TagInput"
+import { TagInput } from "@/components/forms/components/TagInput"
 import { isEnterKeyPressed } from "@/utils/is-enter-key-pressed"
 import { atom, useRecoilState } from "recoil"
+import { SearchBar } from "@/components/SearchBar"
 
-const $searchTerm = atom<string|null>({
-  key: 'search-term',
-  default: null
-})
-
-const $tags = atom<string[]>({
-  key: 'tags',
-  default: []
-})
 
 export default function QuestionsPage() {
   
-  const [searchTerm, setSearchTerm] = useRecoilState($searchTerm)
-  const [tags, setTags] = useRecoilState($tags)
-
   const { data, loading, fetchMore, called, networkStatus, error, refetch } = useQuery(GET_QUESTION_FEED, {
     variables: {
       first: 15,
-      searchTerm,
-      tags
+      searchTerm: null as string|null,
+      tags: [] as string[]
     }
   })
 
-  useEffect(() => {
-    refetch({ tags })
-  }, [tags])
+  
 
   console.log('length = ', data?.questions?.edges.length)
 
   return (
     <Container maxWidth="md">
-      <Grid container direction="column" sx={{ mt: 3}}>
-        <TextField
-          placeholder="جستجو در سوالات..."
-          sx={{ mb: 2 }}
-          variant="filled"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <FontAwesomeIcon icon={faSearch} />
-              </InputAdornment>
-            )
-          }}
-          onChange={(e)=>{setSearchTerm(e.currentTarget.value)}}
-          value={searchTerm}
-          onKeyDown={(e)=>{
-            if (isEnterKeyPressed(e)) {
-              refetch({
-                searchTerm,
-                tags
-              })
-            }
-          }}
-        />
-        <TagInput {...{tags, setTags}} />
-        <Divider />
-      </Grid>
+      <SearchBar onSearch={(searchTerm, tags) => refetch({ searchTerm, tags })} />
       <InfiniteScroll
         pullDownToRefresh
         pullDownToRefreshThreshold={150}

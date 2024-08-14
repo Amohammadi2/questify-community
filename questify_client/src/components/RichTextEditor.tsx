@@ -7,7 +7,7 @@ import { EditorContent } from "@tiptap/react"
 import PageLoader from "./PageLoader"
 import { useRichTextEditor } from "../hooks/useRichTextEditor"
 import "@/styles/ProseMirror.css"
-import { TagInput } from "./TagInput"
+import { TagInput } from "./forms/components/TagInput"
 
 type ReturnsPost = ()=>Promise<{htmlContent: string, title?: string, tags?: Array<string>}>
 
@@ -32,7 +32,9 @@ interface RichTextEditorProps <TPublish extends (content: ContentAggregate) => P
   contentPlaceholder?: string
 }
 
-
+/**
+ * @deprecated
+ */
 export default function RichTextEditor <TPublish extends (content: ContentAggregate) => Promise<any>>
   ({ onPublish, afterPublish, onInit, enableTags=false, enableTitle=false, onCancel, submitButtonText="انتشار سوال", onInitError, contentPlaceholder="محتوا را وارد کنید"} : RichTextEditorProps<TPublish>)
 {
@@ -112,7 +114,6 @@ export default function RichTextEditor <TPublish extends (content: ContentAggreg
           </Button>
           
         </Grid>
-        {/* Todo: add a tag editor here */}
         <Grid>
           <Typography color="error">{publishError?.message}</Typography>
         </Grid>
