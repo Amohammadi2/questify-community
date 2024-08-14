@@ -1,17 +1,10 @@
-import { AnswerRead } from "@/gen"
 import { useModal } from "@/hooks/useModal";
 import { faCheckSquare, faPen, faTrashCan } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Avatar, Grid, IconButton, Typography } from "@mui/material"
-import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "./ConfirmationModal";
-import { useRecoilValue } from "recoil";
-import { $answersApi } from "@/apis";
-import { useCallback, useEffect, useState } from "react";
-import { AnswerType, AnswerTypeConnection } from "@/gen/gql/graphql";
+import { useEffect, useState } from "react";
 import { AnswerDetails } from "@/utils/mappers/answer-edge-to-answer-details";
-import { client } from "@/apollo/client";
-import { gql } from "@apollo/client";
 import { AnswerForm } from "./forms/components/AnswerForm";
 
 interface AnswerProps extends AnswerDetails {
