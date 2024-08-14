@@ -1,5 +1,5 @@
 import { $answersApi } from "@/apis"
-import { Container, Typography } from "@mui/material"
+import { Card, Container, Grid, Typography } from "@mui/material"
 import { useParams } from "react-router-dom"
 import { useRecoilValue } from "recoil"
 import Answer from "@/components/Answer"
@@ -106,7 +106,11 @@ export default function QuestionDetailsPage() {
         : (
           <>
             <QuestionDetails {...toQuestionDetails(data)} opMode={data.question.author?.username === userProfile?.username}/>
-            {isAuthenticated && <AnswerForm qid={qid||null} aid={null} />}
+            {isAuthenticated && <Grid sx={{ mt: 2, px: '10px'}}>
+              <Card sx={{ py: 2, px: 3, borderRadius: 2}}>
+                <AnswerForm qid={qid||null} aid={null} />
+              </Card>
+            </Grid>}
             <InfiniteScroll
               dataLength={data?.question?.answers?.edges.length || 0}
               next={()=>fetchMore({ variables: { answerAfter: data.question?.answers?.pageInfo.endCursor }})}

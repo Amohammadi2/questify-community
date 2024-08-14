@@ -12,6 +12,7 @@ import { AnswerType, AnswerTypeConnection } from "@/gen/gql/graphql";
 import { AnswerDetails } from "@/utils/mappers/answer-edge-to-answer-details";
 import { client } from "@/apollo/client";
 import { gql } from "@apollo/client";
+import { AnswerForm } from "./forms/components/AnswerForm";
 
 interface AnswerProps extends AnswerDetails {
   opMode?: boolean
@@ -23,16 +24,14 @@ interface AnswerProps extends AnswerDetails {
 
 export default function Answer({ htmlContent, author, id, accepted : _accepted, opMode=false, authorMode=false, onDelete, questionId, toggleAcceptAnswer} : AnswerProps) {
   
-  const navigate = useNavigate()
   const [openDeleteModal, deleteModalState] = useModal()
-  const answersApi = useRecoilValue($answersApi)
-
   const [accepted, setAccepted] = useState(_accepted)
 
   useEffect(() => {
     setAccepted(_accepted || false)
   }, [_accepted])
 
+  const [editMode, setEditMode] = useState(false)
 
   
   const toggleAcceptedStatus = () => {
@@ -55,35 +54,41 @@ export default function Answer({ htmlContent, author, id, accepted : _accepted, 
           <Avatar alt={author?.username} />
           <Typography sx={{ flexGrow: 1, ml: 1 }}>{author?.username}</Typography>
         </Grid>
-        <Grid container direction="row" alignItems='center'>
-          {opMode && <Grid item sx={{ mr: 2 }}>
-            <IconButton onClick={toggleAcceptedStatus}>
-              <FontAwesomeIcon
-                icon={faCheckSquare}
-                style={{
-                  color: accepted ? 'green' : 'rgb(220,220,220)'
-                }}
-              />
-            </IconButton>
-          </Grid>}
-          <Grid item>
-            <div dangerouslySetInnerHTML={{ __html: htmlContent }} style={{ fontFamily: 'Vazirmatn' }} />
-          </Grid>
-        </Grid>
-        {authorMode && <Grid container direction="row" sx={{ borderTop: '1px solid rgb(230,230,230)', mt: 2, pt: 1.5 }}>
-          <IconButton sx={{ mr: .5 }} onClick={openDeleteModal}>
-            <FontAwesomeIcon
-              icon={faTrashCan}
-              style={{ fontSize: 16 }}
-            />
-          </IconButton>
-          <IconButton sx={{ mr: .5 }} onClick={()=>navigate('/edit-answer/'+id)}>
-            <FontAwesomeIcon
-              icon={faPen}
-              style={{ fontSize: 16 }}
-            />
-          </IconButton>
-        </Grid>}
+        {editMode ? (
+          <AnswerForm qid={questionId} aid={id} content={htmlContent} onCancel={()=>setEditMode(false)} onSubmit={()=>setEditMode(false)}/>
+        ) : (
+          <>
+            <Grid container direction="row" alignItems='center'>
+              {opMode && <Grid item sx={{ mr: 2 }}>
+                <IconButton onClick={toggleAcceptedStatus}>
+                  <FontAwesomeIcon
+                    icon={faCheckSquare}
+                    style={{
+                      color: accepted ? 'green' : 'rgb(220,220,220)'
+                    }}
+                  />
+                </IconButton>
+              </Grid>}
+              <Grid item>
+                <div dangerouslySetInnerHTML={{ __html: htmlContent }} style={{ fontFamily: 'Vazirmatn' }} />
+              </Grid>
+            </Grid>
+            {authorMode && <Grid container direction="row" sx={{ borderTop: '1px solid rgb(230,230,230)', mt: 2, pt: 1.5 }}>
+              <IconButton sx={{ mr: .5 }} onClick={openDeleteModal}>
+                <FontAwesomeIcon
+                  icon={faTrashCan}
+                  style={{ fontSize: 16 }}
+                />
+              </IconButton>
+              <IconButton sx={{ mr: .5 }} onClick={()=>setEditMode(true)}>
+                <FontAwesomeIcon
+                  icon={faPen}
+                  style={{ fontSize: 16 }}
+                />
+              </IconButton>
+            </Grid>}
+          </>
+        )}
       </Grid>
     </>
   )

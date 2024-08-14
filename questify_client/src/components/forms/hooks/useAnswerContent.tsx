@@ -19,24 +19,24 @@ export function useAnswerContent(qid: string|null, aid: string|null) {
   const editor = useRichTextEditor({ placholder: "پاسخ خود را بنویسید..." })
 
   // load questions content if we are editing an already existing question
-  const populateAnswerContent = useCallback(() => {
-    if (aid === null) return
-    setContentLoading(true)
-    answersApi.answersRetrieve({
-      id: Number.parseInt(aid || '-1')
-    })
-    .catch(e => console.error(e))
-    .then(res => {
-      if (res) {
-        editor?.commands.setContent(res.htmlContent)
-      }
-    })
-    .finally(() => setContentLoading(false))
-  }, [qid, aid, editor])
+  // const populateAnswerContent = useCallback(() => {
+  //   if (aid === null) return
+  //   setContentLoading(true)
+  //   answersApi.answersRetrieve({
+  //     id: Number.parseInt(aid || '-1')
+  //   })
+  //   .catch(e => console.error(e))
+  //   .then(res => {
+  //     if (res) {
+  //       editor?.commands.setContent(res.htmlContent)
+  //     }
+  //   })
+  //   .finally(() => setContentLoading(false))
+  // }, [qid, aid, editor])
 
-  useEffect(() => {
-    populateAnswerContent()
-  }, [qid, aid, editor])
+  // useEffect(() => {
+  //   populateAnswerContent()
+  // }, [qid, aid, editor])
 
 
   const publishable = !editor?.isEmpty
