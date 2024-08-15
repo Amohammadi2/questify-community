@@ -5,6 +5,7 @@ export * from './AnswerRead';
 export * from './AnswerWrite';
 export * from './AnswerWriteRequest';
 export * from './Author';
+export * from './FileUploadResponse';
 export * from './MyAnswers';
 export * from './PaginatedAnswerReadList';
 export * from './PaginatedMyAnswersList';

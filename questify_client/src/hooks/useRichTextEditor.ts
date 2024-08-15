@@ -27,7 +27,7 @@ export function useRichTextEditor({ placholder } : IEditorSettings = {}) {
       Underline,
       TextDirection,
       Image.configure({
-        inline: false
+        inline: true
       })
     ]
   });

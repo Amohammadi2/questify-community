@@ -3,7 +3,7 @@ import { faCheckSquare, faPen, faTrashCan } from "@fortawesome/free-solid-svg-ic
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Avatar, Grid, IconButton, Typography } from "@mui/material"
 import ConfirmationModal from "./ConfirmationModal";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AnswerDetails } from "@/utils/mappers/answer-edge-to-answer-details";
 import { AnswerForm } from "./forms/components/AnswerForm";
 
@@ -15,21 +15,19 @@ interface AnswerProps extends AnswerDetails {
   toggleAcceptAnswer: (accepted: boolean) => any
 }
 
-export default function Answer({ htmlContent, author, id, accepted : _accepted, opMode=false, authorMode=false, onDelete, questionId, toggleAcceptAnswer} : AnswerProps) {
+/**
+ * This component, takes all the data from the parent component and displays an answer object
+ * and manages the editing and deleting operations. Since all the data is passed as props,
+ * we can't make direct changes to the data, but the data is kept in sync with apollo cache. 
+ * For example when the `accepted` state of an answer changes, apollo broadcasts the change to
+ * all the graphql queries watching that field, thus making the `accepted` prop to change from outside
+ */
+export default function Answer({ htmlContent, author, id, accepted, opMode=false, authorMode=false, onDelete, questionId, toggleAcceptAnswer} : AnswerProps) {
   
   const [openDeleteModal, deleteModalState] = useModal()
-  const [accepted, setAccepted] = useState(_accepted)
-
-  useEffect(() => {
-    setAccepted(_accepted || false)
-  }, [_accepted])
-
   const [editMode, setEditMode] = useState(false)
-
-  
   const toggleAcceptedStatus = () => {
     toggleAcceptAnswer(accepted)
-    setAccepted(!accepted)
   }
 
   return (

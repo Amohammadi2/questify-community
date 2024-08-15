@@ -63,6 +63,7 @@ export function useQuestionContent(qid: string|null) {
     })
     .then(res => {
       CacheManager.updateQuestion(res.id, { title, tags, content: editor?.getHTML() || '' })
+      return res.id
     })
   }, [questionsApi, qid, title, tags, editor])
 
@@ -80,6 +81,7 @@ export function useQuestionContent(qid: string|null) {
         title,
         tags
       })
+      return res.id
     })
   }, [questionsApi, title, tags, editor])
 

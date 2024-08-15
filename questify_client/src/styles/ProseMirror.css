@@ -9,11 +9,16 @@
   position: absolute;
 }
 
+.ProseMirror p::before {
+  content: ' ';
+}
+
 .ProseMirror a {
   color: rgb(5, 102, 212);
 }
 
-.ProseMirror > p:has(img) {
+.ProseMirror > *:has(img) {
   display: flex;
   justify-content: center;
+  align-items: center;
 }

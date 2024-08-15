@@ -1,4 +1,5 @@
 apis/AnswersApi.ts
+apis/FileUploadApi.ts
 apis/QuestionsApi.ts
 apis/SchemaApi.ts
 apis/TokenApi.ts
@@ -10,6 +11,7 @@ models/AnswerRead.ts
 models/AnswerWrite.ts
 models/AnswerWriteRequest.ts
 models/Author.ts
+models/FileUploadResponse.ts
 models/MyAnswers.ts
 models/PaginatedAnswerReadList.ts
 models/PaginatedMyAnswersList.ts

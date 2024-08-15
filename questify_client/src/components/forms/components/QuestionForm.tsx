@@ -2,10 +2,11 @@ import { Grid, Card, Divider } from "@mui/material"
 import { useQuestionContent } from "../hooks/useQuestionContent"
 import PageLoader from "../../PageLoader"
 import { TagInput } from "./TagInput"
-import { EditorContent } from "@tiptap/react"
 import { ConfirmationButtonGroup } from "./ConfirmationButtonGroup"
 import { TitleInput } from "./TitleInput"
 import { useNavigate } from "react-router-dom"
+import { TextEditor } from "@/components/text-editor/TextEditor"
+import { LinkMaker } from "@/utils/link-maker"
 
 
 export interface IQuestionFormProps {
@@ -24,17 +25,17 @@ export function QuestionForm({ qid } : IQuestionFormProps) {
 
   const handlePublish = () => {
     return publishChanges()
-    .then(() => navigate(-1))
+    .then(id => navigate(LinkMaker.questionDetails(id.toString()), { replace: true }))
   }
 
   return (
-    <Grid sx={{ mt: 2, px: '10px'}}>
+    <Grid sx={{ mt: 2, px: '10px', mb: 5}}>
       <Card sx={{ py: 2, px: 3, borderRadius: 2}}>
         {loading && <PageLoader fixed />}
         <TitleInput {...{title, setTitle}} />
         <TagInput {...{tags, setTags}} />
         <Divider sx={{ mt: 1, mb: 3 }}/>
-        <EditorContent editor={editor} />
+        <TextEditor editor={editor} />
         <ConfirmationButtonGroup
           publishable={publishable}
           cancelable={!editor?.isEmpty}

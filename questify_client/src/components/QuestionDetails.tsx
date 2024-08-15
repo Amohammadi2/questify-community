@@ -3,7 +3,7 @@ import { useApi } from "@/hooks/useApi";
 import { useModal } from "@/hooks/useModal";
 import { faPen, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Avatar, Grid, IconButton, Typography } from "@mui/material";
+import { Avatar, Divider, Grid, IconButton, Typography } from "@mui/material";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
@@ -57,11 +57,13 @@ export default function QuestionDetails({ id, opMode=false, author, title, htmlC
           <div style={{flexGrow: '1'}} />
           <Typography>تاریخ پرسش: {created.toLocaleDateString("fa-IR")}</Typography>
         </Grid>
+        <Divider sx={{ mb: 2 }} />
         <Grid container>
           <Typography variant="h5" sx={{ ml: 2, mb:2, fontWeight: 800 }}>{title}</Typography>
         </Grid>
         <div dangerouslySetInnerHTML={{ __html: htmlContent || '' }} className="ProseMirror" />
         {/* Todo: replace these buttons with a menu */}
+        <Divider sx={{ mt: 2 }} />
         {opMode && <Grid container sx={{ mt: 1, mb: 3 }}>
           <IconButton sx={{ mr: .5 }} onClick={openDeleteModal}>
             <FontAwesomeIcon

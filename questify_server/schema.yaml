@@ -681,6 +681,31 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserRetrieve'
           description: ''
+  /file-upload/upload/:
+    post:
+      operationId: file_upload_upload_create
+      tags:
+      - file-upload
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileUploadResponse'
+          description: ''
+        '400':
+          description: No response body
 components:
   schemas:
     AcceptAnswerRequest:
@@ -754,6 +779,13 @@ components:
       required:
       - id
       - username
+    FileUploadResponse:
+      type: object
+      properties:
+        file_url:
+          type: string
+      required:
+      - file_url
     MyAnswers:
       type: object
       properties:
