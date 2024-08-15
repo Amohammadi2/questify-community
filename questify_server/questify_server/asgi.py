@@ -10,7 +10,15 @@ https://docs.djangoproject.com/en/4.2/howto/deployment/asgi/
 import os
 
 from django.core.asgi import get_asgi_application
+import channels, django
+from core.consumers import NotificationConsumer
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'questify_server.settings')
 
-application = get_asgi_application()
+application = channels.routing.ProtocolTypeRouter({
+    "http": get_asgi_application(),
+    "websocket": channels.routing.URLRouter([
+        django.urls.path("api/v1/graphql/", NotificationConsumer.as_asgi()),
+    ])
+})
+

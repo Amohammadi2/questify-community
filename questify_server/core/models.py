@@ -13,7 +13,7 @@ class Post(models.Model):
     
 
 class Question(Post):
-    title = models.CharField('title', null=False, blank=False)
+    title = models.CharField('title', null=False, blank=False, max_length=512)
     tags = models.JSONField(null=False, blank=False)
 
     objects = QuestionManager()
@@ -31,5 +31,5 @@ class Answer(Post):
 
 
 class Tag(models.Model):
-    name = models.CharField(256, null=False, blank=False)
+    name = models.CharField('name', null=False, blank=False, max_length=256)
     post_count = models.BigIntegerField(default=0)

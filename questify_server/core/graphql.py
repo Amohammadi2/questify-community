@@ -2,8 +2,10 @@ from django.contrib.auth.models import User
 import graphene
 from graphene_django import DjangoConnectionField, DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
+from notifications.models import Notification
 from .models import Answer, Question
 from .filters import QuestionFilter, QuestionFilterConnectionField
+from .subscriptions import Subscription
 
 class RelayNode(graphene.relay.Node):
     
@@ -21,6 +23,7 @@ class RelayNode(graphene.relay.Node):
 class QuestionRelayNode(RelayNode): type_name = "QuestionType"
 class AnswerRelayNode(RelayNode): type_name = "AnswerType"
 class UserRelayNode(RelayNode): type_name = "UserType"
+class NotificationRelayNode(RelayNode): type_name = "NotificationType"
 
 
 class UserType(DjangoObjectType):
@@ -62,10 +65,26 @@ class QuestionType(DjangoObjectType):
     
     def resolve_has_accepted_answer(self: Question, info):
         return self.has_accepted_answer
+    
+
+class NotificationType(DjangoObjectType):
+
+    @classmethod
+    def get_queryset(cls, queryset, info):
+        return Notification.objects.filter(user=info.context.user)
+    
+    class Meta:
+        model = Notification
+        fields = ('id', 'message')
+        interfaces = (QuestionRelayNode,)
 
 class Query(graphene.ObjectType):
     hello = graphene.String(default_value='hello world')
     questions = QuestionFilterConnectionField(QuestionType)
     question =  QuestionRelayNode.Field(QuestionType)
+    notifications = DjangoConnectionField(NotificationType)
 
-schema = graphene.Schema(query=Query)
+schema = graphene.Schema(
+    query=Query,
+    subscription=Subscription
+)
