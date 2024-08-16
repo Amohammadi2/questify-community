@@ -11,6 +11,7 @@ import { useRecoilValue } from 'recoil'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import UserProfileMenu from '@/components/UserProfileMenu'
+import { NotificationBox } from '@/components/notification'
 import { useNavigate } from 'react-router-dom'
 import { $isAuthenticated } from '@/store/auth.store'
 
@@ -53,7 +54,10 @@ export function NavLayout({ authButtons: showAuthButtons=false, backButton: show
               flexGrow: 1
             }}>
               {showBackButton ? backButton : null}
-              <Suspense><UserProfileMenu /></Suspense>
+              <Suspense>
+                <UserProfileMenu />
+                <NotificationBox />
+              </Suspense>
               {showAuthButtons && !isAuthenticated && authButtons}
               {content}
             </Grid>

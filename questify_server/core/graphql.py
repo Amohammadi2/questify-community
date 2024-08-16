@@ -5,7 +5,7 @@ from graphene_django.filter import DjangoFilterConnectionField
 from notifications.models import Notification
 from .models import Answer, Question
 from .filters import QuestionFilter, QuestionFilterConnectionField
-from .subscriptions import Subscription
+
 
 class RelayNode(graphene.relay.Node):
     
@@ -71,7 +71,7 @@ class NotificationType(DjangoObjectType):
 
     @classmethod
     def get_queryset(cls, queryset, info):
-        return Notification.objects.filter(user=info.context.user)
+        return Notification.objects.filter(user=info.context.user).order_by('-timestamp')
     
     class Meta:
         model = Notification
@@ -85,6 +85,5 @@ class Query(graphene.ObjectType):
     notifications = DjangoConnectionField(NotificationType)
 
 schema = graphene.Schema(
-    query=Query,
-    subscription=Subscription
+    query=Query
 )

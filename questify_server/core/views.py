@@ -10,7 +10,7 @@ from drf_spectacular.types import OpenApiTypes
 from .permissions import IsAuthorOf, IsOwnerOfAccount
 from .models import Answer, Question
 from .serializers import AcceptAnswerSerializer, AnswerReadSerializer, AnswerWriteSerializer, GetAnswersForQuestionParamSerializer, MyAnswersSerializer, QuestionReadSerializer, QuestionWriteSerializer, UserRegistrationSerializer, UserRetrieveSerializer
-
+from .channels import NotificationChannel
 
 
 class QuestionsViewset(viewsets.ModelViewSet):
@@ -79,6 +79,7 @@ class AnswersViewset(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.Up
         serializer.save()
         # Make sure no other answer is accepted for the same question
         answer.question.answers.filter(accepted=True).exclude(pk=pk).update(accepted=False)
+        NotificationChannel.send_notif(request.user, 'پاسخ شما پذیرفته شد')
         return Response(AnswerReadSerializer(answer).data)
 
 
@@ -128,3 +129,30 @@ class UsersViewset(viewsets.GenericViewSet, mixins.RetrieveModelMixin, mixins.De
     def me(self, request):
         serialized_user = UserRetrieveSerializer(request.user)
         return Response(serialized_user.data)
+    
+
+
+
+# Integrating DRF authentication with Graphene Django
+
+from graphene_django.views import GraphQLView
+
+import rest_framework
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import authentication_classes, permission_classes, api_view
+from rest_framework.settings import api_settings
+
+
+class DRFAuthenticatedGraphQLView(GraphQLView):
+    def parse_body(self, request):
+        if isinstance(request, rest_framework.request.Request):
+            return request.data
+        return super(GraphQLView, self).parse_body(request)
+
+    @classmethod
+    def as_view(cls, *args, **kwargs):
+        view = super(GraphQLView, cls).as_view(*args, **kwargs)
+        view = permission_classes((IsAuthenticated,))(view)
+        view = authentication_classes(api_settings.DEFAULT_AUTHENTICATION_CLASSES)(view)
+        view = api_view(['GET', 'POST'])(view)
+        return view

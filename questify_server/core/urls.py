@@ -8,8 +8,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, Spec
 from rest_framework.routers import DefaultRouter
 from graphene_django.views import GraphQLView
 
-from .views import AnswersViewset, QuestionsViewset, UsersViewset
-
+from .views import AnswersViewset, QuestionsViewset, UsersViewset, DRFAuthenticatedGraphQLView
 router = DefaultRouter()
 router.register('questions', QuestionsViewset, basename="questions")
 router.register('answers', AnswersViewset, basename="answers")
@@ -27,7 +26,7 @@ urlpatterns = [
     path('schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 
     # GraphQL
-    path("graphql/", csrf_exempt(GraphQLView.as_view(graphiql=True))),
+    path("graphql/", csrf_exempt(DRFAuthenticatedGraphQLView.as_view(graphiql=True))),
 
     # Questions
     *router.urls,
