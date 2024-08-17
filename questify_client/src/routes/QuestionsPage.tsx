@@ -1,20 +1,24 @@
 import QuestionSummary from "@/components/QuestionSummary"
 import InfiniteScroll from 'react-infinite-scroll-component'
-import { Container, Divider, Grid, IconButton, InputAdornment, InputBase, Paper, TextField, Typography } from "@mui/material"
+import { Container, IconButton } from "@mui/material"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faRefresh, faSearch } from "@fortawesome/free-solid-svg-icons"
+import { faRefresh } from "@fortawesome/free-solid-svg-icons"
 import { useQuery } from "@apollo/client"
 import { GET_QUESTION_FEED } from "@/graphql/get-questions"
 import { QuestionRead } from "@/gen"
-import { useEffect, useState } from "react"
-import { TagInput } from "@/components/forms/components/TagInput"
-import { isEnterKeyPressed } from "@/utils/is-enter-key-pressed"
-import { atom, useRecoilState } from "recoil"
 import { SearchBar } from "@/components/SearchBar"
 
 
 export default function QuestionsPage() {
   
+  // When the data is loaded from server, it is stored in the cache so when the user moves
+  // between pages and then returns back to this page, the `data` variable remains unchanged
+  // and also the browser automatically takes care of scroll position tracking stuff. It is
+  // important that no excessive `refetch` is emmited when the component mounts,
+  // as an example, the search bar was emitting a refetch every time it mounted which caused the
+  // cache to be invalidated and the data to be lost. so we must be careful about how we pass
+  // the `refetch` functions to different components on this page
+
   const { data, loading, fetchMore, called, networkStatus, error, refetch } = useQuery(GET_QUESTION_FEED, {
     variables: {
       first: 15,
@@ -24,12 +28,14 @@ export default function QuestionsPage() {
   })
 
   
-
   console.log('length = ', data?.questions?.edges.length)
 
   return (
     <Container maxWidth="md">
-      <SearchBar onSearch={(searchTerm, tags) => refetch({ searchTerm, tags })} />
+      <SearchBar onSearch={(searchTerm, tags) => {
+        console.log("REFETCH CALL WAS FROM SEARCH BAR")
+        refetch({ searchTerm, tags })
+      }} />
       <InfiniteScroll
         pullDownToRefresh
         pullDownToRefreshThreshold={150}

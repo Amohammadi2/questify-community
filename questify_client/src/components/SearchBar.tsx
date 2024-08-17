@@ -16,6 +16,14 @@ const $tags = atom<string[]>({
   default: []
 })
 
+const $currentlySearchedParams = atom({
+  key: 'currently-searched-params',
+  default: {
+    tags: [] as string[],
+    searchTerm: null as null|string
+  }
+})
+
 
 export interface ISearchBarProps {
   onSearch: (searchTerm: string|null, tags: string[]) => void
@@ -25,9 +33,21 @@ export function SearchBar({ onSearch } : ISearchBarProps) {
   
   const [searchTerm, setSearchTerm] = useRecoilState($searchTerm)
   const [tags, setTags] = useRecoilState($tags)
-  
+  const [currentlySearchedParams, setCurrentlySearchedParams] = useRecoilState($currentlySearchedParams)
+
   useEffect(() => {
-    onSearch(searchTerm, tags)
+    // Note: we convert tags array to string to compare them, this method is also
+    // sensitive to the ordering of tags which means if the order of tags changes it
+    // will trigger a search request to the server but considering the fact that
+    // our UI does not support reordering of tags and there's no point for a user to
+    // try to do that eaither, there's no reason to worry about it XD
+    if (searchTerm != currentlySearchedParams.searchTerm || tags.toString() != currentlySearchedParams.tags.toString()) {
+      console.log("onSearch is triggered")
+      onSearch(searchTerm, tags)
+      setCurrentlySearchedParams({
+        searchTerm, tags
+      })
+    }
   }, [tags])
 
   return (

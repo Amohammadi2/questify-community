@@ -15,7 +15,7 @@ export class CacheManager {
     const authorRef = client.writeFragment({
       id: `UserType:${author?.id}`,
       fragment: gql`
-        fragment CreateAuthor on UserType {
+        fragment CreateAuthor2 on UserType {
           id
           username
           __typename
@@ -96,7 +96,7 @@ export class CacheManager {
     const authorRef = client.cache.writeFragment({
       id: `UserType:${author?.id}`,
       fragment: gql`
-        fragment CreateAuthor on UserType {
+        fragment CreateAuthor1 on UserType {
           id
           __typename
           username
