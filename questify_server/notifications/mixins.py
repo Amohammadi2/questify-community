@@ -13,7 +13,6 @@ class WebsocketTokenAuthMixin:
                 jwt_auth = JWTAuthentication()
                 validated_token = jwt_auth.get_validated_token(token)
                 user = await sync_to_async(jwt_auth.get_user)(validated_token)
-                breakpoint()
                 return user
             except Exception as e:
                 raise e

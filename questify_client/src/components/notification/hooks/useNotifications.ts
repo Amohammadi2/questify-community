@@ -7,12 +7,14 @@ import { useCallback, useEffect } from "react";
 import { $notificationsApi } from "@/apis";
 import { client } from "@/apollo/client";
 import { GetNotificationsQuery } from "@/gen/gql/graphql";
+import { useLiveNotification } from "./useLiveNotifications";
 
 /**
  * Provides a simple way to interact with the notifications api without the overhead
  * of thinking about the rest api endpoints and graphql query management.
  */
 export function useNotifications() {
+  useLiveNotification()
   const authToken = useRecoilValue($authToken)
   const notifsApi = useRecoilValue($notificationsApi)
   const notifsQuery = useQuery(GET_NOTIFS_QUERY, { variables: { after: null } })

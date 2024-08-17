@@ -36,6 +36,14 @@ export default function NotificationBox() {
   if (!userProfile) return null
 
 
+  const numberOfNotifications = notifs.data?.notifications?.edges.length;
+  const anyUnseenNotifications = (function() {
+    for (let edge of notifs.data?.notifications?.edges || []) {
+      if (!edge?.node?.seen)
+        return true
+    }
+    return false
+  })()
   return (
     <>
       <StyledBadge badgeContent={notifs.count} color="primary">
@@ -59,13 +67,10 @@ export default function NotificationBox() {
         onClose={handleMenuClose}
       >
         <Grid container direction="column" sx={{ mx: 1, width: '300px' }}>
-          {/* we use flatmap to insert a divider between notifications and we use
-              the slice method at the end to remove the trailing divider from the end
-          */}
           <Grid container direction="row">
             <Typography variant="h6">اعلانات</Typography>
             <div style={{flexGrow:1}} />
-            <Button onClick={()=>notifs.markSeen()}>علامت به عنوان خوانده شده</Button>
+            <Button onClick={()=>notifs.markSeen()} disabled={!anyUnseenNotifications}>علامت به عنوان خوانده شده</Button>
           </Grid>
           <Divider />
           {/* Note: The infinite scroll component is unable to detect the end of content
@@ -74,7 +79,7 @@ export default function NotificationBox() {
             */}
           <div style={{ height: '400px' }}>
             <InfiniteScroll
-              dataLength={notifs.data?.notifications?.edges.length || 0}
+              dataLength={numberOfNotifications || 0}
               next={()=>notifs.fetchMore().then(res => console.log(res))}
               hasMore={notifs.hasMore || false}
               endMessage={<></>}
@@ -83,7 +88,10 @@ export default function NotificationBox() {
               height='400px'
             >
               {
-                notifs.data?.notifications?.edges.length
+                numberOfNotifications
+                  /* we use flatmap to insert a divider between notifications and we use
+                     the slice method at the end to remove the trailing divider from the end
+                  */
                   ? notifs.data?.notifications?.edges.flatMap(notifEdge =>
                       [ 
                         <NotificationItem message={notifEdge?.node?.message||''} seen={notifEdge?.node?.seen ? true : false} />,

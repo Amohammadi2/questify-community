@@ -7,7 +7,7 @@ class NotificationChannel:
 
     @classmethod
     def send_notif(cls, user: User, message: str):
-        Notification.objects.create(
+        notif = Notification.objects.create(
             user=user,
             message=message
         )
@@ -17,7 +17,9 @@ class NotificationChannel:
             {
                 'type': 'send.notification',
                 'event': {
-                    'message': message
+                    'message': message,
+                    'id': notif.pk,
+                    'seen': False,
                 }
             }
         )
