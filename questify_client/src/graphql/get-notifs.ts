@@ -11,6 +11,7 @@ export const GET_NOTIFS_QUERY = graphql(`
         node {
           id
           message
+          seen
         }
       }
     }

@@ -75,7 +75,7 @@ class NotificationType(DjangoObjectType):
     
     class Meta:
         model = Notification
-        fields = ('id', 'message')
+        fields = ('id', 'message', 'seen')
         interfaces = (QuestionRelayNode,)
 
 class Query(graphene.ObjectType):
@@ -83,6 +83,10 @@ class Query(graphene.ObjectType):
     questions = QuestionFilterConnectionField(QuestionType)
     question =  QuestionRelayNode.Field(QuestionType)
     notifications = DjangoConnectionField(NotificationType)
+    notification_count = graphene.Int()
+
+    def resolve_notification_count(root, info, **kwargs):
+        return Notification.objects.filter(user=info.context.user, seen=False).count()
 
 schema = graphene.Schema(
     query=Query

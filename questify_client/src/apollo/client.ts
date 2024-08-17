@@ -25,7 +25,8 @@ export const client = new ApolloClient({
     typePolicies: {
       Query: {
         fields: {
-          questions: relayStylePagination()
+          questions: relayStylePagination(),
+          notifications: relayStylePagination(),
         },
       },
       QuestionType: {

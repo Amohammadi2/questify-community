@@ -33,6 +33,7 @@ scalar JSONString
 type NotificationType implements QuestionRelayNode {
   id: ID!
   message: String!
+  seen: Boolean!
 }
 
 type NotificationTypeConnection {
@@ -57,6 +58,7 @@ type Query {
   questions(offset: Int, before: String, after: String, first: Int, last: Int, title: String, title_Icontains: String, title_Istartswith: String, htmlContent: String, htmlContent_Icontains: String, tags: [String]): QuestionTypeConnection
   question(id: ID!): QuestionType
   notifications(offset: Int, before: String, after: String, first: Int, last: Int): NotificationTypeConnection
+  notificationCount: Int
 }
 
 interface QuestionRelayNode {

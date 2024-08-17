@@ -1,5 +1,6 @@
 apis/AnswersApi.ts
 apis/FileUploadApi.ts
+apis/NotificationsApi.ts
 apis/QuestionsApi.ts
 apis/SchemaApi.ts
 apis/TokenApi.ts
@@ -13,8 +14,11 @@ models/AnswerWriteRequest.ts
 models/Author.ts
 models/FileUploadResponse.ts
 models/MyAnswers.ts
+models/Notification.ts
+models/NotificationNumber.ts
 models/PaginatedAnswerReadList.ts
 models/PaginatedMyAnswersList.ts
+models/PaginatedNotificationList.ts
 models/PaginatedQuestionReadList.ts
 models/PatchedAnswerWriteRequest.ts
 models/PatchedQuestionWriteRequest.ts

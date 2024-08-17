@@ -1,4 +1,4 @@
-import { Configuration, TokenApi, QuestionsApi, AnswersApi, UsersApi, FileUploadApi } from '@/gen'
+import { Configuration, TokenApi, QuestionsApi, AnswersApi, UsersApi, FileUploadApi, NotificationsApi } from '@/gen'
 import { $authToken } from '@/store/auth.store'
 import { selector } from 'recoil'
 
@@ -46,5 +46,12 @@ export const $fileUploadApi = selector({
   key: 'file-upload-api',
   get: ({get}) => {
     return new FileUploadApi(get($apiConfig))
+  }
+})
+
+export const $notificationsApi = selector({
+  key: 'notifications-api',
+  get: ({get}) => {
+    return new NotificationsApi(get($apiConfig))
   }
 })
