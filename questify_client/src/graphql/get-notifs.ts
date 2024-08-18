@@ -10,8 +10,11 @@ export const GET_NOTIFS_QUERY = graphql(`
       edges {
         node {
           id
+          notifType
           message
           seen
+          timestamp
+          metadata
         }
       }
     }

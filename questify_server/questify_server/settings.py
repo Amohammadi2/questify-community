@@ -164,7 +164,7 @@ SIMPLE_JWT = {
 CORS_ORIGIN_ALLOW_ALL = True
 
 GRAPHENE = {
-    "SCHEMA": 'core.graphql.schema'
+    "SCHEMA": 'questify_server.graphql.schema'
 }
 
 

@@ -23,7 +23,6 @@ class RelayNode(graphene.relay.Node):
 class QuestionRelayNode(RelayNode): type_name = "QuestionType"
 class AnswerRelayNode(RelayNode): type_name = "AnswerType"
 class UserRelayNode(RelayNode): type_name = "UserType"
-class NotificationRelayNode(RelayNode): type_name = "NotificationType"
 
 
 class UserType(DjangoObjectType):
@@ -67,27 +66,11 @@ class QuestionType(DjangoObjectType):
         return self.has_accepted_answer
     
 
-class NotificationType(DjangoObjectType):
-
-    @classmethod
-    def get_queryset(cls, queryset, info):
-        return Notification.objects.filter(user=info.context.user).order_by('-timestamp')
-    
-    class Meta:
-        model = Notification
-        fields = ('id', 'message', 'seen')
-        interfaces = (QuestionRelayNode,)
-
-class Query(graphene.ObjectType):
+class CoreQueryRoot(graphene.ObjectType):
     hello = graphene.String(default_value='hello world')
     questions = QuestionFilterConnectionField(QuestionType)
     question =  QuestionRelayNode.Field(QuestionType)
-    notifications = DjangoConnectionField(NotificationType)
-    notification_count = graphene.Int()
+    
 
     def resolve_notification_count(root, info, **kwargs):
-        return Notification.objects.filter(user=info.context.user, seen=False).count()
-
-schema = graphene.Schema(
-    query=Query
-)
+        return Notification.objects.filter(receiver=info.context.user, seen=False).count()

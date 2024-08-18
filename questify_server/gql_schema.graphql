@@ -30,10 +30,17 @@ scalar DateTime
 
 scalar JSONString
 
-type NotificationType implements QuestionRelayNode {
+interface NotificationRelayNode {
+  id: ID!
+}
+
+type NotificationType implements NotificationRelayNode {
   id: ID!
   message: String!
+  notifType: String!
   seen: Boolean!
+  timestamp: DateTime!
+  metadata: JSONString
 }
 
 type NotificationTypeConnection {

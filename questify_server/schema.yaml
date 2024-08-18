@@ -223,56 +223,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedMyAnswersList'
           description: ''
-  /api/v1/notifications/:
-    get:
-      operationId: notifications_list
-      parameters:
-      - name: limit
-        required: false
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      - name: offset
-        required: false
-        in: query
-        description: The initial index from which to return the results.
-        schema:
-          type: integer
-      tags:
-      - notifications
-      security:
-      - jwtAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedNotificationList'
-          description: ''
-  /api/v1/notifications/{id}/:
-    get:
-      operationId: notifications_retrieve
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this notification.
-        required: true
-      tags:
-      - notifications
-      security:
-      - jwtAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Notification'
-          description: ''
   /api/v1/notifications/mark-seen/:
     post:
       operationId: notifications_mark_seen_create
@@ -282,7 +232,6 @@ paths:
       - notifications
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           description: No response body
@@ -293,7 +242,6 @@ paths:
       - notifications
       security:
       - jwtAuth: []
-      - {}
       responses:
         '200':
           content:
@@ -514,7 +462,6 @@ paths:
           - br
           - bs
           - ca
-          - ckb
           - cs
           - cy
           - da
@@ -567,7 +514,6 @@ paths:
           - ml
           - mn
           - mr
-          - ms
           - my
           - nb
           - ne
@@ -893,24 +839,6 @@ components:
       - id
       - question
       - updated
-    Notification:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        message:
-          type: string
-        seen:
-          type: boolean
-        timestamp:
-          type: string
-          format: date-time
-          readOnly: true
-      required:
-      - id
-      - message
-      - timestamp
     NotificationNumber:
       type: object
       properties:
@@ -958,26 +886,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MyAnswers'
-    PaginatedNotificationList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Notification'
     PaginatedQuestionReadList:
       type: object
       properties:
@@ -1016,6 +924,7 @@ components:
         title:
           type: string
           minLength: 1
+          maxLength: 512
         tags:
           type: array
           items:
@@ -1026,6 +935,7 @@ components:
       properties:
         title:
           type: string
+          maxLength: 512
         id:
           type: integer
           readOnly: true
@@ -1052,6 +962,7 @@ components:
           readOnly: true
         title:
           type: string
+          maxLength: 512
         tags:
           type: array
           items:
@@ -1077,6 +988,7 @@ components:
           type: string
         title:
           type: string
+          maxLength: 512
         tags:
           type: array
           items:
@@ -1098,6 +1010,7 @@ components:
         title:
           type: string
           minLength: 1
+          maxLength: 512
         tags:
           type: array
           items:

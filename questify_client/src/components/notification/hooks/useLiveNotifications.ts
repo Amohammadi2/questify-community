@@ -67,5 +67,5 @@ export function useLiveNotification() {
     return () => {
       ws.close();
     };
-  }, [client, authToken])
+  }, [client, authToken?.access])
 }

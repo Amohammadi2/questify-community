@@ -10,7 +10,7 @@ from drf_spectacular.types import OpenApiTypes
 from .permissions import IsAuthorOf, IsOwnerOfAccount
 from .models import Answer, Question
 from .serializers import AcceptAnswerSerializer, AnswerReadSerializer, AnswerWriteSerializer, GetAnswersForQuestionParamSerializer, MyAnswersSerializer, QuestionReadSerializer, QuestionWriteSerializer, UserRegistrationSerializer, UserRetrieveSerializer
-from .channels import NotificationChannel
+from .signals import question_answered, answer_accepted
 
 
 class QuestionsViewset(viewsets.ModelViewSet):
@@ -68,6 +68,9 @@ class AnswersViewset(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.Up
         else:
             return [IsAuthenticatedOrReadOnly()]
 
+    def perform_create(self, serializer):
+        answer = serializer.save()
+        question_answered.send(__class__, answer=answer)
 
     @extend_schema(request=AcceptAnswerSerializer, responses=AnswerReadSerializer)
     @action(detail=True, methods=['post'])
@@ -79,7 +82,8 @@ class AnswersViewset(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.Up
         serializer.save()
         # Make sure no other answer is accepted for the same question
         answer.question.answers.filter(accepted=True).exclude(pk=pk).update(accepted=False)
-        NotificationChannel.send_notif(request.user, 'پاسخ شما پذیرفته شد')
+        if answer.accepted:
+            answer_accepted.send(__class__, answer=answer)
         return Response(AnswerReadSerializer(answer).data)
 
 

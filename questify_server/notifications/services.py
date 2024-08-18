@@ -3,23 +3,21 @@ from asgiref.sync import async_to_sync
 from core.models import User
 from notifications.models import Notification
 
-class NotificationChannel:
+class NotificationService:
 
     @classmethod
-    def send_notif(cls, user: User, message: str):
-        notif = Notification.objects.create(
-            user=user,
-            message=message
-        )
+    def broadcast(cls, notif: Notification):
         channel_layer = get_channel_layer()
         async_to_sync(channel_layer.group_send)(
-            f'user_{user.pk}_notifications',
+            f'user_{notif.receiver.pk}_notifications',
             {
                 'type': 'send.notification',
                 'event': {
-                    'message': message,
+                    'notif_type': notif.notif_type,
+                    'message': notif.message,
                     'id': notif.pk,
                     'seen': False,
+                    'metadata': notif.metadata
                 }
             }
         )
