@@ -90,8 +90,8 @@ export default function NotificationBox() {
               {
                 numberOfNotifications
                   /* we use flatmap to insert a divider between notifications and we use
-                     the slice method at the end to remove the trailing divider from the end
-                  */
+                   * the slice method at the end to remove the trailing divider from the end
+                   */
                   ? notifs.data?.notifications?.edges.flatMap(notifEdge =>
                       [ 
                         <NotificationItem message={notifEdge?.node?.message||''} seen={notifEdge?.node?.seen ? true : false} />,
