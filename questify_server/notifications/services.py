@@ -17,7 +17,8 @@ class NotificationService:
                     'message': notif.message,
                     'id': notif.pk,
                     'seen': False,
-                    'metadata': notif.metadata
+                    'metadata': notif.metadata,
+                    'timestamp': notif.timestamp.isoformat()
                 }
             }
         )

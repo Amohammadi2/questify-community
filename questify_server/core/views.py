@@ -5,11 +5,12 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from rest_framework.decorators import action
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
+from rest_framework.parsers import MultiPartParser
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 from drf_spectacular.types import OpenApiTypes
-from .permissions import IsAuthorOf, IsOwnerOfAccount
-from .models import Answer, Question
-from .serializers import AcceptAnswerSerializer, AnswerReadSerializer, AnswerWriteSerializer, GetAnswersForQuestionParamSerializer, MyAnswersSerializer, QuestionReadSerializer, QuestionWriteSerializer, UserRegistrationSerializer, UserRetrieveSerializer
+from .permissions import IsAuthorOf, IsOwnerOfAccount, IsOwnerOfProfile
+from .models import Answer, Profile, Question
+from .serializers import AcceptAnswerSerializer, AnswerReadSerializer, AnswerWriteSerializer, GetAnswersForQuestionParamSerializer, MyAnswersSerializer, ProfileWriteSerializer, QuestionReadSerializer, QuestionWriteSerializer, UserRegistrationSerializer, UserRetrieveSerializer
 from .signals import question_answered, answer_accepted
 
 
@@ -135,6 +136,12 @@ class UsersViewset(viewsets.GenericViewSet, mixins.RetrieveModelMixin, mixins.De
         return Response(serialized_user.data)
     
 
+class ProfileViewset(viewsets.GenericViewSet, mixins.UpdateModelMixin):
+
+    queryset = Profile.objects.all()
+    permission_classes = [IsOwnerOfProfile]
+    parser_classes = [MultiPartParser]
+    serializer_class = ProfileWriteSerializer
 
 
 # Integrating DRF authentication with Graphene Django

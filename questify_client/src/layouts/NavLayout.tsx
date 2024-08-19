@@ -6,13 +6,12 @@ import { IconButton } from '@mui/material'
 import Logo from '../assets/logo.svg'
 import { ElevationScroll } from '../components/ElevationScroll'
 import { ReactElement, Suspense } from 'react'
-import { Link } from '@mui/material'
 import { useRecoilValue } from 'recoil'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import UserProfileMenu from '@/components/UserProfileMenu'
 import { NotificationBox } from '@/components/notification'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { $isAuthenticated } from '@/store/auth.store'
 
 export interface NavLayoutProps {
@@ -62,7 +61,7 @@ export function NavLayout({ authButtons: showAuthButtons=false, backButton: show
               {content}
             </Grid>
             <Grid item>
-              <Link href="/">
+              <Link to="/">
                 <Logo width={100} />
               </Link>
             </Grid>

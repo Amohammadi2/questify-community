@@ -1,4 +1,4 @@
-import { Configuration, TokenApi, QuestionsApi, AnswersApi, UsersApi, FileUploadApi, NotificationsApi } from '@/gen'
+import { Configuration, TokenApi, QuestionsApi, AnswersApi, UsersApi, FileUploadApi, NotificationsApi, ProfilesApi } from '@/gen'
 import { $authToken } from '@/store/auth.store'
 import { selector } from 'recoil'
 
@@ -53,5 +53,12 @@ export const $notificationsApi = selector({
   key: 'notifications-api',
   get: ({get}) => {
     return new NotificationsApi(get($apiConfig))
+  }
+})
+
+export const $profilesApi = selector({
+  key: 'profiles-api',
+  get: ({get}) => {
+    return new ProfilesApi(get($apiConfig))
   }
 })

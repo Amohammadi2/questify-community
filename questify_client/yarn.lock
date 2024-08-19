@@ -3122,6 +3122,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/moment-jalaali@npm:^0.7.9":
+  version: 0.7.9
+  resolution: "@types/moment-jalaali@npm:0.7.9"
+  dependencies:
+    moment: ">=2.14.0"
+  checksum: a14b2bf07671227cdceca6982d3262433f87eb2deab175c8dc017353f9d61970dadffcd1fd0095f4de4260e494c765e7505a3af3f377038fc1d95042591dc34c
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:*":
   version: 20.3.1
   resolution: "@types/node@npm:20.3.1"
@@ -4274,6 +4283,13 @@ __metadata:
   version: 1.0.6
   resolution: "crelt@npm:1.0.6"
   checksum: dad842093371ad702afbc0531bfca2b0a8dd920b23a42f26e66dabbed9aad9acd5b9030496359545ef3937c3aced0fd4ac39f7a2d280a23ddf9eb7fdcb94a69f
+  languageName: node
+  linkType: hard
+
+"cropperjs@npm:^1.5.13":
+  version: 1.6.2
+  resolution: "cropperjs@npm:1.6.2"
+  checksum: 287d3fd3adcd76253f9514ec086eb48e028d655157af08e2833c96e468fbe6076790d17ca67c3cea42179602118495cd991262e899a0092dcbf4fd3f79390a5f
   languageName: node
   linkType: hard
 
@@ -5894,6 +5910,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jalaali-js@npm:^1.1.0":
+  version: 1.2.7
+  resolution: "jalaali-js@npm:1.2.7"
+  checksum: 4163ada3fdcc114eb68bc6fe86141aedfb63dc5fa8147c3ea4ad5f72a10b4f42cbc6b010833b7d09dc8ce5b76531b6e2c840bc8f33caf0429f261bdefb24c4e0
+  languageName: node
+  linkType: hard
+
 "jiti@npm:^1.17.1, jiti@npm:^1.18.2":
   version: 1.18.2
   resolution: "jiti@npm:1.18.2"
@@ -6421,6 +6444,34 @@ __metadata:
   bin:
     mkdirp: bin/cmd.js
   checksum: a96865108c6c3b1b8e1d5e9f11843de1e077e57737602de1b82030815f311be11f96f09cce59bd5b903d0b29834733e5313f9301e3ed6d6f6fba2eae0df4298f
+  languageName: node
+  linkType: hard
+
+"moment-jalaali@npm:^0.10.1":
+  version: 0.10.1
+  resolution: "moment-jalaali@npm:0.10.1"
+  dependencies:
+    jalaali-js: ^1.1.0
+    moment: ^2.22.2
+    moment-timezone: ^0.5.21
+    rimraf: ^3.0.2
+  checksum: 5f686f36c2647df2fe30512c9bba55a4534694645b0088140892aa68399a7bbf7ebb24b7ff7c25f3306b2308a0c0bbda3b34cab7edf3fbb13082e29a1a85ab44
+  languageName: node
+  linkType: hard
+
+"moment-timezone@npm:^0.5.21":
+  version: 0.5.45
+  resolution: "moment-timezone@npm:0.5.45"
+  dependencies:
+    moment: ^2.29.4
+  checksum: a22e9f983fbe1a01757ce30685bce92e3f6efa692eb682afd47b82da3ff960b3c8c2c3883ec6715c124bc985a342b57cba1f6ba25a1c8b4c7ad766db3cd5e1d0
+  languageName: node
+  linkType: hard
+
+"moment@npm:>=2.14.0, moment@npm:^2.22.2, moment@npm:^2.29.4, moment@npm:^2.30.1":
+  version: 2.30.1
+  resolution: "moment@npm:2.30.1"
+  checksum: 859236bab1e88c3e5802afcf797fc801acdbd0ee509d34ea3df6eea21eb6bcc2abd4ae4e4e64aa7c986aa6cba563c6e62806218e6412a765010712e5fa121ba6
   languageName: node
   linkType: hard
 
@@ -7199,6 +7250,7 @@ __metadata:
     "@tiptap/react": ^2.0.3
     "@tiptap/starter-kit": ^2.0.3
     "@types/draft-js": ^0.11.11
+    "@types/moment-jalaali": ^0.7.9
     "@types/node": ^20.2.5
     "@types/react": ^18.0.37
     "@types/react-dom": ^18.0.11
@@ -7215,7 +7267,10 @@ __metadata:
     eslint-plugin-react-hooks: ^4.6.0
     eslint-plugin-react-refresh: ^0.3.4
     graphql: ^16.7.1
+    moment: ^2.30.1
+    moment-jalaali: ^0.10.1
     react: ^18.2.0
+    react-cropper: ^2.3.3
     react-dom: ^18.2.0
     react-draft-wysiwyg: ^1.15.0
     react-infinite-scroll-component: ^6.1.0
@@ -7234,6 +7289,17 @@ __metadata:
   version: 1.2.3
   resolution: "queue-microtask@npm:1.2.3"
   checksum: b676f8c040cdc5b12723ad2f91414d267605b26419d5c821ff03befa817ddd10e238d22b25d604920340fd73efd8ba795465a0377c4adf45a4a41e4234e42dc4
+  languageName: node
+  linkType: hard
+
+"react-cropper@npm:^2.3.3":
+  version: 2.3.3
+  resolution: "react-cropper@npm:2.3.3"
+  dependencies:
+    cropperjs: ^1.5.13
+  peerDependencies:
+    react: ">=17.0.2"
+  checksum: 8adaff99aa8f988a94b11ed4f2d268d48f40ac5891ea88a4fe00a1b10874847c4714ba02164b77a25cf0dfe1c203f4047fd25229cdd76e4a243f992cde6fe5b3
   languageName: node
   linkType: hard
 

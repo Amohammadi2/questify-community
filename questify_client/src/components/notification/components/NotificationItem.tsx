@@ -1,11 +1,15 @@
+import { getTimeAgo } from "@/utils/get-time-ago";
 import { Avatar, Badge, Grid, Typography } from "@mui/material";
 
 export interface INotificationItemProps {
+  notifType: string;
   message: string;
   seen: boolean;
+  timestamp: string|Date;
+  metadata: string|null; // json string
 }
 
-export function NotificationItem({ message, seen } : INotificationItemProps) {
+export function NotificationItem({ message, seen, notifType, metadata, timestamp } : INotificationItemProps) {
   return (
     <Grid container direction="column" sx={{  px: 1, py: 1.5 }}>
       <Grid container direction="row" sx={{ mb: .5 }} alignItems='center'>
@@ -24,7 +28,9 @@ export function NotificationItem({ message, seen } : INotificationItemProps) {
           }}>
           
         </Badge>}
-        <Typography sx={{fontSize: 13}} color="text.secondary"> 3 دقیقه پیش</Typography>
+        <Typography sx={{fontSize: 13}} color="text.secondary">
+          {getTimeAgo(timestamp)}
+        </Typography>
       </Grid>
       <Typography sx={{ flexGrow: 1 }}>{message}</Typography>
     </Grid>

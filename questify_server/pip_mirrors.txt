@@ -1,0 +1,11 @@
+Host                                 Addsess
+https://pypi.tuna.tsinghua.edu.cn    https://pypi.tuna.tsinghua.edu.cn/simple/
+https://mirrors.aliyun.com           https://mirrors.aliyun.com/pypi/simple/
+https://pypi.mirrors.ustc.edu.cn     https://pypi.mirrors.ustc.edu.cn/simple/
+https://repo.huaweicloud.com         https://repo.huaweicloud.com/repository/pypi/simple/
+http://pypi.douban.com               http://pypi.douban.com/simple/
+http://pypi.sdutlinux.org            http://pypi.sdutlinux.org/
+http://pypi.hustunique.com           http://pypi.hustunique.com/
+
+
+pip install --trusted-host [host] -i [address] some-pckage

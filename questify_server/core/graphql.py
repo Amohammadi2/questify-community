@@ -3,7 +3,7 @@ import graphene
 from graphene_django import DjangoConnectionField, DjangoObjectType
 from graphene_django.filter import DjangoFilterConnectionField
 from notifications.models import Notification
-from .models import Answer, Question
+from .models import Answer, Profile, Question
 from .filters import QuestionFilter, QuestionFilterConnectionField
 
 
@@ -23,13 +23,31 @@ class RelayNode(graphene.relay.Node):
 class QuestionRelayNode(RelayNode): type_name = "QuestionType"
 class AnswerRelayNode(RelayNode): type_name = "AnswerType"
 class UserRelayNode(RelayNode): type_name = "UserType"
+class ProfileRelayNode(RelayNode): type_name = "ProfileType"
 
+
+class ProfileType(DjangoObjectType):
+    class Meta:
+        model = Profile
+        fields = ('id', 'bio', 'profile_img')
+
+    def resolve_profile_img(self, info, **kwargs):
+        if self.profile_img:
+            # Build and return the absolute URI for the image
+            return info.context.build_absolute_uri(self.profile_img.url)
+        return self.profile_img
 
 class UserType(DjangoObjectType):
+
+    profile = graphene.Field(ProfileType)
+
     class Meta:
         model = User
-        exclude = ('password',)
+        fields = ('id', 'username', 'email', 'profile', 'isStaff')
         interfaces = (UserRelayNode,)
+
+    def resolve_profile(self, info):
+        return self.profile
 
 
 class AnswerType(DjangoObjectType):
@@ -70,7 +88,10 @@ class CoreQueryRoot(graphene.ObjectType):
     hello = graphene.String(default_value='hello world')
     questions = QuestionFilterConnectionField(QuestionType)
     question =  QuestionRelayNode.Field(QuestionType)
-    
+    me = graphene.Field(UserType)
 
-    def resolve_notification_count(root, info, **kwargs):
-        return Notification.objects.filter(receiver=info.context.user, seen=False).count()
+    def resolve_me(self, info):
+        if info.context.user.is_authenticated:
+            return info.context.user
+        else:
+            raise Exception("Not authenticated")

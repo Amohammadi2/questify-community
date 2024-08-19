@@ -17,6 +17,8 @@ import QuestionDetailsPage from './routes/QuestionDetailsPage'
 import EditQuestionPage from './routes/EditQuestionPage'
 import { ApolloProvider } from '@apollo/client'
 import { client } from './apollo/client'
+import EditProfilePage from './routes/EditProfilePage'
+import { MyQuestionsPage } from './routes/MyQuestionsPage'
 
 function App() {
 
@@ -44,7 +46,15 @@ function App() {
     {
       path: '/question-details/:qid',
       element: withNavLayout(<QuestionDetailsPage />)
-    }
+    },
+    {
+      path: '/edit-profile',
+      element: withNavLayout(<EditProfilePage />)
+    },
+    {
+      path: '/my-questions',
+      element: withNavLayout(<MyQuestionsPage />)
+    },
   ])
 
   return (

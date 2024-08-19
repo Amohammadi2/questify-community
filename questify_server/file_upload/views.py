@@ -15,12 +15,12 @@ class FileUploadView(APIView):
             status.HTTP_400_BAD_REQUEST: OpenApiResponse()
         },
         request={
-        'multipart/form-data': {
-            'type': 'object',
-            'properties': {
-                'file': {
-                    'type': 'string',
-                    'format': 'binary'
+            'multipart/form-data': {
+                'type': 'object',
+                'properties': {
+                    'file': {
+                        'type': 'string',
+                        'format': 'binary'
                     }
                 }
             }

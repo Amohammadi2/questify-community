@@ -13,6 +13,7 @@ export * from './PaginatedMyAnswersList';
 export * from './PaginatedQuestionReadList';
 export * from './PatchedAnswerWriteRequest';
 export * from './PatchedQuestionWriteRequest';
+export * from './ProfileWrite';
 export * from './QuestionBrief';
 export * from './QuestionRead';
 export * from './QuestionWrite';

@@ -94,7 +94,13 @@ export default function NotificationBox() {
                    */
                   ? notifs.data?.notifications?.edges.flatMap(notifEdge =>
                       [ 
-                        <NotificationItem message={notifEdge?.node?.message||''} seen={notifEdge?.node?.seen ? true : false} />,
+                        <NotificationItem
+                          message={notifEdge?.node?.message||''}
+                          seen={notifEdge?.node?.seen ? true : false}
+                          notifType={notifEdge?.node?.notifType||''}
+                          timestamp={notifEdge?.node?.timestamp||''}
+                          metadata={notifEdge?.node?.metadata||null}
+                        />,
                         <Divider />
                       ]
                     ).slice(0, -1)

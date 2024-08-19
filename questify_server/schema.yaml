@@ -249,6 +249,58 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotificationNumber'
           description: ''
+  /api/v1/profiles/{id}/:
+    put:
+      operationId: profiles_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this profile.
+        required: true
+      tags:
+      - profiles
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProfileWriteRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileWrite'
+          description: ''
+    patch:
+      operationId: profiles_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this profile.
+        required: true
+      tags:
+      - profiles
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProfileWriteRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileWrite'
+          description: ''
   /api/v1/questions/:
     get:
       operationId: questions_list
@@ -915,6 +967,23 @@ components:
         question:
           type: integer
           nullable: true
+    PatchedProfileWriteRequest:
+      type: object
+      properties:
+        user:
+          type: integer
+        bio:
+          type: string
+          nullable: true
+          maxLength: 512
+        profile_img:
+          type: string
+          format: binary
+          nullable: true
+        email:
+          type: string
+          format: email
+          minLength: 1
     PatchedQuestionWriteRequest:
       type: object
       properties:
@@ -930,6 +999,45 @@ components:
           items:
             type: string
             minLength: 1
+    ProfileWrite:
+      type: object
+      properties:
+        user:
+          type: integer
+        bio:
+          type: string
+          nullable: true
+          maxLength: 512
+        profile_img:
+          type: string
+          format: uri
+          nullable: true
+        email:
+          type: string
+          format: email
+      required:
+      - email
+      - user
+    ProfileWriteRequest:
+      type: object
+      properties:
+        user:
+          type: integer
+        bio:
+          type: string
+          nullable: true
+          maxLength: 512
+        profile_img:
+          type: string
+          format: binary
+          nullable: true
+        email:
+          type: string
+          format: email
+          minLength: 1
+      required:
+      - email
+      - user
     QuestionBrief:
       type: object
       properties:

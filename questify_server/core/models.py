@@ -33,3 +33,9 @@ class Answer(Post):
 class Tag(models.Model):
     name = models.CharField('name', null=False, blank=False, max_length=256)
     post_count = models.BigIntegerField(default=0)
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    bio = models.CharField(max_length=512, blank=True, null=True)
+    profile_img = models.ImageField(upload_to='profile-imgs/', blank=True, null=True)

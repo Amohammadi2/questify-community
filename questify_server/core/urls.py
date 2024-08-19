@@ -9,11 +9,12 @@ from rest_framework.routers import DefaultRouter
 from graphene_django.views import GraphQLView
 from drf_spectacular.utils import extend_schema
 
-from .views import AnswersViewset, QuestionsViewset, UsersViewset, DRFAuthenticatedGraphQLView
+from .views import AnswersViewset, ProfileViewset, QuestionsViewset, UsersViewset, DRFAuthenticatedGraphQLView
 router = DefaultRouter()
 router.register('questions', QuestionsViewset, basename="questions")
 router.register('answers', AnswersViewset, basename="answers")
 router.register('users', UsersViewset, basename="users")
+router.register('profiles', ProfileViewset, basename="profiles")
 
 urlpatterns = [
 

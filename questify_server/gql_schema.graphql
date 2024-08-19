@@ -60,10 +60,17 @@ type PageInfo {
   endCursor: String
 }
 
+type ProfileType {
+  id: ID!
+  bio: String
+  profileImg: String
+}
+
 type Query {
   hello: String
-  questions(offset: Int, before: String, after: String, first: Int, last: Int, title: String, title_Icontains: String, title_Istartswith: String, htmlContent: String, htmlContent_Icontains: String, tags: [String]): QuestionTypeConnection
+  questions(offset: Int, before: String, after: String, first: Int, last: Int, title: String, title_Icontains: String, title_Istartswith: String, htmlContent: String, htmlContent_Icontains: String, authorId: ID, tags: [String]): QuestionTypeConnection
   question(id: ID!): QuestionType
+  me: UserType
   notifications(offset: Int, before: String, after: String, first: Int, last: Int): NotificationTypeConnection
   notificationCount: Int
 }
@@ -101,16 +108,7 @@ interface UserRelayNode {
 
 type UserType implements UserRelayNode {
   id: ID!
-  lastLogin: DateTime
-  isSuperuser: Boolean!
   username: String!
-  firstName: String!
-  lastName: String!
   email: String!
-  isStaff: Boolean!
-  isActive: Boolean!
-  dateJoined: DateTime!
-  question(offset: Int, before: String, after: String, first: Int, last: Int, title: String, title_Icontains: String, title_Istartswith: String, htmlContent: String, htmlContent_Icontains: String, tags: String): QuestionTypeConnection!
-  answer(offset: Int, before: String, after: String, first: Int, last: Int): AnswerTypeConnection!
-  notificationSet(offset: Int, before: String, after: String, first: Int, last: Int): NotificationTypeConnection!
+  profile: ProfileType
 }

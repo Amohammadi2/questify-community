@@ -20,3 +20,6 @@ class NotificationType(DjangoObjectType):
 class NotificationsQueryRoot(graphene.ObjectType):
     notifications = DjangoConnectionField(NotificationType)
     notification_count = graphene.Int()
+
+    def resolve_notification_count(root, info, **kwargs):
+        return Notification.objects.filter(receiver=info.context.user, seen=False).count()

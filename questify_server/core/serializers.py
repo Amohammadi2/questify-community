@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework.fields import empty
-from .models import Answer, Question
+from .models import Answer, Profile, Question
 
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
@@ -89,7 +89,27 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         # they can use their accounts to log in
         return super().save(**kwargs, is_active=False)
 
+
 class UserRetrieveSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'is_staff')
+        fields = ('id', 'username', 'email', 'is_staff', 'profile')
+
+class ProfileWriteSerializer(serializers.ModelSerializer):
+    # We also want to allow the user to change the email field on
+    # the default Django user auth model through this same serializer
+    email = serializers.EmailField(source='user.email')
+
+    class Meta:
+        model = Profile
+        fields = ('user', 'bio', 'profile_img', 'email')
+
+    def update(self, instance, validated_data):
+        user_data = validated_data.pop('user', {})
+        email = user_data.get('email')
+        
+        if email:
+            instance.user.email = email
+            instance.user.save()
+
+        return super().update(instance, validated_data)

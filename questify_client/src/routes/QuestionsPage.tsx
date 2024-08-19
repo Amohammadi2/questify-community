@@ -7,6 +7,8 @@ import { useQuery } from "@apollo/client"
 import { GET_QUESTION_FEED } from "@/graphql/get-questions"
 import { QuestionRead } from "@/gen"
 import { SearchBar } from "@/components/SearchBar"
+import { isMobileDevice } from "@/utils/is-mobile-device"
+import { useMemo } from "react"
 
 
 export default function QuestionsPage() {
@@ -30,6 +32,10 @@ export default function QuestionsPage() {
   
   console.log('length = ', data?.questions?.edges.length)
 
+  const questionsList = useMemo(() => {
+    return data?.questions?.edges.map((question: any) => <QuestionSummary {...(question?.node as unknown as QuestionRead)} key={question?.node?.id} />)
+  }, [data?.questions?.edges])
+
   return (
     <Container maxWidth="md">
       <SearchBar onSearch={(searchTerm, tags) => {
@@ -37,7 +43,7 @@ export default function QuestionsPage() {
         refetch({ searchTerm, tags })
       }} />
       <InfiniteScroll
-        pullDownToRefresh
+        pullDownToRefresh={isMobileDevice()}
         pullDownToRefreshThreshold={150}
         pullDownToRefreshContent={<h3 style={{textAlign: 'center', fontFamily:'Vazirmatn'}}>↓ برای تازه سازی به پایین بکشید</h3>}
         releaseToRefreshContent={
@@ -51,7 +57,7 @@ export default function QuestionsPage() {
         loader={<h3 style={{textAlign: 'center', fontFamily:'Vazirmatn'}}>در حال بارگزاری ...</h3>}
         style={{ padding: '0px 10px' }}
       >
-        {data?.questions?.edges.map((question:any) => <QuestionSummary {...(question?.node as unknown as QuestionRead)} key={question?.node?.id} />)}
+        {questionsList}
       </InfiniteScroll>
       <IconButton sx={{ position: 'fixed', left: 20, bottom: 30, bgcolor: 'white', boxShadow: 2 }} onClick={()=>refetch()}>
         <FontAwesomeIcon

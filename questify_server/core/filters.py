@@ -1,8 +1,9 @@
-from django_filters import Filter, FilterSet
+from django_filters import Filter, FilterSet, NumberFilter, Filter, ModelChoiceFilter
 from django.db import models
 from django.db.models import Q
+from django.contrib.auth.models import User
 from graphene_django.filter import DjangoFilterConnectionField
-from graphene import Argument, List, String
+from graphene import Argument, List, String, Int
 from .models import Question
 
 
@@ -17,6 +18,7 @@ class TagFilter(Filter):
     
 class QuestionFilter(FilterSet):
     tags = TagFilter()
+    author_id = ModelChoiceFilter(queryset=User.objects.all())
 
     class Meta:
         model = Question
@@ -24,6 +26,7 @@ class QuestionFilter(FilterSet):
             'tags': [],
             'title': ['exact', 'icontains', 'istartswith'],
             'html_content': ['exact', 'icontains'],
+            'author_id': [],
         }
 
 class QuestionFilterConnectionField(DjangoFilterConnectionField):
@@ -34,4 +37,3 @@ class QuestionFilterConnectionField(DjangoFilterConnectionField):
         # tags must be represented as a list of strings whereas django_graphene
         # automatically fallsback to "String!", so we are hardcoding it here
         return {**args, "tags": Argument(List(String))}
-    
