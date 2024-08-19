@@ -99,7 +99,7 @@ export default function NotificationBox() {
                           seen={notifEdge?.node?.seen ? true : false}
                           notifType={notifEdge?.node?.notifType||''}
                           timestamp={notifEdge?.node?.timestamp||''}
-                          metadata={notifEdge?.node?.metadata||null}
+                          metadata={JSON.parse(notifEdge?.node?.metadata)||null}
                         />,
                         <Divider />
                       ]

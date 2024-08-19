@@ -24,7 +24,7 @@ export function TagInput({tags, setTags} : TagInputProps) {
   return (
     <Grid container direction="row">
         {tags.map(t => <Chip label={t} key={t} onDelete={()=>{removeTag(t)}} sx={{ mx: .5, my: .7 }}/>)}
-        <InputBase placeholder="تگ های مورد نظر را وارد کنید" sx={{ flexGrow: 1, ml: 2 }} onKeyUp={addTag} inputProps={{ enterKeyHint: 'go' }}/>
+        <InputBase placeholder="تگ های مورد نظر را وارد کنید" sx={{ flexGrow: 1, ml: 2 }} onKeyDown={addTag} inputProps={{ enterKeyHint: 'go' }}/>
     </Grid>
   )
 }

@@ -71,7 +71,7 @@ class AnswersViewset(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.Up
 
     def perform_create(self, serializer):
         answer = serializer.save()
-        question_answered.send(__class__, answer=answer)
+        question_answered.send(__class__, answer=answer, request=self.request)
 
     @extend_schema(request=AcceptAnswerSerializer, responses=AnswerReadSerializer)
     @action(detail=True, methods=['post'])
@@ -84,7 +84,7 @@ class AnswersViewset(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.Up
         # Make sure no other answer is accepted for the same question
         answer.question.answers.filter(accepted=True).exclude(pk=pk).update(accepted=False)
         if answer.accepted:
-            answer_accepted.send(__class__, answer=answer)
+            answer_accepted.send(__class__, answer=answer, request=request)
         return Response(AnswerReadSerializer(answer).data)
 
 
