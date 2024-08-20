@@ -13,5 +13,6 @@ export default defineConfig({
       { find: '@routes', replacement: path.resolve(__dirname, 'src/routes')},
       { find: '@apis', replacement: path.resolve(__dirname, 'src/apis')},
     ]
-  }
+  },
+  envDir: './env'
 })

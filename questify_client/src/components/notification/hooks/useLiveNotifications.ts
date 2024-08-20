@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { gql, useApolloClient } from '@apollo/client';
 import { useRecoilValue } from 'recoil';
 import { $authToken } from '@/store/auth.store';
+import { WS_ADDR } from '@/config/env-vars';
 
 export function useLiveNotification() {
   const client = useApolloClient();
@@ -13,11 +14,11 @@ export function useLiveNotification() {
     if (!(authToken?.access))
       return
 
-    let ws = new WebSocket('ws://192.168.1.100:8000/api/v1/notifications/?token='+encodeURIComponent(authToken.access));
+    let ws = new WebSocket(`${WS_ADDR}/api/v1/notifications/?token=`+encodeURIComponent(authToken.access));
     let retries = 0;
 
     const connect = () => {
-      ws = new WebSocket('ws://192.168.1.100:8000/api/v1/notifications/?token='+encodeURIComponent(authToken.access));
+      ws = new WebSocket(`${WS_ADDR}/api/v1/notifications/?token=`+encodeURIComponent(authToken.access));
 
       ws.onopen = () => {
         console.log('WebSocket connected');

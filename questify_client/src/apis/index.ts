@@ -1,3 +1,4 @@
+import { SERVER_ADDR } from '@/config/env-vars'
 import { Configuration, TokenApi, QuestionsApi, AnswersApi, UsersApi, FileUploadApi, NotificationsApi, ProfilesApi } from '@/gen'
 import { $authToken } from '@/store/auth.store'
 import { selector } from 'recoil'
@@ -7,7 +8,7 @@ const $apiConfig = selector({
   get: ({ get }) => {
     const token = get($authToken)
     return new Configuration({
-      basePath: 'http://192.168.1.100:8000',
+      basePath: SERVER_ADDR,
       accessToken: token?.access || undefined
     })
   }

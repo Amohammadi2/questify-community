@@ -1,9 +1,10 @@
 import { ApolloClient, InMemoryCache, ApolloProvider, gql, createHttpLink } from '@apollo/client';
 import { relayStylePagination } from '@apollo/client/utilities'
 import { setContext } from '@apollo/client/link/context';
+import { SERVER_ADDR } from '@/config/env-vars';
 
 const httpLink = createHttpLink({
-  uri: 'http://192.168.1.100:8000/api/v1/graphql/',
+  uri: `${SERVER_ADDR}/api/v1/graphql/`,
   preserveHeaderCase: true
 });
 
