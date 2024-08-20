@@ -15,7 +15,7 @@ export interface IAnswerFormProps {
   onCancel?: () => void;
 }
 
-export function AnswerForm({qid, aid, content, onSubmit, onCancel} : IAnswerFormProps) {
+export default function AnswerForm({qid, aid, content, onSubmit, onCancel} : IAnswerFormProps) {
   
   const { editor, publishChanges, loading, clearForm, publishable } = useAnswerContent(qid, aid)
 

@@ -5,7 +5,7 @@ import { Avatar, Grid, IconButton, Typography } from "@mui/material"
 import ConfirmationModal from "./ConfirmationModal";
 import { useState } from "react";
 import { AnswerDetails } from "@/utils/mappers/answer-edge-to-answer-details";
-import { AnswerForm } from "./forms/components/AnswerForm";
+import { AnswerForm } from "./forms";
 
 interface AnswerProps extends AnswerDetails {
   opMode?: boolean

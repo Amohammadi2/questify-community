@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { ApiResponse } from "../utils/ApiResponse";
+import { ApiResponse } from "../utils/api-response";
 
 interface ApiCallSettings <Response> {
   before?: () => void

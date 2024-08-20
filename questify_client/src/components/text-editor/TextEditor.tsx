@@ -1,10 +1,10 @@
 import { Button, Card, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid, TextField } from "@mui/material"
 import { Editor, EditorContent } from "@tiptap/react"
-import { ToolbarButton } from "./ToolbarButton"
+import ToolbarButton from "./ToolbarButton"
 import { faBold, faCopy, faCut, faImage, faItalic, faLink, faPaste, faStrikethrough, faUnderline, faUpload } from "@fortawesome/free-solid-svg-icons"
 import { useModal } from "@/hooks/useModal"
 import { useState } from "react"
-import { ImageInput } from "../forms/components/ImageInput"
+import { ImageInput } from "@/components/image-tools"
 import "@/styles/ProseMirror.css"
 import { useRecoilValue } from "recoil"
 import { $fileUploadApi } from "@/apis"
@@ -14,7 +14,7 @@ export interface ITextEditorProps {
   editor: Editor | null
 }
 
-export function TextEditor({ editor } : ITextEditorProps) {
+export default function TextEditor({ editor } : ITextEditorProps) {
 
   // toolbar functions
 

@@ -63,7 +63,8 @@ export class FileUploadApi extends runtime.BaseAPI {
         }
 
         if (requestParameters.file !== undefined) {
-            formParams.append('file', requestParameters.file as any);
+ // @ts-ignore
+            formParams.append('file', requestParameters.file as any, 'prof-img.png');
         }
 
         const response = await this.request({

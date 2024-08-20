@@ -1,4 +1,4 @@
-import { QuestionForm } from "@/components/forms/components/QuestionForm";
+import QuestionForm from "@/components/forms/components/QuestionForm";
 import { Container } from "@mui/material";
 import { useParams } from "react-router-dom";
 

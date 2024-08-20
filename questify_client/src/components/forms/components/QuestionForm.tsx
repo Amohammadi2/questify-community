@@ -5,7 +5,7 @@ import { TagInput } from "./TagInput"
 import { ConfirmationButtonGroup } from "./ConfirmationButtonGroup"
 import { TitleInput } from "./TitleInput"
 import { useNavigate } from "react-router-dom"
-import { TextEditor } from "@/components/text-editor/TextEditor"
+import { TextEditor } from "@/components/text-editor"
 import { LinkMaker } from "@/utils/link-maker"
 
 
@@ -13,7 +13,7 @@ export interface IQuestionFormProps {
   qid: string | null
 }
 
-export function QuestionForm({ qid } : IQuestionFormProps) {
+export default function QuestionForm({ qid } : IQuestionFormProps) {
   
   const { titleState: [title, setTitle], tagsState: [tags, setTags], editor, publishChanges, loading, clearForm, publishable } = useQuestionContent(qid)
   const navigate = useNavigate()

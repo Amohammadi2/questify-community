@@ -32,6 +32,7 @@ export default function QuestionsPage() {
   
   console.log('length = ', data?.questions?.edges.length)
 
+  // Todo: save results to a recoil store in order to keep rendered questions across different routes
   const questionsList = useMemo(() => {
     return data?.questions?.edges.map((question: any) => <QuestionSummary {...(question?.node as unknown as QuestionRead)} key={question?.node?.id} />)
   }, [data?.questions?.edges])

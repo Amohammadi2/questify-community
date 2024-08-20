@@ -8,7 +8,7 @@ export interface ImageInputProps {
 }
 
 
-export function ImageInput({onUpload, value} : ImageInputProps) {
+export default function ImageInput({onUpload, value} : ImageInputProps) {
   
   const handleDrop = (e: React.DragEvent<any>) => {
     e.preventDefault();

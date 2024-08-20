@@ -12,7 +12,7 @@ import { toQuestionDetails } from "@/utils/mappers/to-question-details"
 import { answerEdgeToAnswerDetailsArray } from "@/utils/mappers/answer-edge-to-answer-details"
 import { AnswerType, AnswerTypeConnection } from "@/gen/gql/graphql"
 import InfiniteScroll from "react-infinite-scroll-component"
-import { AnswerForm } from "@/components/forms/components/AnswerForm"
+import { AnswerForm } from "@/components/forms"
 
 interface ToggleAnswerData {
   questionId: string

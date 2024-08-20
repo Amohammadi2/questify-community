@@ -33,9 +33,10 @@ const fs = require('fs');
 const path = require('path');
 
 // Define the file path relative to package.json
-const filePath = path.join(__dirname, 'src/gen/apis/ProfilesApi.ts');
+const profilesApiFilePath = path.join(__dirname, 'src/gen/apis/ProfilesApi.ts');
+const fileUploadApiFile = path.join(__dirname, "src/gen/apis/FileUploadApi.ts")
 
-fs.readFile(filePath, 'utf8', function(err, data) {
+fs.readFile(profilesApiFilePath, 'utf8', function(err, data) {
     if (err) {
         console.error("Error reading file:", err);
         return;
@@ -63,7 +64,41 @@ fs.readFile(filePath, 'utf8', function(err, data) {
     const newData = modifiedLines.join('\n');
 
     // Write the modified content back to the file
-    fs.writeFile(filePath, newData, 'utf8', function(err) {
+    fs.writeFile(profilesApiFilePath, newData, 'utf8', function(err) {
+        if (err) console.error("Error writing file:", err);
+    });
+});
+
+
+fs.readFile(fileUploadApiFile, 'utf8', function(err, data) {
+    if (err) {
+        console.error("Error reading file:", err);
+        return;
+    }
+    const lines = data.split('\n');
+
+    const modifiedLines = lines.map((line, index) => {
+        // Check if the current line has already received the necessary modification
+        if (line.includes('requestParameters.file as any, \'prof-img.png\'')) {
+            console.log('Modification has already been done on line ', index+1)
+            return line
+        }
+        // Check if the current line contains the target string
+        if (line.includes('requestParameters.file as any')) {
+            // Insert "// @ts-ignore" on the line above the match
+            if (index > 0) {
+                line = ' // @ts-ignore\n'+line;
+            }
+            return line.replace('requestParameters.file as any', 'requestParameters.file as any, \'prof-img.png\'');
+        }
+        return line; // Return the line unchanged if it doesn't contain the target string
+    });
+
+    // Join the modified lines back into a single string
+    const newData = modifiedLines.join('\n');
+
+    // Write the modified content back to the file
+    fs.writeFile(fileUploadApiFile, newData, 'utf8', function(err) {
         if (err) console.error("Error writing file:", err);
     });
 });
