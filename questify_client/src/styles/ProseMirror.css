@@ -1,0 +1,28 @@
+.ProseMirror {
+  outline: none;
+  font-family: 'Vazirmatn';
+}
+
+.ProseMirror .is-empty.is-editor-empty::before {
+  content: attr(data-placeholder);
+  color: gray;
+  position: absolute;
+}
+
+.ProseMirror p::before {
+  content: ' ';
+}
+
+.ProseMirror a {
+  color: rgb(5, 102, 212);
+}
+
+.ProseMirror > *:has(img) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ProseMirror img {
+  max-width: 100%;
+}

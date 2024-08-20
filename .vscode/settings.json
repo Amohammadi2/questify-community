@@ -1,6 +1,2 @@
 {
-    "python.analysis.extraPaths": [
-        "./questify"
-    ],
-    "typescript.tsdk": "node_modules/typescript/lib"
 }

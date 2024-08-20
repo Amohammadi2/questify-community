@@ -1,0 +1,114 @@
+schema {
+  query: Query
+}
+
+interface AnswerRelayNode {
+  id: ID!
+}
+
+type AnswerType implements AnswerRelayNode {
+  id: ID!
+  htmlContent: String!
+  author: UserType
+  created: DateTime!
+  updated: DateTime!
+  accepted: Boolean!
+  question: QuestionType
+}
+
+type AnswerTypeConnection {
+  pageInfo: PageInfo!
+  edges: [AnswerTypeEdge]!
+}
+
+type AnswerTypeEdge {
+  node: AnswerType
+  cursor: String!
+}
+
+scalar DateTime
+
+scalar JSONString
+
+interface NotificationRelayNode {
+  id: ID!
+}
+
+type NotificationType implements NotificationRelayNode {
+  id: ID!
+  message: String!
+  notifType: String!
+  seen: Boolean!
+  timestamp: DateTime!
+  metadata: JSONString
+}
+
+type NotificationTypeConnection {
+  pageInfo: PageInfo!
+  edges: [NotificationTypeEdge]!
+}
+
+type NotificationTypeEdge {
+  node: NotificationType
+  cursor: String!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type ProfileType {
+  id: ID!
+  bio: String
+  profileImg: String
+}
+
+type Query {
+  hello: String
+  questions(offset: Int, before: String, after: String, first: Int, last: Int, title: String, title_Icontains: String, title_Istartswith: String, htmlContent: String, htmlContent_Icontains: String, authorId: ID, tags: [String]): QuestionTypeConnection
+  question(id: ID!): QuestionType
+  me: UserType
+  notifications(offset: Int, before: String, after: String, first: Int, last: Int): NotificationTypeConnection
+  notificationCount: Int
+}
+
+interface QuestionRelayNode {
+  id: ID!
+}
+
+type QuestionType implements QuestionRelayNode {
+  id: ID!
+  htmlContent: String!
+  author: UserType
+  created: DateTime!
+  updated: DateTime!
+  title: String!
+  tags: JSONString!
+  answers(offset: Int, before: String, after: String, first: Int, last: Int): AnswerTypeConnection
+  numAnswers: Int
+  hasAcceptedAnswer: Boolean
+}
+
+type QuestionTypeConnection {
+  pageInfo: PageInfo!
+  edges: [QuestionTypeEdge]!
+}
+
+type QuestionTypeEdge {
+  node: QuestionType
+  cursor: String!
+}
+
+interface UserRelayNode {
+  id: ID!
+}
+
+type UserType implements UserRelayNode {
+  id: ID!
+  username: String!
+  email: String!
+  profile: ProfileType
+}

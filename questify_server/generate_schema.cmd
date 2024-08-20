@@ -1,0 +1,1 @@
+python .\manage.py spectacular --file schema.yaml --validate --fail-on-warn

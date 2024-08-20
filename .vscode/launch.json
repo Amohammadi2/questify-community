@@ -4,18 +4,13 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
-            "type": "node",
+            "type": "chrome",
             "request": "launch",
-            "name": "Debug nest js server",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "envFile": "${workspaceFolder}/questify-server/.env",
-            "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
-            "program": "${workspaceFolder}/questify-server/src/main.ts",
-            "console": "integratedTerminal",
-            "autoAttachChildProcesses": true
+            "name": "Launch Chrome against localhost",
+            "url": "http://localhost:5173",
+            "webRoot": "${workspaceFolder}/questify_client"
         }
     ]
 }
