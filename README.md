@@ -10,7 +10,7 @@ Questify is platform for students to help them learn better and fill in the gaps
 
 ## Demo
 
-<style>.h_iframe-aparat_embed_frame{position:relative;}.h_iframe-aparat_embed_frame .ratio{display:block;width:100%;height:auto;}.h_iframe-aparat_embed_frame iframe{position:absolute;top:0;left:0;width:100%;height:100%;}</style><div class="h_iframe-aparat_embed_frame"><span style="display: block;padding-top: 57%"></span><iframe src="https://www.aparat.com/video/video/embed/videohash/gwslv1c/vt/frame"  allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe></div>
+[![Title](./Questify%20Docs/imgs/landing.jpg)](https://www.aparat.com/v/gwslv1c)
 
 ## Technologies Used
 
