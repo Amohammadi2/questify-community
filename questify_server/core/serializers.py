@@ -93,7 +93,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 class UserRetrieveSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'is_staff', 'profile')
+        fields = ('id', 'username', 'email', 'is_staff')
 
 class ProfileWriteSerializer(serializers.ModelSerializer):
     # We also want to allow the user to change the email field on

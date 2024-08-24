@@ -110,5 +110,6 @@ type UserType implements UserRelayNode {
   id: ID!
   username: String!
   email: String!
+  isStaff: Boolean!
   profile: ProfileType
 }

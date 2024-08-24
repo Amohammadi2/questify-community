@@ -1,0 +1,197 @@
+{
+  "main": {
+    "id": "fce6560e3fc2dcef",
+    "type": "split",
+    "children": [
+      {
+        "id": "3d06d42026fa2113",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "cdc6d34dd0c10fb2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "front-end/Project Overview & Setup.md",
+                "mode": "preview",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "5d37e43d31949ac0",
+    "type": "split",
+    "children": [
+      {
+        "id": "74d720ed96d08f60",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c9dcd2a0bc34b7f9",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "804c995129b2eec8",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "55e060f11cc18792",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 269.51103591918945
+  },
+  "right": {
+    "id": "8cf2a62608d99c25",
+    "type": "split",
+    "children": [
+      {
+        "id": "674eea5f0c546353",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "103a918a8980abc7",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "front-end/Project Overview & Setup.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "02768191a2fce1ef",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "front-end/Project Overview & Setup.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "aee58b3aa473132f",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "31f8b4d8654ede4a",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "front-end/Project Overview & Setup.md"
+              }
+            }
+          }
+        ],
+        "currentTab": 3
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "cdc6d34dd0c10fb2",
+  "lastOpenFiles": [
+    "front-end/notifications/Receiving & Viewing Notifications.md",
+    "Pasted image 20240824092632.png",
+    "Pasted image 20240824092549.png",
+    "Pasted image 20240824091623.png",
+    "Pasted image 20240824091615.png",
+    "front-end/questions/Asking A New Question.md",
+    "front-end/layout/Global App Layout.md",
+    "Untitled.md",
+    "front-end/Untitled.md",
+    "front-end/notifications",
+    "front-end/answers/Editing, Deleting & Accepting An Answer.md",
+    "front-end/Project Overview & Setup.md",
+    "imgs/Pasted image 20240824074010.png",
+    "front-end/questions/Deleting A question.md",
+    "imgs/Pasted image 20240824074200.png",
+    "front-end/questions/Editing An Existing Question.md",
+    "front-end/questions/Seeing Question Details.md",
+    "front-end/answers/Posting A New Answer.md",
+    "imgs/Pasted image 20240823113358.png",
+    "imgs/Pasted image 20240823113327.png",
+    "README.md",
+    "front-end/authentication/User Logout.md",
+    "front-end/authentication/User Login.md",
+    "front-end/authentication/Loading User Profile.md",
+    "front-end/authentication/Keeping User Logged In.md",
+    "front-end/questions/Listing Questions In The Feed.md",
+    "front-end/Routing.md",
+    "back-end/Project Overview & Setup.md",
+    "front-end/answers",
+    "imgs/Pasted image 20240823094548.png",
+    "imgs/Pasted image 20240823093030.png",
+    "front-end/user profile/Editing User Profile.md",
+    "front-end/user profile",
+    "front-end/user profile/User Profile Menu.md",
+    "front-end/questions",
+    "Authentication.md",
+    "front-end/layout",
+    "imgs",
+    "front-end/authentication",
+    "back-end/Authentication.md",
+    "back-end/core/Questions CRUD.md",
+    "back-end/core/Core Module Index.md",
+    "back-end/core",
+    "back-end",
+    "front-end"
+  ]
+}

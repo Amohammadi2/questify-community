@@ -43,7 +43,7 @@ class UserType(DjangoObjectType):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'profile', 'isStaff')
+        fields = ('id', 'username', 'email', 'profile', 'is_staff')
         interfaces = (UserRelayNode,)
 
     def resolve_profile(self, info):

@@ -173,6 +173,7 @@ export type UserType = UserRelayNode & {
   __typename?: 'UserType';
   email: Scalars['String']['output'];
   id: Scalars['ID']['output'];
+  isStaff: Scalars['Boolean']['output'];
   profile?: Maybe<ProfileType>;
   username: Scalars['String']['output'];
 };
