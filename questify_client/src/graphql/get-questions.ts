@@ -18,6 +18,9 @@ export const GET_QUESTION_FEED = gql`
           author {
             username
             id
+            profile {
+              profileImg
+            }
           }
         }
       }

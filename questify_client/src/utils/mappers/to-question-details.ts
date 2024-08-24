@@ -1,8 +1,12 @@
-import { GetQuestionDetailsQuery, QuestionType, UserType } from "@/gen/gql/graphql";
+import { GetQuestionDetailsQuery, ProfileType, QuestionType, UserType } from "@/gen/gql/graphql";
+
+interface HasUserProfileImg extends Pick<UserType, 'username' | 'id'> {
+  profile: Pick<ProfileType, 'profileImg'>
+}
 
 export interface QuestionDetails extends Pick<QuestionType, 'id' | 'title' | 'htmlContent'> {
   created: Date
-  author: Pick<UserType, 'username' | 'id'>
+  author: HasUserProfileImg
 }
 
 export function toQuestionDetails(data: GetQuestionDetailsQuery): QuestionDetails {
@@ -13,7 +17,10 @@ export function toQuestionDetails(data: GetQuestionDetailsQuery): QuestionDetail
     id: data.question?.id || '-1',
     author: {
       username: data.question?.author?.username || '',
-      id: data.question?.author?.id || '-1'
+      id: data.question?.author?.id || '-1',
+      profile: {
+        profileImg: data.question?.author?.profile?.profileImg
+      }
     }
   }
 }

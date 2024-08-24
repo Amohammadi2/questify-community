@@ -1,6 +1,6 @@
 import { $userProfile } from "@/store/user-profile.store"
 import { Avatar, Divider, IconButton, Menu, MenuItem, Typography } from "@mui/material"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
 import { FontAwesomeIcon }  from '@fortawesome/react-fontawesome'
 import { faUserCircle, faDoorOpen, faQuestion, faUser } from '@fortawesome/free-solid-svg-icons'
@@ -13,8 +13,18 @@ export default function UserProfileMenu() {
   const userProfile = useRecoilValue($userProfile)
   const navigate = useNavigate()
   const { loading, error, data, refetch } = useQuery(GET_USER_PROFILE);
-  const [,setAuthToken] = useRecoilState($authToken)
+  const [authToken, setAuthToken] = useRecoilState($authToken)
   const [anchorElForMenu, setAnchorElForMenu] = useState<any>(null)
+
+  // when user is not still authenticated, executing the GET_USER_PROFILE
+  // query will cause the `data` to be undefined, causing the component
+  // to render null. Apollo executes every query only once unless
+  // you manually choose to refetch the query, so when the user logs in, we
+  // should refetch the GET_USER_PROFILE query, otherwise this component
+  // will keep rendering null.
+  useEffect(() => {
+    refetch()
+  }, [authToken?.access])
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElForMenu(event.currentTarget)
@@ -37,7 +47,7 @@ export default function UserProfileMenu() {
   return (
     <>
       <IconButton onClick={handleMenuOpen}>
-        <Avatar sx={{ width: '24px', height: '24px'}} src={data.me?.profile?.profileImg||undefined} />
+        <Avatar sx={{ width: '24px', height: '24px'}} src={data.me?.profile?.profileImg||undefined} alt={userProfile.username} />
       </IconButton>
       <Menu
         id="menu-appbar"

@@ -9,6 +9,9 @@ export const GET_QUESTION_DETAILS = graphql(`
       author {
         id
         username
+        profile {
+          profileImg
+        }
       }
       created
       updated
@@ -28,6 +31,9 @@ export const GET_QUESTION_DETAILS = graphql(`
             author {
               id
               username
+              profile {
+                profileImg
+              }
             }
           }
         }

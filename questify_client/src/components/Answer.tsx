@@ -42,7 +42,7 @@ export default function Answer({ htmlContent, author, id, accepted, opMode=false
       />
       <Grid container direction="column" sx={{ boxShadow: 1, borderRadius: 3, py: 2, px: 2.5, mt: 2 }}>
         <Grid container direction="row" alignItems={'center'} sx={{ mb: 2 }}>
-          <Avatar alt={author?.username} />
+          <Avatar alt={author?.username} src={author.profile.profileImg||''} sx={{width: '35px', height: '35px'}} />
           <Typography sx={{ flexGrow: 1, ml: 1 }}>{author?.username}</Typography>
         </Grid>
         {editMode ? (

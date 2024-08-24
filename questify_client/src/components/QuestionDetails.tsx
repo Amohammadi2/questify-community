@@ -52,8 +52,8 @@ export default function QuestionDetails({ id, opMode=false, author, title, htmlC
       />
       <Grid container direction="column" sx={{ mt: 4 }}>
         <Grid container direction="row" alignItems={'center'} sx={{ mb: 2 }}>
-          <Avatar alt={author.username} sx={{ width: 30, height: 30}} />
-          <Typography sx={{ ml: 1 }}>{author.username}</Typography>
+          <Avatar alt={author.username} sx={{ width: 40, height: 40}} src={author.profile?.profileImg||''}/>
+          <Typography sx={{ ml: 1 }}><b>{author.username}</b></Typography>
           <div style={{flexGrow: '1'}} />
           <Typography>تاریخ پرسش: {created.toLocaleDateString("fa-IR")}</Typography>
         </Grid>

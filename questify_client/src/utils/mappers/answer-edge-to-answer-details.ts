@@ -1,7 +1,11 @@
-import { AnswerType, AnswerTypeEdge, GetQuestionDetailsQuery, UserType } from "@/gen/gql/graphql";
+import { AnswerType, AnswerTypeEdge, GetQuestionDetailsQuery, ProfileType, UserType } from "@/gen/gql/graphql";
+
+interface HasUserProfileImg extends Pick<UserType, 'username' | 'id'> {
+  profile: Pick<ProfileType, 'profileImg'>
+}
 
 export interface AnswerDetails extends Pick<AnswerType, 'htmlContent' | 'id' | 'created' | 'accepted'> {
-  author: Pick<UserType, 'username' | 'id'>
+  author: HasUserProfileImg
 }
 
 export function answerEdgeToAnswerDetailsArray(data: GetQuestionDetailsQuery) : AnswerDetails[] {
@@ -13,7 +17,10 @@ export function answerEdgeToAnswerDetailsArray(data: GetQuestionDetailsQuery) : 
       id: answerEdge?.node?.id || '-1',
       author: {
         id: answerEdge?.node?.author?.id || '-1',
-        username: answerEdge?.node?.author?.username || ''
+        username: answerEdge?.node?.author?.username || '',
+        profile: {
+          profileImg: answerEdge?.node?.author?.profile?.profileImg
+        }
       }
     }
   }) || []

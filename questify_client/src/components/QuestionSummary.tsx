@@ -15,7 +15,7 @@ export default function QuestionSummary({ author, created, title, numAnswers, ta
   return (
     <Card sx={{ width: '100%', px: 1.5, py: 2, my: 1.5, borderRadius: 0, borderBottom: '1px solid gray' }} elevation={0}>
       <Stack direction="row" alignItems="center">
-        <Avatar sx={{ mr: 1, width: 30, height: 30 }} />
+        <Avatar sx={{ mr: 1, width: 30, height: 30 }} src={author.profile.profileImg} />
         <Stack>
           <div>{author.username}</div>
         </Stack>
