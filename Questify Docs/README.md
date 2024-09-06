@@ -24,5 +24,7 @@ Useful links:
 
 ## Where to go from here?
 
+* [[Application Demo]]
+* [[GraphQL & Open API Intellisense In VS Code]]
 * [[front-end/Project Overview & Setup|Setting up the frontend app]]
 * [[back-end/Project Overview & Setup|Setting up the backend app]]

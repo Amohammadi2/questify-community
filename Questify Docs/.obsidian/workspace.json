@@ -30,9 +30,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "9e1a7c5f9ea4db58",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "README.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -98,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "back-end/Project Overview & Setup.md",
+                "file": "README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "back-end/Project Overview & Setup.md",
+                "file": "README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "back-end/Project Overview & Setup.md"
+                "file": "README.md"
               }
             }
           }
@@ -159,11 +171,13 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "97245091f4952e4f",
+  "active": "9e1a7c5f9ea4db58",
   "lastOpenFiles": [
+    "GraphQL & Open API Intellisense In VS Code.md",
+    "README.md",
+    "back-end/Project Overview & Setup.md",
     "imgs/landing.jpg",
     "front-end/Project Overview & Setup.md",
-    "README.md",
     "Application Demo.md",
     "imgs/Pasted image 20240824092632.png",
     "front-end/notifications/Receiving & Viewing Notifications.md",
@@ -189,10 +203,8 @@
     "front-end/authentication/Keeping User Logged In.md",
     "front-end/questions/Listing Questions In The Feed.md",
     "front-end/Routing.md",
-    "back-end/Project Overview & Setup.md",
     "front-end/answers",
     "imgs/Pasted image 20240823094548.png",
-    "imgs/Pasted image 20240823093030.png",
     "front-end/user profile/Editing User Profile.md",
     "front-end/user profile",
     "front-end/user profile/User Profile Menu.md",
