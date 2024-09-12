@@ -6,11 +6,13 @@ from rest_framework.decorators import action
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser
+from rest_framework import status
+from rest_framework.exceptions import NotFound
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 from drf_spectacular.types import OpenApiTypes
 from .permissions import IsAuthorOf, IsOwnerOfAccount, IsOwnerOfProfile
 from .models import Answer, Profile, Question
-from .serializers import AcceptAnswerSerializer, AnswerReadSerializer, AnswerWriteSerializer, GetAnswersForQuestionParamSerializer, MyAnswersSerializer, ProfileWriteSerializer, QuestionReadSerializer, QuestionWriteSerializer, UserRegistrationSerializer, UserRetrieveSerializer
+from .serializers import AcceptAnswerSerializer, AnswerReadSerializer, AnswerWriteSerializer, GetAnswersForQuestionParamSerializer, MyAnswersSerializer, ProfileWriteSerializer, QuestionReadSerializer, QuestionWriteSerializer, SubscribeOkSerializer, SubscribeRequestSerializer, UserRegistrationSerializer, UserRetrieveSerializer
 from .signals import question_answered, answer_accepted
 
 
@@ -21,6 +23,10 @@ class QuestionsViewset(viewsets.ModelViewSet):
                 .with_acceptance_status()
                 .with_answer_count()
                 .order_by('-created'))
+    
+    def get_queryset(self): 
+        return (super().get_queryset()
+                .with_subscription_status(user_id=self.request.user.id if self.request.user.is_authenticated else None))
 
 
     def get_serializer_class(self):
@@ -47,6 +53,25 @@ class QuestionsViewset(viewsets.ModelViewSet):
         serialized_questions = QuestionReadSerializer(paginated_questions, many=True).data
         return self.get_paginated_response(serialized_questions)
 
+    @extend_schema(responses={status.HTTP_200_OK: SubscribeOkSerializer}, request=SubscribeRequestSerializer)
+    @action(detail=True, methods=['post'])
+    def subscribe(self, request, pk=None):
+        serializer = SubscribeRequestSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        try:
+            question = self.get_object()
+            if serializer.data['subscribe'] == True:
+                if not question.is_subscribed: # `is_subscribed` is an annotated field created with a call to `with_subscription_status` in `get_queryset`
+                    question.subscribers.append(request.user.id)
+                    question.save()
+                return Response({'ok': True}, status=status.HTTP_200_OK)
+            else:
+                if question.is_subscribed:
+                    question.subscribers.remove(request.user.id)
+                    question.save()
+                return Response({'ok': True}, status=status.HTTP_200_OK)
+        except Question.DoesNotExist:
+            raise NotFound(f'No question with id={pk} exists')
 
 
 class AnswersViewset(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin):

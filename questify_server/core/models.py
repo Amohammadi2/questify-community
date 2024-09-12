@@ -15,6 +15,7 @@ class Post(models.Model):
 class Question(Post):
     title = models.CharField('title', null=False, blank=False, max_length=512)
     tags = models.JSONField(null=False, blank=False)
+    subscribers = models.JSONField(null=False, default=list)
 
     objects = QuestionManager()
 

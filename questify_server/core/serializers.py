@@ -113,3 +113,9 @@ class ProfileWriteSerializer(serializers.ModelSerializer):
             instance.user.save()
 
         return super().update(instance, validated_data)
+    
+class SubscribeOkSerializer(serializers.Serializer):
+    ok = serializers.BooleanField()
+
+class SubscribeRequestSerializer(serializers.Serializer):
+    subscribe = serializers.BooleanField()

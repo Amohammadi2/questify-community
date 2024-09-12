@@ -65,7 +65,11 @@ class QuestionType(DjangoObjectType):
 
     @classmethod
     def get_queryset(cls, queryset, info):
-        return Question.objects.all().with_answer_count().with_acceptance_status().order_by('-created')
+        return (Question.objects.all()
+                .with_answer_count()
+                .with_acceptance_status()
+                .with_subscription_status(user_id=info.context.user.pk if info.context.user.is_authenticated else None)
+                .order_by('-created'))
     
     class Meta:
         model = Question
@@ -75,6 +79,7 @@ class QuestionType(DjangoObjectType):
 
     num_answers = graphene.Int()
     has_accepted_answer = graphene.Boolean()
+    is_subscribed = graphene.Boolean()
     answers = DjangoConnectionField(AnswerType)
 
     def resolve_num_answers(self: Question, info):
@@ -82,6 +87,9 @@ class QuestionType(DjangoObjectType):
     
     def resolve_has_accepted_answer(self: Question, info):
         return self.has_accepted_answer
+    
+    def resolve_is_subscribed(self: Question, info):
+        return self.is_subscribed
     
 
 class CoreQueryRoot(graphene.ObjectType):
