@@ -2,15 +2,15 @@ Here is the documentation on Django based web server for Questify project. In th
 
 ## Technologies
 
-	* Python (v3.11.2)
-	* Pip: package management (v22.3.1)
-	* Django: web app development framework (v3.2.25)
-	* PostgreSQL: main DB (v13.3)
-	* DRF: Rest APIs (v3.14.0)
-	* DRF spectacular: swagger docs & Open API spec generation (v0.26.2)
-	* Graphene: Graphql API server and schema generation (v2.1.9) 
-	* Channels: ASGI & Websocket functionality (v3.0.5)
-	* Redis: message transport layer (v5.0.14)
+* Python (v3.11.2)
+* Pip: package management (v22.3.1)
+* Django: web app development framework (v3.2.25)
+* PostgreSQL: main DB (v13.3)
+* DRF: Rest APIs (v3.14.0)
+* DRF spectacular: swagger docs & Open API spec generation (v0.26.2)
+* Graphene: Graphql API server and schema generation (v2.1.9) 
+* Channels: ASGI & Websocket functionality (v3.0.5)
+* Redis: message transport layer (v5.0.14)
 ## Dev Environment Setup
 
 This project was developed as a monorepo, so when you clone the project repository it automatically downloads the frontend client source code as well but you will work inside `questify_server` folder wherein backend codes are held.
@@ -106,7 +106,7 @@ $ . .\generate_schema.cmd # this is for Open API
 
 you just need to run the `runserver.ps1` script to run the server
 
-```bash
+```ps
 $ . .\runserver.ps1
 ```
 
