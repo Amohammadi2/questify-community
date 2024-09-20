@@ -13,7 +13,7 @@ from drf_spectacular.types import OpenApiTypes
 from .permissions import IsAuthorOf, IsOwnerOfAccount, IsOwnerOfProfile
 from .models import Answer, Profile, Question
 from .serializers import AcceptAnswerSerializer, AnswerReadSerializer, AnswerWriteSerializer, GetAnswersForQuestionParamSerializer, MyAnswersSerializer, ProfileWriteSerializer, QuestionReadSerializer, QuestionWriteSerializer, SubscribeOkSerializer, SubscribeRequestSerializer, UserRegistrationSerializer, UserRetrieveSerializer
-from .signals import question_answered, answer_accepted
+from .signals import question_answered, answer_accepted, question_subscribed, question_unsubscribed
 
 
 class QuestionsViewset(viewsets.ModelViewSet):
@@ -64,11 +64,13 @@ class QuestionsViewset(viewsets.ModelViewSet):
                 if not question.is_subscribed: # `is_subscribed` is an annotated field created with a call to `with_subscription_status` in `get_queryset`
                     question.subscribers.append(request.user.id)
                     question.save()
+                    question_subscribed.send(__class__, request=request, user=request.user, question=question)
                 return Response({'ok': True}, status=status.HTTP_200_OK)
             else:
                 if question.is_subscribed:
                     question.subscribers.remove(request.user.id)
                     question.save()
+                    question_unsubscribed.send(__class__, request=request, user=request.user, question=question)
                 return Response({'ok': True}, status=status.HTTP_200_OK)
         except Question.DoesNotExist:
             raise NotFound(f'No question with id={pk} exists')

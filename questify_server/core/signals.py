@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from .models import Profile
 
 question_answered = Signal()
+question_subscribed = Signal()
+question_unsubscribed = Signal()
 answer_accepted = Signal()
 
 @receiver(post_save, sender=User)

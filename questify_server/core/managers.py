@@ -21,7 +21,7 @@ class QuestionQueryset(models.QuerySet):
     def with_subscription_status(self, user_id: int):
         return self.annotate(is_subscribed=Case(
             When(subscribers__contains=[user_id], then=Value(True)),
-            default=False,
+            default=Value(False),
             output_field=BooleanField()
         ))
 

@@ -9,7 +9,7 @@ class NotificationType(DjangoObjectType):
 
     @classmethod
     def get_queryset(cls, queryset, info):
-        return Notification.objects.filter(receiver=info.context.user).order_by('-timestamp')
+        return Notification.objects.filter(receivers=info.context.user.pk).order_by('-timestamp')
     
     class Meta:
         model = Notification
@@ -22,4 +22,4 @@ class NotificationsQueryRoot(graphene.ObjectType):
     notification_count = graphene.Int()
 
     def resolve_notification_count(root, info, **kwargs):
-        return Notification.objects.filter(receiver=info.context.user, seen=False).count()
+        return Notification.objects.filter(receivers=info.context.user.pk, seen=False).count()
