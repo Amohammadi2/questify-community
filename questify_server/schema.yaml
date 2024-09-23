@@ -455,6 +455,39 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v1/questions/{id}/subscribe/:
+    post:
+      operationId: questions_subscribe_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this question.
+        required: true
+      tags:
+      - questions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscribeRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SubscribeRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SubscribeRequestRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscribeOk'
+          description: ''
   /api/v1/questions/my_questions/:
     get:
       operationId: questions_my_questions_list
@@ -1128,6 +1161,20 @@ components:
       - html_content
       - tags
       - title
+    SubscribeOk:
+      type: object
+      properties:
+        ok:
+          type: boolean
+      required:
+      - ok
+    SubscribeRequestRequest:
+      type: object
+      properties:
+        subscribe:
+          type: boolean
+      required:
+      - subscribe
     TokenObtainPair:
       type: object
       properties:

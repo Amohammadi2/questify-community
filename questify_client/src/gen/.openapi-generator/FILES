@@ -26,6 +26,8 @@ models/QuestionBrief.ts
 models/QuestionRead.ts
 models/QuestionWrite.ts
 models/QuestionWriteRequest.ts
+models/SubscribeOk.ts
+models/SubscribeRequestRequest.ts
 models/TokenObtainPair.ts
 models/TokenObtainPairRequest.ts
 models/TokenRefresh.ts

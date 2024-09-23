@@ -3,10 +3,11 @@ import { faBell, faCheckSquare } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Avatar, Button, Card, CardActionArea, Chip, Grid, IconButton, Stack, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom"
+import QuestionSubscriptionButton from "./QuestionSubscriptionButton"
 
 type QuestionSummaryProps = QuestionRead
 
-export default function QuestionSummary({ author, created, title, numAnswers, tags, id, hasAcceptedAnswer } : any) {
+export default function QuestionSummary({ author, created, title, numAnswers, tags, id, hasAcceptedAnswer, isSubscribed } : any) {
   
   const navigate = useNavigate()
 
@@ -29,9 +30,7 @@ export default function QuestionSummary({ author, created, title, numAnswers, ta
         ))}
       </Grid>
       <Stack direction="row" alignItems="center" sx={{ mt: 1}}>
-        <IconButton sx={{ mr: .5, fontSize: 19}}>
-          <FontAwesomeIcon icon={faBell} style={{ color: "gray" }}/>
-        </IconButton>
+        <QuestionSubscriptionButton {...{qid: id, isSubscribed, authorId: author.id}} />
         <FontAwesomeIcon icon={faCheckSquare} style={{ color: hasAcceptedAnswer ? 'green' : 'rgb(200,200,200)' }}/>
         <Typography sx={{ mx: .7, fontSize: 13}}>{numAnswers} پاسخ</Typography>
         <div style={{flexGrow:1}}></div>

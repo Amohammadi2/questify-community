@@ -22,6 +22,22 @@ export function QuestionAnsweredNotif({metadata}: HasMetadata) {
   )
 }
 
+export function QuestionSubscribedNotif({metadata}: HasMetadata) {
+  return (
+    <Typography>
+      <Link to={LinkMaker.questionDetails(metadata.question_id)}><Typography color="primary" sx={{display: 'inline'}}>سوال</Typography></Link> شما را پیگیری کرد
+    </Typography>
+  )
+}
+
+export function SubscribedQuestionAnsweredNotif({metadata}: HasMetadata) {
+  return (
+    <Typography>
+      به <Link to={LinkMaker.questionDetails(metadata.question_id)}><Typography color="primary" sx={{display: 'inline'}}>سوالی</Typography></Link> که پیگیری کرده بودید پاسخ داد
+    </Typography>
+  )
+}
+
 
 export interface INotificationContentProps {
   notifType: string;
@@ -36,6 +52,12 @@ export default function NotificationContent({notifType, metadata, message} : INo
     },
     'answer-accepted'() {
       return <AnswerAcceptedNotif {...{metadata}} />
+    },
+    'question-subscribed'() {
+      return <QuestionSubscribedNotif {...{metadata}} />
+    },
+    'subscribed-question-answered'() {
+      return <SubscribedQuestionAnsweredNotif {...{metadata}} />
     }
   }
 

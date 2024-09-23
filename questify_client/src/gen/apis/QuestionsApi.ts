@@ -20,6 +20,8 @@ import type {
   QuestionRead,
   QuestionWrite,
   QuestionWriteRequest,
+  SubscribeOk,
+  SubscribeRequestRequest,
 } from '../models';
 import {
     PaginatedQuestionReadListFromJSON,
@@ -32,6 +34,10 @@ import {
     QuestionWriteToJSON,
     QuestionWriteRequestFromJSON,
     QuestionWriteRequestToJSON,
+    SubscribeOkFromJSON,
+    SubscribeOkToJSON,
+    SubscribeRequestRequestFromJSON,
+    SubscribeRequestRequestToJSON,
 } from '../models';
 
 export interface QuestionsCreateRequest {
@@ -59,6 +65,11 @@ export interface QuestionsPartialUpdateRequest {
 
 export interface QuestionsRetrieveRequest {
     id: number;
+}
+
+export interface QuestionsSubscribeCreateRequest {
+    id: number;
+    subscribeRequestRequest: SubscribeRequestRequest;
 }
 
 export interface QuestionsUpdateRequest {
@@ -297,6 +308,49 @@ export class QuestionsApi extends runtime.BaseAPI {
      */
     async questionsRetrieve(requestParameters: QuestionsRetrieveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<QuestionRead> {
         const response = await this.questionsRetrieveRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async questionsSubscribeCreateRaw(requestParameters: QuestionsSubscribeCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubscribeOk>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling questionsSubscribeCreate.');
+        }
+
+        if (requestParameters.subscribeRequestRequest === null || requestParameters.subscribeRequestRequest === undefined) {
+            throw new runtime.RequiredError('subscribeRequestRequest','Required parameter requestParameters.subscribeRequestRequest was null or undefined when calling questionsSubscribeCreate.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("jwtAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/v1/questions/{id}/subscribe/`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: SubscribeRequestRequestToJSON(requestParameters.subscribeRequestRequest),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => SubscribeOkFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async questionsSubscribeCreate(requestParameters: QuestionsSubscribeCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SubscribeOk> {
+        const response = await this.questionsSubscribeCreateRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

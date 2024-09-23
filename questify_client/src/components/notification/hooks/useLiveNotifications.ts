@@ -5,20 +5,16 @@ import { $authToken } from '@/store/auth.store';
 import { WS_ADDR } from '@/config/env-vars';
 
 export function useLiveNotification() {
-  const client = useApolloClient();
+  const client = useApolloClient()
   const authToken = useRecoilValue($authToken)
 
   useEffect(() => {
 
-    // the websocket endpoint won't allow you to connect without an auth token
-    if (!(authToken?.access))
-      return
-
-    let ws = new WebSocket(`${WS_ADDR}/api/v1/notifications/?token=`+encodeURIComponent(authToken.access));
+    let ws = new WebSocket(`${WS_ADDR}/api/v1/notifications/?token=`+encodeURIComponent(authToken?.access||''));
     let retries = 0;
 
     const connect = () => {
-      ws = new WebSocket(`${WS_ADDR}/api/v1/notifications/?token=`+encodeURIComponent(authToken.access));
+      ws = new WebSocket(`${WS_ADDR}/api/v1/notifications/?token=`+encodeURIComponent(authToken?.access||''));
 
       ws.onopen = () => {
         console.log('WebSocket connected');
@@ -63,10 +59,12 @@ export function useLiveNotification() {
       };
     };
 
-    connect();
+    // the websocket endpoint won't allow you to connect without an auth token
+    if ((authToken?.access))
+      connect();
 
     return () => {
       ws.close();
     };
-  }, [client, authToken?.access])
+  }, [authToken?.access])
 }

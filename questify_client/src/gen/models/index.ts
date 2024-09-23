@@ -18,6 +18,8 @@ export * from './QuestionBrief';
 export * from './QuestionRead';
 export * from './QuestionWrite';
 export * from './QuestionWriteRequest';
+export * from './SubscribeOk';
+export * from './SubscribeRequestRequest';
 export * from './TokenObtainPair';
 export * from './TokenObtainPairRequest';
 export * from './TokenRefresh';
