@@ -88,7 +88,7 @@ class NotificationService:
             'actor': {
                 'id': notif_payload.actor.pk,
                 'username': notif_payload.actor.username,
-                'profile_img': self.request.build_absolute_uri(notif_payload.actor.profile.profile_img.url)
+                'profile_img': self.request.build_absolute_uri(notif_payload.actor.profile.profile_img.url if notif_payload.actor.profile.profile_img else '')
             }
         })
         notif_obj = self._persist_notif(notif_payload)

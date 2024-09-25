@@ -37,7 +37,7 @@ class NotificationConsumer(AsyncWebsocketConsumer, WebsocketTokenAuthMixin):
             await self.channel_layer.group_discard(group, self.channel_name)
 
     async def add_groups(self, event):
-        channel_group_list = event['channel_group_list']
+        channel_group_list = event['event']['channel_group_list']
         # we remove the groups that the user has been already added to them
         groups_to_join = list(set(channel_group_list).difference(self.groups_list))
         for group in groups_to_join:
@@ -45,8 +45,8 @@ class NotificationConsumer(AsyncWebsocketConsumer, WebsocketTokenAuthMixin):
         self.groups_list += groups_to_join
 
     async def remove_groups(self, event):
-        channel_group_list = event['channel_group_list']
-        # we remove the groups that the user has been already added to them
+        channel_group_list = event['event']['channel_group_list']
+        # we only include the list of groups that the user is currently a member of
         groups_to_remove = list(set(channel_group_list).intersection(self.groups_list))
         for group in groups_to_remove:
             await self.channel_layer.group_discard(group, self.channel_name)
