@@ -4,47 +4,18 @@
     "type": "split",
     "children": [
       {
-        "id": "74d7ff65acc30b50",
+        "id": "b8e191ff1669573a",
         "type": "tabs",
         "children": [
           {
-            "id": "9f44423644cf6bd6",
+            "id": "e5ec456e281cf9e1",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "README.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "97245091f4952e4f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "back-end/Project Overview & Setup.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "9e1a7c5f9ea4db58",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "README.md",
-                "mode": "source",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -110,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +97,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "README.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -149,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "README.md"
-              }
+              "state": {}
             }
           }
         ],
@@ -171,16 +138,19 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "9e1a7c5f9ea4db58",
+  "active": "e5ec456e281cf9e1",
   "lastOpenFiles": [
-    "GraphQL & Open API Intellisense In VS Code.md",
+    "front-end/notifications/Receiving & Viewing Notifications.md",
+    "front-end/Project Overview & Setup.md",
+    "front-end/Routing.md",
+    "front-end/answers/Posting A New Answer.md",
+    "front-end/questions/Seeing Question Details.md",
     "README.md",
     "back-end/Project Overview & Setup.md",
+    "GraphQL & Open API Intellisense In VS Code.md",
     "imgs/landing.jpg",
-    "front-end/Project Overview & Setup.md",
     "Application Demo.md",
     "imgs/Pasted image 20240824092632.png",
-    "front-end/notifications/Receiving & Viewing Notifications.md",
     "imgs/Pasted image 20240824092549.png",
     "imgs/Pasted image 20240824091623.png",
     "imgs/Pasted image 20240824091615.png",
@@ -193,8 +163,6 @@
     "front-end/questions/Deleting A question.md",
     "imgs/Pasted image 20240824074200.png",
     "front-end/questions/Editing An Existing Question.md",
-    "front-end/questions/Seeing Question Details.md",
-    "front-end/answers/Posting A New Answer.md",
     "imgs/Pasted image 20240823113358.png",
     "imgs/Pasted image 20240823113327.png",
     "front-end/authentication/User Logout.md",
@@ -202,7 +170,6 @@
     "front-end/authentication/Loading User Profile.md",
     "front-end/authentication/Keeping User Logged In.md",
     "front-end/questions/Listing Questions In The Feed.md",
-    "front-end/Routing.md",
     "front-end/answers",
     "imgs/Pasted image 20240823094548.png",
     "front-end/user profile/Editing User Profile.md",

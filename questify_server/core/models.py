@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+import secrets
 
 from .managers import QuestionManager
 
@@ -15,6 +16,7 @@ class Post(models.Model):
 class Question(Post):
     title = models.CharField('title', null=False, blank=False, max_length=512)
     tags = models.JSONField(null=False, blank=False)
+    subscribers = models.JSONField(null=False, default=list, blank=True)
 
     objects = QuestionManager()
 
@@ -39,3 +41,14 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     bio = models.CharField(max_length=512, blank=True, null=True)
     profile_img = models.ImageField(upload_to='profile-imgs/', blank=True, null=True)
+
+
+class Referral(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='referral')
+    token = models.CharField(max_length=32, unique=True, blank=True, null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if not self.token:
+            self.token = secrets.token_hex(16)
+        super().save(*args, **kwargs)

@@ -92,6 +92,15 @@ export class CacheManager {
     })
   }
 
+  public static updateQuestionSubscription(id: number, subscribe: boolean) {
+    client.cache.modify({
+      id: client.cache.identify({ __typename: 'QuestionType', id: `${id}`}),
+      fields: {
+        isSubscribed() { return subscribe }
+      }
+    })
+  }
+
   public static addAnswer(author: UserRetrieve|null, id: number, qid: number, content: string) {
     const authorRef = client.cache.writeFragment({
       id: `UserType:${author?.id}`,

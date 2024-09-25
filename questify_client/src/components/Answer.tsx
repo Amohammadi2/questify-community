@@ -50,8 +50,8 @@ export default function Answer({ htmlContent, author, id, accepted, opMode=false
         ) : (
           <>
             <Grid container direction="row" alignItems='center'>
-              {opMode && <Grid item sx={{ mr: 2 }}>
-                <IconButton onClick={toggleAcceptedStatus}>
+              <Grid item sx={{ mr: 2 }}>
+                <IconButton onClick={toggleAcceptedStatus} disabled={!opMode}>
                   <FontAwesomeIcon
                     icon={faCheckSquare}
                     style={{
@@ -59,7 +59,7 @@ export default function Answer({ htmlContent, author, id, accepted, opMode=false
                     }}
                   />
                 </IconButton>
-              </Grid>}
+              </Grid>
               <Grid item>
                 <div dangerouslySetInnerHTML={{ __html: htmlContent }} style={{ fontFamily: 'Vazirmatn' }} />
               </Grid>

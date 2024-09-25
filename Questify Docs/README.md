@@ -1,6 +1,6 @@
 ## Project Description
 
-Questify is platform for students to help them learn better and fill in the gaps of online education. Questify provides various modules and features that students can use to improve themselves and also help others too:
+Questify is platform for students to help them learn better and fill in the gaps of online educatmion. Questify provides various modules and features that students can use to improve themselves and also help others too:
 
 * Question & Answer forum: Here in Questify, you can ask and answer questions. Students are rewarded Questify coins based on their activity and reputation. They also get notified of the latest activities on the platform through Questify live notification service.
 * Practice Problems Bank & EBooks (**comming soon**):

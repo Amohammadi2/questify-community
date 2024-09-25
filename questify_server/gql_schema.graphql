@@ -90,6 +90,7 @@ type QuestionType implements QuestionRelayNode {
   answers(offset: Int, before: String, after: String, first: Int, last: Int): AnswerTypeConnection
   numAnswers: Int
   hasAcceptedAnswer: Boolean
+  isSubscribed: Boolean
 }
 
 type QuestionTypeConnection {

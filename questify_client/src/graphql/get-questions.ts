@@ -15,6 +15,7 @@ export const GET_QUESTION_FEED = gql`
           created
           numAnswers
           hasAcceptedAnswer
+          isSubscribed
           author {
             username
             id

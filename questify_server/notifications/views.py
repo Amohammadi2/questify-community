@@ -11,7 +11,7 @@ class NotificationViewSet(viewsets.GenericViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return Notification.objects.filter(receiver=self.request.user)
+        return Notification.objects.filter(receivers=self.request.user.pk)
 
     @extend_schema(
         responses=NotificationNumberSerializer
