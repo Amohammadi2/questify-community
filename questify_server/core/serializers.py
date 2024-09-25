@@ -1,7 +1,8 @@
-from django.contrib.auth.models import User
+from core.models import User
 from rest_framework import serializers
 from rest_framework.fields import empty
-from .models import Answer, Profile, Question
+from rest_framework.exceptions import PermissionDenied
+from .models import Answer, Profile, Question, Referral
 
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
@@ -79,15 +80,32 @@ class AcceptAnswerSerializer(serializers.ModelSerializer):
         fields = ('accepted',)
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
+
+    referral_token = serializers.CharField(write_only=True)
+
     class Meta:
         model = User
-        fields = ('username', 'password', 'email')
+        fields = ('id', 'username', 'password', 'email', 'referral_token')
+        read_only_fields = ('id',)
+        extra_kwargs = {
+            'password': { 'write_only': True }
+        }
 
     def save(self, **kwargs):
         # Make the newly created user account inactive
         # The user should first verify their emails before
         # they can use their accounts to log in
-        return super().save(**kwargs, is_active=False)
+        return super().save(**kwargs, is_active=True)
+    
+    def create(self, validated_data):
+        token = validated_data.pop('referral_token', '')
+        if Referral.objects.filter(token=token).exists():
+            new_user =  super().create(validated_data)
+            new_user.set_password(validated_data.get('password'))
+            new_user.save()
+            return new_user
+        else:
+            raise PermissionDenied('The referral token is invalid')
 
 
 class UserRetrieveSerializer(serializers.ModelSerializer):

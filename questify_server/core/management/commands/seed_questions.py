@@ -1,8 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
-from django.contrib.auth.models import User
-from core.models import Question, Answer
-from random import random, choice, sample
-import math
+from core.models import Question, User
+from random import sample
+
 
 titles = [
     "این سوالی است که من دارم",
@@ -52,9 +51,16 @@ tags = [
 
 
 class Command(BaseCommand):
-    help = "Populates the questions db with fake questions and answers"
+    help = "Populates the questions db with fake questions"
 
     def handle(self, *args, **options):
+        if User.objects.count() == 0:
+            raise CommandError(
+                'There are no users in the db to be choosen as authors,'
+                ' consider creating a super user or simply run `seed_users` command'
+                ' to generate some fake users'
+            )
+
         for i in range(0, 200):
             title_list_len = len(titles)
             Question.objects.create(
@@ -63,6 +69,6 @@ class Command(BaseCommand):
                     "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد."
                     "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.",
                 tags=sample(tags, 3),
-                author=User.objects.get(username="ashkan")
+                author=User.objects.order_by('?').first()
             )
-            self.stdout.write(self.style.NOTICE(f'{i+1} of 200 complete'))
+            self.stdout.write(self.style.NOTICE(f'{i+1} of 200 questions created'))
