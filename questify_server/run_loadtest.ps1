@@ -1,0 +1,1 @@
+locust -f "tests/loadtest.py" --host http://127.0.0.1:8000 --users 50 --spawn-rate 5 --web-port 8080
