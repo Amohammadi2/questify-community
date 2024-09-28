@@ -68,7 +68,7 @@ export function NavLayout({ authButtons: showAuthButtons=false, backButton: show
           </Toolbar>
         </AppBar>
       </ElevationScroll>
-      <Toolbar sx={{ mb: 1 }}/>
+      <Toolbar sx={{ mb: .6 }}/>
     </>
   )
 }

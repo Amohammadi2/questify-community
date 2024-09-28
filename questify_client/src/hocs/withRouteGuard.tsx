@@ -14,9 +14,9 @@ export function withRouteGuard(component: ReactNode, { authOnly=true, nonAuthOnl
   const isAuth = useRecoilValue($isAuthenticated)
 
   if (
-    (isAuth && authOnly) ||
-    (!isAuth && nonAuthOnly) ||
-    (!authOnly && !nonAuthOnly)
+    (isAuth && authOnly) || // is authenticated and auth is required
+    (!isAuth && nonAuthOnly) || // is not authenticated and being non-auth is required (opens to non-auth users only)
+    (!authOnly && !nonAuthOnly) // there's no restriction
   )
     return component
   
