@@ -49,11 +49,11 @@ function App() {
     },
     {
       path: '/edit-profile',
-      element: withNavLayout(<EditProfilePage />)
+      element: withRouteGuard(withNavLayout(<EditProfilePage />))
     },
     {
       path: '/my-questions',
-      element: withNavLayout(<MyQuestionsPage />)
+      element: withRouteGuard(withNavLayout(<MyQuestionsPage />))
     },
   ])
 
