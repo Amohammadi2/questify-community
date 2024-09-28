@@ -41,7 +41,7 @@ export default function QuestionsPage() {
   const questionsCount = data?.questions?.edges.length;
   const hasMore = data?.questions?.pageInfo.hasNextPage || false;
   
-  const refetch = (...args : any[]) => {
+  const refetch: typeof dataRefetch = (...args : any[]) => {
     setScrollOffset(0)
     setLoaderMilestone(0)
     return dataRefetch(...args)
