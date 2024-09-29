@@ -14,7 +14,7 @@ export const $isAuthTokenValidated = atom<boolean>({
   default: false
 })
 
-export const $isAuthenticated = selector({
+export const $isAuthenticated = selector<boolean>({
   key: 'is-authenticated',
-  get: ({ get }) => get($authToken)?.refresh && get($isAuthTokenValidated),
+  get: ({ get }) => !!(get($authToken)?.refresh && get($isAuthTokenValidated)),
 })

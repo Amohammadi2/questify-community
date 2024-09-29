@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-import { $authToken } from '@/store/auth.store';
+import { $authToken, $isAuthenticated } from '@/store/auth.store';
 import { WS_ADDR } from '@/config/env-vars';
 import useWebSocket from 'react-use-websocket';
 import { client } from '@/apollo/client';
@@ -10,9 +10,10 @@ import { gql } from '@apollo/client';
 
 export function useLiveNotification() {
   const authToken = useRecoilValue($authToken)
+  const isAuthenticated = useRecoilValue($isAuthenticated)
   const { lastMessage } = useWebSocket(`${WS_ADDR}/api/v1/notifications/?token=`+encodeURIComponent(authToken?.access||''), {
     shouldReconnect() {
-      return true // reconnect on all close events
+      return isAuthenticated
     },
   });
 
@@ -45,5 +46,4 @@ export function useLiveNotification() {
       });
     }
   }, [lastMessage])
-
 }
