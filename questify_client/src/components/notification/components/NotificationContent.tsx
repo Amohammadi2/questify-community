@@ -6,7 +6,7 @@ export interface HasMetadata {
   metadata: any;
 }
 
-export function AnswerAcceptedNotif({metadata}: HasMetadata) {
+function AnswerAcceptedNotif({metadata}: HasMetadata) {
   return (
     <Typography>
       <Link to={LinkMaker.questionDetails(metadata.question_id)}><Typography color="primary" sx={{display: 'inline'}}>پاسخ</Typography></Link> شما را پذیرفت
@@ -14,7 +14,7 @@ export function AnswerAcceptedNotif({metadata}: HasMetadata) {
   )
 }
 
-export function QuestionAnsweredNotif({metadata}: HasMetadata) {
+function QuestionAnsweredNotif({metadata}: HasMetadata) {
   return (
     <Typography>
       به <Link to={LinkMaker.questionDetails(metadata.question_id)}><Typography color="primary" sx={{display: 'inline'}}>سوال</Typography></Link> شما پاسخ داد
@@ -22,7 +22,7 @@ export function QuestionAnsweredNotif({metadata}: HasMetadata) {
   )
 }
 
-export function QuestionSubscribedNotif({metadata}: HasMetadata) {
+function QuestionSubscribedNotif({metadata}: HasMetadata) {
   return (
     <Typography>
       <Link to={LinkMaker.questionDetails(metadata.question_id)}><Typography color="primary" sx={{display: 'inline'}}>سوال</Typography></Link> شما را پیگیری کرد
@@ -30,7 +30,7 @@ export function QuestionSubscribedNotif({metadata}: HasMetadata) {
   )
 }
 
-export function SubscribedQuestionAnsweredNotif({metadata}: HasMetadata) {
+function SubscribedQuestionAnsweredNotif({metadata}: HasMetadata) {
   return (
     <Typography>
       به <Link to={LinkMaker.questionDetails(metadata.question_id)}><Typography color="primary" sx={{display: 'inline'}}>سوالی</Typography></Link> که پیگیری کرده بودید پاسخ داد
