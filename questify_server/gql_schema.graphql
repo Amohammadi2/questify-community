@@ -13,7 +13,7 @@ type AnswerType implements AnswerRelayNode {
   created: DateTime!
   updated: DateTime!
   accepted: Boolean!
-  question: QuestionType
+  question: MyQuestionsType
 }
 
 type AnswerTypeConnection {
@@ -29,6 +29,30 @@ type AnswerTypeEdge {
 scalar DateTime
 
 scalar JSONString
+
+type MyQuestionsType implements QuestionRelayNode {
+  id: ID!
+  htmlContent: String!
+  author: UserType
+  created: DateTime!
+  updated: DateTime!
+  title: String!
+  tags: JSONString!
+  answers(offset: Int, before: String, after: String, first: Int, last: Int): AnswerTypeConnection
+  numAnswers: Int
+  hasAcceptedAnswer: Boolean
+  isSubscribed: Boolean
+}
+
+type MyQuestionsTypeConnection {
+  pageInfo: PageInfo!
+  edges: [MyQuestionsTypeEdge]!
+}
+
+type MyQuestionsTypeEdge {
+  node: MyQuestionsType
+  cursor: String!
+}
 
 interface NotificationRelayNode {
   id: ID!
@@ -70,6 +94,7 @@ type Query {
   hello: String
   questions(offset: Int, before: String, after: String, first: Int, last: Int, title: String, title_Icontains: String, title_Istartswith: String, htmlContent: String, htmlContent_Icontains: String, authorId: ID, tags: [String]): QuestionTypeConnection
   question(id: ID!): QuestionType
+  myQuestions(offset: Int, before: String, after: String, first: Int, last: Int, title: String, title_Icontains: String, title_Istartswith: String, htmlContent: String, htmlContent_Icontains: String, authorId: ID, tags: [String]): MyQuestionsTypeConnection
   me: UserType
   notifications(offset: Int, before: String, after: String, first: Int, last: Int): NotificationTypeConnection
   notificationCount: Int

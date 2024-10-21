@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 import graphene
 from graphene_django import DjangoConnectionField, DjangoObjectType
+from rest_framework.exceptions import NotAuthenticated
 from graphene_django.filter import DjangoFilterConnectionField
 from notifications.models import Notification
 from .models import Answer, Profile, Question
@@ -91,15 +92,28 @@ class QuestionType(DjangoObjectType):
     def resolve_is_subscribed(self: Question, info):
         return self.is_subscribed
     
+class MyQuestionsType(QuestionType):
+
+    @classmethod
+    def get_queryset(cls, queryset, info):
+        return super().get_queryset(queryset, info).filter(author=info.context.user.pk if info.context.user.is_authenticated else None)
+    
+    class Meta:
+        model = Question
+        fields = ('title', 'tags', 'html_content', 'author', 'created', 'updated', 'id', 'answers')
+        interfaces = (QuestionRelayNode,)
+        filterset_class = QuestionFilter
+
 
 class CoreQueryRoot(graphene.ObjectType):
     hello = graphene.String(default_value='hello world')
     questions = QuestionFilterConnectionField(QuestionType)
     question =  QuestionRelayNode.Field(QuestionType)
+    my_questions = QuestionFilterConnectionField(MyQuestionsType)
     me = graphene.Field(UserType)
 
     def resolve_me(self, info):
         if info.context.user.is_authenticated:
             return info.context.user
         else:
-            raise Exception("Not authenticated")
+            raise NotAuthenticated()
