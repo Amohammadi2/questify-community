@@ -5,7 +5,20 @@ import { WS_ADDR } from '@/config/env-vars';
 import useWebSocket from 'react-use-websocket';
 import { client } from '@/apollo/client';
 import { gql } from '@apollo/client';
+import { eventBus } from '@/utils/event-bus';
+import { NotifType } from '../enums';
 
+
+function handleNotif(notif: any) {
+  const list = [
+    NotifType.QUESTION_ANSWERED,
+    NotifType.SUBSCRIBED_QUESTION_ANSWERED,
+    NotifType.ANSWER_ACCEPTED,
+  ]
+  if (list.includes(notif.event.notif_type)) {
+    eventBus.dispatch(`refetch.question.${notif.event.metadata.question_id}`, {}, true)
+  }
+}
 
 
 export function useLiveNotification() {
@@ -20,6 +33,7 @@ export function useLiveNotification() {
   useEffect(() => {
     if (lastMessage !== null) {
       const notification = JSON.parse(lastMessage.data);
+      handleNotif(notification)
       console.log('notification received by ws: ', notification)
       // Update Apollo Client cache
       client.cache.modify({
