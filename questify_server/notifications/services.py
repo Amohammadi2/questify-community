@@ -41,7 +41,7 @@ class NotificationService:
         )
 
     def _join_user_in_channel_groups(self, user: User, group_names: list[str]):
-        # broad cast to all consumers
+        # broadcast to all consumers
         async_to_sync(self.channel_layer.group_send)(
             ChannelName.for_user(user),
             {

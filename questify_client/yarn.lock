@@ -2739,6 +2739,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/react-virtual@npm:^3.10.8":
+  version: 3.10.8
+  resolution: "@tanstack/react-virtual@npm:3.10.8"
+  dependencies:
+    "@tanstack/virtual-core": 3.10.8
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 40a5d6089908096634fec2aa0cd646ca47c044c745e1b0d190ecbf9905ad2e6266ccd56c2550ed92f47349954dc11eb6930beac1354441ce7c98af81c5454d3f
+  languageName: node
+  linkType: hard
+
+"@tanstack/virtual-core@npm:3.10.8":
+  version: 3.10.8
+  resolution: "@tanstack/virtual-core@npm:3.10.8"
+  checksum: 1c5307b534bb963094acc4a2691fcc331364a865d8513abe9f5ca6be577d7bb4b2821e8dddbf259c60ee65afb2f4e5d6debab1af897b0c464ec1bd18906ecbe9
+  languageName: node
+  linkType: hard
+
 "@tiptap/core@npm:^2.0.3":
   version: 2.0.3
   resolution: "@tiptap/core@npm:2.0.3"
@@ -7242,6 +7261,7 @@ __metadata:
     "@graphql-codegen/client-preset": ^4.0.1
     "@mui/lab": ^5.0.0-alpha.132
     "@mui/material": ^5.13.3
+    "@tanstack/react-virtual": ^3.10.8
     "@tiptap/extension-image": ^2.0.3
     "@tiptap/extension-link": ^2.0.3
     "@tiptap/extension-placeholder": ^2.0.3
@@ -7275,6 +7295,7 @@ __metadata:
     react-draft-wysiwyg: ^1.15.0
     react-infinite-scroll-component: ^6.1.0
     react-router-dom: ^6.11.2
+    react-use-websocket: ^4.8.1
     recoil: ^0.7.7
     stylis: ^4.2.0
     stylis-plugin-rtl: ^2.1.1
@@ -7394,6 +7415,16 @@ __metadata:
     react: ">=16.6.0"
     react-dom: ">=16.6.0"
   checksum: 75602840106aa9c6545149d6d7ae1502fb7b7abadcce70a6954c4b64a438ff1cd16fc77a0a1e5197cdd72da398f39eb929ea06f9005c45b132ed34e056ebdeb1
+  languageName: node
+  linkType: hard
+
+"react-use-websocket@npm:^4.8.1":
+  version: 4.8.1
+  resolution: "react-use-websocket@npm:4.8.1"
+  peerDependencies:
+    react: ">= 18.0.0"
+    react-dom: ">= 18.0.0"
+  checksum: 24e4a9efd3f8ffcb15c79fa9427dd2f53d8fe4254ab5fe23a67b86ab8c21db7f47bb012a3b41cd92090f30a5bb9cb5f1758432ae43bd2720ed8b41cb2da14001
   languageName: node
   linkType: hard
 

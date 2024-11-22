@@ -1,12 +1,13 @@
 import { LinkMaker } from "@/utils/link-maker";
 import { Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import { NotifType } from "../enums";
 
 export interface HasMetadata {
   metadata: any;
 }
 
-export function AnswerAcceptedNotif({metadata}: HasMetadata) {
+function AnswerAcceptedNotif({metadata}: HasMetadata) {
   return (
     <Typography>
       <Link to={LinkMaker.questionDetails(metadata.question_id)}><Typography color="primary" sx={{display: 'inline'}}>پاسخ</Typography></Link> شما را پذیرفت
@@ -14,7 +15,7 @@ export function AnswerAcceptedNotif({metadata}: HasMetadata) {
   )
 }
 
-export function QuestionAnsweredNotif({metadata}: HasMetadata) {
+function QuestionAnsweredNotif({metadata}: HasMetadata) {
   return (
     <Typography>
       به <Link to={LinkMaker.questionDetails(metadata.question_id)}><Typography color="primary" sx={{display: 'inline'}}>سوال</Typography></Link> شما پاسخ داد
@@ -22,7 +23,7 @@ export function QuestionAnsweredNotif({metadata}: HasMetadata) {
   )
 }
 
-export function QuestionSubscribedNotif({metadata}: HasMetadata) {
+function QuestionSubscribedNotif({metadata}: HasMetadata) {
   return (
     <Typography>
       <Link to={LinkMaker.questionDetails(metadata.question_id)}><Typography color="primary" sx={{display: 'inline'}}>سوال</Typography></Link> شما را پیگیری کرد
@@ -30,7 +31,7 @@ export function QuestionSubscribedNotif({metadata}: HasMetadata) {
   )
 }
 
-export function SubscribedQuestionAnsweredNotif({metadata}: HasMetadata) {
+function SubscribedQuestionAnsweredNotif({metadata}: HasMetadata) {
   return (
     <Typography>
       به <Link to={LinkMaker.questionDetails(metadata.question_id)}><Typography color="primary" sx={{display: 'inline'}}>سوالی</Typography></Link> که پیگیری کرده بودید پاسخ داد
@@ -39,30 +40,29 @@ export function SubscribedQuestionAnsweredNotif({metadata}: HasMetadata) {
 }
 
 
-export interface INotificationContentProps {
+export interface INotificationContentProps extends HasMetadata {
   notifType: string;
-  metadata: any;
   message: string;
 }
 
 export default function NotificationContent({notifType, metadata, message} : INotificationContentProps) {
-  const types = {
-    'question-answered'() {
+  const notifPresenters = {
+    [NotifType.QUESTION_ANSWERED]() {
       return <QuestionAnsweredNotif {...{metadata}} />
     },
-    'answer-accepted'() {
+    [NotifType.ANSWER_ACCEPTED]() {
       return <AnswerAcceptedNotif {...{metadata}} />
     },
-    'question-subscribed'() {
+    [NotifType.QUESTION_SUBSCRIBED]() {
       return <QuestionSubscribedNotif {...{metadata}} />
     },
-    'subscribed-question-answered'() {
+    [NotifType.SUBSCRIBED_QUESTION_ANSWERED]() {
       return <SubscribedQuestionAnsweredNotif {...{metadata}} />
     }
   }
 
-  if (Object.keys(types).includes(notifType))
+  if (Object.keys(notifPresenters).includes(notifType))
     // @ts-ignore
-    return types[notifType]()
+    return notifPresenters[notifType]()
   return message
 }

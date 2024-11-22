@@ -13,6 +13,8 @@ import { answerEdgeToAnswerDetailsArray } from "@/utils/mappers/answer-edge-to-a
 import { AnswerType, AnswerTypeConnection } from "@/gen/gql/graphql"
 import InfiniteScroll from "react-infinite-scroll-component"
 import { AnswerForm } from "@/components/forms"
+import { useEffect } from "react"
+import { eventBus } from "@/utils/event-bus"
 
 interface ToggleAnswerData {
   questionId: string
@@ -26,8 +28,18 @@ export default function QuestionDetailsPage() {
   const isAuthenticated = useRecoilValue($isAuthenticated)
   const userProfile = useRecoilValue($userProfile)
   const answersApi = useRecoilValue($answersApi)
-  const { loading, data, client, fetchMore } = useQuery(GET_QUESTION_DETAILS, { variables: { id: qid || '-1' }})
+  const { loading, data, client, fetchMore, refetch } = useQuery(GET_QUESTION_DETAILS, { variables: { id: qid || '-1' }})
   
+  // refetch the query if it is required
+  useEffect(() => {
+    const hndl = () => refetch()
+    eventBus.pickFromQueue(`refetch.question.${qid}`, hndl)
+    eventBus.on(`refetch.question.${qid}`, hndl)
+    return () => {
+      eventBus.remove(`refetch.question.${qid}`, hndl)
+    }
+  }, [])
+
   const deleteAnswer = (id: number): Promise<void> => {
     answersApi.answersDestroy({ id })
     .then(() => {}) // Todo: Toast success

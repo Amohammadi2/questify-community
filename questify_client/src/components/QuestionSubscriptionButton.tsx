@@ -35,8 +35,10 @@ export default function QuestionSubscriptionButton({ qid, isSubscribed, authorId
     })
   }, [questionsApi, qid, isSubscribed])
 
-  if (userProfile?.id == Number.parseInt(authorId)) {
-    return null; // users should not be able to subscribe to their own questions
+  // users should not be able to subscribe to their own questions
+  const questionBelongsToCurrentUser = userProfile?.id == Number.parseInt(authorId)
+  if (!userProfile || questionBelongsToCurrentUser) {
+    return null
   }
   
   return (

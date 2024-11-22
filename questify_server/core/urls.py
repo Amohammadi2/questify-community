@@ -9,7 +9,7 @@ from rest_framework.routers import DefaultRouter
 from graphene_django.views import GraphQLView
 from drf_spectacular.utils import extend_schema
 
-from .views import AnswersViewset, ProfileViewset, QuestionsViewset, UsersViewset, DRFAuthenticatedGraphQLView
+from .views import AnswersViewset, ProfileViewset, QuestionsViewset, UsersViewset, DRFAuthenticatedGraphQLView, VerifiedTokenRefreshView
 router = DefaultRouter()
 router.register('questions', QuestionsViewset, basename="questions")
 router.register('answers', AnswersViewset, basename="answers")
@@ -20,7 +20,7 @@ urlpatterns = [
 
     # Auth
     path('token/obtain/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('token/refresh/', VerifiedTokenRefreshView.as_view(), name='token_refresh'),
 
     # API Online Schema
     path('schema/', SpectacularAPIView.as_view(), name='schema'),

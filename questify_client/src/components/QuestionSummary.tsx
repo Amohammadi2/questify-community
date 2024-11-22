@@ -1,5 +1,5 @@
 import { QuestionRead } from "@/gen"
-import { faBell, faCheckSquare } from "@fortawesome/free-solid-svg-icons"
+import { faCheckSquare } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Avatar, Button, Card, CardActionArea, Chip, Grid, IconButton, Stack, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom"

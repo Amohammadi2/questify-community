@@ -1,5 +1,4 @@
 from django.db.models import Count
-from django.contrib.auth.models import User
 from rest_framework import viewsets, mixins
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated, AllowAny
 from rest_framework.decorators import action
@@ -10,10 +9,15 @@ from rest_framework import status
 from rest_framework.exceptions import NotFound
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 from drf_spectacular.types import OpenApiTypes
+from rest_framework_simplejwt.views import TokenRefreshView
+from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from .permissions import IsAuthorOf, IsOwnerOfAccount, IsOwnerOfProfile
-from .models import Answer, Profile, Question
-from .serializers import AcceptAnswerSerializer, AnswerReadSerializer, AnswerWriteSerializer, GetAnswersForQuestionParamSerializer, MyAnswersSerializer, ProfileWriteSerializer, QuestionReadSerializer, QuestionWriteSerializer, SubscribeOkSerializer, SubscribeRequestSerializer, UserRegistrationSerializer, UserRetrieveSerializer
+from .models import User, Answer, Profile, Question
+from .serializers import AcceptAnswerSerializer, AnswerReadSerializer, AnswerWriteSerializer, VerifiedTokenRefreshSerializer, GetAnswersForQuestionParamSerializer, MyAnswersSerializer, ProfileWriteSerializer, QuestionReadSerializer, QuestionWriteSerializer, SubscribeOkSerializer, SubscribeRequestSerializer, UserRegistrationSerializer, UserRetrieveSerializer
 from .signals import question_answered, answer_accepted, question_subscribed, question_unsubscribed
+
+class VerifiedTokenRefreshView(TokenRefreshView):
+    serializer_class = VerifiedTokenRefreshSerializer
 
 
 class QuestionsViewset(viewsets.ModelViewSet):
