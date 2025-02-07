@@ -11,7 +11,36 @@ class Post(models.Model):
     author = models.ForeignKey(User, related_name="%(class)s", on_delete=models.SET_NULL, null=True)
     created  = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    upvoted_by = models.JSONField(default=list)
+    downvoted_by = models.JSONField(default=list)
+
+    def add_upvote(self, user_id):
+        if user_id in self.downvoted_by:
+            self.downvoted_by.remove(user_id)
+        if user_id not in self.upvoted_by:
+            self.upvoted_by.append(user_id)
+        self.save()
+
+    def add_downvote(self, user_id):
+        if user_id in self.upvoted_by:
+            self.upvoted_by.remove(user_id)
+        if user_id not in self.downvoted_by:
+            self.downvoted_by.append(user_id)
+        self.save()
+
+    def get_upvotes(self):
+        return len(self.upvoted_by)
+
+    def get_downvotes(self):
+        return len(self.downvoted_by)
     
+    def remove_vote(self, user_id):
+        if user_id in self.upvoted_by:
+            self.upvoted_by.remove(user_id)
+        if user_id in self.downvoted_by:
+            self.downvoted_by.remove(user_id)
+        self.save()
+
 
 class Question(Post):
     title = models.CharField('title', null=False, blank=False, max_length=512)
