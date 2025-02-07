@@ -62,6 +62,12 @@ class AnswerType(DjangoObjectType):
         fields = '__all__'
         interfaces = (AnswerRelayNode,)
 
+    def resolve_upvotes(self, info):
+        return self.get_upvotes()
+
+    def resolve_downvotes(self, info):
+        return self.get_downvotes()
+
 class QuestionType(DjangoObjectType):
 
     @classmethod
@@ -74,7 +80,7 @@ class QuestionType(DjangoObjectType):
     
     class Meta:
         model = Question
-        fields = ('title', 'tags', 'html_content', 'author', 'created', 'updated', 'id', 'answers')
+        fields = ('title', 'tags', 'html_content', 'author', 'created', 'updated', 'id', 'answers', 'upvotes', 'downvotes')
         interfaces = (QuestionRelayNode,)
         filterset_class = QuestionFilter
 
@@ -91,6 +97,12 @@ class QuestionType(DjangoObjectType):
     
     def resolve_is_subscribed(self: Question, info):
         return self.is_subscribed
+    
+    def resolve_upvotes(self, info):
+        return self.get_upvotes()
+
+    def resolve_downvotes(self, info):
+        return self.get_downvotes()
     
 class MyQuestionsType(QuestionType):
 

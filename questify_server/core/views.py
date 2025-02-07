@@ -7,13 +7,16 @@ from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser
 from rest_framework import status
 from rest_framework.exceptions import NotFound
-from drf_spectacular.utils import extend_schema, OpenApiParameter
+from drf_spectacular.utils import extend_schema, OpenApiResponse, OpenApiExample
 from drf_spectacular.types import OpenApiTypes
 from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from .permissions import IsAuthorOf, IsOwnerOfAccount, IsOwnerOfProfile
 from .models import User, Answer, Profile, Question
-from .serializers import AcceptAnswerSerializer, AnswerReadSerializer, AnswerWriteSerializer, VerifiedTokenRefreshSerializer, GetAnswersForQuestionParamSerializer, MyAnswersSerializer, ProfileWriteSerializer, QuestionReadSerializer, QuestionWriteSerializer, SubscribeOkSerializer, SubscribeRequestSerializer, UserRegistrationSerializer, UserRetrieveSerializer
+from .serializers import (AcceptAnswerSerializer, AnswerReadSerializer, AnswerWriteSerializer, VerifiedTokenRefreshSerializer,
+                          GetAnswersForQuestionParamSerializer, MyAnswersSerializer, ProfileWriteSerializer,
+                          QuestionReadSerializer, QuestionWriteSerializer, SubscribeOkSerializer, SubscribeRequestSerializer,
+                          UserRegistrationSerializer, UserRetrieveSerializer, VoteSerializer, VoteResultSerializer)
 from .signals import question_answered, answer_accepted, question_subscribed, question_unsubscribed
 
 class VerifiedTokenRefreshView(TokenRefreshView):
@@ -78,6 +81,67 @@ class QuestionsViewset(viewsets.ModelViewSet):
                 return Response({'ok': True}, status=status.HTTP_200_OK)
         except Question.DoesNotExist:
             raise NotFound(f'No question with id={pk} exists')
+        
+    @extend_schema(
+        description="Vote on a question. Users can upvote, downvote, or remove their vote.",
+        request=VoteSerializer,
+        responses={
+            status.HTTP_200_OK: OpenApiResponse(
+                response=VoteResultSerializer,
+                description="Vote successful. Returns the updated vote counts.",
+                examples=[
+                    OpenApiExample(
+                        name="Successful Upvote",
+                        value={"upvotes": 10, "downvotes": 2},
+                    ),
+                    OpenApiExample(
+                        name="Successful Downvote",
+                        value={"upvotes": 9, "downvotes": 3},
+                    ),
+                    OpenApiExample(
+                        name="Vote Removed",
+                        value={"upvotes": 8, "downvotes": 2},
+                    ),
+                ],
+            ),
+            status.HTTP_400_BAD_REQUEST: OpenApiResponse(
+                description="Invalid request payload. The 'vote' field must be either 'up', 'down', or 'none'.",
+                examples=[
+                    OpenApiExample(
+                        name="Invalid Vote Value",
+                        value={"vote": ["Must be either 'up', 'down', or 'none'."]},
+                    ),
+                ],
+            ),
+            status.HTTP_401_UNAUTHORIZED: OpenApiResponse(
+                description="User is not authenticated. Authentication is required to vote.",
+            ),
+            status.HTTP_404_NOT_FOUND: OpenApiResponse(
+                description="Question not found. The provided question ID does not exist.",
+            ),
+        },
+    )
+    @action(detail=True, methods=['post'], serializer_class=VoteSerializer)
+    def vote(self, request, pk=None):
+        question = self.get_object()
+        user_id = request.user.id
+
+        serializer = VoteSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        vote = serializer.validated_data['vote']
+        if vote == 'up':
+            question.add_upvote(user_id)
+        elif vote == 'down':
+            question.add_downvote(user_id)
+        elif vote == 'none':
+            question.remove_vote(user_id)
+
+        result_serializer = VoteResultSerializer({
+            'upvotes': question.get_upvotes(),
+            'downvotes': question.get_downvotes(),
+        })
+        return Response(result_serializer.data, status=status.HTTP_200_OK)
 
 
 class AnswersViewset(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin):
@@ -138,6 +202,67 @@ class AnswersViewset(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.Up
         return self.get_paginated_response(
             AnswerReadSerializer(paginated_answers, many=True).data
         )
+    
+    @extend_schema(
+        description="Vote on an answer. Users can upvote, downvote, or remove their vote.",
+        request=VoteSerializer,
+        responses={
+            status.HTTP_200_OK: OpenApiResponse(
+                response=VoteResultSerializer,
+                description="Vote successful. Returns the updated vote counts.",
+                examples=[
+                    OpenApiExample(
+                        name="Successful Upvote",
+                        value={"upvotes": 5, "downvotes": 1},
+                    ),
+                    OpenApiExample(
+                        name="Successful Downvote",
+                        value={"upvotes": 4, "downvotes": 2},
+                    ),
+                    OpenApiExample(
+                        name="Vote Removed",
+                        value={"upvotes": 3, "downvotes": 1},
+                    ),
+                ],
+            ),
+            status.HTTP_400_BAD_REQUEST: OpenApiResponse(
+                description="Invalid request payload. The 'vote' field must be either 'up', 'down', or 'none'.",
+                examples=[
+                    OpenApiExample(
+                        name="Invalid Vote Value",
+                        value={"vote": ["Must be either 'up', 'down', or 'none'."]},
+                    ),
+                ],
+            ),
+            status.HTTP_401_UNAUTHORIZED: OpenApiResponse(
+                description="User is not authenticated. Authentication is required to vote.",
+            ),
+            status.HTTP_404_NOT_FOUND: OpenApiResponse(
+                description="Answer not found. The provided answer ID does not exist.",
+            ),
+        },
+    )
+    @action(detail=True, methods=['post'], serializer_class=VoteSerializer)
+    def vote(self, request, pk=None):
+        answer = self.get_object()
+        user_id = request.user.id
+
+        serializer = VoteSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        vote = serializer.validated_data['vote']
+        if vote == 'up':
+            answer.add_upvote(user_id)
+        elif vote == 'down':
+            answer.add_downvote(user_id)
+        elif vote == 'none':
+            answer.remove_vote(user_id)
+
+        result_serializer = VoteResultSerializer({
+            'upvotes': answer.get_upvotes(),
+            'downvotes': answer.get_downvotes(),
+        })
+        return Response(result_serializer.data, status=status.HTTP_200_OK)
 
 
 

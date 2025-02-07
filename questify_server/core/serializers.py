@@ -102,6 +102,12 @@ class AnswerWriteSerializer(serializers.ModelSerializer):
         model = Answer
         fields = ('html_content', 'author', 'question', 'id')
 
+class VoteSerializer(serializers.Serializer):
+    vote = serializers.ChoiceField(choices=['up', 'down', 'none'])
+
+class VoteResultSerializer(serializers.Serializer):
+    upvotes = serializers.IntegerField()
+    downvotes = serializers.IntegerField()
 
 class AcceptAnswerSerializer(serializers.ModelSerializer):
 
