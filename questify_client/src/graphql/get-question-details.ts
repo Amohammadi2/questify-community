@@ -16,6 +16,9 @@ export const GET_QUESTION_DETAILS = graphql(`
       created
       updated
       tags
+      upvotes
+      downvotes
+      myVote
       answers(after: $answerAfter) {
         pageInfo {
           hasNextPage

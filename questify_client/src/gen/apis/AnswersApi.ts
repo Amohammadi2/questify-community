@@ -22,6 +22,8 @@ import type {
   PaginatedAnswerReadList,
   PaginatedMyAnswersList,
   PatchedAnswerWriteRequest,
+  VoteRequest,
+  VoteResult,
 } from '../models';
 import {
     AcceptAnswerRequestFromJSON,
@@ -38,6 +40,10 @@ import {
     PaginatedMyAnswersListToJSON,
     PatchedAnswerWriteRequestFromJSON,
     PatchedAnswerWriteRequestToJSON,
+    VoteRequestFromJSON,
+    VoteRequestToJSON,
+    VoteResultFromJSON,
+    VoteResultToJSON,
 } from '../models';
 
 export interface AnswersAcceptCreateRequest {
@@ -76,6 +82,11 @@ export interface AnswersRetrieveRequest {
 export interface AnswersUpdateRequest {
     id: number;
     answerWriteRequest: AnswerWriteRequest;
+}
+
+export interface AnswersVoteCreateRequest {
+    id: number;
+    voteRequest: VoteRequest;
 }
 
 /**
@@ -399,6 +410,51 @@ export class AnswersApi extends runtime.BaseAPI {
      */
     async answersUpdate(requestParameters: AnswersUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AnswerWrite> {
         const response = await this.answersUpdateRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Vote on an answer. Users can upvote, downvote, or remove their vote.
+     */
+    async answersVoteCreateRaw(requestParameters: AnswersVoteCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VoteResult>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling answersVoteCreate.');
+        }
+
+        if (requestParameters.voteRequest === null || requestParameters.voteRequest === undefined) {
+            throw new runtime.RequiredError('voteRequest','Required parameter requestParameters.voteRequest was null or undefined when calling answersVoteCreate.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("jwtAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/api/v1/answers/{id}/vote/`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: VoteRequestToJSON(requestParameters.voteRequest),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => VoteResultFromJSON(jsonValue));
+    }
+
+    /**
+     * Vote on an answer. Users can upvote, downvote, or remove their vote.
+     */
+    async answersVoteCreate(requestParameters: AnswersVoteCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VoteResult> {
+        const response = await this.answersVoteCreateRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

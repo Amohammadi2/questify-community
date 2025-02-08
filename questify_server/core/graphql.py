@@ -59,14 +59,28 @@ class AnswerType(DjangoObjectType):
 
     class Meta:
         model = Answer
-        fields = '__all__'
+        fields = ('id', 'html_content', 'created', 'updated', 'accepted', 'question', 'author')
         interfaces = (AnswerRelayNode,)
+
+    upvotes = graphene.Int()
+    downvotes = graphene.Int()
+    my_vote = graphene.String()
 
     def resolve_upvotes(self, info):
         return self.get_upvotes()
 
     def resolve_downvotes(self, info):
         return self.get_downvotes()
+
+    def resolve_my_vote(self, info):
+        if not info.context.user.is_authenticated:
+            return 'none'
+        elif info.context.user.id in self.upvoted_by:
+            return 'up'
+        elif info.context.user.id in self.downvoted_by:
+            return 'down'
+        else:
+            return 'none' 
 
 class QuestionType(DjangoObjectType):
 
@@ -80,11 +94,14 @@ class QuestionType(DjangoObjectType):
     
     class Meta:
         model = Question
-        fields = ('title', 'tags', 'html_content', 'author', 'created', 'updated', 'id', 'answers', 'upvotes', 'downvotes')
+        fields = ('title', 'tags', 'html_content', 'author', 'created', 'updated', 'id', 'answers')
         interfaces = (QuestionRelayNode,)
         filterset_class = QuestionFilter
 
     num_answers = graphene.Int()
+    upvotes = graphene.Int()
+    downvotes = graphene.Int()
+    my_vote = graphene.String()
     has_accepted_answer = graphene.Boolean()
     is_subscribed = graphene.Boolean()
     answers = DjangoConnectionField(AnswerType)
@@ -103,6 +120,16 @@ class QuestionType(DjangoObjectType):
 
     def resolve_downvotes(self, info):
         return self.get_downvotes()
+    
+    def resolve_my_vote(self, info):
+        if not info.context.user.is_authenticated:
+            return 'none'
+        elif info.context.user.id in self.upvoted_by:
+            return 'up'
+        elif info.context.user.id in self.downvoted_by:
+            return 'down'
+        else:
+            return 'none'
     
 class MyQuestionsType(QuestionType):
 

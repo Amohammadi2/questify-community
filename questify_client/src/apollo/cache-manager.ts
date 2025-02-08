@@ -101,6 +101,17 @@ export class CacheManager {
     })
   }
 
+  public static updateQuestionVote(id: number, upvotes: number, downvotes: number, myVote: 'up' | 'down' | 'none') {
+    client.cache.modify({
+      id: client.cache.identify({ __typename: 'QuestionType', id: `${id}`}),
+      fields: {
+        upvotes() { return upvotes },
+        downvotes() { return downvotes },
+        myVote() { return myVote }
+      }
+    })
+  }
+
   public static addAnswer(author: UserRetrieve|null, id: number, qid: number, content: string) {
     const authorRef = client.cache.writeFragment({
       id: `UserType:${author?.id}`,

@@ -30,10 +30,13 @@ models/SubscribeOk.ts
 models/SubscribeRequestRequest.ts
 models/TokenObtainPair.ts
 models/TokenObtainPairRequest.ts
-models/TokenRefresh.ts
-models/TokenRefreshRequest.ts
 models/UserRegistration.ts
 models/UserRegistrationRequest.ts
 models/UserRetrieve.ts
+models/VerifiedTokenRefresh.ts
+models/VerifiedTokenRefreshRequest.ts
+models/VoteEnum.ts
+models/VoteRequest.ts
+models/VoteResult.ts
 models/index.ts
 runtime.ts

@@ -17,18 +17,18 @@ import * as runtime from '../runtime';
 import type {
   TokenObtainPair,
   TokenObtainPairRequest,
-  TokenRefresh,
-  TokenRefreshRequest,
+  VerifiedTokenRefresh,
+  VerifiedTokenRefreshRequest,
 } from '../models';
 import {
     TokenObtainPairFromJSON,
     TokenObtainPairToJSON,
     TokenObtainPairRequestFromJSON,
     TokenObtainPairRequestToJSON,
-    TokenRefreshFromJSON,
-    TokenRefreshToJSON,
-    TokenRefreshRequestFromJSON,
-    TokenRefreshRequestToJSON,
+    VerifiedTokenRefreshFromJSON,
+    VerifiedTokenRefreshToJSON,
+    VerifiedTokenRefreshRequestFromJSON,
+    VerifiedTokenRefreshRequestToJSON,
 } from '../models';
 
 export interface TokenObtainCreateRequest {
@@ -36,7 +36,7 @@ export interface TokenObtainCreateRequest {
 }
 
 export interface TokenRefreshCreateRequest {
-    tokenRefreshRequest: TokenRefreshRequest;
+    verifiedTokenRefreshRequest: VerifiedTokenRefreshRequest;
 }
 
 /**
@@ -80,9 +80,9 @@ export class TokenApi extends runtime.BaseAPI {
     /**
      * Takes a refresh type JSON web token and returns an access type JSON web token if the refresh token is valid.
      */
-    async tokenRefreshCreateRaw(requestParameters: TokenRefreshCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<TokenRefresh>> {
-        if (requestParameters.tokenRefreshRequest === null || requestParameters.tokenRefreshRequest === undefined) {
-            throw new runtime.RequiredError('tokenRefreshRequest','Required parameter requestParameters.tokenRefreshRequest was null or undefined when calling tokenRefreshCreate.');
+    async tokenRefreshCreateRaw(requestParameters: TokenRefreshCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<VerifiedTokenRefresh>> {
+        if (requestParameters.verifiedTokenRefreshRequest === null || requestParameters.verifiedTokenRefreshRequest === undefined) {
+            throw new runtime.RequiredError('verifiedTokenRefreshRequest','Required parameter requestParameters.verifiedTokenRefreshRequest was null or undefined when calling tokenRefreshCreate.');
         }
 
         const queryParameters: any = {};
@@ -96,16 +96,16 @@ export class TokenApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: TokenRefreshRequestToJSON(requestParameters.tokenRefreshRequest),
+            body: VerifiedTokenRefreshRequestToJSON(requestParameters.verifiedTokenRefreshRequest),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => TokenRefreshFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => VerifiedTokenRefreshFromJSON(jsonValue));
     }
 
     /**
      * Takes a refresh type JSON web token and returns an access type JSON web token if the refresh token is valid.
      */
-    async tokenRefreshCreate(requestParameters: TokenRefreshCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TokenRefresh> {
+    async tokenRefreshCreate(requestParameters: TokenRefreshCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<VerifiedTokenRefresh> {
         const response = await this.tokenRefreshCreateRaw(requestParameters, initOverrides);
         return await response.value();
     }

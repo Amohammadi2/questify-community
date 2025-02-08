@@ -163,6 +163,64 @@ paths:
               schema:
                 $ref: '#/components/schemas/AnswerRead'
           description: ''
+  /api/v1/answers/{id}/vote/:
+    post:
+      operationId: answers_vote_create
+      description: Vote on an answer. Users can upvote, downvote, or remove their
+        vote.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this answer.
+        required: true
+      tags:
+      - answers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoteRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/VoteRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/VoteRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoteResult'
+              examples:
+                SuccessfulUpvote:
+                  value:
+                    upvotes: 5
+                    downvotes: 1
+                  summary: Successful Upvote
+                SuccessfulDownvote:
+                  value:
+                    upvotes: 4
+                    downvotes: 2
+                  summary: Successful Downvote
+                VoteRemoved:
+                  value:
+                    upvotes: 3
+                    downvotes: 1
+                  summary: Vote Removed
+          description: Vote successful. Returns the updated vote counts.
+        '400':
+          description: Invalid request payload. The 'vote' field must be either 'up',
+            'down', or 'none'.
+        '401':
+          description: User is not authenticated. Authentication is required to vote.
+        '404':
+          description: Answer not found. The provided answer ID does not exist.
   /api/v1/answers/for_question/:
     get:
       operationId: answers_for_question_list
@@ -488,6 +546,64 @@ paths:
               schema:
                 $ref: '#/components/schemas/SubscribeOk'
           description: ''
+  /api/v1/questions/{id}/vote/:
+    post:
+      operationId: questions_vote_create
+      description: Vote on a question. Users can upvote, downvote, or remove their
+        vote.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this question.
+        required: true
+      tags:
+      - questions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoteRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/VoteRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/VoteRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoteResult'
+              examples:
+                SuccessfulUpvote:
+                  value:
+                    upvotes: 10
+                    downvotes: 2
+                  summary: Successful Upvote
+                SuccessfulDownvote:
+                  value:
+                    upvotes: 9
+                    downvotes: 3
+                  summary: Successful Downvote
+                VoteRemoved:
+                  value:
+                    upvotes: 8
+                    downvotes: 2
+                  summary: Vote Removed
+          description: Vote successful. Returns the updated vote counts.
+        '400':
+          description: Invalid request payload. The 'vote' field must be either 'up',
+            'down', or 'none'.
+        '401':
+          description: User is not authenticated. Authentication is required to vote.
+        '404':
+          description: Question not found. The provided question ID does not exist.
   /api/v1/questions/my_questions/:
     get:
       operationId: questions_my_questions_list
@@ -696,20 +812,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TokenRefreshRequest'
+              $ref: '#/components/schemas/VerifiedTokenRefreshRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/TokenRefreshRequest'
+              $ref: '#/components/schemas/VerifiedTokenRefreshRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/TokenRefreshRequest'
+              $ref: '#/components/schemas/VerifiedTokenRefreshRequest'
         required: true
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TokenRefresh'
+                $ref: '#/components/schemas/VerifiedTokenRefresh'
           description: ''
   /api/v1/users/:
     post:
@@ -1201,44 +1317,25 @@ components:
       required:
       - password
       - username
-    TokenRefresh:
-      type: object
-      properties:
-        access:
-          type: string
-          readOnly: true
-        refresh:
-          type: string
-      required:
-      - access
-      - refresh
-    TokenRefreshRequest:
-      type: object
-      properties:
-        refresh:
-          type: string
-          minLength: 1
-      required:
-      - refresh
     UserRegistration:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         username:
           type: string
           description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
             only.
           pattern: ^[\w.@+-]+$
           maxLength: 150
-        password:
-          type: string
-          maxLength: 128
         email:
           type: string
           format: email
           title: Email address
           maxLength: 254
       required:
-      - password
+      - id
       - username
     UserRegistrationRequest:
       type: object
@@ -1252,6 +1349,7 @@ components:
           maxLength: 150
         password:
           type: string
+          writeOnly: true
           minLength: 1
           maxLength: 128
         email:
@@ -1259,8 +1357,13 @@ components:
           format: email
           title: Email address
           maxLength: 254
+        referral_token:
+          type: string
+          writeOnly: true
+          minLength: 1
       required:
       - password
+      - referral_token
       - username
     UserRetrieve:
       type: object
@@ -1286,6 +1389,60 @@ components:
       required:
       - id
       - username
+    VerifiedTokenRefresh:
+      type: object
+      description: |-
+        Inherit from `TokenRefreshSerializer` and touch the database
+        before re-issuing a new access token and ensure that the user
+        exists and is active.
+      properties:
+        refresh:
+          type: string
+        access:
+          type: string
+          readOnly: true
+      required:
+      - access
+      - refresh
+    VerifiedTokenRefreshRequest:
+      type: object
+      description: |-
+        Inherit from `TokenRefreshSerializer` and touch the database
+        before re-issuing a new access token and ensure that the user
+        exists and is active.
+      properties:
+        refresh:
+          type: string
+          minLength: 1
+      required:
+      - refresh
+    VoteEnum:
+      enum:
+      - up
+      - down
+      - none
+      type: string
+      description: |-
+        * `up` - up
+        * `down` - down
+        * `none` - none
+    VoteRequest:
+      type: object
+      properties:
+        vote:
+          $ref: '#/components/schemas/VoteEnum'
+      required:
+      - vote
+    VoteResult:
+      type: object
+      properties:
+        upvotes:
+          type: integer
+        downvotes:
+          type: integer
+      required:
+      - downvotes
+      - upvotes
   securitySchemes:
     jwtAuth:
       type: http

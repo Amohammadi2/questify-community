@@ -20,17 +20,17 @@ import { exists, mapValues } from '../runtime';
  */
 export interface UserRegistration {
     /**
+     * 
+     * @type {number}
+     * @memberof UserRegistration
+     */
+    readonly id: number;
+    /**
      * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
      * @type {string}
      * @memberof UserRegistration
      */
     username: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserRegistration
-     */
-    password: string;
     /**
      * 
      * @type {string}
@@ -44,8 +44,8 @@ export interface UserRegistration {
  */
 export function instanceOfUserRegistration(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "id" in value;
     isInstance = isInstance && "username" in value;
-    isInstance = isInstance && "password" in value;
 
     return isInstance;
 }
@@ -60,8 +60,8 @@ export function UserRegistrationFromJSONTyped(json: any, ignoreDiscriminator: bo
     }
     return {
         
+        'id': json['id'],
         'username': json['username'],
-        'password': json['password'],
         'email': !exists(json, 'email') ? undefined : json['email'],
     };
 }
@@ -76,7 +76,6 @@ export function UserRegistrationToJSON(value?: UserRegistration | null): any {
     return {
         
         'username': value.username,
-        'password': value.password,
         'email': value.email,
     };
 }

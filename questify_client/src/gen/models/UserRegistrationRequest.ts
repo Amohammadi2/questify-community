@@ -37,6 +37,12 @@ export interface UserRegistrationRequest {
      * @memberof UserRegistrationRequest
      */
     email?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserRegistrationRequest
+     */
+    referralToken: string;
 }
 
 /**
@@ -46,6 +52,7 @@ export function instanceOfUserRegistrationRequest(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "username" in value;
     isInstance = isInstance && "password" in value;
+    isInstance = isInstance && "referralToken" in value;
 
     return isInstance;
 }
@@ -63,6 +70,7 @@ export function UserRegistrationRequestFromJSONTyped(json: any, ignoreDiscrimina
         'username': json['username'],
         'password': json['password'],
         'email': !exists(json, 'email') ? undefined : json['email'],
+        'referralToken': json['referral_token'],
     };
 }
 
@@ -78,6 +86,7 @@ export function UserRegistrationRequestToJSON(value?: UserRegistrationRequest | 
         'username': value.username,
         'password': value.password,
         'email': value.email,
+        'referral_token': value.referralToken,
     };
 }
 

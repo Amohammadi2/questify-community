@@ -14,6 +14,9 @@ type AnswerType implements AnswerRelayNode {
   updated: DateTime!
   accepted: Boolean!
   question: MyQuestionsType
+  upvotes: Int
+  downvotes: Int
+  myVote: String
 }
 
 type AnswerTypeConnection {
@@ -40,6 +43,9 @@ type MyQuestionsType implements QuestionRelayNode {
   tags: JSONString!
   answers(offset: Int, before: String, after: String, first: Int, last: Int): AnswerTypeConnection
   numAnswers: Int
+  upvotes: Int
+  downvotes: Int
+  myVote: String
   hasAcceptedAnswer: Boolean
   isSubscribed: Boolean
 }
@@ -114,6 +120,9 @@ type QuestionType implements QuestionRelayNode {
   tags: JSONString!
   answers(offset: Int, before: String, after: String, first: Int, last: Int): AnswerTypeConnection
   numAnswers: Int
+  upvotes: Int
+  downvotes: Int
+  myVote: String
   hasAcceptedAnswer: Boolean
   isSubscribed: Boolean
 }

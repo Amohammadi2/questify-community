@@ -4,15 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "b8e191ff1669573a",
+        "id": "7909be89eb7330e9",
         "type": "tabs",
         "children": [
           {
-            "id": "e5ec456e281cf9e1",
+            "id": "81f3d4e73ddffdec",
             "type": "leaf",
             "state": {
               "type": "empty",
-              "state": {}
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
             }
           }
         ]
@@ -35,7 +37,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
             }
           },
           {
@@ -50,7 +54,9 @@
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
-              }
+              },
+              "icon": "lucide-search",
+              "title": "Search"
             }
           },
           {
@@ -58,10 +64,13 @@
             "type": "leaf",
             "state": {
               "type": "bookmarks",
-              "state": {}
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -88,7 +97,9 @@
                 "searchQuery": "",
                 "backlinkCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
             }
           },
           {
@@ -99,7 +110,9 @@
               "state": {
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
-              }
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
             }
           },
           {
@@ -110,7 +123,9 @@
               "state": {
                 "sortOrder": "frequency",
                 "useHierarchy": true
-              }
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
             }
           },
           {
@@ -118,7 +133,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {},
+              "icon": "lucide-list",
+              "title": "Outline"
             }
           }
         ],
@@ -138,7 +155,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "e5ec456e281cf9e1",
+  "active": "804c995129b2eec8",
   "lastOpenFiles": [
     "front-end/notifications/Receiving & Viewing Notifications.md",
     "front-end/Project Overview & Setup.md",
