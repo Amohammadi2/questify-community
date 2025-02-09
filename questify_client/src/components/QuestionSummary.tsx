@@ -1,12 +1,10 @@
-import { QuestionRead } from "@/gen"
 import { faCheckSquare } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { Avatar, Button, Card, CardActionArea, Chip, Grid, IconButton, Stack, Typography } from "@mui/material"
+import { Avatar, Card, CardActionArea, Chip, Grid, Stack, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import QuestionSubscriptionButton from "./QuestionSubscriptionButton"
 import VoteCounter from "./VoteCounter"
 
-type QuestionSummaryProps = QuestionRead
 
 export default function QuestionSummary({ author, created, title, numAnswers, tags, id, hasAcceptedAnswer, isSubscribed, upvotes, downvotes, myVote } : any) {
   

@@ -5,6 +5,9 @@ interface HasUserProfileImg extends Pick<UserType, 'username' | 'id'> {
 }
 
 export interface QuestionDetails extends Pick<QuestionType, 'id' | 'title' | 'htmlContent'> {
+  upvotes: number
+  downvotes: number
+  myVote: 'up' | 'down' | 'none'
   created: Date
   author: HasUserProfileImg
 }
@@ -21,6 +24,9 @@ export function toQuestionDetails(data: GetQuestionDetailsQuery): QuestionDetail
       profile: {
         profileImg: data.question?.author?.profile?.profileImg
       }
-    }
+    },
+    upvotes: data.question?.upvotes || 0,
+    downvotes: data.question?.downvotes || 0,
+    myVote: data.question?.myVote as ('up' | 'down' | 'none') || 'none'
   }
 }

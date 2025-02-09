@@ -11,13 +11,14 @@ import ConfirmationModal from "./ConfirmationModal";
 import "@/styles/ProseMirror.css"
 import type { QuestionDetails } from "@/utils/mappers/to-question-details";
 import { client } from "@/apollo/client";
+import VoteCounter from "./VoteCounter";
 
 export interface QuestionDetailsProps extends QuestionDetails {
   opMode?: boolean
 }
 
 
-export default function QuestionDetails({ id, opMode=false, author, title, htmlContent, created } : QuestionDetailsProps) {
+export default function QuestionDetails({ id, opMode=false, author, title, htmlContent, created, upvotes, downvotes, myVote } : QuestionDetailsProps) {
 
   const navigate = useNavigate()
 
@@ -50,35 +51,52 @@ export default function QuestionDetails({ id, opMode=false, author, title, htmlC
         title="سوال حذف شود؟"
         negativeAction
       />
-      <Grid container direction="column" sx={{ mt: 4 }}>
-        <Grid container direction="row" alignItems={'center'} sx={{ mb: 2 }}>
-          <Avatar alt={author.username} sx={{ width: 40, height: 40}} src={author.profile?.profileImg||''}/>
-          <Typography sx={{ ml: 1 }}><b>{author.username}</b></Typography>
-          <div style={{flexGrow: '1'}} />
-          <Typography>تاریخ پرسش: {created.toLocaleDateString("fa-IR")}</Typography>
-        </Grid>
-        <Divider sx={{ mb: 2 }} />
-        <Grid container>
-          <Typography variant="h5" sx={{ ml: 2, mb:2, fontWeight: 800 }}>{title}</Typography>
-        </Grid>
-        <div dangerouslySetInnerHTML={{ __html: htmlContent || '' }} className="ProseMirror" />
-        {/* Todo: replace these buttons with a menu */}
-        <Divider sx={{ mt: 2 }} />
-        {opMode && <Grid container sx={{ mt: 1, mb: 3 }}>
-          <IconButton sx={{ mr: .5 }} onClick={openDeleteModal}>
-            <FontAwesomeIcon
-              icon={faTrashCan}
-              style={{ fontSize: 16 }}
-            />
-          </IconButton>
-          <IconButton sx={{ mr: .5 }} onClick={() => navigate('/edit-question/'+id)}>
-            <FontAwesomeIcon
-              icon={faPen}
-              style={{ fontSize: 16 }}
-            />
-          </IconButton>
-        </Grid>}
-      </Grid>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'row'
+      }}>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column'
+        }}>
+          <VoteCounter qid={id} {...{upvotes, downvotes, myVote}} />
+        </div>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          flexGrow: '1'
+        }}>
+          <Grid container direction="column" sx={{ mt: 4 }}>
+            <Grid container direction="row" alignItems={'center'} sx={{ mb: 2 }}>
+              <Avatar alt={author.username} sx={{ width: 40, height: 40}} src={author.profile?.profileImg||''}/>
+              <Typography sx={{ ml: 1 }}><b>{author.username}</b></Typography>
+              <div style={{flexGrow: '1'}} />
+              <Typography>تاریخ پرسش: {created.toLocaleDateString("fa-IR")}</Typography>
+            </Grid>
+            <Divider sx={{ mb: 2 }} />
+            <Grid container>
+              <Typography variant="h5" sx={{ ml: 2, mb:2, fontWeight: 800 }}>{title}</Typography>
+            </Grid>
+            <div dangerouslySetInnerHTML={{ __html: htmlContent || '' }} className="ProseMirror" />
+            {/* Todo: replace these buttons with a menu */}
+            <Divider sx={{ mt: 2 }} />
+            {opMode && <Grid container sx={{ mt: 1, mb: 3 }}>
+              <IconButton sx={{ mr: .5 }} onClick={openDeleteModal}>
+                <FontAwesomeIcon
+                  icon={faTrashCan}
+                  style={{ fontSize: 16 }}
+                />
+              </IconButton>
+              <IconButton sx={{ mr: .5 }} onClick={() => navigate('/edit-question/'+id)}>
+                <FontAwesomeIcon
+                  icon={faPen}
+                  style={{ fontSize: 16 }}
+                />
+              </IconButton>
+            </Grid>}
+          </Grid>
+        </div>
+      </div>
     </>
   )
 }
