@@ -9,3 +9,5 @@ http://pypi.hustunique.com           http://pypi.hustunique.com/
 
 
 pip install --trusted-host [host] -i [address] some-pckage
+
+https://mirror-pypi.runflare.com    https://mirror-pypi.runflare.com/simple
