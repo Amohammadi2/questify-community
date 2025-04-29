@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+    environment:
+      - POSTGRES_DB_HOST=db
+      - POSTGRES_DB_PORT=5432
+      - POSTGRES_DB_NAME=questify
+      - POSTGRES_DB_USER=postgres
+      - POSTGRES_DB_PASSWORD=questifypassword
+      - REDIS_CHANNEL_HOST=redis
+      - REDIS_CHANNEL_PORT=6379
+      - ENVIRONMENT=development
+    volumes:
+      - .:/app
+
+  db:
+    image: docker.arvancloud.ir/postgres:13.3
+    environment:
+      - POSTGRES_DB=questify
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=questifypassword
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: docker.arvancloud.ir/redis:5.0.14
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  postgres_data:
+  redis_data:
